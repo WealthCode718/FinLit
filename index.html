@@ -145,7 +145,8 @@ const MODULES = [
   // Placeholder modules to show the journey ahead
   {id:4, file:"module-4-more-less-equal.html", stateKey:"mod4-state",
     title:"More, Less & Equal", sub:"Train your comparing eye", emoji:"⚖️", block:"Foundations — Money", lessons:4},
-  {id:5, title:"Price & Cost", sub:"What things cost and why", emoji:"🏷️", block:"Foundations — Money", lessons:4, comingSoon:true},
+  {id:5, file:"module-5-price-and-cost.html", stateKey:"mod5-state",
+    title:"Price & Cost", sub:"The tags come to the trading post", emoji:"🏷️", block:"Foundations — Money", lessons:4},
   {id:6, title:"Adding Money", sub:"Adding up what you have", emoji:"➕", block:"Money Math", lessons:4, comingSoon:true},
   {id:17, title:"What Is a Bank?", sub:"Where money lives", emoji:"🏦", block:"Banking", lessons:4, comingSoon:true},
 ];
@@ -277,7 +278,7 @@ async function render(){
   });
 
   // Coming soon teaser
-  html += '<div class="coming"><strong>More modules coming soon</strong>Module 5: Price & Cost is next. Check back soon!</div>';
+  html += '<div class="coming"><strong>More modules coming soon</strong>Module 6: Adding Money is next. Check back soon!</div>';
 
   document.getElementById("main").innerHTML = html;
 }
