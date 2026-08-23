@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adding Money — Module 6</title>
+<style>
+  :root{
+    --ink:#123a3f; --ink-soft:#3d6166; --lagoon:#ecf5f2; --card:#ffffff;
+    --sand:#f3ead8; --sand-deep:#e5d7bc; --shell:#c96f4a; --shell-soft:#f4e0d6;
+    --night:#0e1b2c; --gold:#e8b84b; --good:#2e7d5b; --bad:#a94436;
+    --radius:14px; --shadow:0 2px 10px rgba(18,58,63,.08);
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html,body{height:100%}
+  body{font-family:"Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif; background:var(--lagoon); color:var(--ink); font-size:17px; line-height:1.5; -webkit-font-smoothing:antialiased}
+  .display{font-family:"Fraunces",Georgia,serif; font-weight:700; letter-spacing:-.01em}
+  #app{max-width:560px; margin:0 auto; min-height:100dvh; display:flex; flex-direction:column}
+  header{position:sticky; top:0; z-index:20; background:var(--lagoon); padding:12px 16px 8px; border-bottom:1px solid #d9e6e1}
+  .hrow{display:flex; align-items:center; justify-content:space-between; gap:10px}
+  .xp{font-weight:700; font-size:14px; background:var(--ink); color:#fff; border-radius:999px; padding:4px 12px; white-space:nowrap}
+  .dots{display:flex; gap:6px}
+  .dot{width:9px; height:9px; border-radius:50%; background:#cfe0da; transition:background .3s}
+  .dot.on{background:var(--shell)}
+  .shelf{display:flex; gap:8px; margin-top:8px; min-height:30px; flex-wrap:wrap}
+  .shelf-label{font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-soft); align-self:center}
+  .word-chip{font-size:13px; font-weight:600; background:var(--sand); border:1.5px solid var(--sand-deep); border-radius:8px; padding:3px 10px; cursor:pointer; color:var(--ink)}
+  .word-chip:focus-visible{outline:3px solid var(--shell)}
+  main{flex:1; padding:20px 16px 110px}
+  .screen{display:none; animation:fade .35s ease}
+  .screen.on{display:block}
+  @keyframes fade{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+  @media (prefers-reduced-motion: reduce){ *{animation:none!important; transition:none!important} }
+  h1{font-size:30px; line-height:1.15; margin-bottom:6px}
+  h2{font-size:22px; line-height:1.2; margin-bottom:10px}
+  .kicker{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--shell); font-weight:700; margin-bottom:8px}
+  p{margin-bottom:12px}
+  .muted{color:var(--ink-soft); font-size:15px}
+  .card{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px; margin-bottom:14px}
+  .recap{background:#f0ebe1; border-left:4px solid var(--shell); border-radius:0 10px 10px 0; padding:10px 14px; margin-bottom:14px; font-size:14px}
+  .scene{background:linear-gradient(180deg,#bfe0d6 0%, #e9dfc6 78%, #dcc9a2 100%); border-radius:var(--radius); padding:26px 20px; text-align:center; margin-bottom:16px; font-size:44px; line-height:1.2; box-shadow:var(--shadow)}
+  .scene .cap{font-size:15px; color:var(--ink); margin-top:8px}
+  button{font:inherit; cursor:pointer; border:none; border-radius:12px; padding:13px 18px; background:var(--ink); color:#fff; font-weight:700; width:100%}
+  button:focus-visible{outline:3px solid var(--shell); outline-offset:2px}
+  button:disabled{opacity:.45; cursor:default}
+  .btn-ghost{background:transparent; color:var(--ink); border:2px solid var(--ink)}
+  .btn-row{display:flex; gap:10px}
+  .opt{display:block; width:100%; text-align:left; background:#fff; color:var(--ink); border:2px solid #d9e2de; font-weight:600; margin-bottom:10px; border-radius:12px; padding:14px 16px}
+  .opt .em{font-size:26px; margin-right:10px; vertical-align:-3px}
+  .opt.right{border-color:var(--good); background:#eef7f2}
+  .opt.wrong{border-color:var(--bad); background:#faf0ee}
+  .feedback{border-left:4px solid var(--ink); background:var(--sand); border-radius:0 10px 10px 0; padding:12px 14px; margin:10px 0 14px; font-size:15px}
+  .feedback.good{border-color:var(--good)}
+  .feedback.bad{border-color:var(--bad)}
+  /* till game */
+  .till{display:flex; gap:10px; align-items:center; justify-content:center; margin-bottom:14px}
+  .till-item{background:#fff; border:2px solid #d9e2de; border-radius:14px; padding:14px 12px; text-align:center; flex:1}
+  .till-item .face{font-size:34px}
+  .till-item .tag{display:inline-block; background:var(--sand); border:1.5px solid var(--sand-deep); border-radius:6px; padding:2px 10px; font-weight:700; font-size:16px; margin-top:4px}
+  .till-plus{font-size:28px; font-weight:700; color:var(--shell)}
+  .steps-hint{background:#fffdf8; border:2px dashed var(--sand-deep); border-radius:12px; padding:10px 14px; margin-bottom:12px; font-size:14px; color:var(--ink-soft)}
+  .modal-bg{position:fixed; inset:0; background:rgba(14,27,44,.55); display:none; z-index:40; align-items:center; justify-content:center; padding:24px}
+  .modal-bg.on{display:flex}
+  .word-card{background:var(--sand); border-radius:18px; padding:28px 24px; max-width:380px; width:100%; text-align:center; border:3px solid var(--sand-deep); animation:flip .5s ease}
+  @keyframes flip{from{transform:rotateY(80deg); opacity:0} to{transform:none; opacity:1}}
+  .word-card .w{font-size:34px; margin-bottom:8px}
+  .word-card .d{font-size:17px; color:var(--ink)}
+  #tutorBtn{position:fixed; right:16px; bottom:16px; width:auto; z-index:30; border-radius:999px; padding:13px 18px; background:var(--shell); box-shadow:0 4px 14px rgba(201,111,74,.4); font-size:15px}
+  .modal-overlay{position:fixed; inset:0; background:rgba(14,27,44,.65); z-index:49; display:none}
+  .modal-overlay.on{display:block}
+  #tutorPanel{position:fixed; inset:auto 0 0 0; max-width:560px; margin:0 auto; height:78dvh; background:#fff; border-radius:18px 18px 0 0; box-shadow:0 -6px 30px rgba(14,27,44,.25); z-index:50; display:none; flex-direction:column}
+  #tutorPanel.on{display:flex}
+  .tp-head{display:flex; justify-content:space-between; align-items:center; padding:14px 16px; border-bottom:1px solid #eee}
+  .tp-head button{width:auto; padding:10px 16px; font-size:15px; background:var(--shell); color:#fff; font-weight:700; border-radius:8px}
+  #tlog{flex:1; overflow-y:auto; padding:14px 16px; display:flex; flex-direction:column; gap:10px}
+  .msg{max-width:86%; padding:10px 14px; border-radius:14px; font-size:15px}
+  .msg.u{align-self:flex-end; background:var(--ink); color:#fff; border-bottom-right-radius:4px}
+  .msg.a{align-self:flex-start; background:var(--sand); border-bottom-left-radius:4px}
+  .tp-quick{display:flex; gap:8px; padding:0 16px 8px; flex-wrap:wrap}
+  .tp-quick button{width:auto; font-size:13px; padding:7px 12px; background:#fff; color:var(--ink); border:1.5px solid var(--ink); border-radius:999px}
+  .tp-in{display:flex; gap:8px; padding:10px 16px 18px; border-top:1px solid #eee}
+  .tp-in input{flex:1; font:inherit; padding:12px 14px; border:2px solid #d9e2de; border-radius:12px}
+  .tp-in button{width:auto; padding:12px 16px}
+  .night{background:linear-gradient(180deg,#0e1b2c 0%, #1b3247 100%); color:#fff; border-radius:var(--radius); padding:34px 22px; text-align:center; margin-bottom:16px}
+  .lantern{font-size:56px; animation:glow 2.2s ease infinite alternate}
+  @keyframes glow{from{filter:drop-shadow(0 0 4px var(--gold))} to{filter:drop-shadow(0 0 22px var(--gold))}}
+  .spin{display:inline-block; width:16px; height:16px; border:3px solid #fff; border-top-color:transparent; border-radius:50%; animation:sp 1s linear infinite; vertical-align:-3px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="hrow">
+      <div class="dots" id="dots"></div>
+      <div class="xp" id="xpBox">0 XP</div>
+    </div>
+    <div class="shelf" id="shelf"><span class="shelf-label">Words you own:</span></div>
+  </header>
+  <main id="main"></main>
+</div>
+
+<button id="tutorBtn" aria-label="Ask the tutor">Ask the tutor 💬</button>
+<div class="modal-overlay" id="tutorOverlay" onclick="if(event.target===this)toggleTutor(false)"></div>
+<div id="tutorPanel" role="dialog" aria-label="Tutor chat">
+  <div class="tp-head"><strong class="display">Tutor</strong><button onclick="toggleTutor(false)">✕ Close</button></div>
+  <div id="tlog"></div>
+  <div class="tp-quick">
+    <button onclick="quickAsk('Explain it differently')">Explain differently</button>
+    <button onclick="quickAsk('Make it easier')">Make it easier</button>
+    <button onclick="quickAsk('Give me an example')">Give example</button>
+    <button onclick="quickAsk('Quiz me')">Quiz me</button>
+  </div>
+  <div class="tp-in">
+    <input id="tin" placeholder="Ask about adding money…" onkeydown="if(event.key==='Enter')sendTutor()">
+    <button onclick="sendTutor()">Send</button>
+  </div>
+</div>
+<div class="modal-bg" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="word-card" id="wordCard"></div>
+</div>
+
+<script>
+/* =====================================================================
+   CONTENT — Module 6: Adding Money
+   'Add' and 'total' become permitted here.
+   Still banned: subtract/minus (M7), buy/sell/pay (M8), earn (M9),
+   spend (M10), save (M11).
+===================================================================== */
+const VOCAB = {
+  add:{term:"add", def:"To put amounts together and find out how much they make all at once."},
+  total:{term:"total", def:"The amount you get when everything is added together. The whole thing."}
+};
+
+const QUESTIONS = {
+  "q61a":{type:"mc", prompt:"What does adding two amounts tell you?", concept:"add", opts:[
+    {t:"Which amount is bigger", ok:false, fb:"That's comparing — your Module 4 skill. Adding answers a different question: how much do they make TOGETHER?"},
+    {t:"How much they make together", ok:true, fb:"Exactly. Adding squishes two amounts into one: the total."},
+    {t:"Which amount came first", ok:false, fb:"Order doesn't matter in adding! 25¢ + 10¢ makes the same total as 10¢ + 25¢."}]},
+  "q61b":{type:"mc", prompt:"25¢ + 25¢ = ?", concept:"add", opts:[
+    {t:"40¢", ok:false, fb:"Count up from 25: another 25 lands on 50. Two quarters make half a dollar."},
+    {t:"50¢", ok:true, fb:"Right. Two quarters = 50¢. You've been doing this since the coin game — now it has a name."},
+    {t:"55¢", ok:false, fb:"Close! 25 + 25 = 50. Try counting: 25… 35… 45… 50."}]},
+  "q62a":{type:"mc", prompt:"The mango is 75¢ and the coconut is 95¢. What do they ask for together?", concept:"total", opts:[
+    {t:"$1.60", ok:false, fb:"Almost: 75 + 95… take 5 from the 75 to make the 95 into 100, then 70 more = 170¢ = $1.70."},
+    {t:"$1.70", ok:true, fb:"Perfect. 75 + 95 = 170 cents, and 170 cents = 1 dollar and 70 cents. Kai finally knows."},
+    {t:"$1.80", ok:false, fb:"A little too far. 75 + 95 = 170, not 180. Try: 75 + 95 = 75 + 100 − 5… whoops, no minus yet! Try: 95 + 5 = 100, then + 70 = 170."}]},
+  "q62b":{type:"tf", prompt:"True or false: to add $1 and 50¢, you can just write 1 + 50 = 51.", answer:false, concept:"add",
+    good:"Right — same-unit rule! Turn everything into cents first: $1 = 100¢, so 100 + 50 = 150¢ = $1.50. Just like comparing.",
+    bad:"Careful — $1 and 50¢ are different units. Turn dollars into cents first: $1 = 100¢. Then 100 + 50 = 150¢ = $1.50."},
+  "q63a":{type:"mc", prompt:"80¢ + 40¢ = ?", concept:"total", opts:[
+    {t:"120¢, which is $1.20", ok:true, fb:"Yes! The cents crossed 100 — and 100 of them became a dollar. 120¢ = $1.20."},
+    {t:"120¢, which is $12.00", ok:false, fb:"Careful with the conversion: 100 cents = 1 dollar, so 120 cents = 1 dollar and 20 cents = $1.20."},
+    {t:"It can't be added — too many cents", ok:false, fb:"Cents can grow past 100! When they do, every 100 of them becomes a dollar: 120¢ = $1.20."}]},
+  "q63c":{type:"mc", prompt:"Kai has $1.10 and finds a quarter on the beach. What's the total now?", concept:"total", opts:[
+    {t:"$1.35", ok:true, fb:"Right: $1.10 = 110¢, plus 25¢ = 135¢ = $1.35. Beach luck, properly counted."},
+    {t:"$1.25", ok:false, fb:"That would be adding 15¢. A quarter is 25¢: 110 + 25 = 135¢ = $1.35."},
+    {t:"$3.60", ok:false, fb:"Whoa — that added $2.50! A quarter is 25¢. 110 + 25 = 135¢ = $1.35."}]},
+  "q63b":{type:"mc", transfer:true, prompt:"Back in shell days: Kai's pouch had 30 shells, and a trade brought in 45 more. Does adding work the same way for shells?", concept:"add", opts:[
+    {t:"No — adding was invented for dollars", ok:false, fb:"Adding is older than any money! It works on amounts of anything: shells, stones, dollars, mangoes."},
+    {t:"Yes — 30 + 45 = 75 shells, same rules", ok:true, fb:"Exactly. Adding belongs to amounts, not to dollars. Any money, any island, same math."},
+    {t:"Only if the shells are the same size", ok:false, fb:"Counting shells doesn't care about size — remember, worth and count are different things. 30 + 45 = 75 shells either way."}]}
+};
+
+/* =====================================================================
+   STATE + PERSISTENCE
+===================================================================== */
+let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false,false], masteryPassed:false };
+
+async function loadState(){
+  try{
+    const r = await window.storage.get("mod6-state");
+    if(r && r.value){ S = Object.assign(S, JSON.parse(r.value)); return; }
+  } catch(e){ }
+  try{
+    const saved = localStorage.getItem("mod6-state");
+    if(saved){ S = Object.assign(S, JSON.parse(saved)); }
+    for(const key of ["mod5-state","mod4-state","mod3-state","mod2-state","mod1-state"]){
+      const prev = localStorage.getItem(key);
+      if(prev){
+        const p = JSON.parse(prev);
+        if(p.xp > S.xp) S.xp = p.xp;
+      }
+    }
+  } catch(e){ }
+}
+async function saveState(){
+  try{ await window.storage.set("mod6-state", JSON.stringify(S)); }catch(e){
+    try{ localStorage.setItem("mod6-state", JSON.stringify(S)); }catch(e2){}
+  }
+}
+function addXP(n){ S.xp+=n; document.getElementById("xpBox").textContent = S.xp+" XP"; saveState(); }
+function earnWord(k){
+  if(S.shelf.includes(k)) return;
+  S.shelf.push(k); renderShelf(); saveState();
+  showWordCard(k);
+}
+function renderShelf(){
+  const el=document.getElementById("shelf");
+  el.innerHTML='<span class="shelf-label">Words you own:</span>';
+  S.shelf.forEach(k=>{
+    if(!VOCAB[k]) return;
+    const b=document.createElement("button"); b.className="word-chip"; b.textContent=VOCAB[k].term;
+    b.onclick=()=>showWordCard(k); el.appendChild(b);
+  });
+}
+function showWordCard(k){
+  const v=VOCAB[k]; if(!v) return;
+  document.getElementById("wordCard").innerHTML =
+    '<div class="w display">'+v.term+'</div><div class="d">'+v.def+'</div>' +
+    '<button style="margin-top:18px" onclick="closeModal()">Got it</button>';
+  document.getElementById("modal").classList.add("on");
+}
+function closeModal(){ document.getElementById("modal").classList.remove("on"); }
+
+/* =====================================================================
+   SCREEN ENGINE
+===================================================================== */
+const M = document.getElementById("main");
+function show(html){ M.innerHTML='<div class="screen on">'+html+'</div>'; window.scrollTo(0,0); }
+function dots(n,i){
+  const d=document.getElementById("dots"); d.innerHTML="";
+  for(let k=0;k<n;k++){const s=document.createElement("span");s.className="dot"+(k<=i?" on":"");d.appendChild(s);}
+}
+function next(){ S.step++; saveState(); render(); }
+function render(){
+  const les=LESSONS[S.lesson];
+  dots(les.steps.length, S.step);
+  if(S.step>=les.steps.length){ lessonComplete(); return; }
+  les.steps[S.step]();
+}
+function lessonComplete(){
+  if(!S.done[S.lesson]){ S.done[S.lesson]=true; addXP(10); }
+  saveState();
+  goHome();
+}
+function renderMC(qid, onDone){
+  const q=QUESTIONS[qid];
+  let html='<div class="kicker">Question</div><h2 class="display">'+q.prompt+'</h2><div id="opts">';
+  q.opts.forEach((o,i)=>{ html+='<button class="opt" data-i="'+i+'">'+o.t+'</button>'; });
+  html+='</div><div id="fb"></div><div id="cont"></div>';
+  show(html);
+  let answered=false, firstShot=!(qid in S.firstTry);
+  document.querySelectorAll(".opt").forEach(btn=>{
+    btn.onclick=()=>{
+      const i=+btn.dataset.i, o=q.opts[i];
+      if(answered && o.ok===false) return;
+      btn.classList.add(o.ok?"right":"wrong");
+      document.getElementById("fb").innerHTML='<div class="feedback '+(o.ok?'good':'bad')+'">'+o.fb+'</div>';
+      if(o.ok){
+        if(firstShot && !answered){ S.firstTry[qid]=true; addXP(2); }
+        answered=true;
+        document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
+        document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>';
+        window._c=()=>onDone;
+      } else { answered=true; S.firstTry[qid]=false; }
+      saveState();
+    };
+  });
+}
+function renderTF(qid,onDone){
+  const q=QUESTIONS[qid];
+  show('<div class="kicker">True or false</div><h2 class="display">'+q.prompt+'</h2>'+
+    '<div class="btn-row"><button class="opt" id="tT">True</button><button class="opt" id="tF">False</button></div>'+
+    '<div id="fb"></div><div id="cont"></div>');
+  let firstShot=!(qid in S.firstTry), answered=false;
+  function pick(val,el){
+    const ok = (val===q.answer);
+    el.classList.add(ok?"right":"wrong");
+    document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?q.good:q.bad)+'</div>';
+    if(ok){
+      if(firstShot && !answered){S.firstTry[qid]=true; addXP(2);}
+      document.getElementById("tT").disabled=true; document.getElementById("tF").disabled=true;
+      document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>'; window._c=()=>onDone;
+    } else { S.firstTry[qid]=false; }
+    answered=true; saveState();
+  }
+  document.getElementById("tT").onclick=e=>pick(true,e.target);
+  document.getElementById("tF").onclick=e=>pick(false,e.target);
+}
+
+/* =====================================================================
+   LESSON 1 — Putting Together
+===================================================================== */
+const L1=[
+  ()=>show('<div class="kicker">Lesson 1 · Putting together</div>'+
+    '<div class="recap"><strong>Kai\'s story so far:</strong> The tags are up. Kai holds $1.25 — and wants BOTH the 75¢ mango and the 95¢ coconut.</div>'+
+    '<div class="scene">🥭➕🥥<div class="cap">What do they ask for together? Kai has no idea how to find out.</div></div>'+
+    '<button onclick="next()">Teach Kai the trick</button>'),
+  ()=>show('<div class="kicker">Lesson 1</div>'+
+    '<div class="card"><p>Putting amounts together to find what they make all at once is called <strong>adding</strong>.</p>'+
+    '<p>You\'ve secretly done it before — every time you counted coins in Module 3, you were adding. Now it gets its real name and its symbol: <strong>+</strong></p>'+
+    '<p>75¢ + 95¢ means: "put 75 and 95 together."</p></div>'+
+    '<button onclick="earnWord(\'add\');next()">New word: add</button>'),
+  ()=>show('<div class="kicker">Lesson 1 · The friendly-hundred trick</div>'+
+    '<div class="card"><p>Here\'s how islanders add 75 + 95 in their heads:</p>'+
+    '<p>The 95 is SO close to 100. It just needs 5 more.</p>'+
+    '<p>So take 5 from the 75 → the 95 becomes <strong>100</strong>, and the 75 becomes <strong>70</strong>.</p>'+
+    '<p>100 + 70 = <strong>170 cents</strong>. And you know from Module 3 what 170 cents is: <strong>$1.70</strong>.</p>'+
+    '<p>The answer to "how much together" has a name too: the <strong>total</strong>.</p></div>'+
+    '<button onclick="earnWord(\'total\');next()">New word: total</button>'),
+  ()=>show('<div class="kicker">Lesson 1 · The sad news</div>'+
+    '<div class="card"><p>The total for mango + coconut: <strong>$1.70</strong>.</p>'+
+    '<p>Kai\'s pocket: <strong>$1.25</strong>.</p>'+
+    '<p>Use your comparing eye: $1.25 vs $1.70 → 125 cents vs 170 cents. Kai\'s money is LESS than the total.</p>'+
+    '<p>No mango-and-coconut feast today. But now Kai can figure that out BEFORE reaching the front of the line — that\'s the power of adding.</p></div>'+
+    '<button onclick="next()">Practice time</button>'),
+  ()=>renderMC("q61a", next),
+  ()=>renderMC("q61b", next),
+];
+
+/* =====================================================================
+   LESSON 2 — The Till Game
+===================================================================== */
+const TILL_ROUNDS=[
+  {a:{face:"🐚",tag:"25¢",v:25}, b:{face:"🪙",tag:"10¢",v:10}, opts:[30,35,40], hint:"Count up from 25: …30, 35"},
+  {a:{face:"🥭",tag:"75¢",v:75}, b:{face:"🥥",tag:"95¢",v:95}, opts:[160,170,180], hint:"Give 5 to the 95 → 100 + 70"},
+  {a:{face:"🪁",tag:"$1.20",v:120}, b:{face:"🍌",tag:"30¢",v:30}, opts:[150,140,123], hint:"Same units first: 120 + 30"},
+  {a:{face:"🪘",tag:"$2.05",v:205}, b:{face:"🎏",tag:"$1.25",v:125}, opts:[320,330,335], hint:"Dollars: 2+1. Cents: 5+25."}
+];
+function centsLabel(v){ return v>=100 ? "$"+(Math.floor(v/100))+"."+String(v%100).padStart(2,"0") : v+"¢"; }
+const L2=[
+  ()=>show('<div class="kicker">Lesson 2 · The till game</div>'+
+    '<div class="recap"><strong>So far:</strong> Adding = putting together. The answer is the total. Cents past 100 become dollars.</div>'+
+    '<div class="card"><p>You\'re working the till at the trading post. Two items come across — find the total. Four customers, harder each time.</p></div>'+
+    '<button onclick="next()">First customer</button>'),
+  ()=>{
+    let round=0;
+    function draw(){
+      const r=TILL_ROUNDS[round];
+      const shuffled=[...r.opts].sort(()=>Math.random()-.5);
+      show('<div class="kicker">Till game · Customer '+(round+1)+' of '+TILL_ROUNDS.length+'</div>'+
+        '<div class="till">'+
+          '<div class="till-item"><div class="face">'+r.a.face+'</div><span class="tag">'+r.a.tag+'</span></div>'+
+          '<div class="till-plus">+</div>'+
+          '<div class="till-item"><div class="face">'+r.b.face+'</div><span class="tag">'+r.b.tag+'</span></div>'+
+        '</div>'+
+        '<h2 class="display" style="text-align:center">What\'s the total?</h2>'+
+        '<div id="opts">'+shuffled.map(v=>'<button class="opt" data-v="'+v+'">'+centsLabel(v)+'</button>').join('')+'</div>'+
+        '<div id="fb"></div><div id="cont"></div>');
+      const truth=r.a.v+r.b.v;
+      let answered=false;
+      document.querySelectorAll(".opt").forEach(btn=>{
+        btn.onclick=()=>{
+          const v=+btn.dataset.v, ok=v===truth;
+          if(answered && !ok) return;
+          btn.classList.add(ok?"right":"wrong");
+          document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+
+            (ok?'Right! '+r.a.tag+' + '+r.b.tag+' = '+centsLabel(truth)+'.':'Hint: '+r.hint+'. Try another answer.')+'</div>';
+          if(ok){
+            answered=true; addXP(2);
+            document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
+            document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(round<TILL_ROUNDS.length-1?"Next customer":"Close the till")+'</button>';
+            window._n=()=>{ round++; if(round<TILL_ROUNDS.length) draw(); else { addXP(4); next(); } };
+          } else { answered=true; }
+        };
+      });
+    }
+    draw();
+  },
+  ()=>renderMC("q62a", next),
+  ()=>renderTF("q62b", next),
+];
+
+/* =====================================================================
+   LESSON 3 — Crossing the Dollar
+===================================================================== */
+const L3=[
+  ()=>show('<div class="kicker">Lesson 3 · Crossing the dollar</div>'+
+    '<div class="recap"><strong>So far:</strong> Kai can total up any two tags.</div>'+
+    '<div class="scene" style="font-size:32px">60¢ + 60¢ = 🤯<div class="cap">Rana adds two 60¢ mangoes and gets… 120 cents?!</div></div>'+
+    '<button onclick="next()">Is 120 cents allowed?</button>'),
+  ()=>show('<div class="kicker">Lesson 3</div>'+
+    '<div class="card"><p>Totally allowed — cents can pile up as high as they want.</p>'+
+    '<p>But remember the exchange rule from Module 3: <strong>every 100 cents IS a dollar.</strong></p>'+
+    '<p>So when a total crosses 100, dress it up properly:</p>'+
+    '<p style="text-align:center; font-size:22px"><strong>120¢ → $1.20</strong></p>'+
+    '<p>100 of the cents became the dollar; the leftover 20 stay as cents. Nothing was lost — same amount, better outfit.</p></div>'+
+    '<button onclick="next()">Got it</button>'),
+  ()=>renderMC("q63a", next),
+  ()=>renderMC("q63c", next),
+];
+
+/* =====================================================================
+   LESSON 4 — Mastery
+===================================================================== */
+let mastery = {qs:[], idx:0, score:0};
+const L4=[
+  ()=>{
+    const pool=["q61a","q61b","q62a","q62b","q63a","q63c"].sort(()=>Math.random()-.5).slice(0,4);
+    mastery={qs:[...pool,"q63b"].sort(()=>Math.random()-.5), idx:0, score:0};
+    show('<div class="kicker">Lesson 4 · Show what you know</div>'+
+      '<div class="recap"><strong>Module 6 quest:</strong> You learned to add amounts, find totals, and cross the dollar line.</div>'+
+      '<h1 class="display">Five questions.</h1>'+
+      '<p>Get 4 of 5 right and Module 6 is yours.</p>'+
+      '<button onclick="next()">Start</button>');
+  },
+  ()=>{ masteryQ(); },
+  ()=>{ finishMastery(mastery.score>=4); },
+];
+function masteryQ(){
+  if(mastery.idx>=mastery.qs.length){ next(); return; }
+  const qid=mastery.qs[mastery.idx];
+  const q=QUESTIONS[qid];
+  const cont=()=>{ mastery.idx++; masteryQ(); };
+  if(q.type==="tf"){ renderTFM(qid,cont); } else { renderMCM(qid,cont); }
+}
+function renderMCM(qid,onDone){
+  const q=QUESTIONS[qid];
+  let html='<div class="kicker">Mastery · '+(mastery.idx+1)+' of '+mastery.qs.length+'</div><h2 class="display">'+q.prompt+'</h2>';
+  q.opts.forEach((o,i)=>html+='<button class="opt" data-i="'+i+'">'+o.t+'</button>');
+  html+='<div id="fb"></div><div id="cont"></div>'; show(html);
+  let answered=false;
+  document.querySelectorAll(".opt").forEach(btn=>{
+    btn.onclick=()=>{
+      if(answered) return; answered=true;
+      const o=q.opts[+btn.dataset.i];
+      btn.classList.add(o.ok?"right":"wrong");
+      if(o.ok) mastery.score++;
+      document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
+      document.getElementById("fb").innerHTML='<div class="feedback '+(o.ok?'good':'bad')+'">'+o.fb+'</div>';
+      document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>'; window._c=()=>onDone;
+    };
+  });
+}
+function renderTFM(qid,onDone){
+  const q=QUESTIONS[qid];
+  show('<div class="kicker">Mastery · '+(mastery.idx+1)+' of '+mastery.qs.length+'</div><h2 class="display">'+q.prompt+'</h2>'+
+    '<div class="btn-row"><button class="opt" id="tT">True</button><button class="opt" id="tF">False</button></div>'+
+    '<div id="fb"></div><div id="cont"></div>');
+  let answered=false;
+  function pick(v,el){
+    if(answered)return; answered=true;
+    const ok=(v===q.answer); if(ok)mastery.score++;
+    el.classList.add(ok?"right":"wrong");
+    document.getElementById("tT").disabled=true;document.getElementById("tF").disabled=true;
+    document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?q.good:q.bad)+'</div>';
+    document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>'; window._c=()=>onDone;
+  }
+  document.getElementById("tT").onclick=e=>pick(true,e.target);
+  document.getElementById("tF").onclick=e=>pick(false,e.target);
+}
+function finishMastery(pass){
+  if(pass && !S.masteryPassed){ S.masteryPassed=true; addXP(20); }
+  saveState();
+  if(pass){
+    show('<div class="night"><div class="lantern">🏮</div>'+
+      '<h1 class="display" style="color:#fff">Module 6 complete</h1>'+
+      '<p style="color:#cfe0ee">Quiz: '+mastery.score+'/5 ✓</p></div>'+
+      '<div class="card"><p><strong>You now own:</strong> add and total — the first real money math.</p>'+
+      '<p>But adding only makes piles grow. When Kai trades $2 away from a $5 pocket… <em>how much stays behind?</em></p>'+
+      '<p class="muted">That\'s Module 7: Subtracting Money.</p></div>'+
+      '<button style="margin-bottom:10px" onclick="window.location.href=\'module-7-subtracting-money.html\'">Continue to Module 7</button>'+
+      '<button class="btn-ghost" style="margin-bottom:10px" onclick="window.location.href=\'index.html\'">🗺️ Back to all modules</button>'+
+      '<button class="btn-ghost" onclick="goHome()">Stay in Module 6</button>');
+    S.done[3]=true; saveState();
+  } else {
+    show('<div class="kicker">Almost there</div>'+
+      '<h1 class="display">One more try</h1>'+
+      '<p>You got '+mastery.score+' of 5. The keys: same units before adding, and every 100 cents becomes a dollar.</p>'+
+      '<button onclick="S.step=0;render()">Try again</button>'+
+      '<button class="btn-ghost" style="margin-top:10px" onclick="toggleTutor(true)">Talk with the tutor</button>'+
+      '<button class="btn-ghost" style="margin-top:10px" onclick="goHome()">Back home</button>');
+  }
+}
+
+const LESSONS=[
+  {title:"Putting Together", sub:"The mango-and-coconut problem", steps:L1, emoji:"➕"},
+  {title:"The Till Game", sub:"Four customers, four totals", steps:L2, emoji:"🧾"},
+  {title:"Crossing the Dollar", sub:"When cents pile past 100", steps:L3, emoji:"💯"},
+  {title:"Show What You Know", sub:"Mastery check", steps:L4, emoji:"🏮"},
+];
+
+/* =====================================================================
+   HOME
+===================================================================== */
+function goHome(){
+  dots(4, S.done.filter(Boolean).length-1);
+  let html='<div class="kicker">Module 6</div><h1 class="display">Adding Money</h1>'+
+    '<p class="muted">Four short lessons. Your first real money math.</p>';
+  LESSONS.forEach((l,i)=>{
+    const locked = i>0 && !S.done[i-1];
+    const done = S.done[i];
+    html+='<button class="opt" '+(locked?'disabled':'')+' onclick="startLesson('+i+')">'+
+      '<span class="em">'+(done?'✅':locked?'🔒':l.emoji)+'</span><strong>'+l.title+'</strong><br>'+
+      '<span class="muted" style="font-weight:400">'+l.sub+'</span></button>';
+  });
+  if(S.masteryPassed) html+='<div class="night" style="margin-top:8px"><div class="lantern">🏮</div><p style="color:#cfe0ee">Module 6 mastered · '+S.xp+' XP</p></div>';
+  html+='<button class="btn-ghost" style="margin-top:14px" onclick="window.location.href=\'index.html\'">🗺️ Back to all modules</button>';
+  show(html);
+}
+function startLesson(i){ S.lesson=i; S.step=0; saveState(); render(); }
+
+/* =====================================================================
+   TUTOR
+===================================================================== */
+let tHist=[];
+function toggleTutor(on){
+  document.getElementById("tutorPanel").classList.toggle("on",on);
+  document.getElementById("tutorOverlay").classList.toggle("on",on);
+  saveState();
+  if(on&&tHist.length===0) tMsg("a","Hi! Ask me anything about adding amounts and finding totals — or tap a button below.");
+}
+document.getElementById("tutorBtn").onclick=()=>toggleTutor(true);
+function tMsg(who,txt){ const d=document.createElement("div"); d.className="msg "+who; d.textContent=txt; document.getElementById("tlog").appendChild(d); d.scrollIntoView({behavior:"smooth"}); }
+function quickAsk(t){ document.getElementById("tin").value=t; sendTutor(); }
+async function sendTutor(){
+  const inp=document.getElementById("tin"); const txt=inp.value.trim(); if(!txt) return;
+  inp.value=""; tMsg("u",txt); tHist.push({role:"user",content:txt});
+  const think=document.createElement("div"); think.className="msg a"; think.innerHTML='<span class="spin" style="border-color:var(--ink);border-top-color:transparent"></span>';
+  document.getElementById("tlog").appendChild(think);
+  const sys="You are the tutor inside Module 6 (Adding Money) of a financial-literacy app. The learner may be a child or an adult. "+
+    "They know from earlier modules: money, worth, agree, barter, trade, dollar, cent, the four US coins, 100 cents = 1 dollar, reading $X.YY, compare, equal, price, cost. From this module: add (put amounts together), total (the answer), the + symbol, the friendly-hundred trick (75+95 → give 5 → 100+70), same-units-first rule, and cents past 100 become dollars (120¢ = $1.20). "+
+    "STRICT RULES: never use these words (later modules): subtract, minus, take away, difference, buy, sell, pay, purchase, earn, spend, save, bank, multiply, divide, budget. Say 'give to get', 'trades for', 'count up'. "+
+    "Story context: Kai wanted a 75¢ mango AND a 95¢ coconut with only $1.25 — the total ($1.70) was more than Kai had. Rana added two 60¢ mangoes and hit 120 cents. "+
+    "Never repeat a failed explanation — switch analogies (stacking blocks, joining sticker piles, pouring two cups into one). Keep answers under 80 words, warm, honest, never mark wrong ideas right. If asked 'Quiz me', ask ONE simple adding question with small numbers and wait.";
+  try{
+    const controller=new AbortController(); const timeout=setTimeout(()=>controller.abort(),8000);
+    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:300,system:sys,messages:tHist.slice(-10)}),signal:controller.signal});
+    clearTimeout(timeout);
+    const data=await r.json();
+    const out=(data.content||[]).filter(c=>c.type==="text").map(c=>c.text).join("").trim() || "I lost my thread. Ask again?";
+    think.remove(); tMsg("a",out); tHist.push({role:"assistant",content:out});
+  }catch(e){
+    think.remove(); tMsg("a","I can't think right now. Try again in a moment — or tap the word cards up top to review.");
+  }
+}
+
+/* ---------- boot ---------- */
+(async function(){
+  await loadState();
+  document.getElementById("xpBox").textContent=S.xp+" XP";
+  renderShelf();
+  goHome();
+})();
+</script>
+</body>
+</html>
