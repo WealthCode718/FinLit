@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FinLit — Your Financial Journey</title>
+<style>
+  :root{
+    --ink:#123a3f; --ink-soft:#3d6166; --lagoon:#ecf5f2; --card:#ffffff;
+    --sand:#f3ead8; --sand-deep:#e5d7bc; --shell:#c96f4a; --shell-soft:#f4e0d6;
+    --night:#0e1b2c; --gold:#e8b84b; --good:#2e7d5b; --locked:#b0c4be;
+    --radius:14px; --shadow:0 2px 10px rgba(18,58,63,.08);
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html,body{height:100%; background:var(--lagoon)}
+  body{
+    font-family:"Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif;
+    color:var(--ink); font-size:17px; line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap');
+  .display{font-family:"Fraunces",Georgia,serif; font-weight:700; letter-spacing:-.01em}
+
+  #app{max-width:560px; margin:0 auto; min-height:100dvh; display:flex; flex-direction:column}
+
+  /* hero header */
+  .hero{
+    background:linear-gradient(160deg,#0e1b2c 0%,#1b3a47 100%);
+    padding:32px 20px 24px; color:#fff;
+  }
+  .hero-top{display:flex; justify-content:space-between; align-items:flex-start}
+  .logo{font-size:13px; letter-spacing:.18em; text-transform:uppercase; opacity:.7; margin-bottom:6px}
+  .hero h1{font-size:32px; line-height:1.1; color:#fff}
+  .hero p{font-size:15px; opacity:.75; margin-top:6px}
+  .xp-badge{
+    background:var(--gold); color:var(--night); font-weight:800; font-size:14px;
+    border-radius:999px; padding:6px 14px; white-space:nowrap; flex-shrink:0;
+  }
+
+  /* overall progress bar */
+  .prog-wrap{padding:16px 20px; background:var(--card); border-bottom:1px solid #e2ede9}
+  .prog-label{display:flex; justify-content:space-between; font-size:13px; color:var(--ink-soft); margin-bottom:6px}
+  .prog-bar{height:8px; background:#dde9e5; border-radius:999px; overflow:hidden}
+  .prog-fill{height:100%; background:var(--shell); border-radius:999px; transition:width .6s ease}
+
+  main{flex:1; padding:16px 16px 40px}
+
+  /* block headers */
+  .block-label{
+    font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-soft);
+    font-weight:700; margin:20px 0 10px; padding-left:2px;
+  }
+
+  /* module card */
+  .mod-card{
+    background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);
+    margin-bottom:10px; overflow:hidden; text-decoration:none; display:block; color:var(--ink);
+    border:2px solid transparent; transition:border-color .2s;
+  }
+  .mod-card:focus-visible{outline:3px solid var(--shell); outline-offset:2px}
+  .mod-card.done{border-color:#c8e6d8}
+  .mod-card.locked{opacity:.55; pointer-events:none}
+  .mod-card.active{border-color:var(--shell)}
+  .mod-inner{display:flex; align-items:center; gap:14px; padding:14px 16px}
+  .mod-icon{
+    width:46px; height:46px; border-radius:12px; display:flex; align-items:center;
+    justify-content:center; font-size:24px; flex-shrink:0; background:var(--lagoon);
+  }
+  .mod-icon.done{background:#eef7f2}
+  .mod-icon.locked{background:#f0f0f0}
+  .mod-icon.active{background:var(--shell-soft)}
+  .mod-info{flex:1; min-width:0}
+  .mod-title{font-weight:700; font-size:15px; margin-bottom:2px}
+  .mod-sub{font-size:13px; color:var(--ink-soft); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .mod-status{flex-shrink:0; font-size:13px; font-weight:700}
+  .mod-status.done{color:var(--good)}
+  .mod-status.active{color:var(--shell)}
+  .mod-status.locked{color:var(--locked)}
+
+  /* mini progress dots on active card */
+  .mod-dots{display:flex; gap:4px; margin-top:6px}
+  .mod-dot{width:7px; height:7px; border-radius:50%; background:#dde9e5}
+  .mod-dot.on{background:var(--shell)}
+
+  /* coming soon banner */
+  .coming{
+    background:var(--sand); border-radius:var(--radius); padding:16px 18px;
+    text-align:center; margin-top:8px; color:var(--ink-soft); font-size:14px;
+  }
+  .coming strong{color:var(--ink); display:block; margin-bottom:4px}
+
+  /* words shelf */
+  .words-wrap{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:14px 16px; margin-bottom:10px}
+  .words-label{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:8px}
+  .words-row{display:flex; flex-wrap:wrap; gap:6px}
+  .word-chip{font-size:13px; font-weight:600; background:var(--sand); border:1.5px solid var(--sand-deep); border-radius:8px; padding:3px 10px}
+  .no-words{font-size:14px; color:var(--ink-soft)}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="hero">
+    <div class="hero-top">
+      <div>
+        <div class="logo">FinLit</div>
+        <h1 class="display">Your Financial<br>Journey</h1>
+        <p>Learn money, one island at a time.</p>
+      </div>
+      <div class="xp-badge" id="xpBadge">0 XP</div>
+    </div>
+  </div>
+
+  <div class="prog-wrap">
+    <div class="prog-label">
+      <span>Overall progress</span>
+      <span id="progText">0 of 52 modules</span>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+  </div>
+
+  <main id="main"></main>
+</div>
+
+<script>
+/* =====================================================================
+   MODULE REGISTRY — add new modules here as they're built
+===================================================================== */
+const MODULES = [
+  // BLOCK 1: FOUNDATIONS
+  {
+    id:1, file:"module-1-what-is-money.html", stateKey:"mod1-state",
+    title:"What Is Money?", sub:"Why shells became money on the island",
+    emoji:"🏝️", block:"Foundations — Money", lessons:4
+  },
+  {
+    id:2, file:"module-2-why-do-we-need-money.html", stateKey:"mod2-state",
+    title:"Why Do We Need Money?", sub:"Why barter breaks — and how money fixes it",
+    emoji:"🔄", block:"Foundations — Money", lessons:4
+  },
+  {
+    id:3, file:"module-3-dollars-and-cents.html", stateKey:"mod3-state",
+    title:"Dollars & Cents", sub:"Coins, bills, and reading the $ sign",
+    emoji:"💵", block:"Foundations — Money", lessons:4
+  },
+  // Placeholder modules to show the journey ahead
+  {id:4, file:"module-4-more-less-equal.html", stateKey:"mod4-state",
+    title:"More, Less & Equal", sub:"Train your comparing eye", emoji:"⚖️", block:"Foundations — Money", lessons:4},
+  {id:5, file:"module-5-price-and-cost.html", stateKey:"mod5-state",
+    title:"Price & Cost", sub:"The tags come to the trading post", emoji:"🏷️", block:"Foundations — Money", lessons:4},
+  {id:6, file:"module-6-adding-money.html", stateKey:"mod6-state",
+    title:"Adding Money", sub:"Your first real money math", emoji:"➕", block:"Foundations — Money", lessons:4},
+  {id:7, file:"module-7-subtracting-money.html", stateKey:"mod7-state",
+    title:"Subtracting Money", sub:"What's left, and how change works", emoji:"➖", block:"Foundations — Money", lessons:4},
+  {id:8, file:"module-8-buying-and-selling.html", stateKey:"mod8-state",
+    title:"Buying & Selling", sub:"One trade, two sides", emoji:"🤝", block:"Foundations — Money", lessons:4},
+  {id:17, title:"What Is a Bank?", sub:"Where money lives", emoji:"🏦", block:"Banking", lessons:4, comingSoon:true},
+];
+
+/* =====================================================================
+   LOAD PROGRESS FROM ALL MODULE STATES
+===================================================================== */
+async function loadAllProgress(){
+  const progress = {};
+  for(const mod of MODULES){
+    if(!mod.stateKey) continue;
+    let state = null;
+    // Try window.storage first, then localStorage
+    try{
+      const r = await window.storage.get(mod.stateKey);
+      if(r && r.value) state = JSON.parse(r.value);
+    }catch(e){}
+    if(!state){
+      try{
+        const s = localStorage.getItem(mod.stateKey);
+        if(s) state = JSON.parse(s);
+      }catch(e){}
+    }
+    if(state){
+      progress[mod.id] = {
+        xp: state.xp || 0,
+        mastered: state.masteryPassed || false,
+        lessonsDown: (state.done || []).filter(Boolean).length,
+        shelf: state.shelf || []
+      };
+    }
+  }
+  return progress;
+}
+
+/* =====================================================================
+   RENDER
+===================================================================== */
+async function render(){
+  const progress = await loadAllProgress();
+
+  // Calculate totals
+  let totalXP = 0, totalMastered = 0, allWords = [];
+  MODULES.forEach(mod=>{
+    const p = progress[mod.id];
+    if(p){
+      totalXP = Math.max(totalXP, p.xp);
+      if(p.mastered) totalMastered++;
+      p.shelf.forEach(w=>{ if(!allWords.includes(w)) allWords.push(w); });
+    }
+  });
+
+  document.getElementById("xpBadge").textContent = totalXP + " XP";
+  document.getElementById("progText").textContent = totalMastered + " of 52 modules";
+  document.getElementById("progFill").style.width = (totalMastered/52*100).toFixed(1)+"%";
+
+  // Group by block
+  const blocks = {};
+  MODULES.forEach(mod=>{
+    if(!blocks[mod.block]) blocks[mod.block]=[];
+    blocks[mod.block].push(mod);
+  });
+
+  let html = "";
+
+  // Words shelf
+  html += '<div class="words-wrap"><div class="words-label">Words you own</div><div class="words-row">';
+  if(allWords.length===0){
+    html += '<span class="no-words">Complete a lesson to earn your first word.</span>';
+  } else {
+    const VOCAB = {
+      money:"A thing almost everyone will take in exchange for other things.",
+      worth:"How much people want something.",
+      agree:"Money works because everyone agrees to take it.",
+      barter:"Trading one thing for another without using money.",
+      trade:"A formal exchange where both people give and get something.",
+      matching:"When you want what someone has, but they don't want what you have."
+    };
+    allWords.forEach(w=>{
+      html += '<span class="word-chip" title="'+(VOCAB[w]||"")+'">'+w+'</span>';
+    });
+  }
+  html += '</div></div>';
+
+  // Module blocks
+  Object.entries(blocks).forEach(([blockName, mods])=>{
+    html += '<div class="block-label">'+blockName+'</div>';
+    mods.forEach(mod=>{
+      const p = progress[mod.id];
+      const mastered = p && p.mastered;
+      const started = p && p.lessonsDown > 0;
+      const prevMod = MODULES.find(m=>m.id===mod.id-1);
+      const prevMastered = !prevMod || (progress[prevMod.id] && progress[prevMod.id].mastered);
+      const locked = mod.comingSoon || (!mastered && !prevMastered && mod.id > 1);
+      const isActive = !mastered && !locked && (started || prevMastered);
+
+      let statusIcon = mastered ? "✅ Done" : locked ? "🔒 Locked" : isActive ? "▶ Continue" : "▶ Start";
+      let cardClass = mastered ? "done" : locked ? "locked" : isActive ? "active" : "";
+
+      if(mod.comingSoon){
+        html += '<div class="mod-card locked"><div class="mod-inner">'+
+          '<div class="mod-icon locked">'+mod.emoji+'</div>'+
+          '<div class="mod-info"><div class="mod-title">'+mod.title+'</div>'+
+          '<div class="mod-sub">'+mod.sub+'</div></div>'+
+          '<div class="mod-status locked">🔒 Soon</div>'+
+          '</div></div>';
+        return;
+      }
+
+      html += '<a href="'+mod.file+'" class="mod-card '+cardClass+'"><div class="mod-inner">'+
+        '<div class="mod-icon '+cardClass+'">'+mod.emoji+'</div>'+
+        '<div class="mod-info">'+
+          '<div class="mod-title">Module '+mod.id+' · '+mod.title+'</div>'+
+          '<div class="mod-sub">'+mod.sub+'</div>';
+
+      // Progress dots for active module
+      if(isActive && p){
+        html += '<div class="mod-dots">';
+        for(let i=0;i<mod.lessons;i++){
+          const done = p.lessonsDown > i;
+          html += '<div class="mod-dot'+(done?' on':'')+'"></div>';
+        }
+        html += '</div>';
+      }
+
+      html += '</div><div class="mod-status '+cardClass+'">'+statusIcon+'</div>'+
+        '</div></a>';
+    });
+  });
+
+  // Coming soon teaser
+  html += '<div class="coming"><strong>More modules coming soon</strong>Module 9: Earning Money is next. Check back soon!</div>';
+
+  document.getElementById("main").innerHTML = html;
+}
+
+render();
+</script>
+</body>
+</html>
