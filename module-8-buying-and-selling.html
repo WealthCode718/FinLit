@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Buying & Selling — Module 8</title>
+<style>
+  :root{
+    --ink:#123a3f; --ink-soft:#3d6166; --lagoon:#ecf5f2; --card:#ffffff;
+    --sand:#f3ead8; --sand-deep:#e5d7bc; --shell:#c96f4a; --shell-soft:#f4e0d6;
+    --night:#0e1b2c; --gold:#e8b84b; --good:#2e7d5b; --bad:#a94436;
+    --radius:14px; --shadow:0 2px 10px rgba(18,58,63,.08);
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html,body{height:100%}
+  body{font-family:"Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif; background:var(--lagoon); color:var(--ink); font-size:17px; line-height:1.5; -webkit-font-smoothing:antialiased}
+  .display{font-family:"Fraunces",Georgia,serif; font-weight:700; letter-spacing:-.01em}
+  #app{max-width:560px; margin:0 auto; min-height:100dvh; display:flex; flex-direction:column}
+  header{position:sticky; top:0; z-index:20; background:var(--lagoon); padding:12px 16px 8px; border-bottom:1px solid #d9e6e1}
+  .hrow{display:flex; align-items:center; justify-content:space-between; gap:10px}
+  .xp{font-weight:700; font-size:14px; background:var(--ink); color:#fff; border-radius:999px; padding:4px 12px; white-space:nowrap}
+  .dots{display:flex; gap:6px}
+  .dot{width:9px; height:9px; border-radius:50%; background:#cfe0da; transition:background .3s}
+  .dot.on{background:var(--shell)}
+  .shelf{display:flex; gap:8px; margin-top:8px; min-height:30px; flex-wrap:wrap}
+  .shelf-label{font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-soft); align-self:center}
+  .word-chip{font-size:13px; font-weight:600; background:var(--sand); border:1.5px solid var(--sand-deep); border-radius:8px; padding:3px 10px; cursor:pointer; color:var(--ink)}
+  .word-chip:focus-visible{outline:3px solid var(--shell)}
+  main{flex:1; padding:20px 16px 110px}
+  .screen{display:none; animation:fade .35s ease}
+  .screen.on{display:block}
+  @keyframes fade{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+  @media (prefers-reduced-motion: reduce){ *{animation:none!important; transition:none!important} }
+  h1{font-size:30px; line-height:1.15; margin-bottom:6px}
+  h2{font-size:22px; line-height:1.2; margin-bottom:10px}
+  .kicker{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--shell); font-weight:700; margin-bottom:8px}
+  p{margin-bottom:12px}
+  .muted{color:var(--ink-soft); font-size:15px}
+  .card{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px; margin-bottom:14px}
+  .recap{background:#f0ebe1; border-left:4px solid var(--shell); border-radius:0 10px 10px 0; padding:10px 14px; margin-bottom:14px; font-size:14px}
+  .scene{background:linear-gradient(180deg,#bfe0d6 0%, #e9dfc6 78%, #dcc9a2 100%); border-radius:var(--radius); padding:26px 20px; text-align:center; margin-bottom:16px; font-size:44px; line-height:1.2; box-shadow:var(--shadow)}
+  .scene .cap{font-size:15px; color:var(--ink); margin-top:8px}
+  button{font:inherit; cursor:pointer; border:none; border-radius:12px; padding:13px 18px; background:var(--ink); color:#fff; font-weight:700; width:100%}
+  button:focus-visible{outline:3px solid var(--shell); outline-offset:2px}
+  button:disabled{opacity:.45; cursor:default}
+  .btn-ghost{background:transparent; color:var(--ink); border:2px solid var(--ink)}
+  .btn-row{display:flex; gap:10px}
+  .opt{display:block; width:100%; text-align:left; background:#fff; color:var(--ink); border:2px solid #d9e2de; font-weight:600; margin-bottom:10px; border-radius:12px; padding:14px 16px}
+  .opt .em{font-size:26px; margin-right:10px; vertical-align:-3px}
+  .opt.right{border-color:var(--good); background:#eef7f2}
+  .opt.wrong{border-color:var(--bad); background:#faf0ee}
+  .feedback{border-left:4px solid var(--ink); background:var(--sand); border-radius:0 10px 10px 0; padding:12px 14px; margin:10px 0 14px; font-size:15px}
+  .feedback.good{border-color:var(--good)}
+  .feedback.bad{border-color:var(--bad)}
+  /* trade scene cards */
+  .trade-card{background:#fff; border:2px solid #d9e2de; border-radius:14px; padding:18px 16px; text-align:center; margin-bottom:12px}
+  .trade-card .big{font-size:38px; margin-bottom:6px}
+  .trade-card .txt{font-size:16px; font-weight:600}
+  .pick3{display:flex; gap:8px; margin-bottom:12px}
+  .pick3 button{font-size:14px; padding:12px 4px}
+  .modal-bg{position:fixed; inset:0; background:rgba(14,27,44,.55); display:none; z-index:40; align-items:center; justify-content:center; padding:24px}
+  .modal-bg.on{display:flex}
+  .word-card{background:var(--sand); border-radius:18px; padding:28px 24px; max-width:380px; width:100%; text-align:center; border:3px solid var(--sand-deep); animation:flip .5s ease}
+  @keyframes flip{from{transform:rotateY(80deg); opacity:0} to{transform:none; opacity:1}}
+  .word-card .w{font-size:34px; margin-bottom:8px}
+  .word-card .d{font-size:17px; color:var(--ink)}
+  #tutorBtn{position:fixed; right:16px; bottom:16px; width:auto; z-index:30; border-radius:999px; padding:13px 18px; background:var(--shell); box-shadow:0 4px 14px rgba(201,111,74,.4); font-size:15px}
+  .modal-overlay{position:fixed; inset:0; background:rgba(14,27,44,.65); z-index:49; display:none}
+  .modal-overlay.on{display:block}
+  #tutorPanel{position:fixed; inset:auto 0 0 0; max-width:560px; margin:0 auto; height:78dvh; background:#fff; border-radius:18px 18px 0 0; box-shadow:0 -6px 30px rgba(14,27,44,.25); z-index:50; display:none; flex-direction:column}
+  #tutorPanel.on{display:flex}
+  .tp-head{display:flex; justify-content:space-between; align-items:center; padding:14px 16px; border-bottom:1px solid #eee}
+  .tp-head button{width:auto; padding:10px 16px; font-size:15px; background:var(--shell); color:#fff; font-weight:700; border-radius:8px}
+  #tlog{flex:1; overflow-y:auto; padding:14px 16px; display:flex; flex-direction:column; gap:10px}
+  .msg{max-width:86%; padding:10px 14px; border-radius:14px; font-size:15px}
+  .msg.u{align-self:flex-end; background:var(--ink); color:#fff; border-bottom-right-radius:4px}
+  .msg.a{align-self:flex-start; background:var(--sand); border-bottom-left-radius:4px}
+  .tp-quick{display:flex; gap:8px; padding:0 16px 8px; flex-wrap:wrap}
+  .tp-quick button{width:auto; font-size:13px; padding:7px 12px; background:#fff; color:var(--ink); border:1.5px solid var(--ink); border-radius:999px}
+  .tp-in{display:flex; gap:8px; padding:10px 16px 18px; border-top:1px solid #eee}
+  .tp-in input{flex:1; font:inherit; padding:12px 14px; border:2px solid #d9e2de; border-radius:12px}
+  .tp-in button{width:auto; padding:12px 16px}
+  .night{background:linear-gradient(180deg,#0e1b2c 0%, #1b3247 100%); color:#fff; border-radius:var(--radius); padding:34px 22px; text-align:center; margin-bottom:16px}
+  .lantern{font-size:56px; animation:glow 2.2s ease infinite alternate}
+  @keyframes glow{from{filter:drop-shadow(0 0 4px var(--gold))} to{filter:drop-shadow(0 0 22px var(--gold))}}
+  .spin{display:inline-block; width:16px; height:16px; border:3px solid #fff; border-top-color:transparent; border-radius:50%; animation:sp 1s linear infinite; vertical-align:-3px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="hrow">
+      <div class="dots" id="dots"></div>
+      <div class="xp" id="xpBox">0 XP</div>
+    </div>
+    <div class="shelf" id="shelf"><span class="shelf-label">Words you own:</span></div>
+  </header>
+  <main id="main"></main>
+</div>
+
+<button id="tutorBtn" aria-label="Ask the tutor">Ask the tutor 💬</button>
+<div class="modal-overlay" id="tutorOverlay" onclick="if(event.target===this)toggleTutor(false)"></div>
+<div id="tutorPanel" role="dialog" aria-label="Tutor chat">
+  <div class="tp-head"><strong class="display">Tutor</strong><button onclick="toggleTutor(false)">✕ Close</button></div>
+  <div id="tlog"></div>
+  <div class="tp-quick">
+    <button onclick="quickAsk('Explain it differently')">Explain differently</button>
+    <button onclick="quickAsk('Make it easier')">Make it easier</button>
+    <button onclick="quickAsk('Give me an example')">Give example</button>
+    <button onclick="quickAsk('Quiz me')">Quiz me</button>
+  </div>
+  <div class="tp-in">
+    <input id="tin" placeholder="Ask about buying and selling…" onkeydown="if(event.key==='Enter')sendTutor()">
+    <button onclick="sendTutor()">Send</button>
+  </div>
+</div>
+<div class="modal-bg" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="word-card" id="wordCard"></div>
+</div>
+
+<script>
+/* =====================================================================
+   CONTENT — Module 8: Buying & Selling
+   'Buy', 'sell', 'pay' become permitted here.
+   Still banned: earn (M9), spend (M10), save (M11), bank (M17+),
+   borrow/lend (M25).
+===================================================================== */
+const VOCAB = {
+  buy:{term:"buy", def:"To give money and get a thing. You buy the mango: your money goes to the trader, the mango comes to you."},
+  sell:{term:"sell", def:"To give a thing and get money. The trader sells the mango: the mango goes to you, your money comes to them."},
+  pay:{term:"pay", def:"The giving-money part of buying. You pay the price — with exact money, or with more and get change back."}
+};
+
+const QUESTIONS = {
+  "q81a":{type:"mc", prompt:"What does it mean to BUY something?", concept:"buy", opts:[
+    {t:"Give money, get the thing", ok:true, fb:"Exactly. Money out, thing in. That's the buyer's side of the trade."},
+    {t:"Give the thing, get money", ok:false, fb:"That's the other side — SELLING. Buying is when the money leaves YOUR hand."},
+    {t:"Get the thing without giving anything", ok:false, fb:"That would be a gift! Buying always means money goes the other way."}]},
+  "q81b":{type:"mc", prompt:"What does it mean to SELL something?", concept:"sell", opts:[
+    {t:"Give money, get the thing", ok:false, fb:"That's buying. Selling is the mirror: the THING leaves your hand and money arrives."},
+    {t:"Give the thing, get money", ok:true, fb:"Right. Thing out, money in. The seller's side of the same moment."},
+    {t:"Trade a thing for another thing", ok:false, fb:"Thing-for-thing with no money is barter — Module 2! Selling always brings money IN."}]},
+  "q82a":{type:"mc", prompt:"Kai hands the drum maker $2.05 and walks away with the drum. In that ONE moment…", concept:"buy", opts:[
+    {t:"Kai bought AND the drum maker sold", ok:true, fb:"Yes! One trade, two names. Every buy has a sell hiding inside it — they're the same moment from different sides."},
+    {t:"Only Kai did something", ok:false, fb:"Look at the drum maker: her drum left, money arrived. She SOLD — at the exact same instant Kai BOUGHT."},
+    {t:"They both bought", ok:false, fb:"Only money-giver buys. Kai gave money (bought); the drum maker gave the drum (sold)."}]},
+  "q82b":{type:"tf", prompt:"True or false: every time someone buys, someone else sells.", answer:true, concept:"sell",
+    good:"Right — it's one trade with two sides. No buyer without a seller, no seller without a buyer. Like a handshake needs two hands.",
+    bad:"Think of the drum moment: Kai's money went one way, the drum went the other. Kai bought; the drum maker sold. Same instant, two names — you can't have one without the other."},
+  "q83a":{type:"mc", prompt:"Kai swaps a fish for Rana's coconut. No money changes hands. Is anyone buying?", concept:"buy", opts:[
+    {t:"Yes — Kai is buying the coconut", ok:false, fb:"Check for money… there isn't any! Thing-for-thing is BARTER (Module 2). Buying needs money on one side."},
+    {t:"No — that's barter, not buying", ok:true, fb:"Sharp eye. Buy and sell only happen when MONEY is one side of the trade. Fish-for-coconut is the old way: barter."},
+    {t:"Both of them are buying", ok:false, fb:"Nobody gave money, so nobody bought. This is barter — the very thing money was invented to fix!"}]},
+  "q83b":{type:"mc", transfer:true, prompt:"Shell days: Kai once gave 10 shells for a blanket. Was Kai BUYING back then?", concept:"buy", opts:[
+    {t:"No — buying was invented with dollars", ok:false, fb:"Remember Module 1: shells WERE money (everyone agreed!). Giving money for a thing = buying, whatever the money looks like."},
+    {t:"Yes — shells were money, so that was buying", ok:true, fb:"Deep connection! Shells were real money on the island. Money-for-thing = buying, whether the money is shells, stones, or dollars."},
+    {t:"No — blankets can't be bought", ok:false, fb:"Anything with a price can be bought. The question is whether MONEY was on one side — and shells were money."}]},
+  "q83c":{type:"mc", prompt:"The kite's price is $1.25. You pay with $2. What should happen?", concept:"pay", opts:[
+    {t:"You get the kite and 75¢ change", ok:true, fb:"Perfect — Module 7 in action. You paid MORE than the price, so the gap comes back: 200 − 125 = 75¢."},
+    {t:"You get the kite and nothing back", ok:false, fb:"You handed over MORE than the price! Count up from 125 to 200 — that gap is your change: 75¢."},
+    {t:"The trade can't happen", ok:false, fb:"It can! Paying more than the price is normal — the seller just hands the extra back as change."}]}
+};
+
+/* =====================================================================
+   STATE + PERSISTENCE
+===================================================================== */
+let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false,false], masteryPassed:false };
+
+async function loadState(){
+  try{
+    const r = await window.storage.get("mod8-state");
+    if(r && r.value){ S = Object.assign(S, JSON.parse(r.value)); return; }
+  } catch(e){ }
+  try{
+    const saved = localStorage.getItem("mod8-state");
+    if(saved){ S = Object.assign(S, JSON.parse(saved)); }
+    for(const key of ["mod7-state","mod6-state","mod5-state","mod4-state","mod3-state","mod2-state","mod1-state"]){
+      const prev = localStorage.getItem(key);
+      if(prev){
+        const p = JSON.parse(prev);
+        if(p.xp > S.xp) S.xp = p.xp;
+      }
+    }
+  } catch(e){ }
+}
+async function saveState(){
+  try{ await window.storage.set("mod8-state", JSON.stringify(S)); }catch(e){
+    try{ localStorage.setItem("mod8-state", JSON.stringify(S)); }catch(e2){}
+  }
+}
+function addXP(n){ S.xp+=n; document.getElementById("xpBox").textContent = S.xp+" XP"; saveState(); }
+function earnWord(k){
+  if(S.shelf.includes(k)) return;
+  S.shelf.push(k); renderShelf(); saveState();
+  showWordCard(k);
+}
+function renderShelf(){
+  const el=document.getElementById("shelf");
+  el.innerHTML='<span class="shelf-label">Words you own:</span>';
+  S.shelf.forEach(k=>{
+    if(!VOCAB[k]) return;
+    const b=document.createElement("button"); b.className="word-chip"; b.textContent=VOCAB[k].term;
+    b.onclick=()=>showWordCard(k); el.appendChild(b);
+  });
+}
+function showWordCard(k){
+  const v=VOCAB[k]; if(!v) return;
+  document.getElementById("wordCard").innerHTML =
+    '<div class="w display">'+v.term+'</div><div class="d">'+v.def+'</div>' +
+    '<button style="margin-top:18px" onclick="closeModal()">Got it</button>';
+  document.getElementById("modal").classList.add("on");
+}
+function closeModal(){ document.getElementById("modal").classList.remove("on"); }
+
+/* =====================================================================
+   SCREEN ENGINE
+===================================================================== */
+const M = document.getElementById("main");
+function show(html){ M.innerHTML='<div class="screen on">'+html+'</div>'; window.scrollTo(0,0); }
+function dots(n,i){
+  const d=document.getElementById("dots"); d.innerHTML="";
+  for(let k=0;k<n;k++){const s=document.createElement("span");s.className="dot"+(k<=i?" on":"");d.appendChild(s);}
+}
+function next(){ S.step++; saveState(); render(); }
+function render(){
+  const les=LESSONS[S.lesson];
+  dots(les.steps.length, S.step);
+  if(S.step>=les.steps.length){ lessonComplete(); return; }
+  les.steps[S.step]();
+}
+function lessonComplete(){
+  if(!S.done[S.lesson]){ S.done[S.lesson]=true; addXP(10); }
+  saveState();
+  goHome();
+}
+function renderMC(qid, onDone){
+  const q=QUESTIONS[qid];
+  let html='<div class="kicker">Question</div><h2 class="display">'+q.prompt+'</h2><div id="opts">';
+  q.opts.forEach((o,i)=>{ html+='<button class="opt" data-i="'+i+'">'+o.t+'</button>'; });
+  html+='</div><div id="fb"></div><div id="cont"></div>';
+  show(html);
+  let answered=false, firstShot=!(qid in S.firstTry);
+  document.querySelectorAll(".opt").forEach(btn=>{
+    btn.onclick=()=>{
+      const i=+btn.dataset.i, o=q.opts[i];
+      if(answered && o.ok===false) return;
+      btn.classList.add(o.ok?"right":"wrong");
+      document.getElementById("fb").innerHTML='<div class="feedback '+(o.ok?'good':'bad')+'">'+o.fb+'</div>';
+      if(o.ok){
+        if(firstShot && !answered){ S.firstTry[qid]=true; addXP(2); }
+        answered=true;
+        document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
+        document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>';
+        window._c=()=>onDone;
+      } else { answered=true; S.firstTry[qid]=false; }
+      saveState();
+    };
+  });
+}
+function renderTF(qid,onDone){
+  const q=QUESTIONS[qid];
+  show('<div class="kicker">True or false</div><h2 class="display">'+q.prompt+'</h2>'+
+    '<div class="btn-row"><button class="opt" id="tT">True</button><button class="opt" id="tF">False</button></div>'+
+    '<div id="fb"></div><div id="cont"></div>');
+  let firstShot=!(qid in S.firstTry), answered=false;
+  function pick(val,el){
+    const ok = (val===q.answer);
+    el.classList.add(ok?"right":"wrong");
+    document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?q.good:q.bad)+'</div>';
+    if(ok){
+      if(firstShot && !answered){S.firstTry[qid]=true; addXP(2);}
+      document.getElementById("tT").disabled=true; document.getElementById("tF").disabled=true;
+      document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>'; window._c=()=>onDone;
+    } else { S.firstTry[qid]=false; }
+    answered=true; saveState();
+  }
+  document.getElementById("tT").onclick=e=>pick(true,e.target);
+  document.getElementById("tF").onclick=e=>pick(false,e.target);
+}
+
+/* =====================================================================
+   LESSON 1 — One Moment, Two Names
+===================================================================== */
+const L1=[
+  ()=>show('<div class="kicker">Lesson 1 · One moment, two names</div>'+
+    '<div class="recap"><strong>Kai\'s story so far:</strong> Tags, totals, gaps, change — Kai is fluent at the trading post. But there\'s a mainland word Kai keeps hearing…</div>'+
+    '<div class="scene">🗣️💬<div class="cap">"You keep saying \'trade you money for the mango,\'" the mainland trader laughs. "We just say BUY."</div></div>'+
+    '<button onclick="next()">Teach me the mainland words</button>'),
+  ()=>show('<div class="kicker">Lesson 1</div>'+
+    '<div class="card"><p>When money goes one way and a thing goes the other way, each side gets a name:</p>'+
+    '<p><strong>The money-giver is BUYING.</strong> Money out, thing in.</p>'+
+    '<p>Kai gives 75¢, gets the mango → Kai <em>buys</em> the mango.</p></div>'+
+    '<button onclick="earnWord(\'buy\');next()">New word: buy</button>'),
+  ()=>show('<div class="kicker">Lesson 1</div>'+
+    '<div class="card"><p>And the other side of the SAME moment:</p>'+
+    '<p><strong>The thing-giver is SELLING.</strong> Thing out, money in.</p>'+
+    '<p>The trader gives the mango, gets 75¢ → the trader <em>sells</em> the mango.</p>'+
+    '<p>Here\'s the secret: buying and selling aren\'t two events. They\'re <strong>one trade seen from two sides</strong> — like a handshake needs two hands.</p></div>'+
+    '<button onclick="earnWord(\'sell\');next()">New word: sell</button>'),
+  ()=>renderMC("q81a", next),
+  ()=>renderMC("q81b", next),
+];
+
+/* =====================================================================
+   LESSON 2 — Which Side Are You On? (game)
+===================================================================== */
+const SIDE_ROUNDS=[
+  {big:"🧑🏽‍🦱💵→🥭", txt:"Kai gives 75¢ and gets a mango. What is KAI doing?", ans:"buy",
+   fb:{buy:"Right — money left Kai's hand, mango arrived. Kai is buying.",
+       sell:"Look at what left Kai's hand: MONEY. Money-out means buying.",
+       neither:"There IS money in this trade (the 75¢) — so someone's buying. Who gave it?"}},
+  {big:"🧕🪵→💵", txt:"Rana gives firewood and gets $2. What is RANA doing?", ans:"sell",
+   fb:{buy:"Rana's money didn't leave — it ARRIVED. Thing-out, money-in is selling.",
+       sell:"Right — the firewood left, money came in. Rana is selling.",
+       neither:"Money is in this trade (the $2) — so someone's selling. Who gave the thing?"}},
+  {big:"🐟↔️🥥", txt:"Kai swaps a fish for a coconut. No money at all. What is KAI doing?", ans:"neither",
+   fb:{buy:"Check for money… there isn\'t any! Thing-for-thing is barter — the old way, before shells.",
+       sell:"No money arrived in anyone\'s hand. Thing-for-thing is barter, not selling.",
+       neither:"Exactly! No money = no buying, no selling. This is BARTER — Module 2\'s old friend."}},
+  {big:"🍲→💵", txt:"The pot maker hands over a pot and takes $3. What is the POT MAKER doing?", ans:"sell",
+   fb:{buy:"The pot maker RECEIVED money. Receiving money for a thing = selling.",
+       sell:"Right — pot out, $3 in. Selling.",
+       neither:"There\'s $3 in this trade — so it\'s a buy-and-sell moment. Which side gave the thing?"}},
+  {big:"💵→🍌🍌", txt:"You hand $1 and take two bananas. What are YOU doing?", ans:"buy",
+   fb:{buy:"Right — your money went out, bananas came in. You bought them.",
+       sell:"Your bananas didn\'t exist until the trade — you GAVE money. Money-out = buying.",
+       neither:"Your $1 is money — so this is a real buy. Money-out means you\'re the buyer."}}
+];
+const L2=[
+  ()=>show('<div class="kicker">Lesson 2 · Which side are you on?</div>'+
+    '<div class="recap"><strong>So far:</strong> Buy = money out, thing in. Sell = thing out, money in. One trade, two sides.</div>'+
+    '<div class="card"><p>Five trades from around the island. For each one, say what the named person is doing: <strong>BUYING</strong>, <strong>SELLING</strong>, or <strong>NEITHER</strong>.</p>'+
+    '<p class="muted">Watch out — one of these is a trick from the old days…</p></div>'+
+    '<button onclick="next()">First trade</button>'),
+  ()=>{
+    let round=0;
+    function draw(){
+      const r=SIDE_ROUNDS[round];
+      show('<div class="kicker">Which side? · '+(round+1)+' of '+SIDE_ROUNDS.length+'</div>'+
+        '<div class="trade-card"><div class="big">'+r.big+'</div><div class="txt">'+r.txt+'</div></div>'+
+        '<div class="pick3">'+
+          '<button onclick="window._p(\'buy\')">BUYING</button>'+
+          '<button onclick="window._p(\'sell\')">SELLING</button>'+
+          '<button onclick="window._p(\'neither\')">NEITHER</button>'+
+        '</div><div id="fb"></div><div id="cont"></div>');
+      window._p=(pick)=>{
+        const ok = pick===r.ans;
+        if(ok) addXP(2);
+        document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+r.fb[pick]+'</div>';
+        if(ok){
+          document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(round<SIDE_ROUNDS.length-1?"Next trade":"Done")+'</button>';
+          window._n=()=>{ round++; if(round<SIDE_ROUNDS.length) draw(); else { addXP(3); next(); } };
+        }
+      };
+    }
+    draw();
+  },
+  ()=>renderMC("q82a", next),
+  ()=>renderTF("q82b", next),
+];
+
+/* =====================================================================
+   LESSON 3 — Pay Up
+===================================================================== */
+const L3=[
+  ()=>show('<div class="kicker">Lesson 3 · Pay up</div>'+
+    '<div class="recap"><strong>So far:</strong> Kai knows both sides of every trade.</div>'+
+    '<div class="scene">💵🤲<div class="cap">One more mainland word: the giving-money part has its own name.</div></div>'+
+    '<button onclick="next()">What is it?</button>'),
+  ()=>show('<div class="kicker">Lesson 3</div>'+
+    '<div class="card"><p>Handing over the money when you buy is called <strong>paying</strong>. You <em>pay the price</em>.</p>'+
+    '<p>Two ways to pay, both fine:</p>'+
+    '<p><strong>Exact:</strong> price is 75¢, you hand 75¢. Equal trade, no change — done.</p>'+
+    '<p><strong>Over:</strong> price is 75¢, you hand $1. The seller counts up — "75… 85, 95, 100" — and hands back 25¢ change.</p>'+
+    '<p>Everything from Modules 4–7 just clicked into one moment: compare, pay, get change.</p></div>'+
+    '<button onclick="earnWord(\'pay\');next()">New word: pay</button>'),
+  ()=>renderMC("q83c", next),
+  ()=>renderMC("q83a", next),
+];
+
+/* =====================================================================
+   LESSON 4 — Mastery
+===================================================================== */
+let mastery = {qs:[], idx:0, score:0};
+const L4=[
+  ()=>{
+    const pool=["q81a","q81b","q82a","q82b","q83a","q83c"].sort(()=>Math.random()-.5).slice(0,4);
+    mastery={qs:[...pool,"q83b"].sort(()=>Math.random()-.5), idx:0, score:0};
+    show('<div class="kicker">Lesson 4 · Show what you know</div>'+
+      '<div class="recap"><strong>Module 8 quest:</strong> You learned both sides of the trade — and the word for handing over the money.</div>'+
+      '<h1 class="display">Five questions.</h1>'+
+      '<p>Get 4 of 5 right and Module 8 is yours.</p>'+
+      '<button onclick="next()">Start</button>');
+  },
+  ()=>{ masteryQ(); },
+  ()=>{ finishMastery(mastery.score>=4); },
+];
+function masteryQ(){
+  if(mastery.idx>=mastery.qs.length){ next(); return; }
+  const qid=mastery.qs[mastery.idx];
+  const q=QUESTIONS[qid];
+  const cont=()=>{ mastery.idx++; masteryQ(); };
+  if(q.type==="tf"){ renderTFM(qid,cont); } else { renderMCM(qid,cont); }
+}
+function renderMCM(qid,onDone){
+  const q=QUESTIONS[qid];
+  let html='<div class="kicker">Mastery · '+(mastery.idx+1)+' of '+mastery.qs.length+'</div><h2 class="display">'+q.prompt+'</h2>';
+  q.opts.forEach((o,i)=>html+='<button class="opt" data-i="'+i+'">'+o.t+'</button>');
+  html+='<div id="fb"></div><div id="cont"></div>'; show(html);
+  let answered=false;
+  document.querySelectorAll(".opt").forEach(btn=>{
+    btn.onclick=()=>{
+      if(answered) return; answered=true;
+      const o=q.opts[+btn.dataset.i];
+      btn.classList.add(o.ok?"right":"wrong");
+      if(o.ok) mastery.score++;
+      document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
+      document.getElementById("fb").innerHTML='<div class="feedback '+(o.ok?'good':'bad')+'">'+o.fb+'</div>';
+      document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>'; window._c=()=>onDone;
+    };
+  });
+}
+function renderTFM(qid,onDone){
+  const q=QUESTIONS[qid];
+  show('<div class="kicker">Mastery · '+(mastery.idx+1)+' of '+mastery.qs.length+'</div><h2 class="display">'+q.prompt+'</h2>'+
+    '<div class="btn-row"><button class="opt" id="tT">True</button><button class="opt" id="tF">False</button></div>'+
+    '<div id="fb"></div><div id="cont"></div>');
+  let answered=false;
+  function pick(v,el){
+    if(answered)return; answered=true;
+    const ok=(v===q.answer); if(ok)mastery.score++;
+    el.classList.add(ok?"right":"wrong");
+    document.getElementById("tT").disabled=true;document.getElementById("tF").disabled=true;
+    document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?q.good:q.bad)+'</div>';
+    document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>'; window._c=()=>onDone;
+  }
+  document.getElementById("tT").onclick=e=>pick(true,e.target);
+  document.getElementById("tF").onclick=e=>pick(false,e.target);
+}
+function finishMastery(pass){
+  if(pass && !S.masteryPassed){ S.masteryPassed=true; addXP(20); }
+  saveState();
+  if(pass){
+    show('<div class="night"><div class="lantern">🏮</div>'+
+      '<h1 class="display" style="color:#fff">Module 8 complete</h1>'+
+      '<p style="color:#cfe0ee">Quiz: '+mastery.score+'/5 ✓</p></div>'+
+      '<div class="card"><p><strong>You now own:</strong> buy, sell, and pay — the whole trade moment, named from every side.</p>'+
+      '<p>But wait. Kai keeps paying money OUT. Mangoes, drums, kites… <em>where does new money come IN?</em> The pocket can\'t refill itself…</p>'+
+      '<p class="muted">That\'s Module 9: Earning Money. (Coming soon.)</p></div>'+
+      '<button style="margin-bottom:10px" onclick="window.location.href=\'index.html\'">🗺️ Back to all modules</button>'+
+      '<button class="btn-ghost" onclick="goHome()">Stay in Module 8</button>');
+    S.done[3]=true; saveState();
+  } else {
+    show('<div class="kicker">Almost there</div>'+
+      '<h1 class="display">One more try</h1>'+
+      '<p>You got '+mastery.score+' of 5. The keys: buy = money out, sell = thing out, and both need MONEY on one side — otherwise it\'s barter.</p>'+
+      '<button onclick="S.step=0;render()">Try again</button>'+
+      '<button class="btn-ghost" style="margin-top:10px" onclick="toggleTutor(true)">Talk with the tutor</button>'+
+      '<button class="btn-ghost" style="margin-top:10px" onclick="goHome()">Back home</button>');
+  }
+}
+
+const LESSONS=[
+  {title:"One Moment, Two Names", sub:"Buy and sell are the same trade", steps:L1, emoji:"🤝"},
+  {title:"Which Side Are You On?", sub:"Five trades — spot the buyer, seller, or neither", steps:L2, emoji:"🔄"},
+  {title:"Pay Up", sub:"Exact or over — both work", steps:L3, emoji:"💵"},
+  {title:"Show What You Know", sub:"Mastery check", steps:L4, emoji:"🏮"},
+];
+
+/* =====================================================================
+   HOME
+===================================================================== */
+function goHome(){
+  dots(4, S.done.filter(Boolean).length-1);
+  let html='<div class="kicker">Module 8</div><h1 class="display">Buying & Selling</h1>'+
+    '<p class="muted">Four short lessons. The trade moment, named from every side.</p>';
+  LESSONS.forEach((l,i)=>{
+    const locked = i>0 && !S.done[i-1];
+    const done = S.done[i];
+    html+='<button class="opt" '+(locked?'disabled':'')+' onclick="startLesson('+i+')">'+
+      '<span class="em">'+(done?'✅':locked?'🔒':l.emoji)+'</span><strong>'+l.title+'</strong><br>'+
+      '<span class="muted" style="font-weight:400">'+l.sub+'</span></button>';
+  });
+  if(S.masteryPassed) html+='<div class="night" style="margin-top:8px"><div class="lantern">🏮</div><p style="color:#cfe0ee">Module 8 mastered · '+S.xp+' XP</p></div>';
+  html+='<button class="btn-ghost" style="margin-top:14px" onclick="window.location.href=\'index.html\'">🗺️ Back to all modules</button>';
+  show(html);
+}
+function startLesson(i){ S.lesson=i; S.step=0; saveState(); render(); }
+
+/* =====================================================================
+   TUTOR
+===================================================================== */
+let tHist=[];
+function toggleTutor(on){
+  document.getElementById("tutorPanel").classList.toggle("on",on);
+  document.getElementById("tutorOverlay").classList.toggle("on",on);
+  saveState();
+  if(on&&tHist.length===0) tMsg("a","Hi! Ask me anything about buying, selling, or paying — or tap a button below.");
+}
+document.getElementById("tutorBtn").onclick=()=>toggleTutor(true);
+function tMsg(who,txt){ const d=document.createElement("div"); d.className="msg "+who; d.textContent=txt; document.getElementById("tlog").appendChild(d); d.scrollIntoView({behavior:"smooth"}); }
+function quickAsk(t){ document.getElementById("tin").value=t; sendTutor(); }
+async function sendTutor(){
+  const inp=document.getElementById("tin"); const txt=inp.value.trim(); if(!txt) return;
+  inp.value=""; tMsg("u",txt); tHist.push({role:"user",content:txt});
+  const think=document.createElement("div"); think.className="msg a"; think.innerHTML='<span class="spin" style="border-color:var(--ink);border-top-color:transparent"></span>';
+  document.getElementById("tlog").appendChild(think);
+  const sys="You are the tutor inside Module 8 (Buying & Selling) of a financial-literacy app. The learner may be a child or an adult. "+
+    "They know from earlier modules: money, worth, agree, barter, trade, matching problem, dollar, cent, coins, 100 cents = 1 dollar, reading $X.YY, compare, equal, price, cost, add, total, subtract, change, count-up method. From this module: buy (give money, get thing), sell (give thing, get money), pay (the giving-money part), and the key ideas that every buy has a sell inside it (one trade, two sides) and that thing-for-thing with NO money is barter, not buying. "+
+    "STRICT RULES: never use these words (later modules): earn, income, wage, salary, job, work for money, spend, save, savings, bank, borrow, lend, credit, invest, budget, profit, multiply, divide. "+
+    "Story context: the mainland trader taught Kai the words buy/sell/pay; Kai realized the fish-for-coconut swap was barter because no money was involved. "+
+    "Never repeat a failed explanation — switch analogies (trading cards for allowance money, lemonade stands, school book fairs). Keep answers under 80 words, warm, honest, never mark wrong ideas right. If asked 'Quiz me', ask ONE simple buy/sell/neither scenario and wait.";
+  try{
+    const controller=new AbortController(); const timeout=setTimeout(()=>controller.abort(),8000);
+    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:300,system:sys,messages:tHist.slice(-10)}),signal:controller.signal});
+    clearTimeout(timeout);
+    const data=await r.json();
+    const out=(data.content||[]).filter(c=>c.type==="text").map(c=>c.text).join("").trim() || "I lost my thread. Ask again?";
+    think.remove(); tMsg("a",out); tHist.push({role:"assistant",content:out});
+  }catch(e){
+    think.remove(); tMsg("a","I can't think right now. Try again in a moment — or tap the word cards up top to review.");
+  }
+}
+
+/* ---------- boot ---------- */
+(async function(){
+  await loadState();
+  document.getElementById("xpBox").textContent=S.xp+" XP";
+  renderShelf();
+  goHome();
+})();
+</script>
+</body>
+</html>
