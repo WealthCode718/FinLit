@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why Do We Need Money? — Module 2</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap');
+  :root{
+    --ink:#123a3f; --ink-soft:#3d6166; --lagoon:#ecf5f2; --card:#ffffff;
+    --sand:#f3ead8; --sand-deep:#e5d7bc; --shell:#c96f4a; --shell-soft:#f4e0d6;
+    --night:#0e1b2c; --gold:#e8b84b; --good:#2e7d5b; --bad:#a94436;
+    --radius:14px; --shadow:0 2px 10px rgba(18,58,63,.08);
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html,body{height:100%}
+  body{
+    font-family:"Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif;
+    background:var(--lagoon); color:var(--ink); font-size:17px; line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .display{font-family:"Fraunces",Georgia,serif; font-weight:700; letter-spacing:-.01em}
+
+  #app{max-width:560px; margin:0 auto; min-height:100dvh; display:flex; flex-direction:column}
+  header{
+    position:sticky; top:0; z-index:20; background:var(--lagoon);
+    padding:12px 16px 8px; border-bottom:1px solid #d9e6e1;
+  }
+  .hrow{display:flex; align-items:center; justify-content:space-between; gap:10px}
+  .xp{font-weight:700; font-size:14px; background:var(--ink); color:#fff; border-radius:999px; padding:4px 12px; white-space:nowrap}
+  .dots{display:flex; gap:6px}
+  .dot{width:9px; height:9px; border-radius:50%; background:#cfe0da; transition:background .3s}
+  .dot.on{background:var(--shell)}
+  .shelf{display:flex; gap:8px; margin-top:8px; min-height:30px; flex-wrap:wrap}
+  .shelf-label{font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-soft); align-self:center}
+  .word-chip{
+    font-size:13px; font-weight:600; background:var(--sand); border:1.5px solid var(--sand-deep);
+    border-radius:8px; padding:3px 10px; cursor:pointer; color:var(--ink);
+  }
+  .word-chip:focus-visible{outline:3px solid var(--shell)}
+
+  main{flex:1; padding:20px 16px 110px}
+  .screen{display:none; animation:fade .35s ease}
+  .screen.on{display:block}
+  @keyframes fade{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+  @media (prefers-reduced-motion: reduce){ *{animation:none!important; transition:none!important} }
+
+  h1{font-size:30px; line-height:1.15; margin-bottom:6px}
+  h2{font-size:22px; line-height:1.2; margin-bottom:10px}
+  .kicker{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--shell); font-weight:700; margin-bottom:8px}
+  p{margin-bottom:12px}
+  .muted{color:var(--ink-soft); font-size:15px}
+
+  .card{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px; margin-bottom:14px}
+  .scene{
+    background:linear-gradient(180deg,#bfe0d6 0%, #e9dfc6 78%, #dcc9a2 100%);
+    border-radius:var(--radius); padding:26px 20px; text-align:center; margin-bottom:16px;
+    font-size:44px; line-height:1.2; box-shadow:var(--shadow);
+  }
+  .scene .cap{font-size:15px; color:var(--ink); margin-top:8px; font-family:inherit}
+
+  button{
+    font:inherit; cursor:pointer; border:none; border-radius:12px; padding:13px 18px;
+    background:var(--ink); color:#fff; font-weight:700; width:100%;
+  }
+  button:focus-visible{outline:3px solid var(--shell); outline-offset:2px}
+  button:disabled{opacity:.45; cursor:default}
+  .btn-ghost{background:transparent; color:var(--ink); border:2px solid var(--ink)}
+  .opt{
+    display:block; width:100%; text-align:left; background:#fff; color:var(--ink);
+    border:2px solid #d9e2de; font-weight:600; margin-bottom:10px; border-radius:12px; padding:14px 16px;
+  }
+  .opt .em{font-size:26px; margin-right:10px; vertical-align:-3px}
+  .opt.sel{border-color:var(--ink)}
+  .opt.right{border-color:var(--good); background:#eef7f2}
+  .opt.wrong{border-color:var(--bad); background:#faf0ee}
+  .feedback{border-left:4px solid var(--ink); background:var(--sand); border-radius:0 10px 10px 0; padding:12px 14px; margin:10px 0 14px; font-size:15px}
+  .feedback.good{border-color:var(--good)}
+  .feedback.bad{border-color:var(--bad)}
+
+  .npc{
+    background:#fff; border-radius:12px; padding:14px; margin-bottom:12px; box-shadow:var(--shadow);
+  }
+  .npc-head{display:flex; align-items:center; gap:10px; margin-bottom:8px}
+  .npc-face{font-size:32px}
+  .npc-name{font-weight:700; font-size:15px}
+  .npc-has{font-size:13px; color:var(--ink-soft); margin:4px 0}
+  .npc-wants{font-size:13px; color:var(--shell); font-weight:600}
+  .npc button{font-size:13px; padding:8px 12px; margin-top:8px}
+
+  .modal-bg{position:fixed; inset:0; background:rgba(14,27,44,.55); display:none; z-index:40; align-items:center; justify-content:center; padding:24px}
+  .modal-bg.on{display:flex}
+  .word-card{
+    background:var(--sand); border-radius:18px; padding:28px 24px; max-width:380px; width:100%;
+    text-align:center; border:3px solid var(--sand-deep); animation:flip .5s ease;
+  }
+  @keyframes flip{from{transform:rotateY(80deg); opacity:0} to{transform:none; opacity:1}}
+  .word-card .w{font-size:34px; margin-bottom:8px}
+  .word-card .d{font-size:17px; color:var(--ink)}
+
+  #tutorBtn{
+    position:fixed; right:16px; bottom:16px; width:auto; z-index:30; border-radius:999px;
+    padding:13px 18px; background:var(--shell); box-shadow:0 4px 14px rgba(201,111,74,.4); font-size:15px;
+  }
+  .modal-overlay{position:fixed; inset:0; background:rgba(14,27,44,.65); z-index:49; display:none}
+  .modal-overlay.on{display:block}
+  #tutorPanel{
+    position:fixed; inset:auto 0 0 0; max-width:560px; margin:0 auto; height:78dvh; background:#fff;
+    border-radius:18px 18px 0 0; box-shadow:0 -6px 30px rgba(14,27,44,.25); z-index:50; display:none;
+    flex-direction:column;
+  }
+  #tutorPanel.on{display:flex}
+  .tp-head{display:flex; justify-content:space-between; align-items:center; padding:14px 16px; border-bottom:1px solid #eee}
+  .tp-head button{width:auto; padding:10px 16px; font-size:15px; background:var(--shell); color:#fff; font-weight:700; border-radius:8px}
+  #tlog{flex:1; overflow-y:auto; padding:14px 16px; display:flex; flex-direction:column; gap:10px}
+  .msg{max-width:86%; padding:10px 14px; border-radius:14px; font-size:15px}
+  .msg.u{align-self:flex-end; background:var(--ink); color:#fff; border-bottom-right-radius:4px}
+  .msg.a{align-self:flex-start; background:var(--sand); border-bottom-left-radius:4px}
+  .tp-quick{display:flex; gap:8px; padding:0 16px 8px; flex-wrap:wrap}
+  .tp-quick button{width:auto; font-size:13px; padding:7px 12px; background:#fff; color:var(--ink); border:1.5px solid var(--ink); border-radius:999px}
+  .tp-in{display:flex; gap:8px; padding:10px 16px 18px; border-top:1px solid #eee}
+  .tp-in input{flex:1; font:inherit; padding:12px 14px; border:2px solid #d9e2de; border-radius:12px}
+  .tp-in button{width:auto; padding:12px 16px}
+
+  textarea{width:100%; font:inherit; padding:13px 14px; border:2px solid #d9e2de; border-radius:12px; min-height:110px; margin-bottom:10px}
+  .night{
+    background:linear-gradient(180deg,#0e1b2c 0%, #1b3247 100%); color:#fff; border-radius:var(--radius);
+    padding:34px 22px; text-align:center; margin-bottom:16px;
+  }
+  .lantern{font-size:56px; animation:glow 2.2s ease infinite alternate}
+  @keyframes glow{from{filter:drop-shadow(0 0 4px var(--gold))} to{filter:drop-shadow(0 0 22px var(--gold))}}
+  .spin{display:inline-block; width:16px; height:16px; border:3px solid #fff; border-top-color:transparent; border-radius:50%; animation:sp 1s linear infinite; vertical-align:-3px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="hrow">
+      <div class="dots" id="dots"></div>
+      <div class="xp" id="xpBox">0 XP</div>
+    </div>
+    <div class="shelf" id="shelf"><span class="shelf-label">Words you own:</span></div>
+  </header>
+  <main id="main"></main>
+</div>
+
+<button id="tutorBtn" aria-label="Ask the tutor">Ask the tutor 💬</button>
+
+<div class="modal-overlay" id="tutorOverlay" onclick="if(event.target===this)toggleTutor(false)"></div>
+
+<div id="tutorPanel" role="dialog" aria-label="Tutor chat">
+  <div class="tp-head"><strong class="display">Tutor</strong><button onclick="toggleTutor(false)">✕ Close</button></div>
+  <div id="tlog"></div>
+  <div class="tp-quick">
+    <button onclick="quickAsk('Explain it differently')">Explain differently</button>
+    <button onclick="quickAsk('Make it easier')">Make it easier</button>
+    <button onclick="quickAsk('Give me an example')">Give example</button>
+    <button onclick="quickAsk('Quiz me')">Quiz me</button>
+  </div>
+  <div class="tp-in">
+    <input id="tin" placeholder="Ask about barter or money…" onkeydown="if(event.key==='Enter')sendTutor()">
+    <button onclick="sendTutor()">Send</button>
+  </div>
+</div>
+
+<div class="modal-bg" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="word-card" id="wordCard"></div>
+</div>
+
+<script>
+/* =====================================================================
+   CONTENT — Module 2: Why Do We Need Money?
+===================================================================== */
+const VOCAB = {
+  barter:{term:"barter", def:"Trading one thing for another without using money."},
+  trade:{term:"trade", def:"A formal exchange where both people give something and get something."},
+  matching:{term:"matching problem", def:"When you want what someone has, but they don't want what you have — the trade can't happen."}
+};
+
+const QUESTIONS = {
+  "q21a":{type:"mc", prompt:"Why couldn't Kai trade fish directly for a blanket? (Remember Lesson 1.)", concept:"matching", opts:[
+    {t:"Fish are less valuable than blankets", ok:false, fb:"Not quite. Value matters, but the real problem is simpler."},
+    {t:"The blanket maker didn't want fish", ok:true, fb:"Exactly. Kai had something, but the blanket maker didn't want it. That's the matching problem."},
+    {t:"There weren't enough fish on the island", ok:false, fb:"Plenty of fish exist. The problem was who wanted them."}]},
+  "q22a":{type:"mc", prompt:"In the barter market, why do some people get stuck unable to trade?", concept:"matching", opts:[
+    {t:"There's not enough stuff on the island", ok:false, fb:"Plenty of goods exist. The problem is connecting who has what with who wants it."},
+    {t:"People are greedy", ok:false, fb:"It's not about greed. It's a puzzle: you want X, person A has it but wants Y, but nobody has Y… until person Z has it but wants Z."},
+    {t:"The person who has what you want doesn't want what you have", ok:true, fb:"Yes. That's the matching problem. Money fixes it because everyone wants money — so the chain breaks."}]},
+  "q22b":{type:"tf", prompt:"True or false: if the island had 100 different people and 100 different things, barter would work perfectly.", answer:false, concept:"matching",
+    good:"Right. Even with infinite variety, the matching problem never disappears. Someone will always be stuck.",
+    bad:"Think it through: person A wants X from person B, but B wants Y, which only person C has, and C wants Z, which person A doesn't have. The chain is broken. Adding more people makes it *worse*, not better."},
+  "q23a":{type:"mc", prompt:"What made money solve the barter problem?", concept:"barter", opts:[
+    {t:"Money is worth more than anything else", ok:false, fb:"Money's value isn't higher — it's different. Money works because *everyone* agrees to take it."},
+    {t:"Everyone will take money, so you can always find someone to trade with", ok:true, fb:"That's it. Money breaks the matching chain. You don't need the blanket maker to want fish — you need her to want money."},
+    {t:"Money makes things cost less", ok:false, fb:"Money doesn't change costs. It just makes trading easier because everyone accepts it."}]},
+  "q23b":{type:"tf", transfer:true, prompt:"True or false: a village with 10 fishermen but no money would have the same problem as barter — nobody would want each other's fish.", answer:true, concept:"matching",
+    good:"Exactly. Even with lots of the same thing, direct barter breaks down. Money solves it by letting people trade their abundance for something others want.",
+    bad:"Think: if everyone is a fisherman, who wants fish? Nobody wants what anyone else has. Money lets you trade your fish for *anything* the village values."}
+};
+
+/* =====================================================================
+   STATE + PERSISTENCE
+===================================================================== */
+let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false,false], masteryPassed:false };
+let storageOK = true;
+
+async function loadState(){
+  try{ 
+    const r = await window.storage.get("mod2-state"); 
+    if(r && r.value){ S = Object.assign(S, JSON.parse(r.value)); return; }
+  } catch(e){ }
+  // Fallback: try localStorage
+  try{
+    const saved = localStorage.getItem("mod2-state");
+    if(saved){ S = Object.assign(S, JSON.parse(saved)); }
+    // Also try to load M1 XP/shelf if available
+    const m1saved = localStorage.getItem("mod1-state");
+    if(m1saved){
+      const m1 = JSON.parse(m1saved);
+      if(!S.xp || S.xp < m1.xp) S.xp = m1.xp;
+      if(!S.shelf || S.shelf.length === 0) S.shelf = m1.shelf || [];
+    }
+  } catch(e){ }
+}
+async function saveState(){
+  try{ await window.storage.set("mod2-state", JSON.stringify(S)); }catch(e){
+    try{ localStorage.setItem("mod2-state", JSON.stringify(S)); }catch(e2){}
+  }
+}
+function addXP(n){ S.xp+=n; document.getElementById("xpBox").textContent = S.xp+" XP"; saveState(); }
+function earnWord(k){
+  if(S.shelf.includes(k)) return;
+  S.shelf.push(k); renderShelf(); saveState();
+  showWordCard(k);
+}
+function renderShelf(){
+  const el=document.getElementById("shelf");
+  el.innerHTML='<span class="shelf-label">Words you own:</span>';
+  S.shelf.forEach(k=>{
+    if(!VOCAB[k]) return; // guard: skip words from other modules
+    const b=document.createElement("button"); b.className="word-chip"; b.textContent=VOCAB[k].term;
+    b.onclick=()=>showWordCard(k); el.appendChild(b);
+  });
+}
+function showWordCard(k){
+  const v=VOCAB[k]; if(!v) return;
+  document.getElementById("wordCard").innerHTML =
+    '<div class="w display">'+v.term+'</div><div class="d">'+v.def+'</div>' +
+    '<button style="margin-top:18px" onclick="closeModal()">Got it</button>';
+  document.getElementById("modal").classList.add("on");
+}
+function closeModal(){ document.getElementById("modal").classList.remove("on"); }
+
+/* =====================================================================
+   SCREEN ENGINE
+===================================================================== */
+const M = document.getElementById("main");
+function show(html){ M.innerHTML='<div class="screen on">'+html+'</div>'; window.scrollTo(0,0); }
+function revealFB(){ setTimeout(function(){
+  var ids=["cont","c2","fb","fb2"];
+  for(var i=0;i<ids.length;i++){
+    var el=document.getElementById(ids[i]);
+    if(el && el.innerHTML && el.innerHTML.trim()){
+      if(el.scrollIntoView) el.scrollIntoView({behavior:"smooth", block:"nearest"});
+      return;
+    }
+  }
+},80); }
+function dots(n,i){
+  const d=document.getElementById("dots"); d.innerHTML="";
+  for(let k=0;k<n;k++){const s=document.createElement("span");s.className="dot"+(k<=i?" on":"");d.appendChild(s);}
+}
+function next(){ S.step++; saveState(); render(); }
+function render(){
+  const les=LESSONS[S.lesson];
+  dots(les.steps.length, S.step);
+  if(S.step>=les.steps.length){ lessonComplete(); return; }
+  les.steps[S.step]();
+}
+function lessonComplete(){
+  if(!S.done[S.lesson]){ S.done[S.lesson]=true; addXP(10); }
+  saveState();
+  goHome();
+}
+
+function renderMC(qid, onDone){
+  const q=QUESTIONS[qid];
+  let html='<div class="kicker">Question</div><h2 class="display">'+q.prompt+'</h2><div id="opts">';
+  q.opts.forEach((o,i)=>{ html+='<button class="opt" data-i="'+i+'">'+o.t+'</button>'; });
+  html+='</div><div id="fb"></div><div id="cont"></div>';
+  show(html);
+  let answered=false, firstShot=!(qid in S.firstTry);
+  document.querySelectorAll(".opt").forEach(btn=>{
+    btn.onclick=()=>{
+      const i=+btn.dataset.i, o=q.opts[i];
+      if(answered && o.ok===false) return;
+      btn.classList.add(o.ok?"right":"wrong");
+      document.getElementById("fb").innerHTML='<div class="feedback '+(o.ok?'good':'bad')+'">'+o.fb+'</div>';
+      revealFB();
+      if(o.ok){
+        if(firstShot && !answered){ S.firstTry[qid]=true; addXP(2); }
+        answered=true;
+        document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
+        document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>';
+        revealFB();
+        window._c=()=>onDone;
+      } else { answered=true; S.firstTry[qid]=false; }
+      saveState();
+    };
+  });
+}
+function renderTF(qid,onDone){
+  const q=QUESTIONS[qid];
+  const html='<div class="kicker">True or false</div><h2 class="display">'+q.prompt+'</h2>'+
+    '<div class="btn-row"><button class="opt" id="tT">True</button><button class="opt" id="tF">False</button></div>'+
+    '<div id="fb"></div><div id="cont"></div>';
+  show(html);
+  let firstShot=!(qid in S.firstTry), answered=false;
+  function pick(val,el){
+    const ok = (val===q.answer);
+    el.classList.add(ok?"right":"wrong");
+    document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?q.good:q.bad)+'</div>';
+    revealFB();
+    if(ok){
+      if(firstShot && !answered){S.firstTry[qid]=true; addXP(2);}
+      document.getElementById("tT").disabled=true; document.getElementById("tF").disabled=true;
+      document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>'; window._c=()=>onDone;
+      revealFB();
+    } else { S.firstTry[qid]=false; }
+    answered=true; saveState();
+  }
+  document.getElementById("tT").onclick=e=>pick(true,e.target);
+  document.getElementById("tF").onclick=e=>pick(false,e.target);
+}
+
+/* =====================================================================
+   LESSON 1 — The Double Coincidence Problem
+===================================================================== */
+const L1=[
+  ()=>show('<div class="kicker">Lesson 1 · The problem with barter</div>'+
+    '<div class="card" style="background:#f0ebe1; border-left:4px solid var(--shell)"><p style="font-size:14px; margin:0"><strong>Remember Kai?</strong> From Module 1. He\'s back on the island, and we\'re about to find out WHY he needed money in the first place.</p></div>'+
+    '<div class="scene">🐟🔄?<div class="cap">You have fish. You want a blanket.</div></div>'+
+    '<h1 class="display">But the blanket maker wants firewood, not fish.</h1>'+
+    '<p>So you can\'t trade directly.</p><button onclick="next()">Tell me why this is a problem</button>'),
+  ()=>show('<div class="kicker">Lesson 1</div>'+
+    '<div class="card"><p>Kai isn\'t alone. On the island, there are 20 people. Kai has fish. The blanket maker wants firewood. The firewood collector wants a pot. The pot maker wants rope. Nobody has rope.</p>'+
+    '<p>In a world without money, this is <strong>the matching problem.</strong></p>'+
+    '<p>You want what person A has, but person A doesn\'t want what you have. Person B has what they want, but doesn\'t want your fish.</p>'+
+    '<p>The chain of "I want this, they want that, they want something else" breaks.</p></div>'+
+    '<div class="feedback"><strong>Barter</strong> is trading one thing for another without using money.</div>'+
+    '<button onclick="earnWord(\'barter\');next()">New word: barter</button>'),
+  ()=>renderMC("q21a", next),
+  ()=>renderTF("q22b", next),
+];
+
+/* =====================================================================
+   LESSON 2 — Barter Simulation
+===================================================================== */
+const NPCS=[
+  {face:"🧑🏽‍🌾",name:"Farmer",has:"🥕 Carrots",wants:"🐟 Fish",traded:false},
+  {face:"🧑🏾‍🎣",name:"Fisher",has:"🐟 Fish",wants:"🪵 Firewood",traded:false},
+  {face:"🧑🏻‍🔧",name:"Carpenter",has:"🪵 Firewood",wants:"🧀 Cheese",traded:false},
+  {face:"🧑🏽‍🌾",name:"Cheesemaker",has:"🧀 Cheese",wants:"🧵 Yarn",traded:false},
+  {face:"🧑🏾‍🎨",name:"Weaver",has:"🧵 Yarn",wants:"🥕 Carrots",traded:false},
+];
+const L2=[
+  ()=>show('<div class="kicker">Lesson 2 · The barter market</div>'+
+    '<div class="scene">🏪🔄🏪🔄🏪<div class="cap">Five people, five things. Someone has what you want.</div></div>'+
+    '<p>You\'re the Farmer. You have carrots. You want yarn.</p>'+
+    '<p class="muted">Try to trade. Tap each person to see what they have and what they want.</p>'+
+    '<div id="npcs"></div><div id="stuck"></div><div id="cont"></div>'),
+  ()=>{
+    const html='<div class="kicker">Lesson 2 · What just happened?</div>'+
+      '<div class="card"><p>You had carrots. The Weaver has yarn (what you want). But the Weaver wants carrots FROM THE FARMER IN POSITION 5.</p>'+
+      '<p>Wait — YOU are the farmer. But you also need yarn. So the Weaver wants YOUR carrots — only if you already have the yarn. It\'s circular.</p>'+
+      '<p>The chain is: Farmer→Weaver→Yarn, but Weaver only takes carrots which Farmer already has but the Farmer (you) doesn\'t want to give away until they get yarn.</p>'+
+      '<p>This is the matching problem in action.</p></div>'+
+      '<button onclick="earnWord(\'matching\');next()">I get it. Move on</button>';
+    show(html);
+  },
+];
+L2[0]=()=>{
+  show('<div class="kicker">Lesson 2 · The barter market</div>'+
+    '<div class="scene">🏪🔄🏪🔄🏪<div class="cap">Five people, five goods. Can you get what you want?</div></div>'+
+    '<p>You\'re the Farmer with carrots. You want yarn from the Weaver.</p>'+
+    '<p class="muted">But the Weaver wants carrots from a different source. You\'re stuck.</p>'+
+    '<div id="npcs"></div><div id="stuck"></div><div id="cont"></div>');
+  let made=0;
+  const npDiv=document.getElementById("npcs");
+  NPCS.forEach((npc,i)=>{
+    const d=document.createElement("div"); d.className="npc";
+    d.innerHTML='<div class="npc-head"><div class="npc-face">'+npc.face+'</div><div>'+
+      '<div class="npc-name">'+npc.name+'</div>'+
+      '<div class="npc-has">Has: '+npc.has+'</div>'+
+      '<div class="npc-wants">Wants: '+npc.wants+'</div></div></div>';
+    const btn=document.createElement("button"); btn.textContent="Trade?";
+    btn.onclick=()=>{
+      if(i===4){ // Weaver wants carrots but you are the farmer
+        document.getElementById("stuck").innerHTML='<div class="feedback bad">'+
+          'The Weaver wants carrots — the same thing YOU have. You need the yarn, but you can\'t give up your only carrots. You\'re stuck.</div>';
+        document.getElementById("cont").innerHTML='<button onclick="next()">The cycle is broken</button>';
+        revealFB();
+      } else if(npc.has==="🧀 Cheese"){ // Cheesemaker wants yarn, not carrots
+        document.getElementById("stuck").innerHTML='<div class="feedback bad">'+
+          'The Cheesemaker wants yarn, not carrots. This won\'t work.</div>';
+      } else {
+        document.getElementById("stuck").innerHTML='<div class="feedback bad">Nobody in this chain has what you need, and nobody wants just carrots.</div>';
+      }
+    };
+    d.appendChild(btn);
+    npDiv.appendChild(d);
+  });
+};
+
+/* =====================================================================
+   LESSON 3 — Money Solves It
+===================================================================== */
+const L3=[
+  ()=>show('<div class="kicker">Lesson 3 · Money arrives</div>'+
+    '<div class="scene">🐚✨<div class="cap">The islanders invent shells as money.</div></div>'+
+    '<div class="card"><p>Now everyone on the market accepts shells.</p>'+
+    '<p>You trade your carrots for shells. The Weaver takes your shells for yarn. Done.</p>'+
+    '<p>Money broke the cycle. It did this by being something <strong>everyone</strong> would take — even if they don\'t care about carrots or yarn.</p></div>'+
+    '<button onclick="next()">So what\'s the difference?</button>'),
+  ()=>show('<div class="kicker">Lesson 3</div>'+
+    '<div class="card"><p><strong>In barter:</strong> the blanket maker won\'t take your fish because she wants firewood.</p>'+
+    '<p><strong>With money:</strong> the blanket maker will take shells because she knows everyone else takes shells.</p>'+
+    '<p>You no longer need to find someone who wants what you have. You just need to find someone who has what you want — because you can pay them in money.</p>'+
+    '<div class="feedback"><strong>Trade</strong> is a formal exchange where both people give and get something. Money makes trade possible for everyone.</div>'+
+    '<button style="margin-top:12px" onclick="earnWord(\'trade\');next()">New word: trade</button>'),
+  ()=>renderMC("q23a", next),
+];
+
+/* =====================================================================
+   LESSON 4 — Mastery
+===================================================================== */
+let mastery = {qs:[], idx:0, score:0};
+const L4=[
+  ()=>{
+    mastery={qs:["q21a","q22a","q23a","q22b","q23b"].sort(()=>Math.random()-.5), idx:0, score:0};
+    show('<div class="kicker">Lesson 4 · Show what you know</div>'+
+      '<div class="card" style="background:#f0ebe1; border-left:4px solid var(--shell)"><p style="font-size:14px; margin:0"><strong>Module 2 quest:</strong> You learned why barter breaks and how money fixes it.</p></div>'+
+      '<h1 class="display">Four questions, then one challenge.</h1>'+
+      '<p>Get 3 of 4 right, and answer the transfer question, and Module 2 is complete.</p>'+
+      '<button onclick="next()">Start</button>');
+  },
+  ()=>{ masteryQ(); },
+];
+function masteryQ(){
+  if(mastery.idx>=mastery.qs.length){ next(); return; }
+  const qid=mastery.qs[mastery.idx];
+  const q=QUESTIONS[qid];
+  if(q.type==="tf"){
+    renderTFM(qid,()=>{ mastery.idx++; masteryQ(); });
+  } else {
+    renderMCM(qid,()=>{ mastery.idx++; masteryQ(); });
+  }
+}
+function renderMCM(qid,onDone){
+  const q=QUESTIONS[qid];
+  let html='<div class="kicker">Mastery · '+(mastery.idx+1)+' of '+mastery.qs.length+'</div><h2 class="display">'+q.prompt+'</h2>';
+  q.opts.forEach((o,i)=>html+='<button class="opt" data-i="'+i+'">'+o.t+'</button>');
+  html+='<div id="fb"></div><div id="cont"></div>'; show(html);
+  let answered=false;
+  document.querySelectorAll(".opt").forEach(btn=>{
+    btn.onclick=()=>{
+      if(answered) return; answered=true;
+      const o=q.opts[+btn.dataset.i];
+      btn.classList.add(o.ok?"right":"wrong");
+      if(o.ok) mastery.score++;
+      document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
+      document.getElementById("fb").innerHTML='<div class="feedback '+(o.ok?'good':'bad')+'">'+o.fb+'</div>';
+      revealFB();
+      document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>'; window._c=()=>onDone;
+      revealFB();
+    };
+  });
+}
+function renderTFM(qid,onDone){
+  const q=QUESTIONS[qid];
+  show('<div class="kicker">Mastery · '+(mastery.idx+1)+' of '+mastery.qs.length+'</div><h2 class="display">'+q.prompt+'</h2>'+
+    '<div class="btn-row"><button class="opt" id="tT">True</button><button class="opt" id="tF">False</button></div>'+
+    '<div id="fb"></div><div id="cont"></div>');
+  let answered=false;
+  function pick(v,el){
+    if(answered)return; answered=true;
+    const ok=(v===q.answer); if(ok)mastery.score++;
+    el.classList.add(ok?"right":"wrong");
+    document.getElementById("tT").disabled=true;document.getElementById("tF").disabled=true;
+    document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?q.good:q.bad)+'</div>';
+    revealFB();
+    document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>'; window._c=()=>onDone;
+    revealFB();
+  }
+  document.getElementById("tT").onclick=e=>pick(true,e.target);
+  document.getElementById("tF").onclick=e=>pick(false,e.target);
+}
+
+function finishMastery(pass){
+  if(pass && !S.masteryPassed){ S.masteryPassed=true; addXP(20); }
+  saveState();
+  if(pass){
+    show('<div class="night"><div class="lantern">🏮</div>'+
+      '<h1 class="display" style="color:#fff">Module 2 complete</h1>'+
+      '<p style="color:#cfe0ee">Quiz: '+mastery.score+'/4 · Transfer question ✓</p></div>'+
+      '<div class="card"><p><strong>You now know:</strong> barter, trade, matching problem.</p>'+
+      '<p>Barter breaks when people want different things. Money works because <strong>everyone</strong> agrees to take it — so you can always find a trade.</p>'+
+      '<p class="muted">Next: Module 3 gets into the money itself — Dollars & Cents.</p></div>'+
+      '<button style="margin-bottom:10px" onclick="window.location.href=\'module-3-dollars-and-cents.html\'">Continue to Module 3</button>'+
+      '<button class="btn-ghost" onclick="goHome()">Back to the island</button>');
+    S.done[3]=true; saveState();
+  } else {
+    show('<div class="kicker">Almost there</div>'+
+      '<h1 class="display">One more try</h1>'+
+      '<p>You got '+mastery.score+' of 4. The big idea: barter fails when people want different things. Money solves it by being something everyone accepts.</p>'+
+      '<button onclick="S.step=0;render()">Try again</button>'+
+      '<button class="btn-ghost" style="margin-top:10px" onclick="toggleTutor(true)">Talk with the tutor</button>'+
+      '<button class="btn-ghost" style="margin-top:10px" onclick="goHome()">Back home</button>');
+  }
+}
+
+// Add mastery completion to L4
+L4.push(()=>{
+  const pass = mastery.score>=3;
+  finishMastery(pass);
+});
+
+const LESSONS=[
+  {title:"The Double Coincidence Problem", sub:"Why can't you just trade directly?", steps:L1, emoji:"🔄"},
+  {title:"The Barter Market", sub:"Try to find someone to trade with", steps:L2, emoji:"🏪"},
+  {title:"Money Solves It", sub:"How shells break the cycle", steps:L3, emoji:"🐚"},
+  {title:"Show What You Know", sub:"Mastery check", steps:L4, emoji:"🏮"},
+];
+
+/* =====================================================================
+   HOME
+===================================================================== */
+function goHome(){
+  dots(4, S.done.filter(Boolean).length-1);
+  let html='<div class="kicker">Module 2</div><h1 class="display">Why Do We Need Money?</h1>'+
+    '<p class="muted">Four short lessons. Why barter breaks, and how money fixes it.</p>';
+  LESSONS.forEach((l,i)=>{
+    const locked = i>0 && !S.done[i-1];
+    const done = S.done[i];
+    html+='<button class="opt" '+(locked?'disabled':'')+' onclick="startLesson('+i+')">'+
+      '<span class="em">'+(done?'✅':locked?'🔒':l.emoji)+'</span><strong>'+l.title+'</strong><br>'+
+      '<span class="muted" style="font-weight:400">'+l.sub+'</span></button>';
+  });
+  if(S.masteryPassed) html+='<div class="night" style="margin-top:8px"><div class="lantern">🏮</div><p style="color:#cfe0ee">Module 2 mastered · '+S.xp+' XP</p></div>';
+  html+='<button class="btn-ghost" style="margin-top:14px" onclick="window.location.href=\'index.html\'">🗺️ Back to all modules</button>';
+  show(html);
+}
+function startLesson(i){ S.lesson=i; S.step=0; saveState(); render(); }
+function goBack(){ window.location.href='module-1-what-is-money.html'; }
+
+/* =====================================================================
+   TUTOR
+===================================================================== */
+let tHist=[];
+function toggleTutor(on){ 
+  document.getElementById("tutorPanel").classList.toggle("on",on); 
+  document.getElementById("tutorOverlay").classList.toggle("on",on);
+  saveState();
+  if(on&&tHist.length===0) tMsg("a","Hi! I'm your tutor. Ask me about barter, money, or the matching problem."); 
+}
+document.getElementById("tutorBtn").onclick=()=>toggleTutor(true);
+function tMsg(who,txt){ const d=document.createElement("div"); d.className="msg "+who; d.textContent=txt; document.getElementById("tlog").appendChild(d); d.scrollIntoView({behavior:"smooth"}); }
+function quickAsk(t){ document.getElementById("tin").value=t; sendTutor(); }
+async function sendTutor(){
+  const inp=document.getElementById("tin"); const txt=inp.value.trim(); if(!txt) return;
+  inp.value=""; tMsg("u",txt); tHist.push({role:"user",content:txt});
+  const think=document.createElement("div"); think.className="msg a"; think.innerHTML='<span class="spin" style="border-color:var(--ink);border-top-color:transparent"></span>';
+  document.getElementById("tlog").appendChild(think);
+  const sys="You are the tutor inside Module 2 (Why Do We Need Money?) of a financial-literacy app. "+
+    "The learner knows: money, worth, agree (from Module 1), barter, trade, matching problem (from this module). "+
+    "NEVER use: price, cost, buy, sell, earn, spend, save, bank, interest, credit, invest. "+
+    "The story: Kai on an island with barter; 5 NPCs who can't trade because nobody wants what they have; money (shells) solves it. "+
+    "Keep answers under 80 words, warm, honest. If asked 'Quiz me', ask ONE question about barter or money. Never mark wrong ideas as right.";
+  try{
+    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:300,system:sys,messages:tHist.slice(-10)})});
+    const data=await r.json();
+    const out=(data.content||[]).filter(c=>c.type==="text").map(c=>c.text).join("").trim() || "I lost my thread. Ask again?";
+    think.remove(); tMsg("a",out); tHist.push({role:"assistant",content:out});
+  }catch(e){
+    think.remove(); tMsg("a","I can't think right now. Try again in a moment.");
+  }
+}
+
+/* ---------- boot ---------- */
+(async function(){
+  await loadState();
+  document.getElementById("xpBox").textContent=S.xp+" XP";
+  renderShelf();
+  goHome();
+})();
+</script>
+</body>
+</html>

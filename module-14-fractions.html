@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fractions — Module 14</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap');
+  :root{
+    --ink:#123a3f; --ink-soft:#3d6166; --lagoon:#ecf5f2; --card:#ffffff;
+    --sand:#f3ead8; --sand-deep:#e5d7bc; --shell:#c96f4a; --shell-soft:#f4e0d6;
+    --night:#0e1b2c; --gold:#e8b84b; --good:#2e7d5b; --bad:#a94436;
+    --radius:14px; --shadow:0 2px 10px rgba(18,58,63,.08);
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html,body{height:100%}
+  body{font-family:"Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif; background:var(--lagoon); color:var(--ink); font-size:17px; line-height:1.5; -webkit-font-smoothing:antialiased}
+  .display{font-family:"Fraunces",Georgia,serif; font-weight:700; letter-spacing:-.01em}
+  #app{max-width:560px; margin:0 auto; min-height:100dvh; display:flex; flex-direction:column}
+  header{position:sticky; top:0; z-index:20; background:var(--lagoon); padding:12px 16px 8px; border-bottom:1px solid #d9e6e1}
+  .hrow{display:flex; align-items:center; justify-content:space-between; gap:10px}
+  .xp{font-weight:700; font-size:14px; background:var(--ink); color:#fff; border-radius:999px; padding:4px 12px; white-space:nowrap}
+  .dots{display:flex; gap:6px}
+  .dot{width:9px; height:9px; border-radius:50%; background:#cfe0da; transition:background .3s}
+  .dot.on{background:var(--shell)}
+  .shelf{display:flex; gap:8px; margin-top:8px; min-height:30px; flex-wrap:wrap}
+  .shelf-label{font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-soft); align-self:center}
+  .word-chip{font-size:13px; font-weight:600; background:var(--sand); border:1.5px solid var(--sand-deep); border-radius:8px; padding:3px 10px; cursor:pointer; color:var(--ink)}
+  .word-chip:focus-visible{outline:3px solid var(--shell)}
+  main{flex:1; padding:20px 16px 110px}
+  .screen{display:none; animation:fade .35s ease}
+  .screen.on{display:block}
+  @keyframes fade{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+  @media (prefers-reduced-motion: reduce){ *{animation:none!important; transition:none!important} }
+  h1{font-size:30px; line-height:1.15; margin-bottom:6px}
+  h2{font-size:22px; line-height:1.2; margin-bottom:10px}
+  .kicker{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--shell); font-weight:700; margin-bottom:8px}
+  p{margin-bottom:12px}
+  .muted{color:var(--ink-soft); font-size:15px}
+  .card{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px; margin-bottom:14px}
+  .recap{background:#f0ebe1; border-left:4px solid var(--shell); border-radius:0 10px 10px 0; padding:10px 14px; margin-bottom:14px; font-size:14px}
+  .scene{background:linear-gradient(180deg,#bfe0d6 0%, #e9dfc6 78%, #dcc9a2 100%); border-radius:var(--radius); padding:26px 20px; text-align:center; margin-bottom:16px; font-size:44px; line-height:1.2; box-shadow:var(--shadow)}
+  .scene .cap{font-size:15px; color:var(--ink); margin-top:8px}
+  button{font:inherit; cursor:pointer; border:none; border-radius:12px; padding:13px 18px; background:var(--ink); color:#fff; font-weight:700; width:100%}
+  button:focus-visible{outline:3px solid var(--shell); outline-offset:2px}
+  button:disabled{opacity:.45; cursor:default}
+  .btn-ghost{background:transparent; color:var(--ink); border:2px solid var(--ink)}
+  .btn-row{display:flex; gap:10px}
+  .opt{display:block; width:100%; text-align:left; background:#fff; color:var(--ink); border:2px solid #d9e2de; font-weight:600; margin-bottom:10px; border-radius:12px; padding:14px 16px}
+  .opt .em{font-size:26px; margin-right:10px; vertical-align:-3px}
+  .opt.right{border-color:var(--good); background:#eef7f2}
+  .opt.wrong{border-color:var(--bad); background:#faf0ee}
+  .feedback{border-left:4px solid var(--ink); background:var(--sand); border-radius:0 10px 10px 0; padding:12px 14px; margin:10px 0 14px; font-size:15px}
+  .feedback.good{border-color:var(--good)}
+  .feedback.bad{border-color:var(--bad)}
+  .cut-viz{background:#fff; border:2px solid #d9e2de; border-radius:14px; padding:16px; text-align:center; margin-bottom:12px; font-size:30px}
+  .cut-viz .n{font-size:14px; color:var(--ink-soft); font-weight:600; margin-top:4px}
+  .modal-bg{position:fixed; inset:0; background:rgba(14,27,44,.55); display:none; z-index:40; align-items:center; justify-content:center; padding:24px}
+  .modal-bg.on{display:flex}
+  .word-card{background:var(--sand); border-radius:18px; padding:28px 24px; max-width:380px; width:100%; text-align:center; border:3px solid var(--sand-deep); animation:flip .5s ease}
+  @keyframes flip{from{transform:rotateY(80deg); opacity:0} to{transform:none; opacity:1}}
+  .word-card .w{font-size:34px; margin-bottom:8px}
+  .word-card .d{font-size:17px; color:var(--ink)}
+  #tutorBtn{position:fixed; right:16px; bottom:16px; width:auto; z-index:30; border-radius:999px; padding:13px 18px; background:var(--shell); box-shadow:0 4px 14px rgba(201,111,74,.4); font-size:15px}
+  .modal-overlay{position:fixed; inset:0; background:rgba(14,27,44,.65); z-index:49; display:none}
+  .modal-overlay.on{display:block}
+  #tutorPanel{position:fixed; inset:auto 0 0 0; max-width:560px; margin:0 auto; height:78dvh; background:#fff; border-radius:18px 18px 0 0; box-shadow:0 -6px 30px rgba(14,27,44,.25); z-index:50; display:none; flex-direction:column}
+  #tutorPanel.on{display:flex}
+  .tp-head{display:flex; justify-content:space-between; align-items:center; padding:14px 16px; border-bottom:1px solid #eee}
+  .tp-head button{width:auto; padding:10px 16px; font-size:15px; background:var(--shell); color:#fff; font-weight:700; border-radius:8px}
+  #tlog{flex:1; overflow-y:auto; padding:14px 16px; display:flex; flex-direction:column; gap:10px}
+  .msg{max-width:86%; padding:10px 14px; border-radius:14px; font-size:15px}
+  .msg.u{align-self:flex-end; background:var(--ink); color:#fff; border-bottom-right-radius:4px}
+  .msg.a{align-self:flex-start; background:var(--sand); border-bottom-left-radius:4px}
+  .tp-quick{display:flex; gap:8px; padding:0 16px 8px; flex-wrap:wrap}
+  .tp-quick button{width:auto; font-size:13px; padding:7px 12px; background:#fff; color:var(--ink); border:1.5px solid var(--ink); border-radius:999px}
+  .tp-in{display:flex; gap:8px; padding:10px 16px 18px; border-top:1px solid #eee}
+  .tp-in input{flex:1; font:inherit; padding:12px 14px; border:2px solid #d9e2de; border-radius:12px}
+  .tp-in button{width:auto; padding:12px 16px}
+  .night{background:linear-gradient(180deg,#0e1b2c 0%, #1b3247 100%); color:#fff; border-radius:var(--radius); padding:34px 22px; text-align:center; margin-bottom:16px}
+  .lantern{font-size:56px; animation:glow 2.2s ease infinite alternate}
+  @keyframes glow{from{filter:drop-shadow(0 0 4px var(--gold))} to{filter:drop-shadow(0 0 22px var(--gold))}}
+  .spin{display:inline-block; width:16px; height:16px; border:3px solid #fff; border-top-color:transparent; border-radius:50%; animation:sp 1s linear infinite; vertical-align:-3px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="hrow">
+      <div class="dots" id="dots"></div>
+      <div class="xp" id="xpBox">0 XP</div>
+    </div>
+    <div class="shelf" id="shelf"><span class="shelf-label">Words you own:</span></div>
+  </header>
+  <main id="main"></main>
+</div>
+
+<button id="tutorBtn" aria-label="Ask the tutor">Ask the tutor 💬</button>
+<div class="modal-overlay" id="tutorOverlay" onclick="if(event.target===this)toggleTutor(false)"></div>
+<div id="tutorPanel" role="dialog" aria-label="Tutor chat">
+  <div class="tp-head"><strong class="display">Tutor</strong><button onclick="toggleTutor(false)">✕ Close</button></div>
+  <div id="tlog"></div>
+  <div class="tp-quick">
+    <button onclick="quickAsk('Explain it differently')">Explain differently</button>
+    <button onclick="quickAsk('Make it easier')">Make it easier</button>
+    <button onclick="quickAsk('Give me an example')">Give example</button>
+    <button onclick="quickAsk('Quiz me')">Quiz me</button>
+  </div>
+  <div class="tp-in">
+    <input id="tin" placeholder="Ask about fractions…" onkeydown="if(event.key==='Enter')sendTutor()">
+    <button onclick="sendTutor()">Send</button>
+  </div>
+</div>
+<div class="modal-bg" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="word-card" id="wordCard"></div>
+</div>
+
+<script>
+/* =====================================================================
+   CONTENT — Module 14: Fractions
+   'Fraction', 'half', 'third', quarter-as-fraction become permitted.
+   Still banned: decimal (M15 — the dot stays mysterious!), percent (M16).
+===================================================================== */
+const VOCAB = {
+  fraction:{term:"fraction", def:"A name for equal parts of one whole. Cut one mango into 2 equal parts — each part is a fraction: one half."},
+  half:{term:"half", def:"One of 2 EQUAL parts. Half a mango, half a dollar (50¢), half an hour. Two halves make the whole again."}
+};
+
+const QUESTIONS = {
+  "q141a":{type:"mc", prompt:"What is a fraction?", concept:"fraction", opts:[
+    {t:"A name for equal parts of one whole", ok:true, fb:"Right. When one thing gets cut into equal parts, each part gets a fraction name: half, third, quarter."},
+    {t:"A very small coin", ok:false, fb:"Fractions aren't coins — they're NAMES for parts. Though one coin is secretly named after a fraction… you'll see."},
+    {t:"A broken piece of anything", ok:false, fb:"Close, but the parts must be EQUAL. A random shard isn't a fraction — a fair cut is."}]},
+  "q141b":{type:"mc", prompt:"One mango, cut into 2 equal parts. What is each part called?", concept:"half", opts:[
+    {t:"One half", ok:true, fb:"Right. Two equal parts → each is one half. Two halves snap back into one whole mango."},
+    {t:"One whole", ok:false, fb:"The WHOLE is the uncut mango. After the cut, each equal part is one half."},
+    {t:"One double", ok:false, fb:"Double goes UP (×2). Cutting goes down — each of 2 equal parts is one half."}]},
+  "q142a":{type:"mc", prompt:"Rana cuts a mango into 4 equal parts. What is each part?", concept:"fraction", opts:[
+    {t:"One quarter (also called one fourth)", ok:true, fb:"Right — 4 equal parts, each is a quarter. Hold that word tight; it's about to unlock a secret from Module 3."},
+    {t:"One half", ok:false, fb:"Halves come from cutting into 2. FOUR equal parts make quarters."},
+    {t:"One third", ok:false, fb:"Thirds come from cutting into 3. Four equal parts → quarters (fourths)."}]},
+  "q142b":{type:"tf", prompt:"True or false: cut a mango into one BIG piece and one small piece — each piece is one half.", answer:false, concept:"half",
+    good:"Right — halves must be EQUAL (Module 4's word, back again). A big piece and a small piece are just… two pieces. No fraction names for unfair cuts.",
+    bad:"Would you trade your small piece for the big one? Then they're not halves! Fractions demand EQUAL parts — that's the whole deal."},
+  "q143a":{type:"mc", prompt:"The 25¢ coin is called a QUARTER. Why?", concept:"fraction", opts:[
+    {t:"Because it's one quarter of a dollar — 4 of them make a whole", ok:true, fb:"The secret's out! 4 × 25¢ = 100¢ = $1. The coin's NAME was a fraction all along, hiding in your pocket since Module 3."},
+    {t:"Because it's shaped like a quarter moon", ok:false, fb:"It's a full circle! The name is about the DOLLAR: 4 quarters = 1 whole dollar. It's a fraction wearing metal."},
+    {t:"Because it takes a quarter of a minute to flip", ok:false, fb:"Fun idea, but no — 4 of these coins make one whole dollar. One coin = one quarter OF the dollar."}]},
+  "q143c":{type:"mc", prompt:"Half of $1 is how many cents?", concept:"half", opts:[
+    {t:"50¢", ok:true, fb:"Right — $1 is 100¢, and 100 ÷ 2 = 50. Fractions and dividing are old friends."},
+    {t:"25¢", ok:false, fb:"25¢ is a QUARTER of a dollar (4 parts). HALF means 2 parts: 100 ÷ 2 = 50¢."},
+    {t:"100¢", ok:false, fb:"100¢ is the WHOLE dollar. Half is one of 2 equal parts: 50¢."}]},
+  "q143b":{type:"mc", transfer:true, prompt:"Half a mango, half a dollar, half an hour of work. Does 'half' work the same everywhere?", concept:"half", opts:[
+    {t:"Yes — half means 1 of 2 equal parts, whatever the whole is", ok:true, fb:"Exactly. Fractions don't care WHAT they cut — fruit, money, time. One of two equal parts, always. That's why they're everywhere."},
+    {t:"No — half only works on food", ok:false, fb:"Half of $2 is $1, half an hour is 30 minutes — fractions cut anything. The rule never changes: 2 equal parts."},
+    {t:"No — money can't have fractions", ok:false, fb:"Money is FULL of fractions — you learned one coin is literally named 'quarter'! Half of $1 = 50¢."}]}
+};
+
+/* =====================================================================
+   STATE + PERSISTENCE
+===================================================================== */
+let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false,false], masteryPassed:false };
+
+async function loadState(){
+  try{
+    const r = await window.storage.get("mod14-state");
+    if(r && r.value){ S = Object.assign(S, JSON.parse(r.value)); return; }
+  } catch(e){ }
+  try{
+    const saved = localStorage.getItem("mod14-state");
+    if(saved){ S = Object.assign(S, JSON.parse(saved)); }
+    for(let i=13;i>=1;i--){
+      const prev = localStorage.getItem("mod"+i+"-state");
+      if(prev){ const p = JSON.parse(prev); if(p.xp > S.xp) S.xp = p.xp; }
+    }
+  } catch(e){ }
+}
+async function saveState(){
+  try{ await window.storage.set("mod14-state", JSON.stringify(S)); }catch(e){
+    try{ localStorage.setItem("mod14-state", JSON.stringify(S)); }catch(e2){}
+  }
+}
+function addXP(n){ S.xp+=n; document.getElementById("xpBox").textContent = S.xp+" XP"; saveState(); }
+function earnWord(k){
+  if(S.shelf.includes(k)) return;
+  S.shelf.push(k); renderShelf(); saveState();
+  showWordCard(k);
+}
+function renderShelf(){
+  const el=document.getElementById("shelf");
+  el.innerHTML='<span class="shelf-label">Words you own:</span>';
+  S.shelf.forEach(k=>{
+    if(!VOCAB[k]) return;
+    const b=document.createElement("button"); b.className="word-chip"; b.textContent=VOCAB[k].term;
+    b.onclick=()=>showWordCard(k); el.appendChild(b);
+  });
+}
+function showWordCard(k){
+  const v=VOCAB[k]; if(!v) return;
+  document.getElementById("wordCard").innerHTML =
+    '<div class="w display">'+v.term+'</div><div class="d">'+v.def+'</div>' +
+    '<button style="margin-top:18px" onclick="closeModal()">Got it</button>';
+  document.getElementById("modal").classList.add("on");
+}
+function closeModal(){ document.getElementById("modal").classList.remove("on"); }
+
+/* =====================================================================
+   SCREEN ENGINE
+===================================================================== */
+const M = document.getElementById("main");
+function show(html){ M.innerHTML='<div class="screen on">'+html+'</div>'; window.scrollTo(0,0); }
+function revealFB(){ setTimeout(function(){
+  var ids=["cont","c2","fb","fb2"];
+  for(var i=0;i<ids.length;i++){
+    var el=document.getElementById(ids[i]);
+    if(el && el.innerHTML && el.innerHTML.trim()){
+      if(el.scrollIntoView) el.scrollIntoView({behavior:"smooth", block:"nearest"});
+      return;
+    }
+  }
+},80); }
+function dots(n,i){
+  const d=document.getElementById("dots"); d.innerHTML="";
+  for(let k=0;k<n;k++){const s=document.createElement("span");s.className="dot"+(k<=i?" on":"");d.appendChild(s);}
+}
+function next(){ S.step++; saveState(); render(); }
+function render(){
+  const les=LESSONS[S.lesson];
+  dots(les.steps.length, S.step);
+  if(S.step>=les.steps.length){ lessonComplete(); return; }
+  les.steps[S.step]();
+}
+function lessonComplete(){
+  if(!S.done[S.lesson]){ S.done[S.lesson]=true; addXP(10); }
+  saveState();
+  goHome();
+}
+function renderMC(qid, onDone){
+  const q=QUESTIONS[qid];
+  let html='<div class="kicker">Question</div><h2 class="display">'+q.prompt+'</h2><div id="opts">';
+  q.opts.forEach((o,i)=>{ html+='<button class="opt" data-i="'+i+'">'+o.t+'</button>'; });
+  html+='</div><div id="fb"></div><div id="cont"></div>';
+  show(html);
+  let answered=false, firstShot=!(qid in S.firstTry);
+  document.querySelectorAll(".opt").forEach(btn=>{
+    btn.onclick=()=>{
+      const i=+btn.dataset.i, o=q.opts[i];
+      if(answered && o.ok===false) return;
+      btn.classList.add(o.ok?"right":"wrong");
+      document.getElementById("fb").innerHTML='<div class="feedback '+(o.ok?'good':'bad')+'">'+o.fb+'</div>';
+      revealFB();
+      if(o.ok){
+        if(firstShot && !answered){ S.firstTry[qid]=true; addXP(2); }
+        answered=true;
+        document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
+        document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>';
+        revealFB();
+        window._c=()=>onDone;
+      } else { answered=true; S.firstTry[qid]=false; }
+      saveState();
+    };
+  });
+}
+function renderTF(qid,onDone){
+  const q=QUESTIONS[qid];
+  show('<div class="kicker">True or false</div><h2 class="display">'+q.prompt+'</h2>'+
+    '<div class="btn-row"><button class="opt" id="tT">True</button><button class="opt" id="tF">False</button></div>'+
+    '<div id="fb"></div><div id="cont"></div>');
+  let firstShot=!(qid in S.firstTry), answered=false;
+  function pick(val,el){
+    const ok = (val===q.answer);
+    el.classList.add(ok?"right":"wrong");
+    document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?q.good:q.bad)+'</div>';
+    revealFB();
+    if(ok){
+      if(firstShot && !answered){S.firstTry[qid]=true; addXP(2);}
+      document.getElementById("tT").disabled=true; document.getElementById("tF").disabled=true;
+      document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>'; window._c=()=>onDone;
+      revealFB();
+    } else { S.firstTry[qid]=false; }
+    answered=true; saveState();
+  }
+  document.getElementById("tT").onclick=e=>pick(true,e.target);
+  document.getElementById("tF").onclick=e=>pick(false,e.target);
+}
+
+/* =====================================================================
+   LESSON 1 — The Mango Problem
+===================================================================== */
+const L1=[
+  ()=>show('<div class="kicker">Lesson 1 · The mango problem</div>'+
+    '<div class="recap"><strong>Kai\'s story so far:</strong> Money leftovers can always be broken into pennies. But that evening: ONE last mango, TWO hungry friends…</div>'+
+    '<div class="scene">🥭🔪🧑🏽‍🦱🧕<div class="cap">You cannot turn a mango into 100 pennies.</div></div>'+
+    '<button onclick="next()">So what now?</button>'),
+  ()=>show('<div class="kicker">Lesson 1</div>'+
+    '<div class="card"><p>Rana takes the knife and cuts the mango into <strong>2 equal parts</strong> — one careful cut, straight down the middle.</p>'+
+    '<p>Each part has a name: <strong>one half</strong>.</p>'+
+    '<p>Names for equal parts of one whole are called <strong>fractions</strong>. Halves, thirds, quarters — a whole new family of numbers that live BETWEEN the whole ones.</p>'+
+    '<p>Two friends, two halves, zero arguments. The mango problem is solved forever.</p></div>'+
+    '<button onclick="earnWord(\'fraction\');next()">New word: fraction</button>'),
+  ()=>show('<div class="kicker">Lesson 1 · The equal rule</div>'+
+    '<div class="card"><p>One rule makes fractions work: <strong>the parts must be EQUAL.</strong></p>'+
+    '<p>Cut a mango into a big piece and a small piece? Those aren\'t halves — those are an argument waiting to happen.</p>'+
+    '<p>Equal (Module 4\'s word!) is what makes a fraction fair. Two equal parts → halves. Three equal parts → thirds. Four equal parts → quarters.</p></div>'+
+    '<button onclick="earnWord(\'half\');next()">New word: half</button>'),
+  ()=>renderMC("q141a", next),
+  ()=>renderMC("q141b", next),
+];
+
+/* =====================================================================
+   LESSON 2 — The Cutting Game
+===================================================================== */
+const CUT_ROUNDS=[
+  {viz:"🥭 → ◐◑", label:"Cut into 2 equal parts", opts:["Halves","Thirds","Quarters"], truth:"Halves", why:"2 equal parts = halves."},
+  {viz:"🥭 → ◔◔◔◔", label:"Cut into 4 equal parts", opts:["Quarters","Halves","Wholes"], truth:"Quarters", why:"4 equal parts = quarters (fourths)."},
+  {viz:"🥭 → ⅓⅓⅓", label:"Cut into 3 equal parts", opts:["Thirds","Quarters","Halves"], truth:"Thirds", why:"3 equal parts = thirds."},
+  {viz:"🥭 → 🍖🤏", label:"Cut into one BIG piece and one small piece", opts:["Not a fraction — parts aren't equal","Halves","Quarters"], truth:"Not a fraction — parts aren't equal", why:"Fractions demand EQUAL parts. Unfair cuts get no fraction names!"}
+];
+const L2=[
+  ()=>show('<div class="kicker">Lesson 2 · The cutting game</div>'+
+    '<div class="recap"><strong>So far:</strong> Fractions = names for EQUAL parts of one whole.</div>'+
+    '<div class="card"><p>Four cuts. Name each one — and watch for the cheater.</p></div>'+
+    '<button onclick="next()">First cut</button>'),
+  ()=>{
+    let round=0;
+    function draw(){
+      const r=CUT_ROUNDS[round];
+      const shuffled=[...r.opts].sort(()=>Math.random()-.5);
+      show('<div class="kicker">Cutting game · '+(round+1)+' of '+CUT_ROUNDS.length+'</div>'+
+        '<div class="cut-viz">'+r.viz+'<div class="n">'+r.label+'</div></div>'+
+        '<h2 class="display" style="text-align:center">What are the parts called?</h2>'+
+        '<div id="opts">'+shuffled.map(v=>'<button class="opt" data-v="'+v.replace(/"/g,'&quot;')+'">'+v+'</button>').join('')+'</div>'+
+        '<div id="fb"></div><div id="cont"></div>');
+      let answered=false;
+      document.querySelectorAll(".opt").forEach(btn=>{
+        btn.onclick=()=>{
+          const v=btn.dataset.v, ok=v===r.truth;
+          if(answered && !ok) return;
+          btn.classList.add(ok?"right":"wrong");
+          document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+
+            (ok?'Right — '+r.why:'Not quite. '+r.why+' Try again.')+'</div>';
+          revealFB();
+          if(ok){
+            answered=true; addXP(2);
+            document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
+            document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(round<CUT_ROUNDS.length-1?"Next cut":"Done")+'</button>';
+            revealFB();
+            window._n=()=>{ round++; if(round<CUT_ROUNDS.length) draw(); else { addXP(4); next(); } };
+          } else { answered=true; }
+        };
+      });
+    }
+    draw();
+  },
+  ()=>renderMC("q142a", next),
+  ()=>renderTF("q142b", next),
+];
+
+/* =====================================================================
+   LESSON 3 — The Quarter's Secret
+===================================================================== */
+const L3=[
+  ()=>show('<div class="kicker">Lesson 3 · The quarter\'s secret</div>'+
+    '<div class="recap"><strong>So far:</strong> Halves, thirds, quarters — Kai can name any fair cut.</div>'+
+    '<div class="scene">🏅❓<div class="cap">Kai stares at a 25¢ coin. "Wait. Why is this called a QUARTER?"</div></div>'+
+    '<button onclick="next()">Oh. OH.</button>'),
+  ()=>show('<div class="kicker">Lesson 3</div>'+
+    '<div class="card"><p>Because it IS one. <strong>The coin is one quarter of a dollar.</strong></p>'+
+    '<p>Cut $1 into 4 equal parts → each part is 25¢ → that\'s the coin! And just like mango quarters: <strong>4 quarters snap back into 1 whole dollar</strong> (you\'ve known 4 × 25 = 100 since Module 3).</p>'+
+    '<p>Half of a dollar works too: $1 cut into 2 equal parts → <strong>50¢ each</strong>. Rana\'s 100-penny trick from last module? That was fractions, secretly: 50¢ is half of a dollar.</p>'+
+    '<p>The money system has been speaking fractions to you this whole time.</p></div>'+
+    '<button onclick="next()">Practice</button>'),
+  ()=>renderMC("q143a", next),
+  ()=>renderMC("q143c", next),
+];
+
+/* =====================================================================
+   LESSON 4 — Mastery
+===================================================================== */
+let mastery = {qs:[], idx:0, score:0};
+const L4=[
+  ()=>{
+    const pool=["q141a","q141b","q142a","q142b","q143a","q143c"].sort(()=>Math.random()-.5).slice(0,4);
+    mastery={qs:[...pool,"q143b"].sort(()=>Math.random()-.5), idx:0, score:0};
+    show('<div class="kicker">Lesson 4 · Show what you know</div>'+
+      '<div class="recap"><strong>Module 14 quest:</strong> You learned to name equal parts — and unlocked the quarter\'s secret.</div>'+
+      '<h1 class="display">Five questions.</h1>'+
+      '<p>Get 4 of 5 right and Module 14 is yours.</p>'+
+      '<button onclick="next()">Start</button>');
+  },
+  ()=>{ masteryQ(); },
+  ()=>{ finishMastery(mastery.score>=4); },
+];
+function masteryQ(){
+  if(mastery.idx>=mastery.qs.length){ next(); return; }
+  const qid=mastery.qs[mastery.idx];
+  const q=QUESTIONS[qid];
+  const cont=()=>{ mastery.idx++; masteryQ(); };
+  if(q.type==="tf"){ renderTFM(qid,cont); } else { renderMCM(qid,cont); }
+}
+function renderMCM(qid,onDone){
+  const q=QUESTIONS[qid];
+  let html='<div class="kicker">Mastery · '+(mastery.idx+1)+' of '+mastery.qs.length+'</div><h2 class="display">'+q.prompt+'</h2>';
+  q.opts.forEach((o,i)=>html+='<button class="opt" data-i="'+i+'">'+o.t+'</button>');
+  html+='<div id="fb"></div><div id="cont"></div>'; show(html);
+  let answered=false;
+  document.querySelectorAll(".opt").forEach(btn=>{
+    btn.onclick=()=>{
+      if(answered) return; answered=true;
+      const o=q.opts[+btn.dataset.i];
+      btn.classList.add(o.ok?"right":"wrong");
+      if(o.ok) mastery.score++;
+      document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
+      document.getElementById("fb").innerHTML='<div class="feedback '+(o.ok?'good':'bad')+'">'+o.fb+'</div>';
+      document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>'; window._c=()=>onDone;
+      revealFB();
+    };
+  });
+}
+function renderTFM(qid,onDone){
+  const q=QUESTIONS[qid];
+  show('<div class="kicker">Mastery · '+(mastery.idx+1)+' of '+mastery.qs.length+'</div><h2 class="display">'+q.prompt+'</h2>'+
+    '<div class="btn-row"><button class="opt" id="tT">True</button><button class="opt" id="tF">False</button></div>'+
+    '<div id="fb"></div><div id="cont"></div>');
+  let answered=false;
+  function pick(v,el){
+    if(answered)return; answered=true;
+    const ok=(v===q.answer); if(ok)mastery.score++;
+    el.classList.add(ok?"right":"wrong");
+    document.getElementById("tT").disabled=true;document.getElementById("tF").disabled=true;
+    document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?q.good:q.bad)+'</div>';
+    document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>'; window._c=()=>onDone;
+    revealFB();
+  }
+  document.getElementById("tT").onclick=e=>pick(true,e.target);
+  document.getElementById("tF").onclick=e=>pick(false,e.target);
+}
+function finishMastery(pass){
+  if(pass && !S.masteryPassed){ S.masteryPassed=true; addXP(20); }
+  saveState();
+  if(pass){
+    show('<div class="night"><div class="lantern">🏮</div>'+
+      '<h1 class="display" style="color:#fff">Module 14 complete</h1>'+
+      '<p style="color:#cfe0ee">Quiz: '+mastery.score+'/5 ✓</p></div>'+
+      '<div class="card"><p><strong>You now own:</strong> fraction and half — the numbers between the numbers.</p>'+
+      '<p>That night Rana writes the day\'s earnings: <strong>$3.50</strong>. Kai points at the dot. "We\'ve been READING that dot since Module 3. But what IS it?"</p>'+
+      '<p>Rana smiles: "That dot is hiding fractions inside numbers."</p>'+
+      '<p class="muted">That\'s Module 15: Decimals.</p></div>'+
+      '<button style="margin-bottom:10px" onclick="window.location.href=\'module-15-decimals.html\'">Continue to Module 15</button>'+
+      '<button class="btn-ghost" style="margin-bottom:10px" onclick="window.location.href=\'index.html\'">🗺️ Back to all modules</button>'+
+      '<button class="btn-ghost" onclick="goHome()">Stay in Module 14</button>');
+    S.done[3]=true; saveState();
+  } else {
+    show('<div class="kicker">Almost there</div>'+
+      '<h1 class="display">One more try</h1>'+
+      '<p>You got '+mastery.score+' of 5. The keys: fractions name EQUAL parts of one whole — and the 25¢ coin is literally a quarter of a dollar.</p>'+
+      '<button onclick="S.step=0;render()">Try again</button>'+
+      '<button class="btn-ghost" style="margin-top:10px" onclick="toggleTutor(true)">Talk with the tutor</button>'+
+      '<button class="btn-ghost" style="margin-top:10px" onclick="goHome()">Back home</button>');
+  }
+}
+
+const LESSONS=[
+  {title:"The Mango Problem", sub:"One mango, two friends, one fair cut", steps:L1, emoji:"🥭"},
+  {title:"The Cutting Game", sub:"Name the parts — and spot the cheater", steps:L2, emoji:"🔪"},
+  {title:"The Quarter's Secret", sub:"The coin was a fraction all along", steps:L3, emoji:"🏅"},
+  {title:"Show What You Know", sub:"Mastery check", steps:L4, emoji:"🏮"},
+];
+
+/* =====================================================================
+   HOME
+===================================================================== */
+function goHome(){
+  dots(4, S.done.filter(Boolean).length-1);
+  let html='<div class="kicker">Module 14</div><h1 class="display">Fractions</h1>'+
+    '<p class="muted">Four short lessons. The numbers between the numbers.</p>';
+  LESSONS.forEach((l,i)=>{
+    const locked = i>0 && !S.done[i-1];
+    const done = S.done[i];
+    html+='<button class="opt" '+(locked?'disabled':'')+' onclick="startLesson('+i+')">'+
+      '<span class="em">'+(done?'✅':locked?'🔒':l.emoji)+'</span><strong>'+l.title+'</strong><br>'+
+      '<span class="muted" style="font-weight:400">'+l.sub+'</span></button>';
+  });
+  if(S.masteryPassed) html+='<div class="night" style="margin-top:8px"><div class="lantern">🏮</div><p style="color:#cfe0ee">Module 14 mastered · '+S.xp+' XP</p></div>';
+  html+='<button class="btn-ghost" style="margin-top:14px" onclick="window.location.href=\'index.html\'">🗺️ Back to all modules</button>';
+  show(html);
+}
+function startLesson(i){ S.lesson=i; S.step=0; saveState(); render(); }
+
+/* =====================================================================
+   TUTOR
+===================================================================== */
+let tHist=[];
+function toggleTutor(on){
+  document.getElementById("tutorPanel").classList.toggle("on",on);
+  document.getElementById("tutorOverlay").classList.toggle("on",on);
+  saveState();
+  if(on&&tHist.length===0) tMsg("a","Hi! Ask me anything about fractions, halves, and quarters — or tap a button below.");
+}
+document.getElementById("tutorBtn").onclick=()=>toggleTutor(true);
+function tMsg(who,txt){ const d=document.createElement("div"); d.className="msg "+who; d.textContent=txt; document.getElementById("tlog").appendChild(d); d.scrollIntoView({behavior:"smooth"}); }
+function quickAsk(t){ document.getElementById("tin").value=t; sendTutor(); }
+async function sendTutor(){
+  const inp=document.getElementById("tin"); const txt=inp.value.trim(); if(!txt) return;
+  inp.value=""; tMsg("u",txt); tHist.push({role:"user",content:txt});
+  const think=document.createElement("div"); think.className="msg a"; think.innerHTML='<span class="spin" style="border-color:var(--ink);border-top-color:transparent"></span>';
+  document.getElementById("tlog").appendChild(think);
+  const sys="You are the tutor inside Module 14 (Fractions) of a financial-literacy app. The learner may be a child or an adult. "+
+    "They know from earlier modules: money, worth, agree, trade, dollar, cent, coins, reading $X.YY, compare, equal, price, cost, add, subtract, buy, sell, pay, earn, spend, need, save, goal, multiply, ×, double, divide, ÷, split, leftovers, the 100-penny trick. From this module: fraction (name for EQUAL parts of one whole), half (1 of 2 equal parts), thirds (3), quarters/fourths (4), parts MUST be equal, halves/quarters of money (half of $1 = 50¢; the 25¢ coin is literally one quarter of a dollar — 4 make a whole), and half works on anything (mango, money, an hour). "+
+    "STRICT RULES: never use these words or notations (later modules): decimal, decimal point explained (they can READ $3.50 from Module 3 but the dot's meaning is Module 15's secret — if asked what the dot IS, say that's tomorrow's mystery), tenths, hundredths, percent, %, numerator, denominator, fraction arithmetic (adding fractions etc.), eighths and beyond. Keep to halves, thirds, quarters only. "+
+    "Story context: one last mango cut into 2 equal halves by Rana; the cheater cut (big+small piece is NOT halves); Kai discovering the quarter coin is a fraction. "+
+    "Never repeat a failed explanation — switch analogies (pizza slices, folding paper, sharing a sandwich). Keep answers under 80 words, warm, honest, never mark wrong ideas right. If asked 'Quiz me', ask ONE simple halves/quarters question and wait.";
+  try{
+    const controller=new AbortController(); const timeout=setTimeout(()=>controller.abort(),8000);
+    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:300,system:sys,messages:tHist.slice(-10)}),signal:controller.signal});
+    clearTimeout(timeout);
+    const data=await r.json();
+    const out=(data.content||[]).filter(c=>c.type==="text").map(c=>c.text).join("").trim() || "I lost my thread. Ask again?";
+    think.remove(); tMsg("a",out); tHist.push({role:"assistant",content:out});
+  }catch(e){
+    think.remove(); tMsg("a","I can't think right now. Try again in a moment — or tap the word cards up top to review.");
+  }
+}
+
+/* ---------- boot ---------- */
+(async function(){
+  await loadState();
+  document.getElementById("xpBox").textContent=S.xp+" XP";
+  renderShelf();
+  goHome();
+})();
+</script>
+</body>
+</html>

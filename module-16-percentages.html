@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Percentages — Module 16</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap');
+  :root{
+    --ink:#123a3f; --ink-soft:#3d6166; --lagoon:#ecf5f2; --card:#ffffff;
+    --sand:#f3ead8; --sand-deep:#e5d7bc; --shell:#c96f4a; --shell-soft:#f4e0d6;
+    --night:#0e1b2c; --gold:#e8b84b; --good:#2e7d5b; --bad:#a94436;
+    --radius:14px; --shadow:0 2px 10px rgba(18,58,63,.08);
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html,body{height:100%}
+  body{font-family:"Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif; background:var(--lagoon); color:var(--ink); font-size:17px; line-height:1.5; -webkit-font-smoothing:antialiased}
+  .display{font-family:"Fraunces",Georgia,serif; font-weight:700; letter-spacing:-.01em}
+  #app{max-width:560px; margin:0 auto; min-height:100dvh; display:flex; flex-direction:column}
+  header{position:sticky; top:0; z-index:20; background:var(--lagoon); padding:12px 16px 8px; border-bottom:1px solid #d9e6e1}
+  .hrow{display:flex; align-items:center; justify-content:space-between; gap:10px}
+  .xp{font-weight:700; font-size:14px; background:var(--ink); color:#fff; border-radius:999px; padding:4px 12px; white-space:nowrap}
+  .dots{display:flex; gap:6px}
+  .dot{width:9px; height:9px; border-radius:50%; background:#cfe0da; transition:background .3s}
+  .dot.on{background:var(--shell)}
+  .shelf{display:flex; gap:8px; margin-top:8px; min-height:30px; flex-wrap:wrap}
+  .shelf-label{font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-soft); align-self:center}
+  .word-chip{font-size:13px; font-weight:600; background:var(--sand); border:1.5px solid var(--sand-deep); border-radius:8px; padding:3px 10px; cursor:pointer; color:var(--ink)}
+  .word-chip:focus-visible{outline:3px solid var(--shell)}
+  main{flex:1; padding:20px 16px 110px}
+  .screen{display:none; animation:fade .35s ease}
+  .screen.on{display:block}
+  @keyframes fade{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+  @media (prefers-reduced-motion: reduce){ *{animation:none!important; transition:none!important} }
+  h1{font-size:30px; line-height:1.15; margin-bottom:6px}
+  h2{font-size:22px; line-height:1.2; margin-bottom:10px}
+  .kicker{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--shell); font-weight:700; margin-bottom:8px}
+  p{margin-bottom:12px}
+  .muted{color:var(--ink-soft); font-size:15px}
+  .card{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px; margin-bottom:14px}
+  .recap{background:#f0ebe1; border-left:4px solid var(--shell); border-radius:0 10px 10px 0; padding:10px 14px; margin-bottom:14px; font-size:14px}
+  .scene{background:linear-gradient(180deg,#bfe0d6 0%, #e9dfc6 78%, #dcc9a2 100%); border-radius:var(--radius); padding:26px 20px; text-align:center; margin-bottom:16px; font-size:44px; line-height:1.2; box-shadow:var(--shadow)}
+  .scene .cap{font-size:15px; color:var(--ink); margin-top:8px}
+  button{font:inherit; cursor:pointer; border:none; border-radius:12px; padding:13px 18px; background:var(--ink); color:#fff; font-weight:700; width:100%}
+  button:focus-visible{outline:3px solid var(--shell); outline-offset:2px}
+  button:disabled{opacity:.45; cursor:default}
+  .btn-ghost{background:transparent; color:var(--ink); border:2px solid var(--ink)}
+  .btn-row{display:flex; gap:10px}
+  .opt{display:block; width:100%; text-align:left; background:#fff; color:var(--ink); border:2px solid #d9e2de; font-weight:600; margin-bottom:10px; border-radius:12px; padding:14px 16px}
+  .opt .em{font-size:26px; margin-right:10px; vertical-align:-3px}
+  .opt.right{border-color:var(--good); background:#eef7f2}
+  .opt.wrong{border-color:var(--bad); background:#faf0ee}
+  .feedback{border-left:4px solid var(--ink); background:var(--sand); border-radius:0 10px 10px 0; padding:12px 14px; margin:10px 0 14px; font-size:15px}
+  .feedback.good{border-color:var(--good)}
+  .feedback.bad{border-color:var(--bad)}
+  .cut-viz{background:#fff; border:2px solid #d9e2de; border-radius:14px; padding:16px; text-align:center; margin-bottom:12px; font-size:30px}
+  .cut-viz .n{font-size:14px; color:var(--ink-soft); font-weight:600; margin-top:4px}
+  .modal-bg{position:fixed; inset:0; background:rgba(14,27,44,.55); display:none; z-index:40; align-items:center; justify-content:center; padding:24px}
+  .modal-bg.on{display:flex}
+  .word-card{background:var(--sand); border-radius:18px; padding:28px 24px; max-width:380px; width:100%; text-align:center; border:3px solid var(--sand-deep); animation:flip .5s ease}
+  @keyframes flip{from{transform:rotateY(80deg); opacity:0} to{transform:none; opacity:1}}
+  .word-card .w{font-size:34px; margin-bottom:8px}
+  .word-card .d{font-size:17px; color:var(--ink)}
+  #tutorBtn{position:fixed; right:16px; bottom:16px; width:auto; z-index:30; border-radius:999px; padding:13px 18px; background:var(--shell); box-shadow:0 4px 14px rgba(201,111,74,.4); font-size:15px}
+  .modal-overlay{position:fixed; inset:0; background:rgba(14,27,44,.65); z-index:49; display:none}
+  .modal-overlay.on{display:block}
+  #tutorPanel{position:fixed; inset:auto 0 0 0; max-width:560px; margin:0 auto; height:78dvh; background:#fff; border-radius:18px 18px 0 0; box-shadow:0 -6px 30px rgba(14,27,44,.25); z-index:50; display:none; flex-direction:column}
+  #tutorPanel.on{display:flex}
+  .tp-head{display:flex; justify-content:space-between; align-items:center; padding:14px 16px; border-bottom:1px solid #eee}
+  .tp-head button{width:auto; padding:10px 16px; font-size:15px; background:var(--shell); color:#fff; font-weight:700; border-radius:8px}
+  #tlog{flex:1; overflow-y:auto; padding:14px 16px; display:flex; flex-direction:column; gap:10px}
+  .msg{max-width:86%; padding:10px 14px; border-radius:14px; font-size:15px}
+  .msg.u{align-self:flex-end; background:var(--ink); color:#fff; border-bottom-right-radius:4px}
+  .msg.a{align-self:flex-start; background:var(--sand); border-bottom-left-radius:4px}
+  .tp-quick{display:flex; gap:8px; padding:0 16px 8px; flex-wrap:wrap}
+  .tp-quick button{width:auto; font-size:13px; padding:7px 12px; background:#fff; color:var(--ink); border:1.5px solid var(--ink); border-radius:999px}
+  .tp-in{display:flex; gap:8px; padding:10px 16px 18px; border-top:1px solid #eee}
+  .tp-in input{flex:1; font:inherit; padding:12px 14px; border:2px solid #d9e2de; border-radius:12px}
+  .tp-in button{width:auto; padding:12px 16px}
+  .night{background:linear-gradient(180deg,#0e1b2c 0%, #1b3247 100%); color:#fff; border-radius:var(--radius); padding:34px 22px; text-align:center; margin-bottom:16px}
+  .lantern{font-size:56px; animation:glow 2.2s ease infinite alternate}
+  @keyframes glow{from{filter:drop-shadow(0 0 4px var(--gold))} to{filter:drop-shadow(0 0 22px var(--gold))}}
+  .spin{display:inline-block; width:16px; height:16px; border:3px solid #fff; border-top-color:transparent; border-radius:50%; animation:sp 1s linear infinite; vertical-align:-3px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="hrow">
+      <div class="dots" id="dots"></div>
+      <div class="xp" id="xpBox">0 XP</div>
+    </div>
+    <div class="shelf" id="shelf"><span class="shelf-label">Words you own:</span></div>
+  </header>
+  <main id="main"></main>
+</div>
+
+<button id="tutorBtn" aria-label="Ask the tutor">Ask the tutor 💬</button>
+<div class="modal-overlay" id="tutorOverlay" onclick="if(event.target===this)toggleTutor(false)"></div>
+<div id="tutorPanel" role="dialog" aria-label="Tutor chat">
+  <div class="tp-head"><strong class="display">Tutor</strong><button onclick="toggleTutor(false)">✕ Close</button></div>
+  <div id="tlog"></div>
+  <div class="tp-quick">
+    <button onclick="quickAsk('Explain it differently')">Explain differently</button>
+    <button onclick="quickAsk('Make it easier')">Make it easier</button>
+    <button onclick="quickAsk('Give me an example')">Give example</button>
+    <button onclick="quickAsk('Quiz me')">Quiz me</button>
+  </div>
+  <div class="tp-in">
+    <input id="tin" placeholder="Ask about percentages…" onkeydown="if(event.key==='Enter')sendTutor()">
+    <button onclick="sendTutor()">Send</button>
+  </div>
+</div>
+<div class="modal-bg" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="word-card" id="wordCard"></div>
+</div>
+
+<script>
+/* =====================================================================
+   CONTENT — Module 16: Percentages
+   'Percent', '%', 'discount' become permitted here.
+   Final module of the Foundations + Money Math block (M1-16).
+===================================================================== */
+const VOCAB = {
+  percent:{term:"percent", def:"Out of 100. The % sign means 'per hundred' — 50% means 50 out of every 100. Same idea as hundredths, new costume."},
+  discount:{term:"discount", def:"A price cut, usually shown as a percent OFF. '50% off' means you pay only half — the store cuts the price in two."}
+};
+
+const QUESTIONS = {
+  "q161a":{type:"mc", prompt:"What does the % sign mean?", concept:"percent", opts:[
+    {t:"Out of 100", ok:true, fb:"Right. Percent literally means 'per hundred' — the same hundredths you already know, wearing a new costume."},
+    {t:"A secret math code", ok:false, fb:"No secret at all — % just means OUT OF 100. You've used hundredths since Module 15!"},
+    {t:"A type of coin", ok:false, fb:"Not a coin — a WAY of writing hundredths. 50% is just another way to say 50 out of 100."}]},
+  "q161b":{type:"mc", prompt:"50% of $1 is how much?", concept:"percent", opts:[
+    {t:"50¢", ok:true, fb:"Right — 50 out of 100 pennies. 50% = 50 hundredths = $0.50 = half. Three costumes, one idea."},
+    {t:"$50", ok:false, fb:"Way too much! 50% means 50 out of 100 — of a DOLLAR, that's 50 cents, not 50 dollars."},
+    {t:"5¢", ok:false, fb:"That would be 5%. Count carefully: 50% is fifty out of a hundred — 50¢."}]},
+  "q162a":{type:"mc", prompt:"Is 50% the SAME amount as one half and 0.50?", concept:"percent", opts:[
+    {t:"Yes — three costumes, one idea", ok:true, fb:"Exactly! ½ = 0.50 = 50% — fraction, decimal, and percent are just three ways to WRITE the exact same amount."},
+    {t:"No — percent is always bigger", ok:false, fb:"Check the coins: half a dollar, 0.50 of a dollar, and 50% of a dollar are all 50¢. Identical amounts, different outfits."},
+    {t:"No — they're used for different things entirely", ok:false, fb:"They describe the SAME thing three ways. ½ the fraction, 0.50 the decimal, 50% the percent — all mean exactly half."}]},
+  "q162b":{type:"tf", prompt:"True or false: 100% means all of something — the whole thing.", answer:true, concept:"percent",
+    good:"Right — 100 out of 100 IS the whole amount. 100% of your allowance is every penny of it.",
+    bad:"Think it through: 100 out of 100 parts is... all of them! 100% always means the complete whole."},
+  "q163a":{type:"mc", prompt:"A kite costs $4. The sign says '50% OFF.' What do you pay?", concept:"discount", opts:[
+    {t:"$2", ok:true, fb:"Right — 50% off means the price is cut in half. $4 → $2. The store keeps $2, you keep $2 in your pocket."},
+    {t:"$4.50", ok:false, fb:"That's MORE than before — a discount should cost LESS! 50% off means half price: $4 → $2."},
+    {t:"$0.50", ok:false, fb:"That's 50 CENTS off, not 50 percent off. 50% off a $4 kite cuts the whole price in half: $2."}]},
+  "q163c":{type:"mc", prompt:"A $1 candy is 25% off. What do you pay?", concept:"discount", opts:[
+    {t:"75¢ — because 25% is the coin you already know", ok:true, fb:"Right! 25% off means the QUARTER coin's fraction gets subtracted: $1.00 − $0.25 = $0.75. The quarter's secret from Module 14, back in action."},
+    {t:"25¢", ok:false, fb:"That's the DISCOUNT amount, not what you pay! Subtract it from the price: $1.00 − $0.25 = $0.75."},
+    {t:"90¢", ok:false, fb:"Careful: 25% of $1 is 25¢ off, not 10¢ off. $1.00 − $0.25 = $0.75."}]},
+  "q163b":{type:"mc", transfer:true, prompt:"Kai once traded 10 shells and gave a friend '10% back' — one shell. Does percent work on shells too?", concept:"percent", opts:[
+    {t:"Yes — percent just means out of 100, of ANY amount", ok:true, fb:"Exactly. 10% of 10 shells is 1 shell (10 out of 100, scaled down). Percent doesn't care if it's shells, dollars, or mangoes — it's a way of describing PARTS, everywhere."},
+    {t:"No — percent only works on money", ok:false, fb:"Percent works on any amount! 10% of 10 shells is 1 shell, just like 10% of $10 is $1 — same idea, different treasure."},
+    {t:"No — shells can't be divided into 100 parts", ok:false, fb:"You don't need 100 actual shells — percent is a RATIO. 10% of anything means the same fraction: one tenth."}]}
+};
+
+/* =====================================================================
+   STATE + PERSISTENCE
+===================================================================== */
+let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false,false], masteryPassed:false };
+
+async function loadState(){
+  try{
+    const r = await window.storage.get("mod16-state");
+    if(r && r.value){ S = Object.assign(S, JSON.parse(r.value)); return; }
+  } catch(e){ }
+  try{
+    const saved = localStorage.getItem("mod16-state");
+    if(saved){ S = Object.assign(S, JSON.parse(saved)); }
+    for(let i=15;i>=1;i--){
+      const prev = localStorage.getItem("mod"+i+"-state");
+      if(prev){ const p = JSON.parse(prev); if(p.xp > S.xp) S.xp = p.xp; }
+    }
+  } catch(e){ }
+}
+async function saveState(){
+  try{ await window.storage.set("mod16-state", JSON.stringify(S)); }catch(e){
+    try{ localStorage.setItem("mod16-state", JSON.stringify(S)); }catch(e2){}
+  }
+}
+function addXP(n){ S.xp+=n; document.getElementById("xpBox").textContent = S.xp+" XP"; saveState(); }
+function earnWord(k){
+  if(S.shelf.includes(k)) return;
+  S.shelf.push(k); renderShelf(); saveState();
+  showWordCard(k);
+}
+function renderShelf(){
+  const el=document.getElementById("shelf");
+  el.innerHTML='<span class="shelf-label">Words you own:</span>';
+  S.shelf.forEach(k=>{
+    if(!VOCAB[k]) return;
+    const b=document.createElement("button"); b.className="word-chip"; b.textContent=VOCAB[k].term;
+    b.onclick=()=>showWordCard(k); el.appendChild(b);
+  });
+}
+function showWordCard(k){
+  const v=VOCAB[k]; if(!v) return;
+  document.getElementById("wordCard").innerHTML =
+    '<div class="w display">'+v.term+'</div><div class="d">'+v.def+'</div>' +
+    '<button style="margin-top:18px" onclick="closeModal()">Got it</button>';
+  document.getElementById("modal").classList.add("on");
+}
+function closeModal(){ document.getElementById("modal").classList.remove("on"); }
+
+/* =====================================================================
+   SCREEN ENGINE
+===================================================================== */
+const M = document.getElementById("main");
+function show(html){ M.innerHTML='<div class="screen on">'+html+'</div>'; window.scrollTo(0,0); }
+function revealFB(){ setTimeout(function(){
+  var ids=["cont","c2","fb","fb2"];
+  for(var i=0;i<ids.length;i++){
+    var el=document.getElementById(ids[i]);
+    if(el && el.innerHTML && el.innerHTML.trim()){
+      if(el.scrollIntoView) el.scrollIntoView({behavior:"smooth", block:"nearest"});
+      return;
+    }
+  }
+},80); }
+function dots(n,i){
+  const d=document.getElementById("dots"); d.innerHTML="";
+  for(let k=0;k<n;k++){const s=document.createElement("span");s.className="dot"+(k<=i?" on":"");d.appendChild(s);}
+}
+function next(){ S.step++; saveState(); render(); }
+function render(){
+  const les=LESSONS[S.lesson];
+  dots(les.steps.length, S.step);
+  if(S.step>=les.steps.length){ lessonComplete(); return; }
+  les.steps[S.step]();
+}
+function lessonComplete(){
+  if(!S.done[S.lesson]){ S.done[S.lesson]=true; addXP(10); }
+  saveState();
+  goHome();
+}
+function renderMC(qid, onDone){
+  const q=QUESTIONS[qid];
+  let html='<div class="kicker">Question</div><h2 class="display">'+q.prompt+'</h2><div id="opts">';
+  q.opts.forEach((o,i)=>{ html+='<button class="opt" data-i="'+i+'">'+o.t+'</button>'; });
+  html+='</div><div id="fb"></div><div id="cont"></div>';
+  show(html);
+  let answered=false, firstShot=!(qid in S.firstTry);
+  document.querySelectorAll(".opt").forEach(btn=>{
+    btn.onclick=()=>{
+      const i=+btn.dataset.i, o=q.opts[i];
+      if(answered && o.ok===false) return;
+      btn.classList.add(o.ok?"right":"wrong");
+      document.getElementById("fb").innerHTML='<div class="feedback '+(o.ok?'good':'bad')+'">'+o.fb+'</div>';
+      revealFB();
+      if(o.ok){
+        if(firstShot && !answered){ S.firstTry[qid]=true; addXP(2); }
+        answered=true;
+        document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
+        document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>';
+        revealFB();
+        window._c=()=>onDone;
+      } else { answered=true; S.firstTry[qid]=false; }
+      saveState();
+    };
+  });
+}
+function renderTF(qid,onDone){
+  const q=QUESTIONS[qid];
+  show('<div class="kicker">True or false</div><h2 class="display">'+q.prompt+'</h2>'+
+    '<div class="btn-row"><button class="opt" id="tT">True</button><button class="opt" id="tF">False</button></div>'+
+    '<div id="fb"></div><div id="cont"></div>');
+  let firstShot=!(qid in S.firstTry), answered=false;
+  function pick(val,el){
+    const ok = (val===q.answer);
+    el.classList.add(ok?"right":"wrong");
+    document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?q.good:q.bad)+'</div>';
+    revealFB();
+    if(ok){
+      if(firstShot && !answered){S.firstTry[qid]=true; addXP(2);}
+      document.getElementById("tT").disabled=true; document.getElementById("tF").disabled=true;
+      document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>'; window._c=()=>onDone;
+      revealFB();
+    } else { S.firstTry[qid]=false; }
+    answered=true; saveState();
+  }
+  document.getElementById("tT").onclick=e=>pick(true,e.target);
+  document.getElementById("tF").onclick=e=>pick(false,e.target);
+}
+
+/* =====================================================================
+   LESSON 1 — The Mysterious Sign
+===================================================================== */
+const L1=[
+  ()=>show('<div class="kicker">Lesson 1 · The mysterious sign</div>'+
+    '<div class="recap"><strong>Kai\'s story so far:</strong> A huge sign appears at the trading post: ALL KITES 50% OFF. Kai squints at the strange circle-slash-circle symbol.</div>'+
+    '<div class="scene" style="font-size:48px">50<span style="color:var(--shell)">%</span> OFF<div class="cap">"Fifty-WHAT? What does that sign even mean?"</div></div>'+
+    '<button onclick="next()">Let\'s find out</button>'),
+  ()=>show('<div class="kicker">Lesson 1</div>'+
+    '<div class="card"><p>Rana laughs. "You already know this one — it\'s wearing a disguise."</p>'+
+    '<p>The % sign means <strong>"out of 100."</strong> It\'s the SAME idea as hundredths from last module — just written with a fun new symbol instead of a dot.</p>'+
+    '<p style="text-align:center; font-size:24px"><strong>50% = 50 out of 100 = 0.50 = half</strong></p>'+
+    '<p>Numbers written this way are called <strong>percentages</strong>.</p></div>'+
+    '<button onclick="earnWord(\'percent\');next()">New word: percent</button>'),
+  ()=>renderMC("q161a", next),
+  ()=>renderMC("q161b", next),
+];
+
+/* =====================================================================
+   LESSON 2 — Three Costumes, One Idea (game)
+===================================================================== */
+const COSTUME_ROUNDS=[
+  {viz:"◐", label:"Half of something", opts:["½ = 0.50 = 50%","½ = 0.05 = 5%","½ = 5.0 = 500%"], truth:"½ = 0.50 = 50%", why:"Half is always half, in every costume: fraction ½, decimal 0.50, percent 50%."},
+  {viz:"◔", label:"A quarter of something", opts:["¼ = 0.25 = 25%","¼ = 0.4 = 40%","¼ = 0.75 = 75%"], truth:"¼ = 0.25 = 25%", why:"The quarter coin, the decimal 0.25, and 25% are the exact same amount."},
+  {viz:"🟢", label:"All of something", opts:["1 = 1.00 = 100%","1 = 0.01 = 1%","1 = 10.0 = 1000%"], truth:"1 = 1.00 = 100%", why:"The whole thing = 1 whole = 1.00 = 100%. All three mean 'everything.'"},
+  {viz:"🔟%", label:"One tenth of something", opts:["1/10 = 0.10 = 10%","1/10 = 0.01 = 1%","1/10 = 1.0 = 100%"], truth:"1/10 = 0.10 = 10%", why:"A dime's fraction: one tenth = 0.10 = 10%. Same amount, three names."}
+];
+const L2=[
+  ()=>show('<div class="kicker">Lesson 2 · Three costumes, one idea</div>'+
+    '<div class="recap"><strong>So far:</strong> % means out of 100 — same as hundredths.</div>'+
+    '<div class="card"><p>Here\'s the big reveal of this whole block: <strong>fractions, decimals, and percents are the SAME family</strong>, just wearing different clothes.</p>'+
+    '<p>½ the fraction. 0.50 the decimal. 50% the percent. All three mean exactly <strong>half</strong> — pick whichever costume fits the moment.</p></div>'+
+    '<button onclick="next()">Match them up</button>'),
+  ()=>{
+    let round=0;
+    function draw(){
+      const r=COSTUME_ROUNDS[round];
+      const shuffled=[...r.opts].sort(()=>Math.random()-.5);
+      show('<div class="kicker">Costume match · '+(round+1)+' of '+COSTUME_ROUNDS.length+'</div>'+
+        '<div class="cut-viz">'+r.viz+'<div class="n">'+r.label+'</div></div>'+
+        '<h2 class="display" style="text-align:center">Which trio matches?</h2>'+
+        '<div id="opts">'+shuffled.map(v=>'<button class="opt" data-v="'+v.replace(/"/g,'&quot;')+'">'+v+'</button>').join('')+'</div>'+
+        '<div id="fb"></div><div id="cont"></div>');
+      let answered=false;
+      document.querySelectorAll(".opt").forEach(btn=>{
+        btn.onclick=()=>{
+          const v=btn.dataset.v, ok=v===r.truth;
+          if(answered && !ok) return;
+          btn.classList.add(ok?"right":"wrong");
+          document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+
+            (ok?'Right — '+r.why:'Not quite. '+r.why+' Try again.')+'</div>';
+          revealFB();
+          if(ok){
+            answered=true; addXP(2);
+            document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
+            document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(round<COSTUME_ROUNDS.length-1?"Next":"Done")+'</button>';
+            revealFB();
+            window._n=()=>{ round++; if(round<COSTUME_ROUNDS.length) draw(); else { addXP(4); next(); } };
+          } else { answered=true; }
+        };
+      });
+    }
+    draw();
+  },
+  ()=>renderMC("q162a", next),
+  ()=>renderTF("q162b", next),
+];
+
+/* =====================================================================
+   LESSON 3 — The Sale
+===================================================================== */
+const L3=[
+  ()=>show('<div class="kicker">Lesson 3 · The sale</div>'+
+    '<div class="recap"><strong>So far:</strong> Kai knows % means out of 100, and all three costumes match.</div>'+
+    '<div class="scene">🪁 $4 → 50% OFF<div class="cap">Kai finally understands the sign. Time to actually SHOP the sale.</div></div>'+
+    '<button onclick="next()">Do the math</button>'),
+  ()=>show('<div class="kicker">Lesson 3</div>'+
+    '<div class="card"><p>A price cut shown as a percent is called a <strong>discount</strong>.</p>'+
+    '<p>"50% OFF" on a $4 kite means: the store cuts the price by half. $4 → <strong>$2</strong>.</p>'+
+    '<p>The trick that always works: turn the percent into its costume you like best. 50% = half. Half of $4 = $2. Done.</p>'+
+    '<p>For trickier percents (like 25%), remember the quarter coin: 25% off means subtract ONE quarter of the price.</p></div>'+
+    '<button onclick="earnWord(\'discount\');next()">New word: discount</button>'),
+  ()=>renderMC("q163a", next),
+  ()=>renderMC("q163c", next),
+];
+
+/* =====================================================================
+   LESSON 4 — Mastery
+===================================================================== */
+let mastery = {qs:[], idx:0, score:0};
+const L4=[
+  ()=>{
+    const pool=["q161a","q161b","q162a","q162b","q163a","q163c"].sort(()=>Math.random()-.5).slice(0,4);
+    mastery={qs:[...pool,"q163b"].sort(()=>Math.random()-.5), idx:0, score:0};
+    show('<div class="kicker">Lesson 4 · Show what you know</div>'+
+      '<div class="recap"><strong>Module 16 quest:</strong> You cracked the % sign, and learned fractions, decimals, and percents are the same family.</div>'+
+      '<h1 class="display">Five questions.</h1>'+
+      '<p>Get 4 of 5 right and Module 16 is yours.</p>'+
+      '<button onclick="next()">Start</button>');
+  },
+  ()=>{ masteryQ(); },
+  ()=>{ finishMastery(mastery.score>=4); },
+];
+function masteryQ(){
+  if(mastery.idx>=mastery.qs.length){ next(); return; }
+  const qid=mastery.qs[mastery.idx];
+  const q=QUESTIONS[qid];
+  const cont=()=>{ mastery.idx++; masteryQ(); };
+  if(q.type==="tf"){ renderTFM(qid,cont); } else { renderMCM(qid,cont); }
+}
+function renderMCM(qid,onDone){
+  const q=QUESTIONS[qid];
+  let html='<div class="kicker">Mastery · '+(mastery.idx+1)+' of '+mastery.qs.length+'</div><h2 class="display">'+q.prompt+'</h2>';
+  q.opts.forEach((o,i)=>html+='<button class="opt" data-i="'+i+'">'+o.t+'</button>');
+  html+='<div id="fb"></div><div id="cont"></div>'; show(html);
+  let answered=false;
+  document.querySelectorAll(".opt").forEach(btn=>{
+    btn.onclick=()=>{
+      if(answered) return; answered=true;
+      const o=q.opts[+btn.dataset.i];
+      btn.classList.add(o.ok?"right":"wrong");
+      if(o.ok) mastery.score++;
+      document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
+      document.getElementById("fb").innerHTML='<div class="feedback '+(o.ok?'good':'bad')+'">'+o.fb+'</div>';
+      document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>'; window._c=()=>onDone;
+      revealFB();
+    };
+  });
+}
+function renderTFM(qid,onDone){
+  const q=QUESTIONS[qid];
+  show('<div class="kicker">Mastery · '+(mastery.idx+1)+' of '+mastery.qs.length+'</div><h2 class="display">'+q.prompt+'</h2>'+
+    '<div class="btn-row"><button class="opt" id="tT">True</button><button class="opt" id="tF">False</button></div>'+
+    '<div id="fb"></div><div id="cont"></div>');
+  let answered=false;
+  function pick(v,el){
+    if(answered)return; answered=true;
+    const ok=(v===q.answer); if(ok)mastery.score++;
+    el.classList.add(ok?"right":"wrong");
+    document.getElementById("tT").disabled=true;document.getElementById("tF").disabled=true;
+    document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?q.good:q.bad)+'</div>';
+    document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>'; window._c=()=>onDone;
+    revealFB();
+  }
+  document.getElementById("tT").onclick=e=>pick(true,e.target);
+  document.getElementById("tF").onclick=e=>pick(false,e.target);
+}
+function finishMastery(pass){
+  if(pass && !S.masteryPassed){ S.masteryPassed=true; addXP(20); }
+  saveState();
+  if(pass){
+    show('<div class="night"><div class="lantern">🏮</div>'+
+      '<h1 class="display" style="color:#fff">Module 16 complete</h1>'+
+      '<p style="color:#cfe0ee">Quiz: '+mastery.score+'/5 ✓ · FOUNDATIONS + MONEY MATH COMPLETE 🎉</p></div>'+
+      '<div class="card"><p><strong>You now own:</strong> percent and discount — the last piece of the fraction/decimal/percent family.</p>'+
+      '<p>Look how far Kai has come: from wondering what money even IS, to earning it, spending it, saving it, and doing real math with it. Sixteen modules. One island. One kid who now understands money better than most grown-ups.</p>'+
+      '<p>That night, Kai\'s tin holds $23 — the most ever. But a storm is rolling in, and the tin sits under a loose floorboard...</p>'+
+      '<p class="muted">Is there somewhere safer? Module 17: What Is a Bank? (Coming soon.)</p></div>'+
+      '<button style="margin-bottom:10px" onclick="window.location.href=\'index.html\'">🗺️ Back to all modules</button>'+
+      '<button class="btn-ghost" onclick="goHome()">Stay in Module 16</button>');
+    S.done[3]=true; saveState();
+  } else {
+    show('<div class="kicker">Almost there</div>'+
+      '<h1 class="display">One more try</h1>'+
+      '<p>You got '+mastery.score+' of 5. The keys: % means out of 100, ½ = 0.50 = 50% are the same amount, and a discount subtracts the percent from the price.</p>'+
+      '<button onclick="S.step=0;render()">Try again</button>'+
+      '<button class="btn-ghost" style="margin-top:10px" onclick="toggleTutor(true)">Talk with the tutor</button>'+
+      '<button class="btn-ghost" style="margin-top:10px" onclick="goHome()">Back home</button>');
+  }
+}
+
+const LESSONS=[
+  {title:"The Mysterious Sign", sub:"What does % actually mean?", steps:L1, emoji:"🏷️"},
+  {title:"Three Costumes, One Idea", sub:"½ = 0.50 = 50% — match them up", steps:L2, emoji:"🎭"},
+  {title:"The Sale", sub:"Shop the 50% OFF kite sign", steps:L3, emoji:"🪁"},
+  {title:"Show What You Know", sub:"Mastery check", steps:L4, emoji:"🏮"},
+];
+
+/* =====================================================================
+   HOME
+===================================================================== */
+function goHome(){
+  dots(4, S.done.filter(Boolean).length-1);
+  let html='<div class="kicker">Module 16</div><h1 class="display">Percentages</h1>'+
+    '<p class="muted">Four short lessons. The last piece of the puzzle.</p>';
+  LESSONS.forEach((l,i)=>{
+    const locked = i>0 && !S.done[i-1];
+    const done = S.done[i];
+    html+='<button class="opt" '+(locked?'disabled':'')+' onclick="startLesson('+i+')">'+
+      '<span class="em">'+(done?'✅':locked?'🔒':l.emoji)+'</span><strong>'+l.title+'</strong><br>'+
+      '<span class="muted" style="font-weight:400">'+l.sub+'</span></button>';
+  });
+  if(S.masteryPassed) html+='<div class="night" style="margin-top:8px"><div class="lantern">🏮</div><p style="color:#cfe0ee">Module 16 mastered · '+S.xp+' XP</p></div>';
+  html+='<button class="btn-ghost" style="margin-top:14px" onclick="window.location.href=\'index.html\'">🗺️ Back to all modules</button>';
+  show(html);
+}
+function startLesson(i){ S.lesson=i; S.step=0; saveState(); render(); }
+
+/* =====================================================================
+   TUTOR
+===================================================================== */
+let tHist=[];
+function toggleTutor(on){
+  document.getElementById("tutorPanel").classList.toggle("on",on);
+  document.getElementById("tutorOverlay").classList.toggle("on",on);
+  saveState();
+  if(on&&tHist.length===0) tMsg("a","Hi! Ask me anything about percentages and discounts — or tap a button below.");
+}
+document.getElementById("tutorBtn").onclick=()=>toggleTutor(true);
+function tMsg(who,txt){ const d=document.createElement("div"); d.className="msg "+who; d.textContent=txt; document.getElementById("tlog").appendChild(d); d.scrollIntoView({behavior:"smooth"}); }
+function quickAsk(t){ document.getElementById("tin").value=t; sendTutor(); }
+async function sendTutor(){
+  const inp=document.getElementById("tin"); const txt=inp.value.trim(); if(!txt) return;
+  inp.value=""; tMsg("u",txt); tHist.push({role:"user",content:txt});
+  const think=document.createElement("div"); think.className="msg a"; think.innerHTML='<span class="spin" style="border-color:var(--ink);border-top-color:transparent"></span>';
+  document.getElementById("tlog").appendChild(think);
+  const sys="You are the tutor inside Module 16 (Percentages) of a financial-literacy app — the FINAL module of the Foundations + Money Math block. The learner may be a child or an adult. "+
+    "They know from earlier modules: money, trade, dollar, cent, coins, compare, add, subtract, buy, sell, pay, earn, spend, save, goal, multiply, divide, split, fraction, half, quarter, decimal, tenth, hundredth. From THIS module: percent (out of 100, same idea as hundredths with a % sign), 50% = 0.50 = half = the exact same amount (three costumes, one idea), 100% = the whole thing, discount (a price cut shown as percent off — subtract the percent amount from the price), and the quarter-coin trick for 25% (25% off = subtract one quarter of the price). "+
+    "STRICT RULES: never use these words (later modules): bank, deposit, interest, compound interest, invest, stock, budget, tax, tip calculation beyond simple discounts, percent increase/markup (only decrease/discount is taught here), percentage points vs percent distinction. Keep all percents simple round numbers (10%, 25%, 50%, 100%) tied to money and discounts only. If asked about earning percent on savings or interest, say warmly that's a wonderful question for a much later module. "+
+    "Story context: the trading post's '50% OFF' kite sign confused Kai; Rana revealed % just means out of 100; they matched fraction/decimal/percent costumes; a $4 kite at 50% off costs $2; a $1 candy at 25% off costs 75¢ (the quarter-coin trick). "+
+    "Never repeat a failed explanation — switch analogies (splitting a pizza into 100 tiny slices, a jar of 100 marbles, a 100-meter race). Keep answers under 80 words, warm, honest, never mark wrong ideas right. If asked 'Quiz me', ask ONE simple percent-of-money question and wait.";
+  try{
+    const controller=new AbortController(); const timeout=setTimeout(()=>controller.abort(),8000);
+    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:300,system:sys,messages:tHist.slice(-10)}),signal:controller.signal});
+    clearTimeout(timeout);
+    const data=await r.json();
+    const out=(data.content||[]).filter(c=>c.type==="text").map(c=>c.text).join("").trim() || "I lost my thread. Ask again?";
+    think.remove(); tMsg("a",out); tHist.push({role:"assistant",content:out});
+  }catch(e){
+    think.remove(); tMsg("a","I can't think right now. Try again in a moment — or tap the word cards up top to review.");
+  }
+}
+
+/* ---------- boot ---------- */
+(async function(){
+  await loadState();
+  document.getElementById("xpBox").textContent=S.xp+" XP";
+  renderShelf();
+  goHome();
+})();
+</script>
+</body>
+</html>

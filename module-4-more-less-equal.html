@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>More, Less & Equal — Module 4</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap');
+  :root{
+    --ink:#123a3f; --ink-soft:#3d6166; --lagoon:#ecf5f2; --card:#ffffff;
+    --sand:#f3ead8; --sand-deep:#e5d7bc; --shell:#c96f4a; --shell-soft:#f4e0d6;
+    --night:#0e1b2c; --gold:#e8b84b; --good:#2e7d5b; --bad:#a94436;
+    --radius:14px; --shadow:0 2px 10px rgba(18,58,63,.08);
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html,body{height:100%}
+  body{
+    font-family:"Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif;
+    background:var(--lagoon); color:var(--ink); font-size:17px; line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .display{font-family:"Fraunces",Georgia,serif; font-weight:700; letter-spacing:-.01em}
+  #app{max-width:560px; margin:0 auto; min-height:100dvh; display:flex; flex-direction:column}
+  header{position:sticky; top:0; z-index:20; background:var(--lagoon); padding:12px 16px 8px; border-bottom:1px solid #d9e6e1}
+  .hrow{display:flex; align-items:center; justify-content:space-between; gap:10px}
+  .xp{font-weight:700; font-size:14px; background:var(--ink); color:#fff; border-radius:999px; padding:4px 12px; white-space:nowrap}
+  .dots{display:flex; gap:6px}
+  .dot{width:9px; height:9px; border-radius:50%; background:#cfe0da; transition:background .3s}
+  .dot.on{background:var(--shell)}
+  .shelf{display:flex; gap:8px; margin-top:8px; min-height:30px; flex-wrap:wrap}
+  .shelf-label{font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-soft); align-self:center}
+  .word-chip{font-size:13px; font-weight:600; background:var(--sand); border:1.5px solid var(--sand-deep); border-radius:8px; padding:3px 10px; cursor:pointer; color:var(--ink)}
+  .word-chip:focus-visible{outline:3px solid var(--shell)}
+  main{flex:1; padding:20px 16px 110px}
+  .screen{display:none; animation:fade .35s ease}
+  .screen.on{display:block}
+  @keyframes fade{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+  @media (prefers-reduced-motion: reduce){ *{animation:none!important; transition:none!important} }
+  h1{font-size:30px; line-height:1.15; margin-bottom:6px}
+  h2{font-size:22px; line-height:1.2; margin-bottom:10px}
+  .kicker{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--shell); font-weight:700; margin-bottom:8px}
+  p{margin-bottom:12px}
+  .muted{color:var(--ink-soft); font-size:15px}
+  .card{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px; margin-bottom:14px}
+  .recap{background:#f0ebe1; border-left:4px solid var(--shell); border-radius:0 10px 10px 0; padding:10px 14px; margin-bottom:14px; font-size:14px}
+  .scene{background:linear-gradient(180deg,#bfe0d6 0%, #e9dfc6 78%, #dcc9a2 100%); border-radius:var(--radius); padding:26px 20px; text-align:center; margin-bottom:16px; font-size:44px; line-height:1.2; box-shadow:var(--shadow)}
+  .scene .cap{font-size:15px; color:var(--ink); margin-top:8px}
+  button{font:inherit; cursor:pointer; border:none; border-radius:12px; padding:13px 18px; background:var(--ink); color:#fff; font-weight:700; width:100%}
+  button:focus-visible{outline:3px solid var(--shell); outline-offset:2px}
+  button:disabled{opacity:.45; cursor:default}
+  .btn-ghost{background:transparent; color:var(--ink); border:2px solid var(--ink)}
+  .btn-row{display:flex; gap:10px}
+  .opt{display:block; width:100%; text-align:left; background:#fff; color:var(--ink); border:2px solid #d9e2de; font-weight:600; margin-bottom:10px; border-radius:12px; padding:14px 16px}
+  .opt .em{font-size:26px; margin-right:10px; vertical-align:-3px}
+  .opt.right{border-color:var(--good); background:#eef7f2}
+  .opt.wrong{border-color:var(--bad); background:#faf0ee}
+  .feedback{border-left:4px solid var(--ink); background:var(--sand); border-radius:0 10px 10px 0; padding:12px 14px; margin:10px 0 14px; font-size:15px}
+  .feedback.good{border-color:var(--good)}
+  .feedback.bad{border-color:var(--bad)}
+  /* comparison game */
+  .vs-row{display:flex; gap:10px; align-items:stretch; margin-bottom:12px}
+  .vs-side{flex:1; background:#fff; border:2px solid #d9e2de; border-radius:14px; padding:16px 10px; text-align:center}
+  .vs-side .amt{font-size:24px; font-weight:700; margin-bottom:4px}
+  .vs-side .sub{font-size:13px; color:var(--ink-soft)}
+  .vs-mid{display:flex; align-items:center; font-weight:700; color:var(--ink-soft)}
+  .pick-row{display:flex; gap:8px; margin-bottom:12px}
+  .pick-row button{font-size:14px; padding:12px 6px}
+  .modal-bg{position:fixed; inset:0; background:rgba(14,27,44,.55); display:none; z-index:40; align-items:center; justify-content:center; padding:24px}
+  .modal-bg.on{display:flex}
+  .word-card{background:var(--sand); border-radius:18px; padding:28px 24px; max-width:380px; width:100%; text-align:center; border:3px solid var(--sand-deep); animation:flip .5s ease}
+  @keyframes flip{from{transform:rotateY(80deg); opacity:0} to{transform:none; opacity:1}}
+  .word-card .w{font-size:34px; margin-bottom:8px}
+  .word-card .d{font-size:17px; color:var(--ink)}
+  #tutorBtn{position:fixed; right:16px; bottom:16px; width:auto; z-index:30; border-radius:999px; padding:13px 18px; background:var(--shell); box-shadow:0 4px 14px rgba(201,111,74,.4); font-size:15px}
+  .modal-overlay{position:fixed; inset:0; background:rgba(14,27,44,.65); z-index:49; display:none}
+  .modal-overlay.on{display:block}
+  #tutorPanel{position:fixed; inset:auto 0 0 0; max-width:560px; margin:0 auto; height:78dvh; background:#fff; border-radius:18px 18px 0 0; box-shadow:0 -6px 30px rgba(14,27,44,.25); z-index:50; display:none; flex-direction:column}
+  #tutorPanel.on{display:flex}
+  .tp-head{display:flex; justify-content:space-between; align-items:center; padding:14px 16px; border-bottom:1px solid #eee}
+  .tp-head button{width:auto; padding:10px 16px; font-size:15px; background:var(--shell); color:#fff; font-weight:700; border-radius:8px}
+  #tlog{flex:1; overflow-y:auto; padding:14px 16px; display:flex; flex-direction:column; gap:10px}
+  .msg{max-width:86%; padding:10px 14px; border-radius:14px; font-size:15px}
+  .msg.u{align-self:flex-end; background:var(--ink); color:#fff; border-bottom-right-radius:4px}
+  .msg.a{align-self:flex-start; background:var(--sand); border-bottom-left-radius:4px}
+  .tp-quick{display:flex; gap:8px; padding:0 16px 8px; flex-wrap:wrap}
+  .tp-quick button{width:auto; font-size:13px; padding:7px 12px; background:#fff; color:var(--ink); border:1.5px solid var(--ink); border-radius:999px}
+  .tp-in{display:flex; gap:8px; padding:10px 16px 18px; border-top:1px solid #eee}
+  .tp-in input{flex:1; font:inherit; padding:12px 14px; border:2px solid #d9e2de; border-radius:12px}
+  .tp-in button{width:auto; padding:12px 16px}
+  .night{background:linear-gradient(180deg,#0e1b2c 0%, #1b3247 100%); color:#fff; border-radius:var(--radius); padding:34px 22px; text-align:center; margin-bottom:16px}
+  .lantern{font-size:56px; animation:glow 2.2s ease infinite alternate}
+  @keyframes glow{from{filter:drop-shadow(0 0 4px var(--gold))} to{filter:drop-shadow(0 0 22px var(--gold))}}
+  .spin{display:inline-block; width:16px; height:16px; border:3px solid #fff; border-top-color:transparent; border-radius:50%; animation:sp 1s linear infinite; vertical-align:-3px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="hrow">
+      <div class="dots" id="dots"></div>
+      <div class="xp" id="xpBox">0 XP</div>
+    </div>
+    <div class="shelf" id="shelf"><span class="shelf-label">Words you own:</span></div>
+  </header>
+  <main id="main"></main>
+</div>
+
+<button id="tutorBtn" aria-label="Ask the tutor">Ask the tutor 💬</button>
+<div class="modal-overlay" id="tutorOverlay" onclick="if(event.target===this)toggleTutor(false)"></div>
+<div id="tutorPanel" role="dialog" aria-label="Tutor chat">
+  <div class="tp-head"><strong class="display">Tutor</strong><button onclick="toggleTutor(false)">✕ Close</button></div>
+  <div id="tlog"></div>
+  <div class="tp-quick">
+    <button onclick="quickAsk('Explain it differently')">Explain differently</button>
+    <button onclick="quickAsk('Make it easier')">Make it easier</button>
+    <button onclick="quickAsk('Give me an example')">Give example</button>
+    <button onclick="quickAsk('Quiz me')">Quiz me</button>
+  </div>
+  <div class="tp-in">
+    <input id="tin" placeholder="Ask about comparing amounts…" onkeydown="if(event.key==='Enter')sendTutor()">
+    <button onclick="sendTutor()">Send</button>
+  </div>
+</div>
+<div class="modal-bg" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="word-card" id="wordCard"></div>
+</div>
+
+<script>
+/* =====================================================================
+   CONTENT — Module 4: More, Less & Equal
+   Curriculum guard: price/cost are Module 5 words; buy/sell are Module 8.
+   This module says "trades for" / "asks for" / "worth".
+===================================================================== */
+const VOCAB = {
+  compare:{term:"compare", def:"To look at two things side by side and see which is more, which is less — or if they match."},
+  equal:{term:"equal", def:"When two amounts are exactly the same. 4 quarters and 1 dollar are equal: both are 100 cents."}
+};
+
+const QUESTIONS = {
+  "q41a":{type:"mc", prompt:"Which is more: 75¢ or $0.80?", concept:"compare", opts:[
+    {t:"75¢", ok:false, fb:"$0.80 means 80 cents. Compare cents to cents: 80 is more than 75."},
+    {t:"$0.80", ok:true, fb:"Right. $0.80 = 80 cents. 80 beats 75. Turning everything into cents makes comparing easy."},
+    {t:"They're equal", ok:false, fb:"Close numbers, but not the same: 75 cents vs 80 cents. 80 is more."}]},
+  "q41b":{type:"mc", prompt:"Kai has 4 quarters. Rana has $1. Who has more?", concept:"equal", opts:[
+    {t:"Kai", ok:false, fb:"Count Kai's quarters: 25+25+25+25 = 100 cents. And $1 = 100 cents too. Look again…"},
+    {t:"Rana", ok:false, fb:"$1 is 100 cents. But 4 quarters is 25×4 = 100 cents too. What does that make them?"},
+    {t:"They're equal", ok:true, fb:"Exactly. Different shapes, same amount: both are 100 cents. That's what equal means."}]},
+  "q42a":{type:"mc", prompt:"Kai has $2.35. Rana has $2.53. Who has more?", concept:"compare", opts:[
+    {t:"Kai", ok:false, fb:"Careful — the digits are sneaky. Dollars match (2 = 2), so compare the cents: 35 vs 53. Which is bigger?"},
+    {t:"Rana", ok:true, fb:"Right. Same dollars, so compare cents: 53 beats 35. Reading carefully wins."},
+    {t:"They're equal", ok:false, fb:"The same digits appear, but in a different order — 35 cents is not 53 cents."}]},
+  "q42b":{type:"tf", prompt:"True or false: whoever holds MORE coins always has MORE money.", answer:false, concept:"compare",
+    good:"Right — remember from Module 3: 3 quarters (75¢) beats 6 dimes (60¢). Count the cents, not the coins.",
+    bad:"Think back to Module 3: 3 quarters = 75¢, but 6 dimes = only 60¢. Fewer coins can be worth more. Count cents, not coins."},
+  "q43a":{type:"mc", transfer:true, prompt:"Two islands trade different things — one uses shells, one uses red stones. A trader wants to compare a pile of 40 shells with a pile of 40 stones. Can she just count them?", concept:"compare", opts:[
+    {t:"Yes — 40 equals 40, so the piles are equal", ok:false, fb:"Counting pieces isn't enough. Remember: worth isn't about how many things you hold. One stone might be worth ten shells!"},
+    {t:"No — she needs to know what each one is worth first", ok:true, fb:"You've got it. Comparing amounts only works when you compare the same unit — like turning coins into cents first."},
+    {t:"No — shells and stones can never be compared", ok:false, fb:"They CAN be compared — but only after finding what each is worth. Just counting pieces isn't comparing worth."}]},
+  "q43b":{type:"mc", prompt:"Which of these is EQUAL to $1.50?", concept:"equal", opts:[
+    {t:"6 quarters", ok:true, fb:"Perfect: 6 × 25 = 150 cents = $1.50. Equal means exactly the same amount."},
+    {t:"5 quarters", ok:false, fb:"5 × 25 = 125 cents = $1.25. Not quite $1.50. One more quarter…"},
+    {t:"15 dimes", ok:false, fb:"15 × 10 = 150… wait, that IS 150 cents! Ha — trick answer, but 6 quarters is ALSO 150. Both work, but tap the quarters one."}]}
+};
+
+/* fix q43b: avoid the ambiguity — replace 15 dimes with 12 dimes */
+QUESTIONS["q43b"].opts[2] = {t:"12 dimes", ok:false, fb:"12 × 10 = 120 cents = $1.20. Not $1.50. Try counting the quarters."};
+
+/* =====================================================================
+   STATE + PERSISTENCE
+===================================================================== */
+let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false,false], masteryPassed:false };
+
+async function loadState(){
+  try{
+    const r = await window.storage.get("mod4-state");
+    if(r && r.value){ S = Object.assign(S, JSON.parse(r.value)); return; }
+  } catch(e){ }
+  try{
+    const saved = localStorage.getItem("mod4-state");
+    if(saved){ S = Object.assign(S, JSON.parse(saved)); }
+    for(const key of ["mod3-state","mod2-state","mod1-state"]){
+      const prev = localStorage.getItem(key);
+      if(prev){
+        const p = JSON.parse(prev);
+        if(p.xp > S.xp) S.xp = p.xp;
+      }
+    }
+  } catch(e){ }
+}
+async function saveState(){
+  try{ await window.storage.set("mod4-state", JSON.stringify(S)); }catch(e){
+    try{ localStorage.setItem("mod4-state", JSON.stringify(S)); }catch(e2){}
+  }
+}
+function addXP(n){ S.xp+=n; document.getElementById("xpBox").textContent = S.xp+" XP"; saveState(); }
+function earnWord(k){
+  if(S.shelf.includes(k)) return;
+  S.shelf.push(k); renderShelf(); saveState();
+  showWordCard(k);
+}
+function renderShelf(){
+  const el=document.getElementById("shelf");
+  el.innerHTML='<span class="shelf-label">Words you own:</span>';
+  S.shelf.forEach(k=>{
+    if(!VOCAB[k]) return;
+    const b=document.createElement("button"); b.className="word-chip"; b.textContent=VOCAB[k].term;
+    b.onclick=()=>showWordCard(k); el.appendChild(b);
+  });
+}
+function showWordCard(k){
+  const v=VOCAB[k]; if(!v) return;
+  document.getElementById("wordCard").innerHTML =
+    '<div class="w display">'+v.term+'</div><div class="d">'+v.def+'</div>' +
+    '<button style="margin-top:18px" onclick="closeModal()">Got it</button>';
+  document.getElementById("modal").classList.add("on");
+}
+function closeModal(){ document.getElementById("modal").classList.remove("on"); }
+
+/* =====================================================================
+   SCREEN ENGINE
+===================================================================== */
+const M = document.getElementById("main");
+function show(html){ M.innerHTML='<div class="screen on">'+html+'</div>'; window.scrollTo(0,0); }
+function revealFB(){ setTimeout(function(){
+  var ids=["cont","c2","fb","fb2"];
+  for(var i=0;i<ids.length;i++){
+    var el=document.getElementById(ids[i]);
+    if(el && el.innerHTML && el.innerHTML.trim()){
+      if(el.scrollIntoView) el.scrollIntoView({behavior:"smooth", block:"nearest"});
+      return;
+    }
+  }
+},80); }
+function dots(n,i){
+  const d=document.getElementById("dots"); d.innerHTML="";
+  for(let k=0;k<n;k++){const s=document.createElement("span");s.className="dot"+(k<=i?" on":"");d.appendChild(s);}
+}
+function next(){ S.step++; saveState(); render(); }
+function render(){
+  const les=LESSONS[S.lesson];
+  dots(les.steps.length, S.step);
+  if(S.step>=les.steps.length){ lessonComplete(); return; }
+  les.steps[S.step]();
+}
+function lessonComplete(){
+  if(!S.done[S.lesson]){ S.done[S.lesson]=true; addXP(10); }
+  saveState();
+  goHome();
+}
+function renderMC(qid, onDone){
+  const q=QUESTIONS[qid];
+  let html='<div class="kicker">Question</div><h2 class="display">'+q.prompt+'</h2><div id="opts">';
+  q.opts.forEach((o,i)=>{ html+='<button class="opt" data-i="'+i+'">'+o.t+'</button>'; });
+  html+='</div><div id="fb"></div><div id="cont"></div>';
+  show(html);
+  let answered=false, firstShot=!(qid in S.firstTry);
+  document.querySelectorAll(".opt").forEach(btn=>{
+    btn.onclick=()=>{
+      const i=+btn.dataset.i, o=q.opts[i];
+      if(answered && o.ok===false) return;
+      btn.classList.add(o.ok?"right":"wrong");
+      document.getElementById("fb").innerHTML='<div class="feedback '+(o.ok?'good':'bad')+'">'+o.fb+'</div>';
+      revealFB();
+      if(o.ok){
+        if(firstShot && !answered){ S.firstTry[qid]=true; addXP(2); }
+        answered=true;
+        document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
+        document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>';
+        revealFB();
+        window._c=()=>onDone;
+      } else { answered=true; S.firstTry[qid]=false; }
+      saveState();
+    };
+  });
+}
+function renderTF(qid,onDone){
+  const q=QUESTIONS[qid];
+  show('<div class="kicker">True or false</div><h2 class="display">'+q.prompt+'</h2>'+
+    '<div class="btn-row"><button class="opt" id="tT">True</button><button class="opt" id="tF">False</button></div>'+
+    '<div id="fb"></div><div id="cont"></div>');
+  let firstShot=!(qid in S.firstTry), answered=false;
+  function pick(val,el){
+    const ok = (val===q.answer);
+    el.classList.add(ok?"right":"wrong");
+    document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?q.good:q.bad)+'</div>';
+    revealFB();
+    if(ok){
+      if(firstShot && !answered){S.firstTry[qid]=true; addXP(2);}
+      document.getElementById("tT").disabled=true; document.getElementById("tF").disabled=true;
+      document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>'; window._c=()=>onDone;
+      revealFB();
+    } else { S.firstTry[qid]=false; }
+    answered=true; saveState();
+  }
+  document.getElementById("tT").onclick=e=>pick(true,e.target);
+  document.getElementById("tF").onclick=e=>pick(false,e.target);
+}
+
+/* =====================================================================
+   LESSON 1 — The Two Offers
+===================================================================== */
+const L1=[
+  ()=>show('<div class="kicker">Lesson 1 · The two offers</div>'+
+    '<div class="recap"><strong>Kai\'s story so far:</strong> The mainland\'s dollars and cents arrived on the island, and Kai knows the four coins.</div>'+
+    '<div class="scene">🐟🤝🤝<div class="cap">Two traders both want Kai\'s biggest fish.</div></div>'+
+    '<button onclick="next()">What do they offer?</button>'),
+  ()=>show('<div class="kicker">Lesson 1</div>'+
+    '<div class="card"><p>The first trader holds out <strong>3 quarters</strong>.</p>'+
+    '<p>The second trader holds out <strong>8 dimes</strong>.</p>'+
+    '<p>Kai freezes. Eight coins looks like more than three coins… but is it?</p></div>'+
+    '<button onclick="next()">Help Kai figure it out</button>'),
+  ()=>show('<div class="kicker">Lesson 1 · Count the cents</div>'+
+    '<div class="scene" style="font-size:26px">🏅🏅🏅 = 75¢<br>🪙🪙🪙🪙🪙🪙🪙🪙 = 80¢<div class="cap">3 quarters = 75 cents. 8 dimes = 80 cents.</div></div>'+
+    '<div class="card"><p>The trick: <strong>don\'t count the coins. Count the cents.</strong></p>'+
+    '<p>3 quarters → 25 + 25 + 25 = <strong>75¢</strong></p>'+
+    '<p>8 dimes → 10×8 = <strong>80¢</strong></p>'+
+    '<p>80 is more than 75. The dimes win — by one nickel\'s worth.</p>'+
+    '<p>Putting two amounts side by side to see which is bigger is called <strong>comparing</strong>.</p></div>'+
+    '<button onclick="earnWord(\'compare\');next()">New word: compare</button>'),
+  ()=>renderMC("q41a", next),
+];
+
+/* =====================================================================
+   LESSON 2 — The Comparison Game
+===================================================================== */
+const L2=[
+  ()=>show('<div class="kicker">Lesson 2 · More, less, or equal?</div>'+
+    '<div class="recap"><strong>So far:</strong> To compare, turn everything into cents first.</div>'+
+    '<div class="card"><p>Time to train your comparing eye. You\'ll see two amounts. Tap <strong>MORE</strong> if the left is more, <strong>LESS</strong> if the left is less, or <strong>EQUAL</strong> if they match.</p></div>'+
+    '<button onclick="next()">Start the game</button>'),
+  ()=>{
+    const rounds=[
+      {l:"2 quarters", lv:50, r:"6 dimes", rv:60, hint:"2×25 vs 6×10"},
+      {l:"$1.00", lv:100, r:"4 quarters", rv:100, hint:"Both in cents: 100 vs 100"},
+      {l:"$0.45", lv:45, r:"9 nickels", rv:45, hint:"9×5 = ?"},
+      {l:"$2.15", lv:215, r:"$2.51", rv:251, hint:"Dollars match — compare the cents"},
+      {l:"5 dimes + 1 nickel", lv:55, r:"2 quarters", rv:50, hint:"50+5 vs 25+25"}
+    ];
+    let round=0, correct=0;
+    function draw(){
+      const r=rounds[round];
+      show('<div class="kicker">Comparison game · '+(round+1)+' of '+rounds.length+'</div>'+
+        '<div class="vs-row">'+
+          '<div class="vs-side"><div class="amt">'+r.l+'</div><div class="sub">left</div></div>'+
+          '<div class="vs-mid">vs</div>'+
+          '<div class="vs-side"><div class="amt">'+r.r+'</div><div class="sub">right</div></div>'+
+        '</div>'+
+        '<p class="muted" style="text-align:center">Is the LEFT amount more, less, or equal?</p>'+
+        '<div class="pick-row">'+
+          '<button onclick="window._p(\'more\')">MORE</button>'+
+          '<button onclick="window._p(\'equal\')">EQUAL</button>'+
+          '<button onclick="window._p(\'less\')">LESS</button>'+
+        '</div><div id="fb"></div><div id="cont"></div>');
+      window._p=(pick)=>{
+        const truth = r.lv>r.rv?"more":(r.lv<r.rv?"less":"equal");
+        const ok = pick===truth;
+        if(ok){ correct++; addXP(2); }
+        document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+
+          (ok?'Right! ':'Not quite. ')+r.l+' = '+r.lv+'¢ and '+r.r+' = '+r.rv+'¢. ('+r.hint+')</div>';
+        document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(round<rounds.length-1?"Next":"Finish")+'</button>';
+        revealFB();
+        window._n=()=>{ round++; if(round<rounds.length) draw(); else { addXP(3); next(); } };
+      };
+    }
+    draw();
+  },
+  ()=>renderMC("q42a", next),
+  ()=>renderTF("q42b", next),
+];
+
+/* =====================================================================
+   LESSON 3 — Exactly Equal
+===================================================================== */
+const L3=[
+  ()=>show('<div class="kicker">Lesson 3 · Exactly equal</div>'+
+    '<div class="recap"><strong>So far:</strong> Kai can compare any two amounts by counting cents.</div>'+
+    '<div class="scene" style="font-size:32px">🏅🏅🏅🏅 = 💵<div class="cap">4 quarters. 1 dollar bill. Same thing?</div></div>'+
+    '<button onclick="next()">Are they the same?</button>'),
+  ()=>show('<div class="kicker">Lesson 3</div>'+
+    '<div class="card"><p>They look completely different — four metal circles vs one paper rectangle.</p>'+
+    '<p>But count the cents: 4 quarters = 100¢. One dollar = 100¢.</p>'+
+    '<p>When two amounts are exactly the same, they are <strong>equal</strong>. Shape doesn\'t matter. Color doesn\'t matter. Only the amount matters.</p>'+
+    '<p>That\'s why a trader will happily swap you 4 quarters for a dollar bill — nobody wins, nobody loses. It\'s an equal trade.</p></div>'+
+    '<button onclick="earnWord(\'equal\');next()">New word: equal</button>'),
+  ()=>renderMC("q41b", next),
+  ()=>renderMC("q43b", next),
+];
+
+/* =====================================================================
+   LESSON 4 — Mastery
+===================================================================== */
+let mastery = {qs:[], idx:0, score:0};
+const L4=[
+  ()=>{
+    const pool=["q41a","q41b","q42a","q42b","q43b"].sort(()=>Math.random()-.5).slice(0,4);
+    mastery={qs:[...pool,"q43a"].sort(()=>Math.random()-.5), idx:0, score:0};
+    show('<div class="kicker">Lesson 4 · Show what you know</div>'+
+      '<div class="recap"><strong>Module 4 quest:</strong> You learned to compare amounts and spot equal trades.</div>'+
+      '<h1 class="display">Five questions.</h1>'+
+      '<p>Get 4 of 5 right and Module 4 is yours.</p>'+
+      '<button onclick="next()">Start</button>');
+  },
+  ()=>{ masteryQ(); },
+  ()=>{ finishMastery(mastery.score>=4); },
+];
+function masteryQ(){
+  if(mastery.idx>=mastery.qs.length){ next(); return; }
+  const qid=mastery.qs[mastery.idx];
+  const q=QUESTIONS[qid];
+  const cont=()=>{ mastery.idx++; masteryQ(); };
+  if(q.type==="tf"){ renderTFM(qid,cont); } else { renderMCM(qid,cont); }
+}
+function renderMCM(qid,onDone){
+  const q=QUESTIONS[qid];
+  let html='<div class="kicker">Mastery · '+(mastery.idx+1)+' of '+mastery.qs.length+'</div><h2 class="display">'+q.prompt+'</h2>';
+  q.opts.forEach((o,i)=>html+='<button class="opt" data-i="'+i+'">'+o.t+'</button>');
+  html+='<div id="fb"></div><div id="cont"></div>'; show(html);
+  let answered=false;
+  document.querySelectorAll(".opt").forEach(btn=>{
+    btn.onclick=()=>{
+      if(answered) return; answered=true;
+      const o=q.opts[+btn.dataset.i];
+      btn.classList.add(o.ok?"right":"wrong");
+      if(o.ok) mastery.score++;
+      document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
+      document.getElementById("fb").innerHTML='<div class="feedback '+(o.ok?'good':'bad')+'">'+o.fb+'</div>';
+      revealFB();
+      document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>'; window._c=()=>onDone;
+      revealFB();
+    };
+  });
+}
+function renderTFM(qid,onDone){
+  const q=QUESTIONS[qid];
+  show('<div class="kicker">Mastery · '+(mastery.idx+1)+' of '+mastery.qs.length+'</div><h2 class="display">'+q.prompt+'</h2>'+
+    '<div class="btn-row"><button class="opt" id="tT">True</button><button class="opt" id="tF">False</button></div>'+
+    '<div id="fb"></div><div id="cont"></div>');
+  let answered=false;
+  function pick(v,el){
+    if(answered)return; answered=true;
+    const ok=(v===q.answer); if(ok)mastery.score++;
+    el.classList.add(ok?"right":"wrong");
+    document.getElementById("tT").disabled=true;document.getElementById("tF").disabled=true;
+    document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?q.good:q.bad)+'</div>';
+    revealFB();
+    document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>'; window._c=()=>onDone;
+    revealFB();
+  }
+  document.getElementById("tT").onclick=e=>pick(true,e.target);
+  document.getElementById("tF").onclick=e=>pick(false,e.target);
+}
+function finishMastery(pass){
+  if(pass && !S.masteryPassed){ S.masteryPassed=true; addXP(20); }
+  saveState();
+  if(pass){
+    show('<div class="night"><div class="lantern">🏮</div>'+
+      '<h1 class="display" style="color:#fff">Module 4 complete</h1>'+
+      '<p style="color:#cfe0ee">Quiz: '+mastery.score+'/5 ✓</p></div>'+
+      '<div class="card"><p><strong>You now know:</strong> how to compare any two amounts, and what makes trades equal.</p>'+
+      '<p>Next question on the island: the trading post is putting little tags on everything. Numbers on tags. <em>What are those numbers, and who decides them?</em></p>'+
+      '<p class="muted">That\'s Module 5.</p></div>'+
+      '<button style="margin-bottom:10px" onclick="window.location.href=\'module-5-price-and-cost.html\'">Continue to Module 5</button>'+
+      '<button class="btn-ghost" style="margin-bottom:10px" onclick="window.location.href=\'index.html\'">🗺️ Back to all modules</button>'+
+      '<button class="btn-ghost" onclick="goHome()">Stay in Module 4</button>');
+    S.done[3]=true; saveState();
+  } else {
+    show('<div class="kicker">Almost there</div>'+
+      '<h1 class="display">One more try</h1>'+
+      '<p>You got '+mastery.score+' of 5. The key: turn everything into cents, THEN compare. And equal means exactly the same amount.</p>'+
+      '<button onclick="S.step=0;render()">Try again</button>'+
+      '<button class="btn-ghost" style="margin-top:10px" onclick="toggleTutor(true)">Talk with the tutor</button>'+
+      '<button class="btn-ghost" style="margin-top:10px" onclick="goHome()">Back home</button>');
+  }
+}
+
+const LESSONS=[
+  {title:"The Two Offers", sub:"Count the cents, not the coins", steps:L1, emoji:"🤝"},
+  {title:"The Comparison Game", sub:"More, less, or equal — 5 rounds", steps:L2, emoji:"⚖️"},
+  {title:"Exactly Equal", sub:"When different shapes hold the same amount", steps:L3, emoji:"🟰"},
+  {title:"Show What You Know", sub:"Mastery check", steps:L4, emoji:"🏮"},
+];
+
+/* =====================================================================
+   HOME
+===================================================================== */
+function goHome(){
+  dots(4, S.done.filter(Boolean).length-1);
+  let html='<div class="kicker">Module 4</div><h1 class="display">More, Less & Equal</h1>'+
+    '<p class="muted">Four short lessons. Train your comparing eye.</p>';
+  LESSONS.forEach((l,i)=>{
+    const locked = i>0 && !S.done[i-1];
+    const done = S.done[i];
+    html+='<button class="opt" '+(locked?'disabled':'')+' onclick="startLesson('+i+')">'+
+      '<span class="em">'+(done?'✅':locked?'🔒':l.emoji)+'</span><strong>'+l.title+'</strong><br>'+
+      '<span class="muted" style="font-weight:400">'+l.sub+'</span></button>';
+  });
+  if(S.masteryPassed) html+='<div class="night" style="margin-top:8px"><div class="lantern">🏮</div><p style="color:#cfe0ee">Module 4 mastered · '+S.xp+' XP</p></div>';
+  html+='<button class="btn-ghost" style="margin-top:14px" onclick="window.location.href=\'index.html\'">🗺️ Back to all modules</button>';
+  show(html);
+}
+function startLesson(i){ S.lesson=i; S.step=0; saveState(); render(); }
+
+/* =====================================================================
+   TUTOR
+===================================================================== */
+let tHist=[];
+function toggleTutor(on){
+  document.getElementById("tutorPanel").classList.toggle("on",on);
+  document.getElementById("tutorOverlay").classList.toggle("on",on);
+  saveState();
+  if(on&&tHist.length===0) tMsg("a","Hi! Ask me anything about comparing amounts — more, less, equal — or tap a button below.");
+}
+document.getElementById("tutorBtn").onclick=()=>toggleTutor(true);
+function tMsg(who,txt){ const d=document.createElement("div"); d.className="msg "+who; d.textContent=txt; document.getElementById("tlog").appendChild(d); d.scrollIntoView({behavior:"smooth"}); }
+function quickAsk(t){ document.getElementById("tin").value=t; sendTutor(); }
+async function sendTutor(){
+  const inp=document.getElementById("tin"); const txt=inp.value.trim(); if(!txt) return;
+  inp.value=""; tMsg("u",txt); tHist.push({role:"user",content:txt});
+  const think=document.createElement("div"); think.className="msg a"; think.innerHTML='<span class="spin" style="border-color:var(--ink);border-top-color:transparent"></span>';
+  document.getElementById("tlog").appendChild(think);
+  const sys="You are the tutor inside Module 4 (More, Less & Equal) of a financial-literacy app. The learner may be a child or an adult. "+
+    "They know from earlier modules: money, worth, agree, barter, trade, matching problem, dollar, cent, the four US coins (penny 1¢, nickel 5¢, dime 10¢, quarter 25¢), 100 cents = 1 dollar, reading $X.YY. From this module: compare (look at two amounts side by side), equal (exactly the same amount), and the rule 'count the cents, not the coins.' "+
+    "STRICT RULES: never use these words (later modules): price, cost, buy, sell, earn, spend, save, bank, pay, interest, credit, invest, add, subtract, plus, minus, decimal, fraction, percent. Instead of add say 'count up' or 'put together'. Use 'trades for' or 'worth' instead of price/cost. "+
+    "Story context: Kai's island now uses dollars and cents from the mainland; two traders made different coin offers for Kai's fish. "+
+    "Never repeat a failed explanation — switch analogies (stacks of blocks, game tokens, sticker piles). Keep answers under 80 words, warm, honest, never mark wrong ideas right. If asked 'Quiz me', ask ONE simple comparison question and wait.";
+  try{
+    const controller=new AbortController(); const timeout=setTimeout(()=>controller.abort(),8000);
+    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:300,system:sys,messages:tHist.slice(-10)}),signal:controller.signal});
+    clearTimeout(timeout);
+    const data=await r.json();
+    const out=(data.content||[]).filter(c=>c.type==="text").map(c=>c.text).join("").trim() || "I lost my thread. Ask again?";
+    think.remove(); tMsg("a",out); tHist.push({role:"assistant",content:out});
+  }catch(e){
+    think.remove(); tMsg("a","I can't think right now. Try again in a moment — or tap the word cards up top to review.");
+  }
+}
+
+/* ---------- boot ---------- */
+(async function(){
+  await loadState();
+  document.getElementById("xpBox").textContent=S.xp+" XP";
+  renderShelf();
+  goHome();
+})();
+</script>
+</body>
+</html>
