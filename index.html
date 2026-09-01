@@ -171,6 +171,10 @@ const MODULES = [
     title:"Percentages", sub:"The last piece of the puzzle", emoji:"🏷️", block:"Money Math", lessons:4},
   {id:17, file:"module-17-what-is-a-bank.html", stateKey:"mod17-state",
     title:"What Is a Bank?", sub:"A safer place than a tin", emoji:"🏦", block:"Banking", lessons:4},
+  {id:18, file:"module-18-your-account-and-balance.html", stateKey:"mod18-state",
+    title:"Your Account & Balance", sub:"Learn to read your own money", emoji:"🧾", block:"Banking", lessons:4},
+  {id:19, file:"module-19-savings-vs-checking.html", stateKey:"mod19-state",
+    title:"Savings vs. Checking", sub:"The right home for every dollar", emoji:"⚖️", block:"Banking", lessons:4},
   {id:17, title:"What Is a Bank?", sub:"Where money lives", emoji:"🏦", block:"Banking", lessons:4, comingSoon:true},
 ];
 
@@ -301,7 +305,7 @@ async function render(){
   });
 
   // Coming soon teaser
-  html += '<div class="coming"><strong>More modules coming soon</strong>Module 18: Your Account & Balance is next. Check back soon!</div>';
+  html += '<div class="coming"><strong>More modules coming soon</strong>Module 20: Digital Banking is next. Check back soon!</div>';
 
   document.getElementById("main").innerHTML = html;
 }
