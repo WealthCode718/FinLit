@@ -175,6 +175,11 @@ const MODULES = [
     title:"Your Account & Balance", sub:"Learn to read your own money", emoji:"🧾", block:"Banking", lessons:4},
   {id:19, file:"module-19-savings-vs-checking.html", stateKey:"mod19-state",
     title:"Savings vs. Checking", sub:"The right home for every dollar", emoji:"⚖️", block:"Banking", lessons:4},
+  {id:20, file:"module-20-digital-banking.html", stateKey:"mod20-state",
+    title:"Digital Banking", sub:"Your whole account, in your pocket", emoji:"📱", block:"Banking", lessons:4},
+  {id:21, file:"module-21-interest.html", stateKey:"mod21-state",
+    title:"Interest", sub:"Money that grows on its own", emoji:"📈", block:"Banking", lessons:4},
+  {id:17, title:"What Is a Bank?", sub:"Where money lives", emoji:"🏦", block:"Banking", lessons:4, comingSoon:true},
 ];
 
 /* =====================================================================
@@ -304,7 +309,7 @@ async function render(){
   });
 
   // Coming soon teaser
-  html += '<div class="coming"><strong>More modules coming soon</strong>Module 20: Digital Banking is next. Check back soon!</div>';
+  html += '<div class="coming"><strong>More modules coming soon</strong>Module 22: Fees & Overdrafts is next. Check back soon!</div>';
 
   document.getElementById("main").innerHTML = html;
 }

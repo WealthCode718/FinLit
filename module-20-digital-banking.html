@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Digital Banking — Module 20</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap');
+  :root{
+    --ink:#123a3f; --ink-soft:#3d6166; --lagoon:#ecf5f2; --card:#ffffff;
+    --sand:#f3ead8; --sand-deep:#e5d7bc; --shell:#c96f4a; --shell-soft:#f4e0d6;
+    --night:#0e1b2c; --gold:#e8b84b; --good:#2e7d5b; --bad:#a94436;
+    --radius:14px; --shadow:0 2px 10px rgba(18,58,63,.08);
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html,body{height:100%}
+  body{font-family:"Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif; background:var(--lagoon); color:var(--ink); font-size:17px; line-height:1.5; -webkit-font-smoothing:antialiased}
+  .display{font-family:"Fraunces",Georgia,serif; font-weight:700; letter-spacing:-.01em}
+  #app{max-width:560px; margin:0 auto; min-height:100dvh; display:flex; flex-direction:column}
+  header{position:sticky; top:0; z-index:20; background:var(--lagoon); padding:12px 16px 8px; border-bottom:1px solid #d9e6e1}
+  .hrow{display:flex; align-items:center; justify-content:space-between; gap:10px}
+  .xp{font-weight:700; font-size:14px; background:var(--ink); color:#fff; border-radius:999px; padding:4px 12px; white-space:nowrap}
+  .dots{display:flex; gap:6px}
+  .dot{width:9px; height:9px; border-radius:50%; background:#cfe0da; transition:background .3s}
+  .dot.on{background:var(--shell)}
+  .shelf{display:flex; gap:8px; margin-top:8px; min-height:30px; flex-wrap:wrap}
+  .shelf-label{font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-soft); align-self:center}
+  .word-chip{font-size:13px; font-weight:600; background:var(--sand); border:1.5px solid var(--sand-deep); border-radius:8px; padding:3px 10px; cursor:pointer; color:var(--ink)}
+  .word-chip:focus-visible{outline:3px solid var(--shell)}
+  main{flex:1; padding:20px 16px 110px}
+  .screen{display:none; animation:fade .35s ease}
+  .screen.on{display:block}
+  @keyframes fade{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+  @media (prefers-reduced-motion: reduce){ *{animation:none!important; transition:none!important} }
+  h1{font-size:30px; line-height:1.15; margin-bottom:6px}
+  h2{font-size:22px; line-height:1.2; margin-bottom:10px}
+  .kicker{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--shell); font-weight:700; margin-bottom:8px}
+  p{margin-bottom:12px}
+  .muted{color:var(--ink-soft); font-size:15px}
+  .card{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px; margin-bottom:14px}
+  .recap{background:#f0ebe1; border-left:4px solid var(--shell); border-radius:0 10px 10px 0; padding:10px 14px; margin-bottom:14px; font-size:14px}
+  .scene{background:linear-gradient(180deg,#bfe0d6 0%, #e9dfc6 78%, #dcc9a2 100%); border-radius:var(--radius); padding:26px 20px; text-align:center; margin-bottom:16px; font-size:44px; line-height:1.2; box-shadow:var(--shadow)}
+  .scene .cap{font-size:15px; color:var(--ink); margin-top:8px}
+  button{font:inherit; cursor:pointer; border:none; border-radius:12px; padding:13px 18px; background:var(--ink); color:#fff; font-weight:700; width:100%}
+  button:focus-visible{outline:3px solid var(--shell); outline-offset:2px}
+  button:disabled{opacity:.45; cursor:default}
+  .btn-ghost{background:transparent; color:var(--ink); border:2px solid var(--ink)}
+  .btn-row{display:flex; gap:10px}
+  .opt{display:block; width:100%; text-align:left; background:#fff; color:var(--ink); border:2px solid #d9e2de; font-weight:600; margin-bottom:10px; border-radius:12px; padding:14px 16px}
+  .opt .em{font-size:26px; margin-right:10px; vertical-align:-3px}
+  .opt.right{border-color:var(--good); background:#eef7f2}
+  .opt.wrong{border-color:var(--bad); background:#faf0ee}
+  .feedback{border-left:4px solid var(--ink); background:var(--sand); border-radius:0 10px 10px 0; padding:12px 14px; margin:10px 0 14px; font-size:15px}
+  .feedback.good{border-color:var(--good)}
+  .feedback.bad{border-color:var(--bad)}
+  .cut-viz{background:#fff; border:2px solid #d9e2de; border-radius:14px; padding:16px; text-align:center; margin-bottom:12px; font-size:30px}
+  .cut-viz .n{font-size:14px; color:var(--ink-soft); font-weight:600; margin-top:4px}
+  .modal-bg{position:fixed; inset:0; background:rgba(14,27,44,.55); display:none; z-index:40; align-items:center; justify-content:center; padding:24px}
+  .modal-bg.on{display:flex}
+  .word-card{background:var(--sand); border-radius:18px; padding:28px 24px; max-width:380px; width:100%; text-align:center; border:3px solid var(--sand-deep); animation:flip .5s ease}
+  @keyframes flip{from{transform:rotateY(80deg); opacity:0} to{transform:none; opacity:1}}
+  .word-card .w{font-size:34px; margin-bottom:8px}
+  .word-card .d{font-size:17px; color:var(--ink)}
+  #tutorBtn{position:fixed; right:16px; bottom:16px; width:auto; z-index:30; border-radius:999px; padding:13px 18px; background:var(--shell); box-shadow:0 4px 14px rgba(201,111,74,.4); font-size:15px}
+  .modal-overlay{position:fixed; inset:0; background:rgba(14,27,44,.65); z-index:49; display:none}
+  .modal-overlay.on{display:block}
+  #tutorPanel{position:fixed; inset:auto 0 0 0; max-width:560px; margin:0 auto; height:78dvh; background:#fff; border-radius:18px 18px 0 0; box-shadow:0 -6px 30px rgba(14,27,44,.25); z-index:50; display:none; flex-direction:column}
+  #tutorPanel.on{display:flex}
+  .tp-head{display:flex; justify-content:space-between; align-items:center; padding:14px 16px; border-bottom:1px solid #eee}
+  .tp-head button{width:auto; padding:10px 16px; font-size:15px; background:var(--shell); color:#fff; font-weight:700; border-radius:8px}
+  #tlog{flex:1; overflow-y:auto; padding:14px 16px; display:flex; flex-direction:column; gap:10px}
+  .msg{max-width:86%; padding:10px 14px; border-radius:14px; font-size:15px}
+  .msg.u{align-self:flex-end; background:var(--ink); color:#fff; border-bottom-right-radius:4px}
+  .msg.a{align-self:flex-start; background:var(--sand); border-bottom-left-radius:4px}
+  .tp-quick{display:flex; gap:8px; padding:0 16px 8px; flex-wrap:wrap}
+  .tp-quick button{width:auto; font-size:13px; padding:7px 12px; background:#fff; color:var(--ink); border:1.5px solid var(--ink); border-radius:999px}
+  .tp-in{display:flex; gap:8px; padding:10px 16px 18px; border-top:1px solid #eee}
+  .tp-in input{flex:1; font:inherit; padding:12px 14px; border:2px solid #d9e2de; border-radius:12px}
+  .tp-in button{width:auto; padding:12px 16px}
+  .night{background:linear-gradient(180deg,#0e1b2c 0%, #1b3247 100%); color:#fff; border-radius:var(--radius); padding:34px 22px; text-align:center; margin-bottom:16px}
+  .lantern{font-size:56px; animation:glow 2.2s ease infinite alternate}
+  @keyframes glow{from{filter:drop-shadow(0 0 4px var(--gold))} to{filter:drop-shadow(0 0 22px var(--gold))}}
+  .acct{background:linear-gradient(135deg,#123a3f 0%,#1b3247 100%); color:#fff; border-radius:16px; padding:20px; margin-bottom:14px; box-shadow:0 4px 16px rgba(18,58,63,.25)}
+  .acct .lbl{font-size:11px; letter-spacing:.14em; text-transform:uppercase; opacity:.75}
+  .acct .bal{font-size:42px; font-weight:700; font-family:"Fraunces",Georgia,serif; margin:2px 0}
+  .acct .who{font-size:14px; opacity:.8}
+  .txn{background:#fff; border:2px solid #d9e2de; border-radius:12px; padding:11px 14px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; font-size:15px; animation:fade .3s ease}
+  .txn .amt{font-weight:700; color:var(--good); white-space:nowrap}
+  .txn .amt.out{color:var(--bad)}
+  .txn-empty{color:var(--ink-soft); font-size:15px; font-style:italic; padding:10px 0}
+  .tin{background:var(--sand); border:2px dashed var(--sand-deep); border-radius:14px; padding:16px; text-align:center; margin-bottom:12px}
+  .tin .n{font-size:14px; color:var(--ink-soft); margin-top:4px}
+  .ledger{background:#fff; border:2px solid #d9e2de; border-radius:14px; overflow:hidden; margin-bottom:12px}
+  .lrow{display:flex; justify-content:space-between; align-items:center; gap:10px; padding:11px 14px; border-bottom:1px solid #eef2f0; font-size:15px}
+  .lrow:last-child{border-bottom:none}
+  .lrow.head{background:var(--sand); font-weight:700; font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft)}
+  .lrow .run{font-weight:700; font-family:"Fraunces",Georgia,serif; white-space:nowrap}
+  .lrow .mv{font-weight:700; white-space:nowrap; color:var(--good)}
+  .lrow .mv.out{color:var(--bad)}
+  .lrow.pending{background:#fffdf5}
+  .duo{display:flex; gap:10px; margin-bottom:14px}
+  .duo .acct{flex:1; margin-bottom:0; padding:16px 13px}
+  .duo .acct .bal{font-size:29px}
+  .duo .acct .lbl{font-size:10px}
+  .duo .acct .who{font-size:12px; opacity:.75}
+  .acct.save{background:linear-gradient(135deg,#2e7d5b 0%,#1b5540 100%)}
+  .sortbar{display:flex; gap:10px; margin-bottom:12px}
+  .sortbar button{flex:1; font-size:15px; padding:14px 8px}
+  .sortbar .chk{background:var(--ink)}
+  .sortbar .sav{background:var(--good)}
+  .item{background:#fff; border:2px solid #d9e2de; border-radius:14px; padding:18px 16px; text-align:center; margin-bottom:12px; font-size:18px; font-weight:600}
+  .item .sub{font-size:14px; font-weight:400; color:var(--ink-soft); margin-top:4px}
+  .phone{background:#0e1b2c; border-radius:22px; padding:12px 10px 14px; margin-bottom:14px; box-shadow:0 6px 22px rgba(14,27,44,.3)}
+  .phone .pbar{display:flex; justify-content:space-between; color:#8fa8bd; font-size:11px; padding:2px 8px 8px; letter-spacing:.04em}
+  .feed{background:#fff; border-radius:14px; overflow:hidden}
+  .fitem{display:flex; justify-content:space-between; align-items:center; gap:8px; padding:11px 13px; border-bottom:1px solid #eef2f0; font-size:14px}
+  .fitem:last-child{border-bottom:none}
+  .fitem .day{font-size:10px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.08em}
+  .fitem .amt{font-weight:700; white-space:nowrap; color:var(--good)}
+  .fitem .amt.out{color:var(--bad)}
+  .fitem .run{font-size:11px; color:var(--ink-soft)}
+  .notif{background:var(--sand); border:2px solid var(--sand-deep); border-radius:12px; padding:11px 14px; margin-bottom:10px; font-size:14px; display:flex; gap:10px; align-items:flex-start}
+  .notif .bell{font-size:17px; line-height:1.2}
+  .spin{display:inline-block; width:16px; height:16px; border:3px solid #fff; border-top-color:transparent; border-radius:50%; animation:sp 1s linear infinite; vertical-align:-3px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="hrow">
+      <div class="dots" id="dots"></div>
+      <div class="xp" id="xpBox">0 XP</div>
+    </div>
+    <div class="shelf" id="shelf"><span class="shelf-label">Words you own:</span></div>
+  </header>
+  <main id="main"></main>
+</div>
+
+<button id="tutorBtn" aria-label="Ask the tutor">Ask the tutor 💬</button>
+<div class="modal-overlay" id="tutorOverlay" onclick="if(event.target===this)toggleTutor(false)"></div>
+<div id="tutorPanel" role="dialog" aria-label="Tutor chat">
+  <div class="tp-head"><strong class="display">Tutor</strong><button onclick="toggleTutor(false)">✕ Close</button></div>
+  <div id="tlog"></div>
+  <div class="tp-quick">
+    <button onclick="quickAsk('Explain it differently')">Explain differently</button>
+    <button onclick="quickAsk('Make it easier')">Make it easier</button>
+    <button onclick="quickAsk('Give me an example')">Give example</button>
+    <button onclick="quickAsk('Quiz me')">Quiz me</button>
+  </div>
+  <div class="tp-in">
+    <input id="tin" placeholder="Ask about digital banking…" onkeydown="if(event.key==='Enter')sendTutor()">
+    <button onclick="sendTutor()">Send</button>
+  </div>
+</div>
+<div class="modal-bg" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="word-card" id="wordCard"></div>
+</div>
+
+<script>
+/* =====================================================================
+   CONTENT — Module 20: Digital Banking
+   Vocab: transaction (NAMES what deposits/withdrawals both are),
+          notification (the bank telling you money moved).
+   SCOPE NOTE: scams, passwords in depth, and spotting suspicious
+   activity belong to Module 23. M20 teaches only the HABIT of looking,
+   which is what M23 later builds on.
+===================================================================== */
+const VOCAB = {
+  transaction:{term:"transaction", def:"Any time money moves in or out of your account. Deposits and withdrawals are both transactions."},
+  notification:{term:"notification", def:"A message from the bank telling you a transaction just happened, so you find out straight away."}
+};
+
+const QUESTIONS = {
+  "q201a":{type:"mc", prompt:"What is a transaction?", concept:"transaction", opts:[
+    {t:"Any time money moves in or out of your account", ok:true, fb:"Right — and you have been making them since Module 17. Deposits and withdrawals are both transactions."},
+    {t:"Only money going out", ok:false, fb:"Both directions count. A deposit is a transaction too — anything that moves money."},
+    {t:"A fee the bank charges you", ok:false, fb:"No charge involved. A transaction is simply a movement of money, in or out."}]},
+  "q201b":{type:"mc", prompt:"What can Kai do from the island that he could not do before?", concept:"transaction", opts:[
+    {t:"See his balance and every transaction, without crossing the water", ok:true, fb:"Right. The record used to be a half-day row away. Now it is in his pocket, updated the moment anything moves."},
+    {t:"Make money appear in his account", ok:false, fb:"A phone shows you the money — it does not create any. Kai still has to earn every dollar."},
+    {t:"Stop the bank from keeping records", ok:false, fb:"The opposite! Digital banking means the record is MORE available, not less. He can see it any time."}]},
+  "q202a":{type:"mc", prompt:"In Kai's history the rope cost $4 and the sweet cake cost $2. Which was the bigger transaction?", concept:"transaction", opts:[
+    {t:"The rope, at $4", ok:true, fb:"Right. Reading a history means comparing amounts — Module 4's skill, working on a phone screen."},
+    {t:"The sweet cake, at $2", ok:false, fb:"Compare the numbers: $4 is more than $2. The rope was the bigger transaction."},
+    {t:"They were the same", ok:false, fb:"$4 and $2 are different amounts. The rope was bigger."}]},
+  "q202b":{type:"tf", prompt:"True or false: your transaction history only shows money going OUT.", answer:false, concept:"transaction",
+    good:"Right — it shows both directions. Deposits and withdrawals all land in the same list, which is what makes the balance make sense.",
+    bad:"Look again at a history: money coming in is listed too. If it only showed money going out, the balance could never add up."},
+  "q203a":{type:"mc", prompt:"What is a notification?", concept:"notification", opts:[
+    {t:"A message from the bank telling you a transaction just happened", ok:true, fb:"Right. Instead of you going to check, the bank taps you on the shoulder the moment money moves."},
+    {t:"A bill you have to pay", ok:false, fb:"Nothing to pay. A notification is just information — money moved, here is what and when."},
+    {t:"A message from a shop asking you to buy something", ok:false, fb:"That is an advertisement. A notification comes from your bank, about your own money."}]},
+  "q203c":{type:"mc", prompt:"Why is it a good habit to check your account regularly?", concept:"notification", opts:[
+    {t:"Because you can only notice something is wrong if you look", ok:true, fb:"Right. Checking often means you know where you stand — and you find out quickly if something does not look right."},
+    {t:"Because the bank charges you if you do not", ok:false, fb:"Nobody charges you for looking. You check because it is YOUR money, and looking is how you stay in control of it."},
+    {t:"There is no reason — checking once a year is fine", ok:false, fb:"A year is a long time to be wrong about your own money. Checking often is how you catch problems while they are small."}]},
+  "q203b":{type:"mc", transfer:true, prompt:"Rana writes every stall sale in a notebook and reads it back each evening. Is that the same idea?", concept:"notification", opts:[
+    {t:"Yes — keeping a record and looking at it regularly", ok:true, fb:"Exactly. The phone is faster, but the habit is identical: record what moves, then actually look. Rana has been doing digital banking without a phone this whole time."},
+    {t:"No — a notebook is nothing like a phone", ok:false, fb:"The tool changed, not the habit. Record every movement, check it often — Rana and the bank app are doing the same job."},
+    {t:"No — only banks can keep records", ok:false, fb:"Rana keeps an excellent record with a pencil. What matters is that a record exists and someone reads it."}]}
+};
+
+/* =====================================================================
+   STATE + PERSISTENCE
+===================================================================== */
+let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false,false], masteryPassed:false,
+          acct:{checking:0, savings:0} };
+
+async function loadState(){
+  try{
+    const r = await window.storage.get("mod20-state");
+    if(r && r.value){ S = Object.assign(S, JSON.parse(r.value)); return; }
+  } catch(e){ }
+  try{
+    const saved = localStorage.getItem("mod20-state");
+    if(saved){ S = Object.assign(S, JSON.parse(saved)); }
+    for(let i=19;i>=1;i--){
+      const prev = localStorage.getItem("mod"+i+"-state");
+      if(prev){ const p = JSON.parse(prev); if(p.xp > S.xp) S.xp = p.xp; }
+    }
+  } catch(e){ }
+}
+async function saveState(){
+  try{ await window.storage.set("mod20-state", JSON.stringify(S)); }catch(e){
+    try{ localStorage.setItem("mod20-state", JSON.stringify(S)); }catch(e2){}
+  }
+}
+function addXP(n){ S.xp+=n; document.getElementById("xpBox").textContent = S.xp+" XP"; saveState(); }
+function earnWord(k){
+  if(S.shelf.includes(k)) return;
+  S.shelf.push(k); renderShelf(); saveState();
+  showWordCard(k);
+}
+function renderShelf(){
+  const el=document.getElementById("shelf");
+  el.innerHTML='<span class="shelf-label">Words you own:</span>';
+  S.shelf.forEach(k=>{
+    if(!VOCAB[k]) return;
+    const b=document.createElement("button"); b.className="word-chip"; b.textContent=VOCAB[k].term;
+    b.onclick=()=>showWordCard(k); el.appendChild(b);
+  });
+}
+function showWordCard(k){
+  const v=VOCAB[k]; if(!v) return;
+  document.getElementById("wordCard").innerHTML =
+    '<div class="w display">'+v.term+'</div><div class="d">'+v.def+'</div>' +
+    '<button style="margin-top:18px" onclick="closeModal()">Got it</button>';
+  document.getElementById("modal").classList.add("on");
+}
+function closeModal(){ document.getElementById("modal").classList.remove("on"); }
+
+/* =====================================================================
+   SCREEN ENGINE
+===================================================================== */
+const M = document.getElementById("main");
+function show(html){ M.innerHTML='<div class="screen on">'+html+'</div>'; window.scrollTo(0,0); }
+function revealFB(){ setTimeout(function(){
+  var ids=["cont","c2","fb","fb2"];
+  for(var i=0;i<ids.length;i++){
+    var el=document.getElementById(ids[i]);
+    if(el && el.innerHTML && el.innerHTML.trim()){
+      if(el.scrollIntoView) el.scrollIntoView({behavior:"smooth", block:"nearest"});
+      return;
+    }
+  }
+},80); }
+function dots(n,i){
+  const d=document.getElementById("dots"); d.innerHTML="";
+  for(let k=0;k<n;k++){const s=document.createElement("span");s.className="dot"+(k<=i?" on":"");d.appendChild(s);}
+}
+function next(){ S.step++; saveState(); render(); }
+function render(){
+  const les=LESSONS[S.lesson];
+  dots(les.steps.length, S.step);
+  if(S.step>=les.steps.length){ lessonComplete(); return; }
+  les.steps[S.step]();
+}
+function lessonComplete(){
+  if(!S.done[S.lesson]){ S.done[S.lesson]=true; addXP(10); }
+  saveState();
+  goHome();
+}
+function renderMC(qid, onDone){
+  const q=QUESTIONS[qid];
+  let html='<div class="kicker">Question</div><h2 class="display">'+q.prompt+'</h2><div id="opts">';
+  q.opts.forEach((o,i)=>{ html+='<button class="opt" data-i="'+i+'">'+o.t+'</button>'; });
+  html+='</div><div id="fb"></div><div id="cont"></div>';
+  show(html);
+  let answered=false, firstShot=!(qid in S.firstTry);
+  document.querySelectorAll(".opt").forEach(btn=>{
+    btn.onclick=()=>{
+      const i=+btn.dataset.i, o=q.opts[i];
+      if(answered && o.ok===false) return;
+      btn.classList.add(o.ok?"right":"wrong");
+      document.getElementById("fb").innerHTML='<div class="feedback '+(o.ok?'good':'bad')+'">'+o.fb+'</div>';
+      revealFB();
+      if(o.ok){
+        if(firstShot && !answered){ S.firstTry[qid]=true; addXP(2); }
+        answered=true;
+        document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
+        document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>';
+        revealFB();
+        window._c=()=>onDone;
+      } else { answered=true; S.firstTry[qid]=false; }
+      saveState();
+    };
+  });
+}
+function renderTF(qid,onDone){
+  const q=QUESTIONS[qid];
+  show('<div class="kicker">True or false</div><h2 class="display">'+q.prompt+'</h2>'+
+    '<div class="btn-row"><button class="opt" id="tT">True</button><button class="opt" id="tF">False</button></div>'+
+    '<div id="fb"></div><div id="cont"></div>');
+  let firstShot=!(qid in S.firstTry), answered=false;
+  function pick(val,el){
+    const ok = (val===q.answer);
+    el.classList.add(ok?"right":"wrong");
+    document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?q.good:q.bad)+'</div>';
+    revealFB();
+    if(ok){
+      if(firstShot && !answered){S.firstTry[qid]=true; addXP(2);}
+      document.getElementById("tT").disabled=true; document.getElementById("tF").disabled=true;
+      document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>'; window._c=()=>onDone;
+      revealFB();
+    } else { S.firstTry[qid]=false; }
+    answered=true; saveState();
+  }
+  document.getElementById("tT").onclick=e=>pick(true,e.target);
+  document.getElementById("tF").onclick=e=>pick(false,e.target);
+}
+
+/* =====================================================================
+   SIMULATOR — M20 adds the phone view: a transaction FEED.
+   Same two accounts as M19; the new thing is seeing the history
+   itself, live, from anywhere.
+===================================================================== */
+const WEEK_START = 10;   // checking balance carried from Module 19
+const SAVINGS_HELD = 15; // untouched sail money from Module 19
+const FEED=[
+  {day:"Mon", label:"Market morning",   amt:8},
+  {day:"Tue", label:"Bread and fruit",  amt:-3},
+  {day:"Wed", label:"Rope",             amt:-4},
+  {day:"Thu", label:"Helping Tavo",     amt:6},
+  {day:"Fri", label:"Sweet cake",       amt:-2}
+];
+function money(n){ return "$" + n.toFixed(2); }
+function feedRuns(){
+  var run=WEEK_START, out=[];
+  for(var i=0;i<FEED.length;i++){
+    run=Math.round((run+FEED[i].amt)*100)/100;
+    out.push(run);
+  }
+  return out;
+}
+function phone(upTo, showRun){
+  var runs=feedRuns();
+  var n=(upTo===undefined)?FEED.length:upTo;
+  var h='<div class="phone"><div class="pbar"><span>FinLit Bank</span><span>Checking</span></div><div class="feed">';
+  if(n===0){ h+='<div class="fitem"><span>Nothing yet this week</span></div>'; }
+  for(var i=0;i<n;i++){
+    var f=FEED[i];
+    h+='<div class="fitem"><span><span class="day">'+f.day+'</span><br>'+f.label+'</span>'+
+       '<span style="text-align:right"><span class="amt'+(f.amt<0?' out':'')+'">'+(f.amt<0?'−':'+')+money(Math.abs(f.amt))+'</span>'+
+       (showRun?'<br><span class="run">'+money(runs[i])+'</span>':'')+'</span></div>';
+  }
+  return h+'</div></div>';
+}
+function duoCard(){
+  return '<div class="duo">'+
+    '<div class="acct"><div class="lbl">Checking</div><div class="bal">'+money(S.acct.checking)+'</div><div class="who">spend soon</div></div>'+
+    '<div class="acct save"><div class="lbl">Savings</div><div class="bal">'+money(S.acct.savings)+'</div><div class="who">for the goal</div></div>'+
+    '</div>';
+}
+function resetAcct(){ S.acct={checking:WEEK_START, savings:SAVINGS_HELD}; saveState(); }
+
+/* =====================================================================
+   LESSON 1 — The Phone
+===================================================================== */
+const L1=[
+  ()=>{ resetAcct();
+    show('<div class="kicker">Lesson 1 · The phone</div>'+
+    '<div class="recap"><strong>Kai\'s story so far:</strong> Two accounts, sorted by job. But the bank is a half-day row across open water.</div>'+
+    '<div class="scene">📱😲<div class="cap">Rana holds up her phone. "You know you can see all of this from here, right?"</div></div>'+
+    '<button onclick="next()">Show me</button>'); },
+  ()=>show('<div class="kicker">Lesson 1</div>'+
+    duoCard()+
+    '<div class="card"><p>There it is. Both balances, on the island, with no boat involved.</p>'+
+    '<p>And underneath, something Kai has never seen all in one place: <strong>every single movement of money</strong>, listed in order.</p>'+
+    '<p>Each one of those movements has a name. A <strong>transaction</strong> is any time money moves in or out of your account — a deposit or a withdrawal, either direction.</p>'+
+    '<p>Kai has been making transactions since Module 17. Now he can watch them.</p></div>'+
+    '<button onclick="earnWord(\'transaction\');next()">New word: transaction</button>'),
+  ()=>renderMC("q201a", next),
+  ()=>renderMC("q201b", next),
+];
+
+/* =====================================================================
+   LESSON 2 — Reading the Feed
+===================================================================== */
+const FEED_QS=[
+  {q:"What was the biggest amount that went OUT this week?", opts:["$4 — rope","$8 — market morning","$2 — sweet cake"], right:"$4 — rope",
+   why:"Only three transactions went out: $3, $4 and $2. The rope was the biggest at $4. The $8 went IN, so it does not count."},
+  {q:"How much money came IN this week, altogether?", opts:["$14","$8","$9"], right:"$14",
+   why:"Two deposits: $8 on Monday and $6 on Thursday. $8 + $6 = $14."},
+  {q:"Kai started the week with $10 in checking. What is the balance on Friday night?", opts:["$15","$14","$10"], right:"$15",
+   why:"$10 + $8 − $3 − $4 + $6 − $2 = $15. Work down the list one line at a time, exactly like Module 18."}
+];
+const L2=[
+  ()=>show('<div class="kicker">Lesson 2 · Reading the feed</div>'+
+    '<div class="recap"><strong>So far:</strong> every movement is a transaction, and Kai can see them all.</div>'+
+    '<div class="card"><p>Here is Kai\'s week. Five transactions, newest at the bottom.</p></div>'+
+    phone(undefined,false)+
+    '<div class="card"><p>A list like this can answer real questions — but only if you can read it. Three questions coming up.</p></div>'+
+    '<button onclick="next()">Start</button>'),
+  ()=>{
+    let i=0;
+    function draw(){
+      if(i>=FEED_QS.length){ addXP(6); next(); return; }
+      const q=FEED_QS[i];
+      const shuffled=[...q.opts].sort(function(){return Math.random()-.5;});
+      show('<div class="kicker">Reading the feed · '+(i+1)+' of '+FEED_QS.length+'</div>'+
+        phone(undefined,false)+
+        '<h2 class="display">'+q.q+'</h2>'+
+        '<div id="opts">'+shuffled.map(function(v){
+          return '<button class="opt" data-v="'+v.replace(/"/g,'&quot;')+'">'+v+'</button>';
+        }).join('')+'</div><div id="fb"></div><div id="cont"></div>');
+      let answered=false;
+      document.querySelectorAll(".opt").forEach(function(btn){
+        btn.onclick=function(){
+          const ok = btn.dataset.v===q.right;
+          if(answered && !ok) return;
+          btn.classList.add(ok?"right":"wrong");
+          document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+
+            (ok?'Right — '+q.why : 'Not quite. '+q.why+' Try again.')+'</div>';
+          revealFB();
+          if(ok){
+            answered=true; addXP(2);
+            document.querySelectorAll(".opt").forEach(function(b){b.disabled=true;});
+            document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(i<FEED_QS.length-1?"Next":"Done")+'</button>';
+            revealFB();
+            window._n=function(){ i++; draw(); };
+          } else { answered=true; }
+        };
+      });
+    }
+    draw();
+  },
+  ()=>show('<div class="kicker">Lesson 2 · The running balance, live</div>'+
+    phone(undefined,true)+
+    '<div class="card"><p>Same feed, with the balance after each line — the ledger from Module 18, except Kai did not have to write any of it.</p>'+
+    '<p>The bank keeps the running total. Kai just has to look.</p></div>'+
+    '<button onclick="next()">Practice</button>'),
+  ()=>renderMC("q202a", next),
+  ()=>renderTF("q202b", next),
+];
+
+/* =====================================================================
+   LESSON 3 — The Habit of Looking
+===================================================================== */
+const L3=[
+  ()=>show('<div class="kicker">Lesson 3 · The habit of looking</div>'+
+    '<div class="recap"><strong>So far:</strong> Kai can read a week of transactions without leaving the island.</div>'+
+    '<div class="notif"><span class="bell">🔔</span><span><strong>FinLit Bank</strong><br>Money out: $4.00 — Rope. Balance now $11.00.</span></div>'+
+    '<div class="card"><p>Kai\'s phone buzzed the moment the rope was paid for.</p>'+
+    '<p>That is a <strong>notification</strong> — the bank telling you a transaction just happened, instead of waiting for you to come and ask.</p></div>'+
+    '<button onclick="earnWord(\'notification\');next()">New word: notification</button>'),
+  ()=>show('<div class="kicker">Lesson 3</div>'+
+    '<div class="notif"><span class="bell">🔔</span><span><strong>FinLit Bank</strong><br>Money in: $6.00 — Helping Tavo. Balance now $17.00.</span></div>'+
+    '<div class="notif"><span class="bell">🔔</span><span><strong>FinLit Bank</strong><br>Money out: $2.00 — Sweet cake. Balance now $15.00.</span></div>'+
+    '<div class="card"><p>Notifications turn checking your account from a chore into something that just… happens.</p>'+
+    '<p>And that matters more than it sounds. Here is the whole point:</p>'+
+    '<p style="text-align:center; font-size:19px"><strong>You can only notice something is wrong if you look.</strong></p>'+
+    '<p>Kai now knows where he stands every single day, without trying. That is the habit worth keeping.</p></div>'+
+    '<button onclick="next()">Practice</button>'),
+  ()=>renderMC("q203a", next),
+  ()=>renderMC("q203c", next),
+];
+
+/* =====================================================================
+   LESSON 4 — Mastery
+===================================================================== */
+let mastery = {qs:[], idx:0, score:0};
+const L4=[
+  ()=>{
+    const pool=["q201a","q201b","q202a","q202b","q203a","q203c"].sort(()=>Math.random()-.5).slice(0,4);
+    mastery={qs:[...pool,"q203b"].sort(()=>Math.random()-.5), idx:0, score:0};
+    show('<div class="kicker">Lesson 4 · Show what you know</div>'+
+      '<div class="recap"><strong>Module 20 quest:</strong> You read a week of transactions and built the habit of looking.</div>'+
+      '<h1 class="display">Five questions.</h1>'+
+      '<p>Get 4 of 5 right and Module 20 is yours.</p>'+
+      '<button onclick="next()">Start</button>');
+  },
+  ()=>{ masteryQ(); },
+  ()=>{ finishMastery(mastery.score>=4); },
+];
+function masteryQ(){
+  if(mastery.idx>=mastery.qs.length){ next(); return; }
+  const qid=mastery.qs[mastery.idx];
+  const q=QUESTIONS[qid];
+  const cont=()=>{ mastery.idx++; masteryQ(); };
+  if(q.type==="tf"){ renderTFM(qid,cont); } else { renderMCM(qid,cont); }
+}
+function renderMCM(qid,onDone){
+  const q=QUESTIONS[qid];
+  let html='<div class="kicker">Mastery · '+(mastery.idx+1)+' of '+mastery.qs.length+'</div><h2 class="display">'+q.prompt+'</h2>';
+  q.opts.forEach((o,i)=>html+='<button class="opt" data-i="'+i+'">'+o.t+'</button>');
+  html+='<div id="fb"></div><div id="cont"></div>'; show(html);
+  let answered=false;
+  document.querySelectorAll(".opt").forEach(btn=>{
+    btn.onclick=()=>{
+      if(answered) return; answered=true;
+      const o=q.opts[+btn.dataset.i];
+      btn.classList.add(o.ok?"right":"wrong");
+      if(o.ok) mastery.score++;
+      document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
+      document.getElementById("fb").innerHTML='<div class="feedback '+(o.ok?'good':'bad')+'">'+o.fb+'</div>';
+      document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>'; window._c=()=>onDone;
+      revealFB();
+    };
+  });
+}
+function renderTFM(qid,onDone){
+  const q=QUESTIONS[qid];
+  show('<div class="kicker">Mastery · '+(mastery.idx+1)+' of '+mastery.qs.length+'</div><h2 class="display">'+q.prompt+'</h2>'+
+    '<div class="btn-row"><button class="opt" id="tT">True</button><button class="opt" id="tF">False</button></div>'+
+    '<div id="fb"></div><div id="cont"></div>');
+  let answered=false;
+  function pick(v,el){
+    if(answered)return; answered=true;
+    const ok=(v===q.answer); if(ok)mastery.score++;
+    el.classList.add(ok?"right":"wrong");
+    document.getElementById("tT").disabled=true;document.getElementById("tF").disabled=true;
+    document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?q.good:q.bad)+'</div>';
+    document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>'; window._c=()=>onDone;
+    revealFB();
+  }
+  document.getElementById("tT").onclick=e=>pick(true,e.target);
+  document.getElementById("tF").onclick=e=>pick(false,e.target);
+}
+function finishMastery(pass){
+  if(pass && !S.masteryPassed){ S.masteryPassed=true; addXP(20); }
+  saveState();
+  if(pass){
+    show('<div class="night"><div class="lantern">🏮</div>'+
+      '<h1 class="display" style="color:#fff">Module 20 complete</h1>'+
+      '<p style="color:#cfe0ee">Quiz: '+mastery.score+'/5 ✓ · First Banking season complete 🏦</p></div>'+
+      '<div class="card"><p><strong>You now own:</strong> transaction and notification — and a habit that will do more for you than any single lesson.</p>'+
+      '<p>Four modules ago Kai kept his money in a tin under a floorboard and could not prove how much was in it. Tonight he knows both balances, every movement of the week, and exactly where he stands — from a rock on the beach.</p>'+
+      '<p>Then Rana says something odd. "Your savings will be a little bigger next month. You do not have to do anything."</p>'+
+      '<p>Kai stares at her. "Bigger? I am not putting anything in."</p>'+
+      '<p class="muted">Module 21: Interest.</p></div>'+
+      '<button style="margin-bottom:10px" onclick="window.location.href=\'module-21-interest.html\'">Continue to Module 21</button>'+
+      '<button class="btn-ghost" style="margin-bottom:10px" onclick="window.location.href=\'index.html\'">🗺️ Back to all modules</button>'+
+      '<button class="btn-ghost" onclick="goHome()">Stay in Module 20</button>');
+    S.done[3]=true; saveState();
+  } else {
+    show('<div class="kicker">Almost there</div>'+
+      '<h1 class="display">One more try</h1>'+
+      '<p>You got '+mastery.score+' of 5. The keys: a transaction is any movement in or out, a notification tells you the moment one happens, and checking often is how you stay in control.</p>'+
+      '<button onclick="S.step=0;render()">Try again</button>'+
+      '<button class="btn-ghost" style="margin-top:10px" onclick="toggleTutor(true)">Talk with the tutor</button>'+
+      '<button class="btn-ghost" style="margin-top:10px" onclick="goHome()">Back home</button>');
+  }
+}
+
+const LESSONS=[
+  {title:"The Phone", sub:"The whole account, from the island", steps:L1, emoji:"📱"},
+  {title:"Reading the Feed", sub:"Answer real questions from a week of history", steps:L2, emoji:"📜"},
+  {title:"The Habit of Looking", sub:"Why checking often is the whole point", steps:L3, emoji:"🔔"},
+  {title:"Show What You Know", sub:"Mastery check", steps:L4, emoji:"🏮"},
+];
+
+/* =====================================================================
+   HOME
+===================================================================== */
+function goHome(){
+  dots(4, S.done.filter(Boolean).length-1);
+  let html='<div class="kicker">Module 20</div><h1 class="display">Digital Banking</h1>'+
+    '<p class="muted">Four short lessons. Your whole account, in your pocket.</p>';
+  LESSONS.forEach((l,i)=>{
+    const locked = i>0 && !S.done[i-1];
+    const done = S.done[i];
+    html+='<button class="opt" '+(locked?'disabled':'')+' onclick="startLesson('+i+')">'+
+      '<span class="em">'+(done?'✅':locked?'🔒':l.emoji)+'</span><strong>'+l.title+'</strong><br>'+
+      '<span class="muted" style="font-weight:400">'+l.sub+'</span></button>';
+  });
+  if(S.masteryPassed) html+='<div class="night" style="margin-top:8px"><div class="lantern">🏮</div><p style="color:#cfe0ee">Module 20 mastered · '+S.xp+' XP</p></div>';
+  html+='<button class="btn-ghost" style="margin-top:14px" onclick="window.location.href=\'index.html\'">🗺️ Back to all modules</button>';
+  show(html);
+}
+function startLesson(i){ S.lesson=i; S.step=0; saveState(); render(); }
+
+/* =====================================================================
+   TUTOR
+===================================================================== */
+let tHist=[];
+function toggleTutor(on){
+  document.getElementById("tutorPanel").classList.toggle("on",on);
+  document.getElementById("tutorOverlay").classList.toggle("on",on);
+  saveState();
+  if(on&&tHist.length===0) tMsg("a","Hi! Ask me anything about transactions, notifications, or reading your history — or tap a button below.");
+}
+document.getElementById("tutorBtn").onclick=()=>toggleTutor(true);
+function tMsg(who,txt){ const d=document.createElement("div"); d.className="msg "+who; d.textContent=txt; document.getElementById("tlog").appendChild(d); d.scrollIntoView({behavior:"smooth"}); }
+function quickAsk(t){ document.getElementById("tin").value=t; sendTutor(); }
+async function sendTutor(){
+  const inp=document.getElementById("tin"); const txt=inp.value.trim(); if(!txt) return;
+  inp.value=""; tMsg("u",txt); tHist.push({role:"user",content:txt});
+  const think=document.createElement("div"); think.className="msg a"; think.innerHTML='<span class="spin" style="border-color:var(--ink);border-top-color:transparent"></span>';
+  document.getElementById("tlog").appendChild(think);
+  const sys="You are the tutor inside Module 20 (Digital Banking) of a financial-literacy app — the LAST module of the first Banking season. The learner may be a child or an adult. "+
+    "They know from earlier modules: money, dollar, cent, add, subtract, buy, sell, pay, earn, spend, need, save, goal, multiply, divide, fraction, half, quarter, decimal, hundredth, percent, discount, bank, deposit, withdraw, balance, checking, savings. From THIS module: transaction (any time money moves in or out — deposits and withdrawals are both transactions), notification (a message from the bank the moment a transaction happens), reading a transaction history to answer questions, and the core habit — you can only notice something is wrong if you look, so check often. "+
+    "STRICT RULES: never use these words (later modules): interest, money growing by itself, rate, APY (Module 21), fees, overdraft, being charged, minimum balance (Module 22), scam, fraud, phishing, stolen, suspicious transactions, passwords in detail, someone pretending to be the bank (all Module 23 — if a learner raises any of these, say warmly that keeping money safe from tricks is its own module coming soon, and do not teach it here), debit card, credit card, credit, loan, borrow, lend, invest, budget, tax. If asked why savings will get bigger on its own, say that is exactly what the very next module explains — do NOT explain interest. "+
+    "Story context: Rana showed Kai the bank on her phone; he saw both balances from the island; his week ran Mon +$8 market, Tue −$3 bread and fruit, Wed −$4 rope, Thu +$6 helping Tavo, Fri −$2 sweet cake, starting at $10 checking and ending at $15, with $15 untouched in savings. Notifications buzzed each time money moved. "+
+    "Never repeat a failed explanation — switch analogies (a window into a room you used to have to walk to, a scoreboard that updates itself, a friend who tells you the moment something changes). Keep answers under 80 words, warm, honest, never mark wrong ideas right. If asked \'Quiz me\', ask ONE simple question about reading a transaction list and wait.";
+  try{
+    const controller=new AbortController(); const timeout=setTimeout(()=>controller.abort(),8000);
+    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:300,system:sys,messages:tHist.slice(-10)}),signal:controller.signal});
+    clearTimeout(timeout);
+    const data=await r.json();
+    const out=(data.content||[]).filter(c=>c.type==="text").map(c=>c.text).join("").trim() || "I lost my thread. Ask again?";
+    think.remove(); tMsg("a",out); tHist.push({role:"assistant",content:out});
+  }catch(e){
+    think.remove(); tMsg("a","I can't think right now. Try again in a moment — or tap the word cards up top to review.");
+  }
+}
+
+/* ---------- boot ---------- */
+(async function(){
+  await loadState();
+  document.getElementById("xpBox").textContent=S.xp+" XP";
+  renderShelf();
+  goHome();
+})();
+</script>
+</body>
+</html>
