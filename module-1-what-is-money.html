@@ -700,20 +700,52 @@ function explainBack(followup){
     const btn=document.getElementById("sendExp");
     btn.innerHTML='<span class="spin"></span> Reading your answer…'; btn.disabled=true;
     let verdict = await scoreExplain(txt, !!followup);
+    // No reliable reading helper? Never guess from keywords — ask a short check question instead.
+    if(!verdict){ checkBack(txt); return; }
     btn.style.display='none'; // Hide the spinner button after scoring
     const fb=document.getElementById("fb"), cont=document.getElementById("cont");
+    const say=(cls)=>{ const d=document.createElement("div"); d.className="feedback"+(cls?" "+cls:""); d.textContent=verdict.reply; fb.innerHTML=""; fb.appendChild(d); };
     if(verdict.result==="pass"){
       addXP(verdict.bonus?5:0);
-      fb.innerHTML='<div class="feedback good">'+verdict.reply+'</div>';
+      say("good");
       cont.innerHTML='<button onclick="finishMastery(true)">See my result</button>';
     } else if(verdict.result==="borderline" && !followup){
-      fb.innerHTML='<div class="feedback">'+verdict.reply+'</div>';
+      say("");
       cont.innerHTML='<button onclick="explainBack(true)">Answer the follow-up</button>';
     } else {
-      fb.innerHTML='<div class="feedback bad">'+verdict.reply+'</div>';
+      say("bad");
       cont.innerHTML='<button onclick="finishMastery(false)">See my result</button>';
     }
   };
+}
+/* Offline check: the learner's own words are kept, then ONE fixed question
+   decides the result. A misconception ("the paper itself is valuable") can
+   no longer pass just because it contains a keyword like "agree" or "take". */
+function checkBack(own){
+  const opts=[
+    {t:"It works because everyone agrees to take it. The paper itself is not the valuable part.", ok:true},
+    {t:"It works because the paper itself is very valuable.", ok:false,
+     why:"Not quite. The paper on its own is worth almost nothing. It works only because everyone agrees to take it."},
+    {t:"It works because the shop is being kind and giving the food away.", ok:false,
+     why:"Not quite. The shop is not giving anything away. It takes the paper because it knows others will take it too."}
+  ].sort(()=>Math.random()-.5);
+  show('<div class="kicker">Mastery · the fun one</div>'+
+    '<div class="card"><p class="muted" style="margin:0 0 6px">Your answer:</p><p id="own" style="margin:0"></p></div>'+
+    '<h2 class="display">Which sentence says the big idea?</h2>'+
+    opts.map((o,i)=>'<button class="opt" data-i="'+i+'">'+o.t+'</button>').join('')+
+    '<div id="fb" style="margin-top:12px"></div><div id="cont"></div>');
+  document.getElementById("own").textContent=own;
+  document.querySelectorAll(".opt").forEach(el=>{
+    el.onclick=()=>{
+      const o=opts[+el.dataset.i];
+      document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
+      el.classList.add(o.ok?"right":"wrong");
+      document.getElementById("fb").innerHTML='<div class="feedback '+(o.ok?'good':'bad')+'">'+
+        (o.ok?"That's the big idea. Money works because everyone agrees to take it.":o.why)+'</div>';
+      document.getElementById("cont").innerHTML='<button onclick="finishMastery('+(o.ok?'true':'false')+')">See my result</button>';
+      revealFB();
+    };
+  });
 }
 async function scoreExplain(answer, isFollowup){
   const sys = "You are a warm, honest tutor inside a financial-literacy app for beginners of all ages. "+
@@ -735,18 +767,15 @@ async function scoreExplain(answer, isFollowup){
       signal:controller.signal
     });
     clearTimeout(timeout);
+    if(!r.ok) return null;
     const data=await r.json();
     const txt=(data.content||[]).filter(c=>c.type==="text").map(c=>c.text).join("").replace(/```json|```/g,"").trim();
     const v=JSON.parse(txt);
-    if(v && v.result) return v;
-    throw new Error("bad json");
+    const okShape = v && ["pass","borderline","fail"].includes(v.result) &&
+      typeof v.bonus==="boolean" && typeof v.reply==="string" && v.reply.length>0 && v.reply.length<600;
+    return okShape ? v : null;
   }catch(e){
-    // offline fallback: simple keyword rubric so testing is never blocked
-    const a=answer.toLowerCase();
-    const hit=/agree|trust|everyone|accept|take it|takes it|believe|promise|not the paper|paper.*(worthless|nothing)/.test(a);
-    return {result: hit?"pass":"borderline", bonus:false,
-      reply: hit?"That's the big idea — it works because everyone agrees to take it. Well said."
-                :"You're close. Think back to the shells: what did all the traders stop doing at the same time?"};
+    return null;  // offline or bad reply: explainBack falls back to checkBack()
   }
 }
 function finishMastery(explainPass){

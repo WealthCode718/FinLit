@@ -198,7 +198,7 @@
 ===================================================================== */
 const VOCAB = {
   taxreturn:{term:"tax return", def:"A form you fill out once a year telling the government how much you earned and how much tax was already taken. It checks whether you paid the right amount."},
-  refund:{term:"refund", def:"Money given back to you because you paid too much. A tax refund is your own money coming home — not a bonus, so give it a job."}
+  refund:{term:"refund", def:"Money given back to you, often because you paid too much. Kai’s tax refund is his own money coming home — not a bonus, so give it a job."}
 };
 
 const QUESTIONS = {
@@ -206,16 +206,16 @@ const QUESTIONS = {
     {t:"A once-a-year form that checks whether you paid the right amount of tax", ok:true, fb:"Right. It lists what you earned and what was already taken, and checks if they match up."},
     {t:"Taking something back to a shop", ok:false, fb:"That is returning an item. A tax return is a yearly form about your income and your taxes."},
     {t:"A form to ask for a loan", ok:false, fb:"Nothing borrowed here. A tax return checks whether the tax you paid during the year was the right amount."}]},
-  "q341b":{type:"mc", prompt:"On a tax return, what happens if too LITTLE tax was taken during the year?", concept:"taxreturn", opts:[
+  "q341b":{type:"mc", prompt:"On Kai\u2019s island, what happens if too LITTLE tax was taken during the year?", concept:"taxreturn", opts:[
     {t:"You pay the rest of what you owe", ok:true, fb:"Right. The return works both ways: too much taken → money back; too little → you pay the difference."},
     {t:"Nothing — you get to keep the difference", ok:false, fb:"Taxes are required. If too little was paid, the return is where you pay the rest."},
-    {t:"You get a refund anyway", ok:false, fb:"A refund only happens when too MUCH was taken. Too little means you pay a bit more."}]},
+    {t:"You get a refund anyway", ok:false, fb:"On Kai\u2019s island, a refund only comes when too MUCH was taken. Too little means you pay a bit more."}]},
   "q341c":{type:"tf", prompt:"True or false: it is fine to leave some income off your tax return if it gets you a bigger refund.", answer:false, concept:"taxreturn",
     good:"Right. A tax return must be honest and complete. Leaving income out is against the rules.",
     bad:"Never. A tax return has to include all your income. Leaving some out to get more back is against the rules."},
   "q342a":{type:"mc", prompt:"What is a refund?", concept:"refund", opts:[
-    {t:"Money given back because you paid too much", ok:true, fb:"Right. At a shop or on a tax return, it is your own money coming home."},
-    {t:"A prize for filling out forms", ok:false, fb:"It is not a prize — it was your money all along. You paid too much, and it came back."},
+    {t:"Money given back to you, often because you paid too much", ok:true, fb:"Right. At a shop, or on Kai\u2019s tax return, it is money coming back to you."},
+    {t:"A prize for filling out forms", ok:false, fb:"It is not a prize for paperwork. For Kai, it was his own money — he paid too much, and it came back."},
     {t:"Money the government lends you", ok:false, fb:"Nothing to pay back. A refund is your own money returned."}]},
   "q342b":{type:"mc", prompt:"Kai gets a $6 tax refund. What is the smartest way to think about it?", concept:"refund", opts:[
     {t:"It is his own money coming home — give it a job in his budget", ok:true, fb:"Right. Not free money, not a surprise bonus to blow. Like every dollar, it gets a job."},
@@ -238,7 +238,7 @@ const CFG = {
   n:34, title:"The Earning Challenge", homeSub:"Four short lessons. The yearly check-up, then a whole season of work.",
   pool:["q341a","q341b","q341c","q342a","q342b","q342c","q343a"], transfer:"q343b",
   quest:"You learned what a tax return and a refund are, then ran a whole season of earning — and bought the sail.",
-  failKeys:"The keys: a tax return is the once-a-year check that the right tax was paid (too much → refund, too little → pay the rest), it must be honest, and a refund is your own money coming home — give it a job.",
+  failKeys:"The keys: a tax return is the once-a-year check that the right tax was paid (in Kai’s case, too much → refund, too little → pay the rest), it must be honest, and a refund is your own money coming home — give it a job.",
   badge:" · Earning & Taxes block complete 💼",
   nextFile:"module-35-risk.html",
   passStory:'<p><strong>You now own:</strong> tax return and refund — and the whole Earning & Taxes block.</p>'+
@@ -251,7 +251,7 @@ const CFG = {
 const TUTOR_HELLO = "Hi! Ask me anything about tax returns, refunds, or Kai’s season — or tap a button below.";
 const TUTOR_SYS = "You are the tutor inside Module 34 (The Earning Challenge) of a financial-literacy app — the finale of the Earning & Taxes block. The learner may be a child or an adult. "+
   "They know from earlier modules: money, dollar, cent, add, subtract, multiply, buy, sell, pay, earn, work, spend, need, save, goal, percent, bank, deposit, withdraw, balance, checking, savings, transaction, notification, interest, grow, fee, overdraft, PIN, scam, budget, cushion, borrow, loan, lend, owe, debt, debit card, credit card, credit score, due date, lender, minimum payment, employer, wage, paycheck, income, tax, take-home pay, sales tax, receipt. "+
-  "From THIS module: tax return (a form filled out once a year telling the government how much you earned and how much tax was already taken; it checks whether the right amount was paid; too much taken means a refund, too little means you pay the rest, just right means nothing more) and refund (money given back because you paid too much; a tax refund is your own money coming home, not a bonus, so give it a job). A tax return must be honest and include all income. Fake 'tax office' messages asking for a PIN are scams. "+
+  "From THIS module: tax return (a form filled out once a year telling the government how much you earned and how much tax was already taken; it checks whether the right amount was paid; too much taken means a refund, too little means you pay the rest, just right means nothing more) and refund (money given back to you, often because you paid too much; Kai's tax refund is his own money coming home, not a bonus, so give it a job). In real life, some tax rules (in the U.S., refundable tax credits) can pay people a refund even when they owed little or no tax; if asked, say so briefly in plain words, say rules differ by place, and suggest a trusted adult. A tax return must be honest and include all income. Fake 'tax office' messages asking for a PIN are scams. "+
   "ACCURACY: rules differ by place (who must file, deadlines, forms). Do not name specific agencies or forms, and do not give rates or amounts. Suggest a trusted adult for real tax questions. "+
   "NEUTRALITY: do not give opinions on whether taxes should be higher or lower. "+
   "STRICT RULES: never use these words (later modules): insurance, premium, deductible, risk, emergency fund, invest, stock, retirement, W-2, 1040, IRS. If the learner uses one, answer briefly in plain words and say it is coming later. "+
@@ -427,7 +427,7 @@ const L1=[
       <div><div class="t">Just right</div>Nothing more to do</div>
     </div>
     <div class="card"><p>Kai’s turned out to be the first kind: a little too much was taken during the season.</p>
-    <p class="muted">(Rules about who fills one out, and when, differ from place to place. A trusted adult can help with a real one.)</p></div>
+    <p class="muted">(This is how it works on Kai\u2019s island. In real life, rules about who fills one out, and when, differ from place to place. Some places also have special tax rules that can give people money back even when they owed little or no tax. A trusted adult can help with a real one.)</p></div>
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q341a", next),
   ()=>renderMC("q341b", next),
@@ -440,7 +440,7 @@ const L1=[
 const L2=[
   ()=>show(`<div class="kicker">Lesson 2 · Money coming home</div>
     <div class="recap"><strong>So far:</strong> a tax return checks whether the right amount of tax was paid.</div>
-    <div class="card"><p>Because too much was taken, the island council sends Kai back $6. Money given back because you paid too much is called a <strong>refund</strong>.</p>
+    <div class="card"><p>Because too much was taken, the island council sends Kai back $6. Money given back to you is called a <strong>refund</strong>. For Kai, it is tax he paid too much of, coming home.</p>
     <p>You get refunds in shops too — bring back a ripped net with your receipt, and they give your money back. Same word, same idea.</p></div>
     <button onclick="earnWord('refund');next()">New word: refund</button>`),
   ()=>show(`<div class="kicker">Lesson 2 · Not a bonus</div>

@@ -113,7 +113,7 @@
   <div class="prog-wrap">
     <div class="prog-label">
       <span>Overall progress</span>
-      <span id="progText">0 of 52 modules</span>
+      <span id="progText">0 modules mastered</span>
     </div>
     <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
   </div>
@@ -266,8 +266,11 @@ async function render(){
   });
 
   document.getElementById("xpBadge").textContent = totalXP + " XP";
-  document.getElementById("progText").textContent = totalMastered + " of 52 modules";
-  document.getElementById("progFill").style.width = (totalMastered/52*100).toFixed(1)+"%";
+  // Progress is measured against the modules that exist; the rest of the roadmap is shown separately.
+  const PLANNED_TOTAL = 52, available = MODULES.length, planned = Math.max(0, PLANNED_TOTAL - available);
+  document.getElementById("progText").textContent = totalMastered + " of " + available + " modules" +
+    (planned ? " · " + planned + " more planned" : "");
+  document.getElementById("progFill").style.width = (available ? totalMastered/available*100 : 0).toFixed(1)+"%";
 
   // Group by block
   const blocks = {};
