@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>What Is a Bank? — Module 17</title>
+<title>FinLit — What Is a Bank? — Module 17</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap');
   :root{
     --ink:#123a3f; --ink-soft:#3d6166; --lagoon:#ecf5f2; --card:#ffffff;
     --sand:#f3ead8; --sand-deep:#e5d7bc; --shell:#c96f4a; --shell-soft:#f4e0d6;
-    --night:#0e1b2c; --gold:#e8b84b; --good:#2e7d5b; --bad:#a94436;
+    --night:#0e1b2c; --gold:#e8b84b; --good:#2e7d5b; --bad:#a94436; --locked:#3d6166;
     --radius:14px; --shadow:0 2px 10px rgba(18,58,63,.08);
   }
   *{box-sizing:border-box; margin:0; padding:0}
@@ -92,15 +92,48 @@
   .tin .n{font-size:14px; color:var(--ink-soft); margin-top:4px}
   .spin{display:inline-block; width:16px; height:16px; border:3px solid #fff; border-top-color:transparent; border-radius:50%; animation:sp 1s linear infinite; vertical-align:-3px}
   @keyframes sp{to{transform:rotate(360deg)}}
+
+  /* Shared island UX — tap targets, focus, no sideways scroll */
+  html,body{overflow-x:clip}
+  a.back-hub,button.back-lessons{
+    width:auto; flex:0 0 auto; display:inline-flex; align-items:center; justify-content:center;
+    min-height:44px; padding:0 12px; border-radius:999px; text-decoration:none;
+    color:var(--ink); font-weight:700; font-size:14px; background:#fff;
+    border:2px solid #d9e6e1; line-height:1.1; font-family:inherit; cursor:pointer;
+  }
+  .hrow-nav{display:flex; gap:8px; flex-wrap:wrap; min-width:0}
+  .hrow{flex-wrap:wrap; row-gap:8px}
+  .dots{margin-top:8px; flex-wrap:wrap}
+  .shelf .word-chip{width:auto; min-height:44px; display:inline-flex; align-items:center}
+  button,.opt,.sort-item,.coin-btn{min-height:44px}
+  a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,.word-chip:focus-visible{
+    outline:3px solid var(--shell); outline-offset:2px;
+  }
+  input,textarea{max-width:100%}
+  .tp-in input{min-height:44px}
+  .trader,.zone,.acct,.card,.txn,.lrow{min-width:0; max-width:100%}
+  .trader button,.tp-quick button,.sortbar button{min-height:44px}
+  .zones,.sortbar,.duo,.btn-row,.pick2{flex-wrap:wrap}
+  .zone{flex:1 1 140px}
+  #tutorBtn{max-width:calc(100vw - 32px)}
+  @media (max-width:380px){
+    h1{font-size:26px}
+    .traders{grid-template-columns:1fr}
+    .duo{flex-direction:column}
+  }
 </style>
 </head>
 <body>
 <div id="app">
   <header>
     <div class="hrow">
-      <div class="dots" id="dots"></div>
+      <div class="hrow-nav">
+        <a class="back-hub" href="index.html">← Modules</a>
+        <button type="button" class="back-lessons" onclick="goHome()">Lessons</button>
+      </div>
       <div class="xp" id="xpBox">0 XP</div>
     </div>
+    <div class="dots" id="dots" aria-label="Lesson progress"></div>
     <div class="shelf" id="shelf"><span class="shelf-label">Words you own:</span></div>
   </header>
   <main id="main"></main>
@@ -229,13 +262,13 @@ function revealFB(){ setTimeout(function(){
   for(var i=0;i<ids.length;i++){
     var el=document.getElementById(ids[i]);
     if(el && el.innerHTML && el.innerHTML.trim()){
-      if(el.scrollIntoView) el.scrollIntoView({behavior:"smooth", block:"nearest"});
+      if(el.scrollIntoView) el.scrollIntoView({behavior:(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)?"auto":"smooth", block:"nearest"});
       return;
     }
   }
 },80); }
 function dots(n,i){
-  const d=document.getElementById("dots"); d.innerHTML="";
+  const d=document.getElementById("dots"); if(!d) return; d.innerHTML="";
   for(let k=0;k<n;k++){const s=document.createElement("span");s.className="dot"+(k<=i?" on":"");d.appendChild(s);}
 }
 function next(){ S.step++; saveState(); render(); }
@@ -535,7 +568,8 @@ function goHome(){
       '<span class="muted" style="font-weight:400">'+l.sub+'</span></button>';
   });
   if(S.masteryPassed) html+='<div class="night" style="margin-top:8px"><div class="lantern">🏮</div><p style="color:#cfe0ee">Module 17 mastered · '+S.xp+' XP</p></div>';
-  html+='<button class="btn-ghost" style="margin-top:14px" onclick="window.location.href=\'index.html\'">🗺️ Back to all modules</button>';
+  html+='<button class="btn-ghost" style="margin-top:14px" onclick="window.location.href=\'module-16-percentages.html\'">← Module 16</button>';
+  html+='<button class="btn-ghost" style="margin-top:10px" onclick="window.location.href=\'index.html\'">🗺️ Back to all modules</button>';
   show(html);
 }
 function startLesson(i){ S.lesson=i; S.step=0; saveState(); render(); }
@@ -551,7 +585,7 @@ function toggleTutor(on){
   if(on&&tHist.length===0) tMsg("a","Hi! Ask me anything about banks, accounts, and deposits — or tap a button below.");
 }
 document.getElementById("tutorBtn").onclick=()=>toggleTutor(true);
-function tMsg(who,txt){ const d=document.createElement("div"); d.className="msg "+who; d.textContent=txt; document.getElementById("tlog").appendChild(d); d.scrollIntoView({behavior:"smooth"}); }
+function tMsg(who,txt){ const d=document.createElement("div"); d.className="msg "+who; d.textContent=txt; document.getElementById("tlog").appendChild(d); d.scrollIntoView({behavior:(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)?"auto":"smooth"}); }
 function quickAsk(t){ document.getElementById("tin").value=t; sendTutor(); }
 async function sendTutor(){
   const inp=document.getElementById("tin"); const txt=inp.value.trim(); if(!txt) return;

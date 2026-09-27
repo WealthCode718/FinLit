@@ -9,11 +9,14 @@
   :root{
     --ink:#123a3f; --ink-soft:#3d6166; --lagoon:#ecf5f2; --card:#ffffff;
     --sand:#f3ead8; --sand-deep:#e5d7bc; --shell:#c96f4a; --shell-soft:#f4e0d6;
-    --night:#0e1b2c; --gold:#e8b84b; --good:#2e7d5b; --locked:#b0c4be;
+    --night:#0e1b2c; --gold:#e8b84b; --good:#2e7d5b; --bad:#a94436; --locked:#3d6166;
     --radius:14px; --shadow:0 2px 10px rgba(18,58,63,.08);
   }
   *{box-sizing:border-box; margin:0; padding:0}
-  html,body{height:100%; background:var(--lagoon)}
+  html,body{height:100%; background:var(--lagoon); overflow-x:clip}
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation:none!important; transition:none!important}
+  }
   body{
     font-family:"Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif;
     color:var(--ink); font-size:17px; line-height:1.5;
@@ -21,7 +24,7 @@
   }
   .display{font-family:"Fraunces",Georgia,serif; font-weight:700; letter-spacing:-.01em}
 
-  #app{max-width:560px; margin:0 auto; min-height:100dvh; display:flex; flex-direction:column}
+  #app{max-width:560px; width:100%; margin:0 auto; min-height:100dvh; display:flex; flex-direction:column}
 
   /* hero header */
   .hero{
@@ -59,9 +62,9 @@
   }
   .mod-card:focus-visible{outline:3px solid var(--shell); outline-offset:2px}
   .mod-card.done{border-color:#c8e6d8}
-  .mod-card.locked{opacity:.55; pointer-events:none}
+  .mod-card.locked{background:#f7faf9; box-shadow:none; cursor:default}
   .mod-card.active{border-color:var(--shell)}
-  .mod-inner{display:flex; align-items:center; gap:14px; padding:14px 16px}
+  .mod-inner{display:flex; align-items:center; gap:14px; padding:14px 16px; min-height:72px}
   .mod-icon{
     width:46px; height:46px; border-radius:12px; display:flex; align-items:center;
     justify-content:center; font-size:24px; flex-shrink:0; background:var(--lagoon);
@@ -92,9 +95,20 @@
   /* words shelf */
   .words-wrap{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:14px 16px; margin-bottom:10px}
   .words-label{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:8px}
-  .words-row{display:flex; flex-wrap:wrap; gap:6px}
-  .word-chip{font-size:13px; font-weight:600; background:var(--sand); border:1.5px solid var(--sand-deep); border-radius:8px; padding:3px 10px}
+  .words-row{display:flex; flex-wrap:wrap; gap:8px}
+  button.word-chip{
+    font:inherit; font-size:13px; font-weight:600; background:var(--sand); color:var(--ink);
+    border:1.5px solid var(--sand-deep); border-radius:8px; padding:8px 12px; cursor:pointer;
+    width:auto; min-height:44px; display:inline-flex; align-items:center;
+  }
+  button.word-chip[aria-pressed="true"]{border-color:var(--shell); background:var(--shell-soft)}
+  button.word-chip:focus-visible{outline:3px solid var(--shell); outline-offset:2px}
+  .word-def{margin-top:10px; font-size:15px; color:var(--ink)}
   .no-words{font-size:14px; color:var(--ink-soft)}
+  @media (max-width:380px){
+    .hero h1{font-size:28px}
+    .mod-status{font-size:12px}
+  }
 </style>
 </head>
 <body>
@@ -207,33 +221,226 @@ const MODULES = [
     title:"The Earning Challenge", sub:"Tax returns, refunds, and a season of work", emoji:"⛵", block:"Earning & Taxes", lessons:4},
 ];
 
+/* Words earned in modules 1–19. Keys match each lesson's shelf array. */
+const VOCAB = {
+  "money": {
+    "term": "money",
+    "def": "A thing almost everyone will take when you want to get something from them."
+  },
+  "worth": {
+    "term": "worth",
+    "def": "How much people want something. If lots of people want it, it is worth a lot."
+  },
+  "agree": {
+    "term": "agree",
+    "def": "When people all say yes to the same idea. Money works because everyone agrees it does."
+  },
+  "barter": {
+    "term": "barter",
+    "def": "Trading one thing for another without using money."
+  },
+  "trade": {
+    "term": "trade",
+    "def": "A formal exchange where both people give something and get something."
+  },
+  "matching": {
+    "term": "matching problem",
+    "def": "When you want what someone has, but they don't want what you have — the trade can't happen."
+  },
+  "dollar": {
+    "term": "dollar",
+    "def": "The main unit of money. Written with a $ sign, like $3."
+  },
+  "cent": {
+    "term": "cent",
+    "def": "The small unit of money. 100 cents make 1 dollar."
+  },
+  "compare": {
+    "term": "compare",
+    "def": "To look at two things side by side and see which is more, which is less — or if they match."
+  },
+  "equal": {
+    "term": "equal",
+    "def": "When two amounts are exactly the same. 4 quarters and 1 dollar are equal: both are 100 cents."
+  },
+  "price": {
+    "term": "price",
+    "def": "The amount a trader asks for. The number on the tag."
+  },
+  "cost": {
+    "term": "cost",
+    "def": "What you give up to get something. If the price is $3, getting it costs you $3 — money you no longer have for anything else."
+  },
+  "add": {
+    "term": "add",
+    "def": "To put amounts together and find out how much they make all at once."
+  },
+  "total": {
+    "term": "total",
+    "def": "The amount you get when everything is added together. The whole thing."
+  },
+  "subtract": {
+    "term": "subtract",
+    "def": "To take an amount away and find what's left — or to find the gap between two amounts."
+  },
+  "change": {
+    "term": "change",
+    "def": "The money handed back when you give MORE than the price. Hand $1 for a 70¢ mango, get 30¢ change."
+  },
+  "buy": {
+    "term": "buy",
+    "def": "To give money and get a thing. You buy the mango: your money goes to the trader, the mango comes to you."
+  },
+  "sell": {
+    "term": "sell",
+    "def": "To give a thing and get money. The trader sells the mango: the mango goes to you, your money comes to them."
+  },
+  "pay": {
+    "term": "pay",
+    "def": "The giving-money part of buying. You pay the price — with exact money, or with more and get change back."
+  },
+  "earn": {
+    "term": "earn",
+    "def": "To get money by doing work someone wants. Money flows IN — because you traded your effort for it."
+  },
+  "work": {
+    "term": "work",
+    "def": "Effort that helps someone — carrying, building, watching, fixing. When someone pays for it, that's how you earn."
+  },
+  "spend": {
+    "term": "spend",
+    "def": "To use your money to buy things. Money out — by your own choice. Spending is what money is FOR… the trick is choosing well."
+  },
+  "need": {
+    "term": "need",
+    "def": "Something you must have to be okay — food, water, a warm place, clothes that fit the weather. Needs come first."
+  },
+  "save": {
+    "term": "save",
+    "def": "To keep money instead of spending it now, so it can wait for later. Saved money isn't lost — it's yours, waiting."
+  },
+  "goal": {
+    "term": "goal",
+    "def": "The thing you're saving toward. Naming your goal makes the waiting easier — and tells you exactly how far you are."
+  },
+  "multiply": {
+    "term": "multiply",
+    "def": "The fast way to count equal groups. 6 nickels = 6 × 5¢ = 30¢. The × sign means 'groups of'."
+  },
+  "double": {
+    "term": "double",
+    "def": "Multiply by 2. Double $3 is $6. Double THAT is $12. Doubling makes things grow fast — remember this word."
+  },
+  "divide": {
+    "term": "divide",
+    "def": "To split an amount into equal parts — or to find how many equal groups fit inside it. The ÷ sign means 'split into'."
+  },
+  "split": {
+    "term": "split",
+    "def": "To share something out. A FAIR split gives everyone exactly the same — and sometimes leaves a little left over."
+  },
+  "fraction": {
+    "term": "fraction",
+    "def": "A name for equal parts of one whole. Cut one mango into 2 equal parts — each part is a fraction: one half."
+  },
+  "half": {
+    "term": "half",
+    "def": "One of 2 EQUAL parts. Half a mango, half a dollar (50¢), half an hour. Two halves make the whole again."
+  },
+  "decimal": {
+    "term": "decimal",
+    "def": "A number with a dot in it. The dot is a wall: whole dollars on the left, PARTS of a dollar on the right. $3.50 = 3 wholes + half more."
+  },
+  "hundredth": {
+    "term": "hundredth",
+    "def": "One of 100 equal parts of a whole. A penny is one hundredth of a dollar — that's why cents get exactly two digits after the dot."
+  },
+  "percent": {
+    "term": "percent",
+    "def": "Out of 100. The % sign means 'per hundred' — 50% means 50 out of every 100. Same idea as hundredths, new costume."
+  },
+  "discount": {
+    "term": "discount",
+    "def": "A price cut, usually shown as a percent OFF. '50% off' means you pay only half — the store cuts the price in two."
+  },
+  "bank": {
+    "term": "bank",
+    "def": "A safe place that holds your money for you and keeps a record of it. The money is still yours — the bank is just looking after it."
+  },
+  "deposit": {
+    "term": "deposit",
+    "def": "Putting money INTO your account. Deposit $5 and your balance goes up by $5."
+  },
+  "withdraw": {
+    "term": "withdraw",
+    "def": "Taking money OUT of your account. Withdraw $5 and your balance drops by $5. It's the opposite of a deposit."
+  },
+  "balance": {
+    "term": "balance",
+    "def": "How much money is in your account RIGHT NOW. Deposits push it up, withdrawals pull it down."
+  },
+  "checking": {
+    "term": "checking",
+    "def": "The account for money you will spend soon — food, rope, everyday things. Easy to reach on purpose."
+  },
+  "savings": {
+    "term": "savings",
+    "def": "The account for money you are keeping for a goal. Kept separate so you do not spend it by accident."
+  }
+};
+
+const JOURNEY_MODULES = 52; // full-course teaser; built modules are listed above
+
+function esc(s){
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+function setText(id, text){
+  const el = document.getElementById(id);
+  if(el) el.textContent = text;
+}
+function parseState(raw){
+  if(raw == null || raw === "") return null;
+  let state = raw;
+  if(typeof raw === "string"){
+    try{ state = JSON.parse(raw); }catch(e){ return null; }
+  }
+  if(!state || typeof state !== "object") return null;
+  const xpNum = Number(state.xp);
+  const done = Array.isArray(state.done) ? state.done.map(Boolean) : [];
+  const shelf = Array.isArray(state.shelf) ? state.shelf.filter(w => typeof w === "string" && w) : [];
+  return {
+    xp: Number.isFinite(xpNum) ? xpNum : 0,
+    mastered: !!(state.masteryPassed || state.mastered || state.passed),
+    lessonsDown: done.filter(Boolean).length,
+    done: done,
+    shelf: shelf
+  };
+}
+
 /* =====================================================================
    LOAD PROGRESS FROM ALL MODULE STATES
+   Reads modN-state (window.storage, then localStorage). Older saves that
+   used mastered/passed still count. XP is a running total inside each
+   module, so the hub shows the highest value.
 ===================================================================== */
 async function loadAllProgress(){
   const progress = {};
   for(const mod of MODULES){
     if(!mod.stateKey) continue;
-    let state = null;
-    // Try window.storage first, then localStorage
+    let parsed = null;
     try{
-      const r = await window.storage.get(mod.stateKey);
-      if(r && r.value) state = JSON.parse(r.value);
+      if(window.storage && typeof window.storage.get === "function"){
+        const r = await window.storage.get(mod.stateKey);
+        if(r && r.value != null) parsed = parseState(r.value);
+      }
     }catch(e){}
-    if(!state){
+    if(!parsed){
       try{
         const s = localStorage.getItem(mod.stateKey);
-        if(s) state = JSON.parse(s);
+        if(s) parsed = parseState(s);
       }catch(e){}
     }
-    if(state){
-      progress[mod.id] = {
-        xp: state.xp || 0,
-        mastered: state.masteryPassed || false,
-        lessonsDown: (state.done || []).filter(Boolean).length,
-        shelf: state.shelf || []
-      };
-    }
+    if(parsed) progress[mod.id] = parsed;
   }
   return progress;
 }
@@ -242,24 +449,25 @@ async function loadAllProgress(){
    RENDER
 ===================================================================== */
 async function render(){
-  const progress = await loadAllProgress();
+  const mainEl = document.getElementById("main");
+  if(!mainEl) return;
+  let progress = {};
+  try{ progress = await loadAllProgress(); }catch(e){ progress = {}; }
 
-  // Calculate totals
   let totalXP = 0, totalMastered = 0, allWords = [];
   MODULES.forEach(mod=>{
     const p = progress[mod.id];
-    if(p){
-      totalXP = Math.max(totalXP, p.xp);
-      if(p.mastered) totalMastered++;
-      p.shelf.forEach(w=>{ if(!allWords.includes(w)) allWords.push(w); });
-    }
+    if(!p) return;
+    totalXP = Math.max(totalXP, p.xp || 0);
+    if(p.mastered) totalMastered++;
+    (p.shelf || []).forEach(w=>{ if(!allWords.includes(w)) allWords.push(w); });
   });
 
-  document.getElementById("xpBadge").textContent = totalXP + " XP";
-  document.getElementById("progText").textContent = totalMastered + " of 52 modules";
-  document.getElementById("progFill").style.width = (totalMastered/52*100).toFixed(1)+"%";
+  setText("xpBadge", totalXP + " XP");
+  setText("progText", totalMastered + " of " + JOURNEY_MODULES + " modules");
+  const progFill = document.getElementById("progFill");
+  if(progFill) progFill.style.width = (totalMastered / JOURNEY_MODULES * 100).toFixed(1) + "%";
 
-  // Group by block
   const blocks = {};
   MODULES.forEach(mod=>{
     if(!blocks[mod.block]) blocks[mod.block]=[];
@@ -268,75 +476,78 @@ async function render(){
 
   let html = "";
 
-  // Words shelf
   html += '<div class="words-wrap"><div class="words-label">Words you own</div><div class="words-row">';
   if(allWords.length===0){
     html += '<span class="no-words">Complete a lesson to earn your first word.</span>';
   } else {
-    const VOCAB = {
-      money:"A thing almost everyone will take in exchange for other things.",
-      worth:"How much people want something.",
-      agree:"Money works because everyone agrees to take it.",
-      barter:"Trading one thing for another without using money.",
-      trade:"A formal exchange where both people give and get something.",
-      matching:"When you want what someone has, but they don't want what you have."
-    };
     allWords.forEach(w=>{
-      html += '<span class="word-chip" title="'+(VOCAB[w]||"")+'">'+w+'</span>';
+      const entry = VOCAB[w];
+      const label = entry && entry.term ? entry.term : w;
+      html += '<button type="button" class="word-chip" data-key="'+esc(w)+'" aria-pressed="false">'+esc(label)+'</button>';
     });
   }
-  html += '</div></div>';
+  html += '</div><p class="word-def" id="wordDef" hidden></p></div>';
 
-  // Module blocks
   Object.entries(blocks).forEach(([blockName, mods])=>{
-    html += '<div class="block-label">'+blockName+'</div>';
+    html += '<div class="block-label">'+esc(blockName)+'</div>';
     mods.forEach(mod=>{
       const p = progress[mod.id];
-      const mastered = p && p.mastered;
-      const started = p && p.lessonsDown > 0;
-      const prevMod = MODULES.find(m=>m.id===mod.id-1);
-      const prevMastered = !prevMod || (progress[prevMod.id] && progress[prevMod.id].mastered);
-      const locked = mod.comingSoon || (!mastered && !prevMastered && mod.id > 1);
-      const isActive = !mastered && !locked && (started || prevMastered);
+      const mastered = !!(p && p.mastered);
+      const started = !!(p && p.lessonsDown > 0);
+      const prev = progress[mod.id - 1];
+      const prevMastered = mod.id === 1 || !!(prev && prev.mastered);
+      const locked = !!(mod.comingSoon || (mod.id > 1 && !mastered && !prevMastered && !started));
+      const isActive = !mastered && !locked;
+      const statusIcon = mastered ? "✅ Done" : locked ? "🔒 Locked" : started ? "▶ Continue" : "▶ Start";
+      const cardClass = mastered ? "done" : locked ? "locked" : isActive ? "active" : "";
+      const title = "Module " + mod.id + " · " + mod.title;
 
-      let statusIcon = mastered ? "✅ Done" : locked ? "🔒 Locked" : isActive ? "▶ Continue" : "▶ Start";
-      let cardClass = mastered ? "done" : locked ? "locked" : isActive ? "active" : "";
-
-      if(mod.comingSoon){
-        html += '<div class="mod-card locked"><div class="mod-inner">'+
-          '<div class="mod-icon locked">'+mod.emoji+'</div>'+
-          '<div class="mod-info"><div class="mod-title">'+mod.title+'</div>'+
-          '<div class="mod-sub">'+mod.sub+'</div></div>'+
-          '<div class="mod-status locked">🔒 Soon</div>'+
-          '</div></div>';
-        return;
-      }
-
-      html += '<a href="'+mod.file+'" class="mod-card '+cardClass+'"><div class="mod-inner">'+
+      let inner = '<div class="mod-inner">'+
         '<div class="mod-icon '+cardClass+'">'+mod.emoji+'</div>'+
         '<div class="mod-info">'+
-          '<div class="mod-title">Module '+mod.id+' · '+mod.title+'</div>'+
-          '<div class="mod-sub">'+mod.sub+'</div>';
+          '<div class="mod-title">'+esc(title)+'</div>'+
+          '<div class="mod-sub">'+esc(mod.sub)+'</div>';
 
-      // Progress dots for active module
-      if(isActive && p){
-        html += '<div class="mod-dots">';
+      if(isActive && p && Array.isArray(p.done)){
+        inner += '<div class="mod-dots" aria-hidden="true">';
         for(let i=0;i<mod.lessons;i++){
-          const done = p.lessonsDown > i;
-          html += '<div class="mod-dot'+(done?' on':'')+'"></div>';
+          inner += '<div class="mod-dot'+(p.done[i] ? " on" : "")+'"></div>';
         }
-        html += '</div>';
+        inner += '</div>';
       }
+      inner += '</div><div class="mod-status '+cardClass+'">'+statusIcon+'</div></div>';
 
-      html += '</div><div class="mod-status '+cardClass+'">'+statusIcon+'</div>'+
-        '</div></a>';
+      if(locked || mod.comingSoon){
+        html += '<div class="mod-card locked" aria-disabled="true">'+inner+'</div>';
+        return;
+      }
+      html += '<a href="'+esc(mod.file)+'" class="mod-card '+cardClass+'">'+inner+'</a>';
     });
   });
 
-  // Coming soon teaser
   html += '<div class="coming"><strong>More modules coming soon</strong>Module 35 is next — a new block begins. Check back soon!</div>';
 
-  document.getElementById("main").innerHTML = html;
+  mainEl.innerHTML = html;
+  const defEl = document.getElementById("wordDef");
+  mainEl.querySelectorAll(".word-chip").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      if(!defEl) return;
+      const key = btn.getAttribute("data-key") || "";
+      const entry = VOCAB[key];
+      const open = btn.getAttribute("aria-pressed") === "true";
+      mainEl.querySelectorAll(".word-chip").forEach(b=>b.setAttribute("aria-pressed","false"));
+      if(open){
+        defEl.hidden = true;
+        defEl.textContent = "";
+        return;
+      }
+      btn.setAttribute("aria-pressed","true");
+      const label = entry && entry.term ? entry.term : key;
+      const meaning = entry && entry.def ? entry.def : "You earned this word in a lesson.";
+      defEl.hidden = false;
+      defEl.textContent = label + " — " + meaning;
+    });
+  });
 }
 
 render();
