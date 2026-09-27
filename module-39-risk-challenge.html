@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Earning Challenge — Module 34</title>
+<title>The Risk Challenge — Module 39</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap');
   :root{
@@ -131,25 +131,24 @@
   .compare .box .v{font-size:22px; font-weight:700; font-family:"Fraunces",Georgia,serif}
   .spin{display:inline-block; width:16px; height:16px; border:3px solid #fff; border-top-color:transparent; border-radius:50%; animation:sp 1s linear infinite; vertical-align:-3px}
   @keyframes sp{to{transform:rotate(360deg)}}
-  .form{background:#fff; border:2px solid #d9e2de; border-radius:10px; padding:14px 16px; margin-bottom:12px; font-size:15px}
-  .form .hd{font-weight:700; border-bottom:2px solid var(--ink); padding-bottom:6px; margin-bottom:6px; display:flex; justify-content:space-between}
-  .form .row{display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px dashed #d9e2de}
-  .form .res{margin-top:8px; padding:8px; border-radius:8px; background:#eef7f2; font-weight:700; display:flex; justify-content:space-between}
-  .form .res span:last-child{font-family:"Fraunces",Georgia,serif; color:var(--good)}
-  .three{display:flex; gap:8px; margin-bottom:12px}
-  .three > div{flex:1; background:#fff; border:2px solid #d9e2de; border-radius:12px; padding:10px 6px; text-align:center; font-size:13px}
-  .three .t{font-weight:700; font-size:14px; margin-bottom:4px}
-  .three .good{border-color:var(--good); background:#eef7f2}
-  .three .bad{border-color:var(--shell); background:var(--shell-soft)}
+  .policy{background:#fffdf5; border:2px solid var(--sand-deep); border-radius:10px; padding:14px 16px; margin-bottom:12px; font-size:14px}
+  .policy .hd{font-family:"Fraunces",Georgia,serif; font-weight:700; font-size:18px; text-align:center; margin-bottom:8px}
+  .policy .row{display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px dashed var(--sand-deep)}
+  .policy h4{font-size:12px; letter-spacing:.1em; text-transform:uppercase; margin:10px 0 4px}
+  .policy h4.y{color:var(--good)} .policy h4.n{color:var(--bad)}
+  .policy ul{list-style:none; padding-left:0}
+  .policy li{padding:2px 0}
+  .sortbar .yes{background:var(--good)}
+  .sortbar .no{background:var(--bad)}
   .week{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:#fff; background:var(--shell); display:inline-block; border-radius:6px; padding:2px 10px; margin-bottom:8px; font-weight:700}
   .stars{font-size:28px; letter-spacing:4px; text-align:center; margin:6px 0}
+  .ready{background:#fff; border:2px solid #d9e2de; border-radius:14px; padding:12px 14px; margin-bottom:12px}
+  .ready .lbl{font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-weight:700; display:flex; justify-content:space-between}
+  .ready .bar{height:14px; border-radius:999px; background:#eef2f0; overflow:hidden; margin-top:8px}
+  .ready .bar div{height:100%; background:var(--good); border-radius:999px; transition:width .5s ease}
   .recaplist{list-style:none}
   .recaplist li{padding:8px 0; border-bottom:1px solid #eef2f0}
   .recaplist li:last-child{border-bottom:none}
-  .goal{background:#fff; border:2px solid var(--good); border-radius:14px; padding:14px 16px; margin-bottom:12px}
-  .goal .lbl{font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-weight:700; display:flex; justify-content:space-between}
-  .goal .bar{height:16px; border-radius:999px; background:#eef2f0; overflow:hidden; margin-top:8px}
-  .goal .bar div{height:100%; background:var(--good); border-radius:999px; transition:width .6s ease}
 </style>
 </head>
 <body>
@@ -176,7 +175,7 @@
     <button onclick="quickAsk('Quiz me')">Quiz me</button>
   </div>
   <div class="tp-in">
-    <input id="tin" placeholder="Ask about tax returns and refunds…" onkeydown="if(event.key==='Enter')sendTutor()">
+    <input id="tin" placeholder="Ask about policies and coverage…" onkeydown="if(event.key==='Enter')sendTutor()">
     <button onclick="sendTutor()">Send</button>
   </div>
 </div>
@@ -186,77 +185,73 @@
 
 <script>
 /* =====================================================================
-   CONTENT — Module 34: The Earning Challenge (Earning & Taxes finale)
-   Vocab: tax return, refund.
-   Concept only: a tax return is the once-a-year check of "was the right
-   amount of tax paid?" — three possible outcomes (refund / pay a bit
-   more / nothing). No forms, no country-specific rules, no rates.
-   The season challenge pays off the SAIL GOAL that has run since the
-   Foundations and Banking seasons — Kai finally buys it.
-   Honesty is taught as non-negotiable: leaving income off a tax return
-   is against the rules.
+   CONTENT — Module 39: The Risk Challenge (Risk & Insurance finale)
+   Vocab: policy, coverage.
+   Two quick concept lessons (what a policy is; reading what is and is
+   NOT covered), then a storm-season challenge that uses every tool
+   from the block: reduce risk, an emergency fund big enough for the
+   deductible, spotting a fake insurance seller, an honest claim, and
+   knowing when something is simply not covered.
+   Same challenge engine as M24/M29/M34: only the correct choice
+   advances; first-try picks earn a star and fill a readiness bar.
 ===================================================================== */
 const VOCAB = {
-  taxreturn:{term:"tax return", def:"A form you fill out once a year telling the government how much you earned and how much tax was already taken. It checks whether you paid the right amount."},
-  refund:{term:"refund", def:"Money given back to you because you paid too much. A tax refund is your own money coming home — not a bonus, so give it a job."}
+  policy:{term:"policy", def:"The written agreement with your insurance. It lists the premium, the deductible, and exactly what is covered — and what is not."},
+  coverage:{term:"coverage", def:"What your insurance policy will pay for. Anything not in the coverage, you pay for yourself — so read it before you need it."}
 };
 
 const QUESTIONS = {
-  "q341a":{type:"mc", prompt:"What is a tax return?", concept:"taxreturn", opts:[
-    {t:"A once-a-year form that checks whether you paid the right amount of tax", ok:true, fb:"Right. It lists what you earned and what was already taken, and checks if they match up."},
-    {t:"Taking something back to a shop", ok:false, fb:"That is returning an item. A tax return is a yearly form about your income and your taxes."},
-    {t:"A form to ask for a loan", ok:false, fb:"Nothing borrowed here. A tax return checks whether the tax you paid during the year was the right amount."}]},
-  "q341b":{type:"mc", prompt:"On a tax return, what happens if too LITTLE tax was taken during the year?", concept:"taxreturn", opts:[
-    {t:"You pay the rest of what you owe", ok:true, fb:"Right. The return works both ways: too much taken → money back; too little → you pay the difference."},
-    {t:"Nothing — you get to keep the difference", ok:false, fb:"Taxes are required. If too little was paid, the return is where you pay the rest."},
-    {t:"You get a refund anyway", ok:false, fb:"A refund only happens when too MUCH was taken. Too little means you pay a bit more."}]},
-  "q341c":{type:"tf", prompt:"True or false: it is fine to leave some income off your tax return if it gets you a bigger refund.", answer:false, concept:"taxreturn",
-    good:"Right. A tax return must be honest and complete. Leaving income out is against the rules.",
-    bad:"Never. A tax return has to include all your income. Leaving some out to get more back is against the rules."},
-  "q342a":{type:"mc", prompt:"What is a refund?", concept:"refund", opts:[
-    {t:"Money given back because you paid too much", ok:true, fb:"Right. At a shop or on a tax return, it is your own money coming home."},
-    {t:"A prize for filling out forms", ok:false, fb:"It is not a prize — it was your money all along. You paid too much, and it came back."},
-    {t:"Money the government lends you", ok:false, fb:"Nothing to pay back. A refund is your own money returned."}]},
-  "q342b":{type:"mc", prompt:"Kai gets a $6 tax refund. What is the smartest way to think about it?", concept:"refund", opts:[
-    {t:"It is his own money coming home — give it a job in his budget", ok:true, fb:"Right. Not free money, not a surprise bonus to blow. Like every dollar, it gets a job."},
-    {t:"Free money — spend it all right away", ok:false, fb:"It was his money all along. Treat it like any other dollar: give it a job first."},
-    {t:"He should send it back", ok:false, fb:"It is his! Too much was taken, so it comes back. He just needs to plan it."}]},
-  "q342c":{type:"tf", prompt:"True or false: a message saying “You have a tax refund! Reply with your PIN to get it” is real.", answer:false, concept:"refund",
-    good:"Right. That is a scam. Nobody real ever asks for your PIN — not the bank, not the government.",
-    bad:"It is a scam. It asks for a PIN and dangles money. Tricksters love pretending to be the tax office."},
-  "q343a":{type:"mc", prompt:"Kai earned $52 this pay period, and $5 was taken for taxes. Which number does his budget start with?", concept:"refund", opts:[
-    {t:"$47 — his take-home pay", ok:true, fb:"Right. Plan with what actually lands."},
-    {t:"$52 — what he earned", ok:false, fb:"He never sees $52 in his account. Plan with take-home pay: $47."},
-    {t:"$57 — earned plus taxes", ok:false, fb:"Taxes come OUT, not in. Take-home pay is $47."}]},
-  "q343b":{type:"mc", transfer:true, prompt:"Kai buys a net, but it rips on the first day. He brings it back with his receipt, and the shop gives him his money back. What is that money called?", concept:"refund", opts:[
-    {t:"A refund — money given back because he paid for something he did not get", ok:true, fb:"Exactly. Same word as a tax refund, same shape: money that was his, coming home. And the receipt made it possible."},
-    {t:"Income — new money coming in", ok:false, fb:"It is not new money — it was already his. A refund is his own money coming back."},
-    {t:"A loan from the shop", ok:false, fb:"Nothing to pay back. The shop is returning what he paid. That is a refund."}]}
+  "q391a":{type:"mc", prompt:"What is an insurance policy?", concept:"policy", opts:[
+    {t:"The written agreement that lists the premium, deductible, and what is covered", ok:true, fb:"Right. It is the rulebook for your insurance. Everything is in writing."},
+    {t:"A promise someone makes out loud", ok:false, fb:"A real policy is written down. If it is only spoken, you have nothing to show later."},
+    {t:"The money you get after a loss", ok:false, fb:"That is what a claim pays. The policy is the written agreement behind it."}]},
+  "q391b":{type:"mc", prompt:"What does coverage mean?", concept:"coverage", opts:[
+    {t:"What the policy will pay for", ok:true, fb:"Right. If it is covered, a claim can be paid. If not, it is on you."},
+    {t:"The cover on the front of the policy paper", ok:false, fb:"Ha — not quite! Coverage is what the policy will actually pay for."},
+    {t:"Every possible loss, always", ok:false, fb:"No policy covers everything. That is why you read what is and is not covered."}]},
+  "q391c":{type:"tf", prompt:"True or false: if you have insurance, every loss you have will be paid for.", answer:false, concept:"coverage",
+    good:"Right. Only what is in the coverage gets paid. Everything else is yours — read the policy before you need it.",
+    bad:"Only losses in your coverage are paid. Things like a rope wearing out with age usually are not."},
+  "q392a":{type:"mc", prompt:"Kai’s policy covers storm damage but NOT things wearing out with age. His five-year-old rope frays. Will a claim be paid?", concept:"coverage", opts:[
+    {t:"No — wearing out with age is not in his coverage", ok:true, fb:"Right. Old things wearing out are expected. That belongs in the budget, not an insurance claim."},
+    {t:"Yes — insurance pays for everything on a boat", ok:false, fb:"Only what the policy covers. Wear and tear is listed as NOT covered."},
+    {t:"Yes, if he says a storm did it", ok:false, fb:"That would be a dishonest claim — against the rules, and unfair to everyone in the pot."}]},
+  "q392b":{type:"mc", prompt:"A man at the dock says: “Buy my Super Storm Insurance now — cash only, today only, no paperwork!” What is the biggest warning sign?", concept:"policy", opts:[
+    {t:"No written policy — plus he is rushing you", ok:true, fb:"Right. Real insurance comes with a written policy. No paper plus “today only” are scam signs from Module 23."},
+    {t:"He is selling insurance at all", ok:false, fb:"Real insurance does get sold. The problem is no written policy and a rush."},
+    {t:"Nothing — it sounds like a good deal", ok:false, fb:"No written policy means nothing to show when you need to claim. And the rush is a classic scam sign."}]},
+  "q393a":{type:"mc", prompt:"Which tool from this block should be big enough to pay your deductible?", concept:"policy", opts:[
+    {t:"Your emergency fund", ok:true, fb:"Right. The fund pays your part; insurance pays the rest. They work as a team."},
+    {t:"Your cushion", ok:false, fb:"The cushion is just a few dollars in checking to prevent overdrafts. The emergency fund is for surprises like this."},
+    {t:"A credit card", ok:false, fb:"That turns a surprise into debt. The emergency fund is built for exactly this."}]},
+  "q393b":{type:"mc", transfer:true, prompt:"Mika buys a phone that comes with a paper saying: “We repair it free for one year if it stops working. Dropping it is not included.” She drops it. Is the repair free?", concept:"coverage", opts:[
+    {t:"No — drops are not in the coverage, even though she has the paper", ok:true, fb:"Exactly. Different paper, same shape as Kai’s policy: what is covered, and what is not. Reading it first saves surprises."},
+    {t:"Yes — she has the paper, so everything is free", ok:false, fb:"The paper says drops are NOT included. Having coverage is not the same as covering everything."},
+    {t:"Yes, if she says it just stopped working", ok:false, fb:"That would be dishonest. The truth matters — and the paper was clear."}]}
 };
 
 const CFG = {
-  n:34, title:"The Earning Challenge", homeSub:"Four short lessons. The yearly check-up, then a whole season of work.",
-  pool:["q341a","q341b","q341c","q342a","q342b","q342c","q343a"], transfer:"q343b",
-  quest:"You learned what a tax return and a refund are, then ran a whole season of earning — and bought the sail.",
-  failKeys:"The keys: a tax return is the once-a-year check that the right tax was paid (too much → refund, too little → pay the rest), it must be honest, and a refund is your own money coming home — give it a job.",
-  badge:" · Earning & Taxes block complete 💼",
-  nextFile:"module-35-risk.html",
-  passStory:'<p><strong>You now own:</strong> tax return and refund — and the whole Earning & Taxes block.</p>'+
-    '<p>The next morning, Kai’s new sail goes up for the first time. It is the brightest thing in the harbor. He saved for it since before he had a bank account.</p>'+
-    '<p>That afternoon the sky turns grey. The wind picks up. Tavo looks at the clouds, then at the sail.</p>'+
-    '<p>"That is a beautiful sail," he says quietly. "What happens to it if the storm tears it in half?"</p>'+
-    '<p class="muted">Module 35: Risk — a new block begins.</p>'
+  n:39, title:"The Risk Challenge", homeSub:"Four short lessons. Read the policy, then get ready for the big storm season.",
+  pool:["q391a","q391b","q391c","q392a","q392b","q393a"], transfer:"q393b",
+  quest:"You read a policy, sorted covered from not covered, and got ready for the big storm season using every tool in the block.",
+  failKeys:"The keys: a policy is the written agreement, coverage is what it will pay for (not everything), your emergency fund covers the deductible, and real insurance always comes in writing.",
+  badge:" · Risk & Insurance block complete 🛡️",
+  nextFile:null,
+  passStory:'<p><strong>You now own:</strong> policy and coverage — and the whole Risk & Insurance block.</p>'+
+    '<p>The big storm comes and goes. Kai’s boat is tied down, his emergency fund is full, his policy is in a dry drawer, and his sail is patched and flying.</p>'+
+    '<p>On the first calm morning, Rana sits beside him on the dock. "Your money is safe now. Savings, a fund, insurance. That is the defense."</p>'+
+    '<p>She looks out at the water. "Now, what if some of it could do more than sit safely? What if it could go out and work?"</p>'+
+    '<p class="muted">Module 40 begins a new block. (Coming soon.)</p>'
 };
 
-const TUTOR_HELLO = "Hi! Ask me anything about tax returns, refunds, or Kai’s season — or tap a button below.";
-const TUTOR_SYS = "You are the tutor inside Module 34 (The Earning Challenge) of a financial-literacy app — the finale of the Earning & Taxes block. The learner may be a child or an adult. "+
-  "They know from earlier modules: money, dollar, cent, add, subtract, multiply, buy, sell, pay, earn, work, spend, need, save, goal, percent, bank, deposit, withdraw, balance, checking, savings, transaction, notification, interest, grow, fee, overdraft, PIN, scam, budget, cushion, borrow, loan, lend, owe, debt, debit card, credit card, credit score, due date, lender, minimum payment, employer, wage, paycheck, income, tax, take-home pay, sales tax, receipt. "+
-  "From THIS module: tax return (a form filled out once a year telling the government how much you earned and how much tax was already taken; it checks whether the right amount was paid; too much taken means a refund, too little means you pay the rest, just right means nothing more) and refund (money given back because you paid too much; a tax refund is your own money coming home, not a bonus, so give it a job). A tax return must be honest and include all income. Fake 'tax office' messages asking for a PIN are scams. "+
-  "ACCURACY: rules differ by place (who must file, deadlines, forms). Do not name specific agencies or forms, and do not give rates or amounts. Suggest a trusted adult for real tax questions. "+
-  "NEUTRALITY: do not give opinions on whether taxes should be higher or lower. "+
-  "STRICT RULES: never use these words (later modules): insurance, premium, deductible, risk, emergency fund, invest, stock, retirement, W-2, 1040, IRS. If the learner uses one, answer briefly in plain words and say it is coming later. "+
-  "Story context: Tavo explained that once a year everyone tells the island council what they earned. Kai filled out his tax return honestly with Tavo's help and got a $6 refund. In the season challenge he chose more hours over a higher wage for fewer hours, budgeted with take-home pay ($47), left room for sales tax at the register, deleted a fake 'tax refund' message asking for his PIN, and put his refund toward his sail. He bought the sail. "+
-  "Never repeat a failed explanation — switch analogies (a yearly check-up, returning a ripped net with a receipt, counting fish at the end of the season). Keep answers under 80 words, warm, honest, never mark wrong ideas right. If asked 'Quiz me', ask ONE simple question and wait.";
+const TUTOR_HELLO = "Hi! Ask me anything about policies, coverage, or getting ready for storm season — or tap a button below.";
+const TUTOR_SYS = "You are the tutor inside Module 39 (The Risk Challenge) of a financial-literacy app — the finale of the Risk & Insurance block. The learner may be a child or an adult. "+
+  "They know from earlier modules: money, dollar, cent, add, subtract, multiply, buy, sell, pay, earn, work, spend, need, save, goal, percent, bank, deposit, withdraw, balance, checking, savings, transaction, notification, interest, grow, fee, overdraft, PIN, scam, budget, cushion, borrow, loan, lend, owe, debt, debit card, credit card, credit score, due date, lender, minimum payment, employer, wage, paycheck, income, tax, take-home pay, sales tax, receipt, tax return, refund, risk, loss, emergency, emergency fund, insurance, premium, claim, deductible. "+
+  "From THIS module: policy (the written agreement with your insurance listing the premium, the deductible, and what is and is not covered) and coverage (what the policy will pay for; nothing covers everything; wear and tear is usually not covered). Real insurance always comes with a written policy; a seller with no paperwork who rushes you is a scam sign. The whole block works together: reduce risk, keep an emergency fund big enough for the deductible, insure big losses, file honest claims, and budget for things that simply wear out. "+
+  "TEACHING STYLE: concepts over calculations. Do not recommend specific companies or products. "+
+  "STRICT RULES: never use these words (later modules): invest, investment, stock, bond, share (as in company share), diversify, portfolio, return (as in investment return), retirement. If the learner uses one, answer briefly in plain words and say it is coming later. "+
+  "Story context: Kai read his boat policy (covers storm damage and theft; not wear and tear, lost gear, or racing damage), sorted losses into covered or not, then prepared for the big storm season: tied everything down, refilled his emergency fund to cover his $10 deductible, turned away a cash-only 'Super Storm Insurance' seller with no paperwork, filed an honest claim with photos and a receipt for a torn sail, and budgeted for a worn-out rope that was not covered. "+
+  "Never repeat a failed explanation — switch analogies (a phone repair paper that excludes drops, a rulebook for a game). Keep answers under 80 words, warm, honest, never mark wrong ideas right. If asked 'Quiz me', ask ONE simple 'covered or not?' question and wait.";
 
 /* =====================================================================
    STATE + PERSISTENCE
@@ -266,21 +261,21 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 
 async function loadState(){
   try{
-    const r = await window.storage.get("mod34-state");
+    const r = await window.storage.get("mod39-state");
     if(r && r.value){ S = Object.assign(S, JSON.parse(r.value)); return; }
   } catch(e){ }
   try{
-    const saved = localStorage.getItem("mod34-state");
+    const saved = localStorage.getItem("mod39-state");
     if(saved){ S = Object.assign(S, JSON.parse(saved)); }
-    for(let i=33;i>=1;i--){
+    for(let i=38;i>=1;i--){
       const prev = localStorage.getItem("mod"+i+"-state");
       if(prev){ const p = JSON.parse(prev); if(p.xp > S.xp) S.xp = p.xp; }
     }
   } catch(e){ }
 }
 async function saveState(){
-  try{ await window.storage.set("mod34-state", JSON.stringify(S)); }catch(e){
-    try{ localStorage.setItem("mod34-state", JSON.stringify(S)); }catch(e2){}
+  try{ await window.storage.set("mod39-state", JSON.stringify(S)); }catch(e){
+    try{ localStorage.setItem("mod39-state", JSON.stringify(S)); }catch(e2){}
   }
 }
 function addXP(n){ S.xp+=n; document.getElementById("xpBox").textContent = S.xp+" XP"; saveState(); }
@@ -388,112 +383,128 @@ function renderTF(qid,onDone){
 }
 
 /* =====================================================================
-   SIMULATOR — a simple yearly tax-return card, the three outcomes, and
-   a season challenge with a sail-goal progress bar (first-try = star).
+   SIMULATOR — Kai's written policy, a covered-or-not sort, and the
+   storm-season challenge with a readiness bar.
 ===================================================================== */
-function taxForm(){
-  return '<div class="form"><div class="hd"><span>Island Council · Yearly tax return</span><span>Kai</span></div>'+
-    '<div class="row"><span>Income from Tavo’s boat</span><span>listed ✓</span></div>'+
-    '<div class="row"><span>Income from selling fish</span><span>listed ✓</span></div>'+
-    '<div class="row"><span>Interest from savings</span><span>listed ✓</span></div>'+
-    '<div class="row"><span>Tax already taken from paychecks</span><span>from pay slips ✓</span></div>'+
-    '<div class="res"><span>Too much was taken. Refund:</span><span>$6.00</span></div></div>';
+function policy(){
+  return '<div class="policy"><div class="hd">Fishers’ Pot · Policy</div>'+
+    '<div class="row"><span>Insured</span><span>Kai · small boat & sail</span></div>'+
+    '<div class="row"><span>Premium</span><span>$5 each season</span></div>'+
+    '<div class="row"><span>Deductible</span><span>$10 per loss</span></div>'+
+    '<h4 class="y">✅ Covered</h4><ul><li>Storm damage to the boat or sail</li><li>The boat being stolen</li></ul>'+
+    '<h4 class="n">❌ Not covered</h4><ul><li>Things wearing out with age</li><li>Fishing gear lost overboard</li><li>Damage while racing</li></ul></div>';
 }
-const SAIL=60;
-let sailSaved=38, sStars=0;
-function goalBar(){
-  const pct=Math.min(100, sailSaved/SAIL*100);
-  return '<div class="goal"><div class="lbl"><span>⛵ Sail goal</span><span>$'+sailSaved+' of $'+SAIL+'</span></div><div class="bar"><div style="width:'+pct+'%"></div></div></div>';
+let rStars=0, ready=20;
+function readyBar(){
+  return '<div class="ready"><div class="lbl"><span>🌀 Storm readiness</span><span>'+ready+'%</span></div><div class="bar"><div style="width:'+ready+'%"></div></div></div>';
 }
 
 /* =====================================================================
-   LESSON 1 — Once a Year
+   LESSON 1 — The Paper in the Drawer
 ===================================================================== */
 const L1=[
-  ()=>show(`<div class="kicker">Lesson 1 · Once a year</div>
-    <div class="recap"><strong>Kai’s story so far:</strong> A season of paychecks, taxes taken out of each one, and sales tax at the register. Then Tavo mentions: "Sometimes they give some back."</div>
-    <div class="card"><p>All season, a little tax came out of every paycheck. But nobody knew for sure, while it was happening, whether it was <em>exactly</em> the right amount for the whole year.</p>
-    <p>So once a year, everyone who earned money does a check-up.</p></div>
-    <button onclick="next()">What kind of check-up?</button>`),
-  ()=>show(`<div class="kicker">Lesson 1</div>
-    ${taxForm()}
-    <div class="card"><p>With Tavo’s help, Kai fills out a form listing <strong>all</strong> his income for the year, and how much tax was already taken from his pay slips.</p>
-    <p>That form is a <strong>tax return</strong>. It checks whether you paid the right amount of tax. Every bit of income goes on it — honest and complete, always.</p></div>
-    <button onclick="earnWord('taxreturn');next()">New word: tax return</button>`),
-  ()=>show(`<div class="kicker">Lesson 1 · Three ways it can go</div>
-    <div class="three">
-      <div class="good"><div class="t">Too much taken</div>You get some back</div>
-      <div class="bad"><div class="t">Too little taken</div>You pay the rest</div>
-      <div><div class="t">Just right</div>Nothing more to do</div>
-    </div>
-    <div class="card"><p>Kai’s turned out to be the first kind: a little too much was taken during the season.</p>
-    <p class="muted">(Rules about who fills one out, and when, differ from place to place. A trusted adult can help with a real one.)</p></div>
-    <button onclick="next()">Practice</button>`),
-  ()=>renderMC("q341a", next),
-  ()=>renderMC("q341b", next),
-  ()=>renderTF("q341c", next),
+  ()=>show(`<div class="kicker">Lesson 1 · The paper in the drawer</div>
+    <div class="recap"><strong>Kai’s story so far:</strong> An emergency fund, insurance on his boat, and one honest claim already paid. The big storm season is coming.</div>
+    <div class="card"><p>Rana asks Kai one question: "What exactly does your insurance pay for?"</p>
+    <p>Kai opens his mouth… and realizes he is not sure. Tavo pulls a folded paper from a dry drawer.</p></div>
+    ${policy()}
+    <div class="card"><p>This is Kai’s <strong>policy</strong>: the written agreement with his insurance. The premium, the deductible, and exactly what is covered — in writing.</p></div>
+    <button onclick="earnWord('policy');next()">New word: policy</button>`),
+  ()=>show(`<div class="kicker">Lesson 1 · Read the bottom half</div>
+    <div class="card"><p>Look at the two lists. What the policy will pay for is called its <strong>coverage</strong>.</p>
+    <p>And the <em>not covered</em> list matters just as much. No policy covers everything. If Kai only learns what is missing on the day he needs it, it is too late.</p>
+    <p style="text-align:center"><strong>Read the policy before you need it.</strong></p></div>
+    <button onclick="earnWord('coverage');next()">New word: coverage</button>`),
+  ()=>renderMC("q391a", next),
+  ()=>renderMC("q391b", next),
+  ()=>renderTF("q391c", next),
 ];
 
 /* =====================================================================
-   LESSON 2 — Money Coming Home
+   LESSON 2 — Covered or Not? (sort)
 ===================================================================== */
+const EVENTS=[
+  {t:"⛈️ A storm rips the sail", yes:true, why:"Storm damage to the sail is on the covered list."},
+  {t:"🪢 A five-year-old rope frays and snaps", yes:false, why:"Wearing out with age is NOT covered. Budget for it."},
+  {t:"🚤 Someone steals the boat from the dock", yes:true, why:"Theft of the boat is covered."},
+  {t:"🎣 Kai drops his fishing rod overboard", yes:false, why:"Lost fishing gear is NOT covered. That one is on Kai."},
+  {t:"🏁 The mast cracks during the harbor race", yes:false, why:"Damage while racing is NOT covered. Kai might think twice about racing."}
+];
 const L2=[
-  ()=>show(`<div class="kicker">Lesson 2 · Money coming home</div>
-    <div class="recap"><strong>So far:</strong> a tax return checks whether the right amount of tax was paid.</div>
-    <div class="card"><p>Because too much was taken, the island council sends Kai back $6. Money given back because you paid too much is called a <strong>refund</strong>.</p>
-    <p>You get refunds in shops too — bring back a ripped net with your receipt, and they give your money back. Same word, same idea.</p></div>
-    <button onclick="earnWord('refund');next()">New word: refund</button>`),
-  ()=>show(`<div class="kicker">Lesson 2 · Not a bonus</div>
-    <div class="card"><p>"Six free dollars!" Kai says.</p>
-    <p>"Not free," Rana says. "That was <em>your</em> money all season. It is just coming home late. So treat it like every other dollar: <strong>give it a job.</strong>"</p>
-    <p>And one warning. Tricksters know people are excited about refunds. A message that says <em>“You have a refund! Reply with your PIN”</em> is a scam — every time.</p></div>
-    <button onclick="next()">Practice</button>`),
-  ()=>renderMC("q342a", next),
-  ()=>renderMC("q342b", next),
-  ()=>renderTF("q342c", next),
+  ()=>{
+    let i=0;
+    function draw(){
+      if(i>=EVENTS.length){ addXP(5); next(); return; }
+      const m=EVENTS[i];
+      show(`<div class="kicker">Covered or not? · ${i+1} of ${EVENTS.length}</div>
+        ${policy()}
+        <div class="item">${m.t}</div>
+        <div class="sortbar"><button class="yes" id="sYes">✅ Covered</button><button class="no" id="sNo">❌ Not covered</button></div>
+        <div id="fb"></div><div id="cont"></div>`);
+      let done=false;
+      function pick(saysYes){
+        if(done) return;
+        const ok = saysYes===m.yes;
+        document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?'Right — ':'Check the policy again. ')+m.why+(ok?'':' Try again.')+'</div>';
+        revealFB();
+        if(ok){
+          done=true; addXP(1);
+          document.getElementById("sYes").disabled=true; document.getElementById("sNo").disabled=true;
+          document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(i<EVENTS.length-1?"Next":"Done")+'</button>';
+          window._n=()=>{ i++; draw(); };
+          revealFB();
+        }
+      }
+      document.getElementById("sYes").onclick=()=>pick(true);
+      document.getElementById("sNo").onclick=()=>pick(false);
+    }
+    draw();
+  },
+  ()=>renderMC("q392a", next),
+  ()=>renderMC("q392b", next),
 ];
 
 /* =====================================================================
-   LESSON 3 — The Season (challenge)
+   LESSON 3 — The Big Storm Season (challenge)
 ===================================================================== */
-const SEASON=[
-  {wk:"Early season · Extra work", story:"Tavo offers 3 extra hours on Saturday at $4 an hour. The fair offers 1 hour at $6. Kai can only do one.", opts:[
-    {t:"Tavo’s boat — 3 hours at $4 brings in $12", ok:true, fb:"Right. The fair’s wage is higher, but 1 hour is only $6. Hours matter as much as the wage. Half of it goes straight to the sail.", apply:()=>{ sailSaved+=6; }},
-    {t:"The fair — $6 is a bigger wage", ok:false, fb:"A bigger wage, but only 1 hour: $6. Tavo’s 3 hours bring in $12."},
-    {t:"Neither — extra work is never worth it", ok:false, fb:"This one fits his week (Saturday, safe, with Tavo) and brings in real money for the sail."}]},
-  {wk:"Mid season · Payday", story:"Pay slip: <strong>Earned $52. Taxes −$5. Paid to you $47.</strong> Time to plan.", opts:[
-    {t:"Budget with $47 — his take-home pay", ok:true, fb:"Right. Needs, then $10 to the sail, then wants — all from $47.", apply:()=>{ sailSaved+=10; }},
-    {t:"Budget with $52 — what he earned", ok:false, fb:"$52 never lands in his account. Planning with it means planning to spend $5 he does not have."},
-    {t:"Skip the budget this time", ok:false, fb:"The budget is what gets the sail money set aside before wants can eat it. Plan with $47."}]},
-  {wk:"Market day", story:"Kai has $15. A coil of rope is tagged <strong>$15.00</strong>. Prices do not include sales tax.", opts:[
-    {t:"Wait — exactly the tag is not enough", ok:true, fb:"Right. With sales tax, the total will be a little more than $15. He comes back next week with room to spare.", apply:()=>{}},
-    {t:"Pay with his debit card — $15 is $15", ok:false, fb:"The total at the register will be a little more than $15 — that is an overdraft on his debit card."},
-    {t:"Put it on a credit card and pay the minimum", ok:false, fb:"Kai does not have a real card — and paying the minimum would turn rope into growing debt."}]},
-  {wk:"Late season · A message", story:"“ISLAND TAX OFFICE: You have a $50 refund waiting! Reply with your PIN within 1 hour to receive it.”", opts:[
-    {t:"Delete it and tell Rana", ok:true, fb:"Right. It asks for his PIN, rushes him, and dangles money. A scam, every time.", apply:()=>{}},
-    {t:"Reply — $50 is a lot of money", ok:false, fb:"That is exactly what the trickster is counting on. Nobody real asks for a PIN."},
-    {t:"Reply, but only with his name", ok:false, fb:"Nothing goes back to a surprise message. Delete it, and ask a trusted adult."}]},
-  {wk:"Tax time", story:"Kai’s tax return shows too much tax was taken. His refund: <strong>$6</strong>.", opts:[
-    {t:"Give it a job: put it toward the sail", ok:true, fb:"Right. His own money came home, and he gave it the job that matters most right now.", apply:()=>{ sailSaved+=6; }},
-    {t:"Leave the fish money off the form next year to get more back", ok:false, fb:"A tax return must include all income. Leaving some out is against the rules — never worth it."},
-    {t:"Skip the tax return next year — too much paperwork", ok:false, fb:"It is required where he lives — and skipping it could mean missing his own refund."}]}
+const STORM=[
+  {wk:"Before the season", story:"Forecasts say the storms will be the biggest in years. The season starts next week.", opts:[
+    {t:"Tie everything down and check the sky before every trip", ok:true, fb:"Right. Reduce the risk first. The cheapest loss is the one that never happens."},
+    {t:"Nothing — he has insurance now", ok:false, fb:"Insurance helps after a loss, and he still pays the deductible. Reduce the risk first."},
+    {t:"Race in the harbor to practice", ok:false, fb:"Racing damage is not even covered! Reduce the risk instead."}]},
+  {wk:"A quick check", story:"Kai’s deductible is $10. His emergency fund has only $5 after buying new nets.", opts:[
+    {t:"Refill the fund from the next paychecks until it can cover the $10", ok:true, fb:"Right. If a storm hits, the fund has to be able to pay his part of the claim."},
+    {t:"Spend the $5 on snacks — insurance will handle it", ok:false, fb:"Insurance only pays after the deductible. Without $10 in the fund, a claim could push him into borrowing."},
+    {t:"Put the deductible on a credit card later", ok:false, fb:"That turns a surprise into debt. Refill the fund instead."}]},
+  {wk:"At the dock", story:"A stranger: “Super Storm Insurance! Pay me $20 cash right now — today only. No paperwork needed!”", opts:[
+    {t:"Say no — no written policy and a rush are scam signs", ok:true, fb:"Right. Real insurance always comes with a written policy. “Today only” is straight out of Module 23."},
+    {t:"Pay — more insurance is always better", ok:false, fb:"There is no policy, so nothing to claim on. And the rush is a classic scam sign."},
+    {t:"Pay half now, half later", ok:false, fb:"Any money to a seller with no written policy is money gone. Say no and tell Rana."}]},
+  {wk:"The storm hits", story:"A gust tears Kai’s sail. The repair costs $30. Storm damage is on his covered list.", opts:[
+    {t:"File an honest claim with photos and the receipt; pay the $10 deductible from his fund", ok:true, fb:"Right. Honest claim, fund pays his part, the pot pays the rest. No debt, no drama."},
+    {t:"Claim $50 — the pot has plenty", ok:false, fb:"Exaggerating a claim is against the rules and raises everyone’s premium. Claim the true $30."},
+    {t:"Skip the claim and borrow for the repair", ok:false, fb:"He pays premiums for exactly this. Borrowing would cost extra for no reason."}]},
+  {wk:"After the storm", story:"Kai’s old rope, five years old, frays and snaps. A new one costs $4.", opts:[
+    {t:"Buy a new rope from his budget — wear and tear is not covered", ok:true, fb:"Right. Old things wearing out are expected. That is a budget item, not a claim."},
+    {t:"File a claim for the rope", ok:false, fb:"Wear and tear is on the not-covered list. The claim would be turned down."},
+    {t:"Keep using the frayed rope", ok:false, fb:"A snapped rope in a storm is a much bigger risk. $4 now is the smart spend."}]}
 ];
 const L3=[
-  ()=>{ sailSaved=38; sStars=0;
-    show(`<div class="kicker">Lesson 3 · The season</div>
-    <div class="recap"><strong>So far:</strong> a refund is your own money coming home — give it a job.</div>
-    ${goalBar()}
-    <div class="card"><p>Kai has been saving for a sail since before he had a bank account. With interest and his early paychecks, he is at $38 of $60.</p>
-    <p>Five moments in the season. Get each right the first time to earn a ⭐ — and see if the sail is his by the end.</p></div>
+  ()=>{ rStars=0; ready=20;
+    show(`<div class="kicker">Lesson 3 · The big storm season</div>
+    <div class="recap"><strong>So far:</strong> read the policy; know what is and is not covered.</div>
+    ${readyBar()}
+    <div class="card"><p>Rana’s notebook has one page: <em>Get ready.</em> Five moments are coming. Use every tool from this block.</p>
+    <p>Get each right the first time to earn a ⭐ and fill the readiness bar.</p></div>
     <button onclick="next()">Start the season</button>`); },
   ()=>{
     let i=0;
     function draw(){
-      if(i>=SEASON.length){ addXP(6); next(); return; }
-      const w=SEASON[i];
+      if(i>=STORM.length){ addXP(6); next(); return; }
+      const w=STORM[i];
       const shuffled=w.opts.map((o,k)=>({o,k})).sort(()=>Math.random()-.5);
       show(`<div class="week">${w.wk}</div>
-        ${goalBar()}
+        ${readyBar()}
         <div class="card"><p style="margin:0">${w.story}</p></div>
         <div id="opts">${shuffled.map(x=>'<button class="opt" data-bot="1" data-k="'+x.k+'">'+x.o.t+'</button>').join('')}</div>
         <div id="fb"></div><div id="cont"></div>`);
@@ -506,11 +517,11 @@ const L3=[
           document.getElementById("fb").innerHTML='<div class="feedback '+(o.ok?'good':'bad')+'">'+o.fb+(o.ok?'':' Pick again.')+'</div>';
           revealFB();
           if(o.ok){
-            done=true; if(first){ sStars++; addXP(1); }
-            if(o.apply) o.apply();
-            document.querySelector(".goal").outerHTML=goalBar();
+            done=true; if(first){ rStars++; addXP(1); }
+            ready=Math.min(100, ready+16);
+            document.querySelector(".ready").outerHTML=readyBar();
             document.querySelectorAll("#opts .opt").forEach(b=>b.disabled=true);
-            document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(i<SEASON.length-1?"Next":"End of season")+'</button>';
+            document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(i<STORM.length-1?"Next":"End of the season")+'</button>';
             window._n=()=>{ i++; draw(); };
             revealFB();
           } else { first=false; btn.disabled=true; }
@@ -519,26 +530,24 @@ const L3=[
     }
     draw();
   },
-  ()=>{
-    show(`<div class="kicker">Lesson 3 · End of season</div>
-    ${goalBar()}
-    <div class="stars">${"⭐".repeat(sStars)}${"☆".repeat(SEASON.length-sStars)}</div>
-    <p class="muted" style="text-align:center">${sStars} of ${SEASON.length} on the first try</p>
-    <div class="card"><p>Half the extra hours’ pay, the $10 set aside on payday, and the $6 refund — it all adds up. <strong>The sail is paid for.</strong></p>
-    <ul class="recaplist">
-      <li>✅ <strong>Chose work by total pay</strong>, not just the wage.</li>
-      <li>✅ <strong>Budgeted with take-home pay.</strong></li>
-      <li>✅ <strong>Left room for sales tax.</strong> No overdraft.</li>
-      <li>✅ <strong>Spotted a fake tax-office scam.</strong></li>
-      <li>✅ <strong>Filed an honest tax return</strong> and gave the refund a job.</li>
+  ()=>show(`<div class="kicker">Lesson 3 · After the storms</div>
+    ${readyBar()}
+    <div class="stars">${"⭐".repeat(rStars)}${"☆".repeat(STORM.length-rStars)}</div>
+    <p class="muted" style="text-align:center">${rStars} of ${STORM.length} on the first try</p>
+    <div class="card"><ul class="recaplist">
+      <li>✅ <strong>Reduced</strong> the risk before the season.</li>
+      <li>✅ <strong>Kept</strong> an emergency fund big enough for the deductible.</li>
+      <li>✅ <strong>Spotted</strong> a fake insurance seller.</li>
+      <li>✅ <strong>Shared</strong> a big loss through an honest claim.</li>
+      <li>✅ <strong>Budgeted</strong> for what simply wears out.</li>
     </ul></div>
-    <button onclick="next()">Practice</button>`); },
-  ()=>renderMC("q343a", next),
+    <button onclick="next()">Practice</button>`),
+  ()=>renderMC("q393a", next),
 ];
 const META=[
-  {title:"Once a Year", sub:"The yearly tax check-up", emoji:"📋"},
-  {title:"Money Coming Home", sub:"A refund is not a bonus", emoji:"🏠"},
-  {title:"The Season", sub:"Five moments — and a sail", emoji:"⛵"},
+  {title:"The Paper in the Drawer", sub:"What a policy is, and what it covers", emoji:"📄"},
+  {title:"Covered or Not?", sub:"Read Kai’s policy and sort five", emoji:"✅"},
+  {title:"The Big Storm Season", sub:"Every tool in the block, all at once", emoji:"🌀"},
 ];
 
 
