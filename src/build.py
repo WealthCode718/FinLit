@@ -13,7 +13,9 @@ n = int(sys.argv[1]); src = open(os.path.join(HERE, f"m{n}.js"), encoding="utf-8
 parts = dict(re.findall(r"//@@(\w+)\n(.*?)(?=\n//@@|\Z)", src, re.S))
 meta = dict(re.findall(r"^(\w+)=(.*)$", parts["META"], re.M))
 t = open(os.path.join(HERE, "template.html"), encoding="utf-8").read()
-for k, v in {"{{TITLE}}": meta["title"], "{{N}}": str(n), "{{PREV}}": str(n - 1), "{{PLACEHOLDER}}": meta["placeholder"],
+idx = open(os.path.join(ROOT, "index.html"), encoding="utf-8").read()
+prev_file = dict((int(k), v) for v, k in re.findall(r'file:"(module-(\d+)-[^"]+)"', idx))[n - 1]
+for k, v in {"{{TITLE}}": meta["title"], "{{N}}": str(n), "{{PREV}}": str(n - 1), "{{PREV_FILE}}": prev_file, "{{PLACEHOLDER}}": meta["placeholder"],
              "{{EXTRA_CSS}}": parts.get("CSS", ""), "{{CONTENT}}": parts["CONTENT"], "{{LESSONS}}": parts["LESSONS"]}.items():
     t = t.replace(k, v)
 assert "{{" not in t

@@ -65,6 +65,13 @@ def question_checks(pg):
           if(typeof CFG!=='undefined' && CFG.pool) CFG.pool.concat(CFG.transfer?[CFG.transfer]:[]).forEach(k=>{ if(!QUESTIONS[k]) out.push('pool id missing: '+k); });
           return out; }""")
         bad += [f"M{num(f)} {x}" for x in r]
+    words = set()
+    for f in MODULES:
+        pg.goto(URL + name(f)); pg.wait_for_timeout(60)
+        words |= set(pg.evaluate("typeof VOCAB!=='undefined'?Object.keys(VOCAB):[]"))
+    pg.goto(URL + "index.html"); pg.wait_for_timeout(150)
+    missing = sorted(w for w in words if not pg.evaluate("w=>!!(VOCAB[w]&&VOCAB[w].def)", w))
+    check(not missing, f"home-page glossary defines all {len(words)} words" + ("" if not missing else ": missing " + ", ".join(missing)))
     check(not bad, "quiz questions are well-formed" + ("" if not bad else ": " + "; ".join(bad[:8])))
 
 # ---------------------------------------------------------------- play-through
