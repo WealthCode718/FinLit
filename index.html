@@ -187,6 +187,14 @@ const MODULES = [
     title:"The Banking Challenge", sub:"A budget, a cushion, and one whole month", emoji:"🏁", block:"Banking", lessons:4},
   {id:25, file:"module-25-borrowing.html", stateKey:"mod25-state",
     title:"Borrowing", sub:"Using someone else's money — and what it costs", emoji:"🤝", block:"Credit", lessons:4},
+  {id:26, file:"module-26-debt.html", stateKey:"mod26-state",
+    title:"Debt", sub:"When borrowed money isn't paid back", emoji:"🧥", block:"Credit", lessons:4},
+  {id:27, file:"module-27-paying-with-cards.html", stateKey:"mod27-state",
+    title:"Paying with Cards", sub:"Debit vs. credit — which one is borrowing?", emoji:"💳", block:"Credit", lessons:4},
+  {id:28, file:"module-28-credit-score.html", stateKey:"mod28-state",
+    title:"Your Credit Score", sub:"Who's keeping score, and how to keep it high", emoji:"📊", block:"Credit", lessons:4},
+  {id:29, file:"module-29-credit-challenge.html", stateKey:"mod29-state",
+    title:"The Credit Challenge", sub:"A pretend card, a month of real choices", emoji:"🥥", block:"Credit", lessons:4},
 ];
 
 /* =====================================================================
@@ -316,7 +324,7 @@ async function render(){
   });
 
   // Coming soon teaser
-  html += '<div class="coming"><strong>More modules coming soon</strong>Module 26 is next — the Credit block continues. Check back soon!</div>';
+  html += '<div class="coming"><strong>More modules coming soon</strong>Module 30 is next — a new block begins. Check back soon!</div>';
 
   document.getElementById("main").innerHTML = html;
 }

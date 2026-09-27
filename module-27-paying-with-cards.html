@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Borrowing — Module 25</title>
+<title>Paying with Cards — Module 27</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap');
   :root{
@@ -131,14 +131,20 @@
   .compare .box .v{font-size:22px; font-weight:700; font-family:"Fraunces",Georgia,serif}
   .spin{display:inline-block; width:16px; height:16px; border:3px solid #fff; border-top-color:transparent; border-radius:50%; animation:sp 1s linear infinite; vertical-align:-3px}
   @keyframes sp{to{transform:rotate(360deg)}}
-  .poster{background:#fffdf5; border:2px solid var(--sand-deep); border-radius:6px; padding:18px 16px; margin-bottom:14px; text-align:center; box-shadow:0 3px 0 var(--sand-deep); transform:rotate(-1deg)}
-  .poster .big{font-family:"Fraunces",Georgia,serif; font-weight:700; font-size:22px; line-height:1.2}
-  .poster .small{font-size:14px; color:var(--ink-soft); margin-top:6px}
-  .flow{display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap; font-size:15px; font-weight:600; margin:6px 0 2px}
-  .flow .pill{background:var(--lagoon); border-radius:999px; padding:6px 12px}
-  .compare .box .d{font-size:13px; color:var(--ink-soft); margin-top:6px}
-  .sortbar .wait{background:var(--good)}
-  .sortbar .bor{background:var(--shell)}
+  .cards{display:flex; gap:10px; margin-bottom:14px}
+  .pcard{flex:1; border-radius:14px; padding:14px 12px; color:#fff; min-height:110px; display:flex; flex-direction:column; justify-content:space-between; box-shadow:0 4px 14px rgba(14,27,44,.2)}
+  .pcard.deb{background:linear-gradient(135deg,#123a3f 0%,#1f5a60 100%)}
+  .pcard.cred{background:linear-gradient(135deg,#c96f4a 0%,#8f4428 100%)}
+  .pcard .chip{width:28px; height:20px; border-radius:4px; background:var(--gold); opacity:.9}
+  .pcard .nm{font-weight:700; font-size:15px}
+  .pcard .sm{font-size:11px; opacity:.8; letter-spacing:.06em; text-transform:uppercase}
+  .bill{background:#fffdf5; border:2px solid var(--sand-deep); border-radius:12px; padding:14px 16px; margin-bottom:12px; font-size:15px}
+  .bill .row{display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px dashed var(--sand-deep)}
+  .bill .row:last-of-type{border-bottom:none}
+  .bill .tot{font-weight:700; font-size:17px; border-top:2px solid var(--ink); margin-top:6px; padding-top:6px; display:flex; justify-content:space-between}
+  .bill .by{font-size:13px; color:var(--bad); font-weight:700; margin-top:6px; text-align:right}
+  .sortbar .deb{background:var(--ink)}
+  .sortbar .cred{background:var(--shell)}
 </style>
 </head>
 <body>
@@ -165,7 +171,7 @@
     <button onclick="quickAsk('Quiz me')">Quiz me</button>
   </div>
   <div class="tp-in">
-    <input id="tin" placeholder="Ask about borrowing and loans…" onkeydown="if(event.key==='Enter')sendTutor()">
+    <input id="tin" placeholder="Ask about debit and credit cards…" onkeydown="if(event.key==='Enter')sendTutor()">
     <button onclick="sendTutor()">Send</button>
   </div>
 </div>
@@ -175,83 +181,76 @@
 
 <script>
 /* =====================================================================
-   CONTENT — Module 25: Borrowing  (opens the Credit block)
-   Vocab: borrow, loan.  (lend is used as the everyday verb here too —
-   it was held back until this module.)
-   Big idea: interest runs in BOTH directions. M21 taught "the bank pays
-   you for using your money." M25 flips it: when you use someone else's
-   money, YOU pay. Concept over computation: pay-back amounts are shown
-   only as "more than you got" — no rates, no percentages, no "how much
-   interest" questions.
-   Callback: in M21 Kai learned the bank puts saved money to work
-   "helping other people with their own plans" — this is where he finds
-   out what that meant.
+   CONTENT — Module 27: Paying with Cards
+   Vocab: debit card, credit card.
+   First time cards appear in the app (deliberately held back through
+   the Banking season). The whole module is one contrast:
+     debit card  → spends YOUR money, from checking, right now
+     credit card → spends the BANK'S money; every tap is a small loan;
+                   a bill arrives later
+   "The date on the bill" is SHOWN here and NAMED ("due date") in M28.
+   No interest math: "pay the whole bill on time → usually no interest;
+   pay part → the rest becomes debt that grows" (callback to M26).
 ===================================================================== */
 const VOCAB = {
-  borrow:{term:"borrow", def:"To use someone else’s money (or thing) now, and give it back later. When you borrow money, you usually pay back MORE than you got."},
-  loan:{term:"loan", def:"Money you borrow, with an agreement about when you will pay it back and how much extra (interest) you will pay for using it."}
+  debitcard:{term:"debit card", def:"A card connected to your checking account. When you pay with it, the money leaves YOUR checking right away — like a withdrawal you can tap."},
+  creditcard:{term:"credit card", def:"A card that pays with the BANK’S money. Every tap is a small loan. A bill comes later, and if you do not pay all of it, the rest becomes debt with interest."}
 };
 
 const QUESTIONS = {
-  "q251a":{type:"mc", prompt:"What does it mean to borrow money?", concept:"borrow", opts:[
-    {t:"Use someone else’s money now and give it back later", ok:true, fb:"Right. The money is yours to use — for a while. The giving-back part is not optional."},
-    {t:"Get money as a gift that you keep forever", ok:false, fb:"A gift stays with you. Borrowed money has to go back to whoever it came from."},
-    {t:"Earn money by working", ok:false, fb:"Earning is money you keep because you worked for it. Borrowed money has to be paid back."}]},
-  "q251b":{type:"mc", prompt:"Where does a bank get the money it lends out as loans?", concept:"loan", opts:[
-    {t:"Partly from the money savers like Kai leave in the bank", ok:true, fb:"Right! This is what Module 21 meant by the bank “putting your money to work.” Kai’s savings helps make someone else’s loan possible."},
-    {t:"It prints brand-new money for every loan", ok:false, fb:"Not the way to think about it here. A big part of what a bank lends comes from money that savers keep there."},
-    {t:"From the fees it charges for paper statements", ok:false, fb:"Fees are small. The big pool the bank lends from is the money savers leave with it."}]},
-  "q251c":{type:"tf", prompt:"True or false: a loan comes with an agreement about when you will pay it back.", answer:true, concept:"loan",
-    good:"Right. A loan is not “pay back whenever.” There is an agreement — when, and how much — before you get the money.",
-    bad:"A loan always comes with an agreement. You know WHEN you must pay it back, and how much, before you ever get the money."},
-  "q252a":{type:"mc", prompt:"Kai SAVES $10 in the bank. Tavo BORROWS $10 from the bank. Who pays interest to whom?", concept:"loan", opts:[
-    {t:"The bank pays Kai. Tavo pays the bank.", ok:true, fb:"Exactly. Same word, opposite directions. Whoever gets to USE the money pays the thank-you."},
-    {t:"The bank pays both of them", ok:false, fb:"Only the saver gets paid. Tavo is using the bank’s money, so he is the one who pays."},
-    {t:"Kai and Tavo both pay the bank", ok:false, fb:"Kai is letting the bank use his money — so the bank pays HIM. Only the borrower pays."}]},
-  "q252b":{type:"tf", prompt:"True or false: if you borrow $10, you usually pay back exactly $10.", answer:false, concept:"borrow",
-    good:"Right. You usually pay back more than $10. The extra is interest — the price of using someone else’s money.",
-    bad:"Usually you pay back MORE than you borrowed. The extra is interest — this time going from you to whoever lent it."},
-  "q252c":{type:"mc", prompt:"Why does borrowing usually make something cost more?", concept:"borrow", opts:[
-    {t:"You pay the price, plus interest for using someone else’s money", ok:true, fb:"Right. A $10 net paid for with a loan ends up costing more than $10 by the time it is all paid back."},
-    {t:"Shops charge more if you borrowed", ok:false, fb:"The shop charges the normal price. The extra comes from the LOAN — the interest you pay the bank."},
-    {t:"It doesn’t — borrowing is free", ok:false, fb:"Borrowing money is almost never free. The interest you pay back is what makes it cost more."}]},
-  "q253a":{type:"mc", prompt:"What should Kai ask himself BEFORE borrowing?", concept:"borrow", opts:[
-    {t:"“Can I pay it back on time — and is this worth paying extra for?”", ok:true, fb:"Right. Two questions: can I really pay it back, and is having it NOW worth paying more than the price?"},
-    {t:"“Will they let me?”", ok:false, fb:"Being allowed to borrow is not the same as it being a good idea. Ask: can I pay it back, and is it worth the extra?"},
-    {t:"“How fast can I spend it?”", ok:false, fb:"That is the question that gets people in trouble. Ask first whether you can pay it back and whether it is worth the extra."}]},
-  "q253c":{type:"mc", prompt:"Kai wants a new sail. He could borrow now, or save for a few more weeks. Why is saving usually the better choice for something like this?", concept:"borrow", opts:[
-    {t:"Saving costs nothing extra — and his savings even grows with interest while he waits", ok:true, fb:"Right. Waiting a few weeks is free. Borrowing would mean paying interest instead of earning it."},
-    {t:"Saving is faster than borrowing", ok:false, fb:"Borrowing is actually faster! That is its one advantage. But it costs extra — saving does not."},
-    {t:"Banks never lend money for sails", ok:false, fb:"They might! The reason to wait is cost: borrowing means paying interest, saving means earning it."}]},
-  "q253b":{type:"mc", transfer:true, prompt:"Mika lets Kai use her fishing rod for a week. When he gives it back, he adds a fish as thanks. Who borrowed, and what is the fish like?", concept:"borrow", opts:[
-    {t:"Kai borrowed the rod — and the fish is like the interest a borrower pays", ok:true, fb:"Exactly. Kai used something that was not his, gave it back, and added a little extra for the use of it. That is the whole shape of a loan."},
-    {t:"Mika borrowed — the fish was hers", ok:false, fb:"Mika owns the rod. Kai is the one who used it and gave it back, so Kai borrowed."},
-    {t:"Nobody borrowed — it was a trade", ok:false, fb:"In a trade, things swap for good. Here the rod went BACK to Mika. Using something and returning it is borrowing."}]}
+  "q271a":{type:"mc", prompt:"Kai pays $3 for bread with his debit card. Where does the money come from?", concept:"debitcard", opts:[
+    {t:"Straight out of his own checking account, right away", ok:true, fb:"Right. A debit card spends money Kai already has. His checking balance drops by $3 the moment he pays."},
+    {t:"From the bank, as a small loan", ok:false, fb:"That is how a CREDIT card works. A debit card uses Kai’s own money from checking."},
+    {t:"From his savings account", ok:false, fb:"A debit card is connected to checking — the spend-soon account. Savings stays put."}]},
+  "q271b":{type:"tf", prompt:"True or false: you can still have an overdraft with a debit card if you do not look at your balance.", answer:true, concept:"debitcard",
+    good:"Right. A debit card spends from checking, so Module 22’s rule still applies: look before you pay.",
+    bad:"It can happen! A debit card takes money from checking — and if the price is bigger than the balance, that is an overdraft. Look first."},
+  "q272a":{type:"mc", prompt:"What really happens each time Nilo taps his credit card?", concept:"creditcard", opts:[
+    {t:"The bank pays for him — it is a small loan he must pay back", ok:true, fb:"Right. Every tap is borrowing. It just does not feel like it, because his checking does not move."},
+    {t:"Money leaves his checking account right away", ok:false, fb:"That is a debit card. With a credit card, his checking does not change — the bank pays, and he owes the bank."},
+    {t:"Nothing — the card is free money", ok:false, fb:"Nothing is free here. Every tap is a loan that shows up on a bill later."}]},
+  "q272b":{type:"mc", prompt:"Why can a credit card make it easy to spend too much?", concept:"creditcard", opts:[
+    {t:"Your checking does not go down when you tap, so it does not FEEL like spending", ok:true, fb:"Right. That was exactly Nilo’s trap. No number dropped, so it felt free — until the bill came."},
+    {t:"Things cost more when you use a card", ok:false, fb:"The price is the same. The danger is that the spending is hidden until the bill arrives."},
+    {t:"It can’t — credit cards stop you from spending", ok:false, fb:"They make spending feel easier, not harder. That is why they need extra care."}]},
+  "q272c":{type:"tf", prompt:"True or false: paying with a credit card is a kind of borrowing.", answer:true, concept:"creditcard",
+    good:"Right. Every tap is a small loan from the bank. Module 25’s questions apply: can I pay it back, and is it worth it?",
+    bad:"It really is borrowing. The bank pays for you now, and you owe the bank until you pay the bill."},
+  "q273a":{type:"mc", prompt:"Nilo’s credit card bill says $18. What is the best way to pay it?", concept:"creditcard", opts:[
+    {t:"Pay the whole $18 by the date on the bill", ok:true, fb:"Right. Pay it all, on time, and there is usually no interest at all. The loan came and went for free."},
+    {t:"Pay a little now and the rest someday", ok:false, fb:"Whatever is left over becomes debt — and from Module 26, you know debt grows. Pay the whole bill if you can."},
+    {t:"Wait for next month’s bill and pay both together", ok:false, fb:"Paying late usually means a late fee AND interest. Pay the whole bill by the date on it."}]},
+  "q273c":{type:"mc", prompt:"Which card spends money you already have?", concept:"debitcard", opts:[
+    {t:"The debit card", ok:true, fb:"Right. Debit = your own money, from checking, right now."},
+    {t:"The credit card", ok:false, fb:"A credit card spends the bank’s money — it is a loan. The debit card is the one that uses money you already have."},
+    {t:"Both of them", ok:false, fb:"Only one does. Debit uses your checking. Credit borrows from the bank."}]},
+  "q273b":{type:"mc", transfer:true, prompt:"The bread shop lets Kai take bread now and write his name in a book. At the end of the month, he pays for everything in the book. What is this most like?", concept:"creditcard", opts:[
+    {t:"A credit card — buy now, and a bill comes later", ok:true, fb:"Exactly. No plastic, but the same shape: the shop trusts him now, and the book is his bill. It is still borrowing."},
+    {t:"A debit card — the money leaves right away", ok:false, fb:"Nothing leaves Kai’s money right away here. He takes the bread now and pays later. That is the credit shape."},
+    {t:"Savings — Kai is keeping his money", ok:false, fb:"He is not saving it — he already owes it. At the end of the month the whole book has to be paid."}]}
 };
 
 const CFG = {
-  n:25, title:"Borrowing", homeSub:"Four short lessons. Using someone else’s money — and what it costs.",
-  pool:["q251a","q251b","q251c","q252a","q252b","q252c","q253a","q253c"], transfer:"q253b",
-  quest:"You learned what it means to borrow, why a loan costs more than the price, and when waiting beats borrowing.",
-  failKeys:"The keys: borrowing means using someone else’s money and paying it back, a loan comes with an agreement, and the borrower pays interest — so it usually costs more than the price.",
-  badge:" · Credit block begins 🔑",
-  nextFile:"module-26-debt.html",
-  passStory:'<p><strong>You now own:</strong> borrow and loan — and the other half of interest.</p>'+
-    '<p>Tavo got his loan and fixed his boat. Every week at the market he pays a little of it back, and Kai watches him check it off.</p>'+
-    '<p>"What happens," Kai asks one day, "if someone borrows and then… can’t pay it back?"</p>'+
-    '<p>Tavo stops smiling for a second. "That," he says, "is the part nobody puts on the poster."</p>'+
-    '<p class="muted">Module 26: Debt.</p>'
+  n:27, title:"Paying with Cards", homeSub:"Four short lessons. Two cards that look the same and work completely differently.",
+  pool:["q271a","q271b","q272a","q272b","q272c","q273a","q273c"], transfer:"q273b",
+  quest:"You learned the difference between a debit card and a credit card, and how to handle the bill.",
+  failKeys:"The keys: a debit card spends your own money from checking right away, a credit card spends the bank’s money (every tap is a small loan), and paying the WHOLE bill on time is how you avoid interest.",
+  nextFile:"module-28-credit-score.html",
+  passStory:'<p><strong>You now own:</strong> debit card and credit card — and you know which one is borrowing.</p>'+
+    '<p>Tavo walks up waving a letter. "The bank said yes to a new net loan — and fast! They said I have a good record."</p>'+
+    '<p>Nilo frowns. "They told me no last week. Said my record was… not so good."</p>'+
+    '<p>Kai looks from one to the other. "What record? Who is keeping score?"</p>'+
+    '<p class="muted">Module 28: Your Credit Score.</p>'
 };
 
-const TUTOR_HELLO = "Hi! Ask me anything about borrowing, loans, or why the borrower pays interest — or tap a button below.";
-const TUTOR_SYS = "You are the tutor inside Module 25 (Borrowing) of a financial-literacy app — the first module of the Credit block. The learner may be a child or an adult. "+
-  "They know from earlier modules: money, dollar, cent, add, subtract, buy, sell, pay, earn, spend, need, save, goal, percent, bank, deposit, withdraw, balance, checking, savings, transaction, notification, interest, grow, fee, overdraft, PIN, scam, budget, cushion. "+
-  "From THIS module: borrow (use someone else's money or thing now and give it back later), loan (money you borrow, with an agreement about when you pay it back and how much extra you pay), and lend (the everyday verb for the other side). "+
-  "Core ideas: interest runs both ways — the bank pays savers, borrowers pay whoever lent the money, so borrowing usually makes things cost more than the price; the bank lends out money that savers leave there (this is what 'the bank puts your money to work' meant in Module 21); before borrowing ask 'can I pay it back on time, and is having it now worth paying extra?'; saving up is usually cheaper for wants, while borrowing can make sense for a real need that cannot wait or something that helps you keep earning. "+
-  "TEACHING STYLE: concepts over calculations. Never calculate interest, a rate, a percentage, or a payment amount, even if asked. Say 'more than you borrowed' instead of a number. If asked how much, explain warmly that the exact math comes much later. "+
-  "STRICT RULES: never use these words (later modules): lender (say 'the bank' or 'whoever lends'), credit card, credit score, debt, default, APR, interest rate, minimum payment, invest, stock, tax, insurance. You may say 'credit' only as the name of this section of the app. If the learner uses a later word, answer briefly in plain words and say it is coming later. Never encourage a child to borrow money. "+
-  "Story context: a poster at the trading post said 'IF YOU BORROW $10 TODAY, PAY BACK $12 AT HARVEST'. Tavo's boat engine broke, and without the boat he cannot fish or earn, so he took a loan from the bank to fix it and pays a little back each week. Kai learned that his own savings is part of what the bank lends out. Kai decided to keep saving for his sail instead of borrowing. "+
-  "Never repeat a failed explanation — switch analogies (a borrowed fishing rod returned with a fish, a library book, using a friend's bike). Keep answers under 80 words, warm, honest, never mark wrong ideas right. If asked 'Quiz me', ask ONE simple WHY or WHO question and wait.";
+const TUTOR_HELLO = "Hi! Ask me anything about debit cards, credit cards, or the bill — or tap a button below.";
+const TUTOR_SYS = "You are the tutor inside Module 27 (Paying with Cards) of a financial-literacy app, in the Credit block. The learner may be a child or an adult. "+
+  "They know from earlier modules: money, dollar, cent, add, subtract, buy, sell, pay, earn, spend, need, save, goal, percent, bank, deposit, withdraw, balance, checking, savings, transaction, notification, interest, grow, fee, overdraft, PIN, scam, budget, cushion, borrow, loan, lend, owe, debt. "+
+  "From THIS module: debit card (connected to checking; money leaves your own account right away; you can still overdraft if you don't look) and credit card (pays with the bank's money; every tap is a small loan; a bill arrives later; pay the WHOLE bill by the date on it and there is usually no interest; pay only part and the rest becomes debt that grows). Key danger: a credit card does not feel like spending because checking does not go down. Both cards are protected by a PIN that stays secret. "+
+  "TEACHING STYLE: concepts over calculations. Never calculate interest, rates, percentages or payoff time. "+
+  "STRICT RULES: never use these words (later modules): lender, credit score, due date, minimum payment, credit limit, APR, interest rate, grace period, bankruptcy, collections, invest, stock, tax, insurance. Say 'the date on the bill' instead of due date. If the learner uses a later word, answer briefly in plain words and say it is coming later. Never encourage a child to get or use a credit card; say that is for adults, and always with care. "+
+  "Story context: Nilo showed Kai two cards that look alike. His debit card spends his own checking money; his credit card is how he kept tapping for small things after the jacket without feeling it, until an $18 bill arrived. The learner sorted facts into debit or credit. "+
+  "Never repeat a failed explanation — switch analogies (a shop's name-book paid at the end of the month, a borrowed rod, a key to your own tin vs. a note that says 'the bank will pay'). Keep answers under 80 words, warm, honest, never mark wrong ideas right. If asked 'Quiz me', ask ONE simple 'debit or credit?' question and wait.";
 
 /* =====================================================================
    STATE + PERSISTENCE
@@ -261,21 +260,21 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 
 async function loadState(){
   try{
-    const r = await window.storage.get("mod25-state");
+    const r = await window.storage.get("mod27-state");
     if(r && r.value){ S = Object.assign(S, JSON.parse(r.value)); return; }
   } catch(e){ }
   try{
-    const saved = localStorage.getItem("mod25-state");
+    const saved = localStorage.getItem("mod27-state");
     if(saved){ S = Object.assign(S, JSON.parse(saved)); }
-    for(let i=24;i>=1;i--){
+    for(let i=26;i>=1;i--){
       const prev = localStorage.getItem("mod"+i+"-state");
       if(prev){ const p = JSON.parse(prev); if(p.xp > S.xp) S.xp = p.xp; }
     }
   } catch(e){ }
 }
 async function saveState(){
-  try{ await window.storage.set("mod25-state", JSON.stringify(S)); }catch(e){
-    try{ localStorage.setItem("mod25-state", JSON.stringify(S)); }catch(e2){}
+  try{ await window.storage.set("mod27-state", JSON.stringify(S)); }catch(e){
+    try{ localStorage.setItem("mod27-state", JSON.stringify(S)); }catch(e2){}
   }
 }
 function addXP(n){ S.xp+=n; document.getElementById("xpBox").textContent = S.xp+" XP"; saveState(); }
@@ -383,126 +382,127 @@ function renderTF(qid,onDone){
 }
 
 /* =====================================================================
-   SIMULATOR — M25 has no balances. The visual is a money FLOW: who
-   hands money to whom, and which direction the interest goes.
+   SIMULATOR — two side-by-side cards, a checking balance that moves
+   (debit) or does not (credit), and a monthly bill.
 ===================================================================== */
-function flow(parts){ return '<div class="flow">'+parts.map(p=>p==='→'?'<span>→</span>':'<span class="pill">'+p+'</span>').join('')+'</div>'; }
+function money(n){ return (n<0?"−":"") + "$" + Math.abs(n).toFixed(2); }
+function twoCards(){
+  return '<div class="cards">'+
+    '<div class="pcard deb"><div class="chip"></div><div><div class="sm">spends your money</div><div class="nm">Debit card</div></div></div>'+
+    '<div class="pcard cred"><div class="chip"></div><div><div class="sm">spends the bank’s money</div><div class="nm">Credit card</div></div></div>'+
+    '</div>';
+}
+function acctCard(bal,note){
+  return '<div class="acct"><div class="lbl">Checking</div><div class="bal">'+money(bal)+'</div><div class="who">'+note+'</div></div>';
+}
+function billCard(){
+  return '<div class="bill"><strong>FinLit Bank · Credit card bill</strong>'+
+    '<div class="row"><span>Sweet cakes</span><span>$4.00</span></div>'+
+    '<div class="row"><span>Hat</span><span>$6.00</span></div>'+
+    '<div class="row"><span>Snacks</span><span>$3.00</span></div>'+
+    '<div class="row"><span>Kite string</span><span>$5.00</span></div>'+
+    '<div class="tot"><span>You owe</span><span>$18.00</span></div>'+
+    '<div class="by">Pay by the 15th</div></div>';
+}
 
 /* =====================================================================
-   LESSON 1 — The Poster
+   LESSON 1 — The Card That Spends Your Money
 ===================================================================== */
 const L1=[
-  ()=>show(`<div class="kicker">Lesson 1 · The poster</div>
-    <div class="recap"><strong>Kai’s story so far:</strong> One whole month, run perfectly. Then a paper on the trading post board.</div>
-    <div class="poster"><div class="big">IF YOU BORROW $10 TODAY…</div><div class="small">…pay back $12 at harvest. Ask at FinLit Bank.</div></div>
-    <div class="card"><p>Kai reads it twice. "So someone gives me $10… and later I give them $12? Why would anybody do that?"</p>
-    <p>Tavo is standing right behind him, looking at the same poster. "I might," he says quietly.</p></div>
-    <button onclick="next()">Why would Tavo?</button>`),
+  ()=>show(`<div class="kicker">Lesson 1 · Two cards</div>
+    <div class="recap"><strong>Kai’s story so far:</strong> Nilo is climbing out of debt. Now he holds up two cards that look almost exactly the same.</div>
+    ${twoCards()}
+    <div class="card"><p>"One spends MY money," Nilo says. "One spends the bank’s. From the outside, you can’t tell."</p>
+    <p>Kai has used his phone to watch his money. He has never paid with a card.</p></div>
+    <button onclick="next()">Start with the first one</button>`),
   ()=>show(`<div class="kicker">Lesson 1</div>
-    <div class="scene">🚤💥<div class="cap">Tavo’s boat engine broke. No boat, no fishing. No fishing, no earning.</div></div>
-    <div class="card"><p>Tavo has $10 saved. The repair costs $30. If he waits to save the rest, he cannot fish — so he cannot earn — so he can never save the rest.</p>
-    <p>So he is thinking about using someone else’s money now, and giving it back later. That is called <strong>borrowing</strong>.</p></div>
-    <button onclick="earnWord('borrow');next()">New word: borrow</button>`),
-  ()=>show(`<div class="kicker">Lesson 1 · Where the money comes from</div>
-    <div class="card"><p>Tavo goes to the bank. They agree: the bank will lend him $20 now, and he will pay it back a little each week, plus some extra, by harvest.</p>
-    <p>Money you borrow, with an agreement like that, is called a <strong>loan</strong>.</p>
-    <p>And here is the part that makes Kai stop in his tracks. Remember Module 21 — the bank “puts your money to work, helping other people with their own plans”?</p></div>
-    ${flow(["Kai saves","→","the bank","→","lends to Tavo"])}
-    <div class="card" style="margin-top:12px"><p style="margin:0"><strong>This is what it meant.</strong> Money savers leave in the bank is part of what the bank lends out.</p></div>
-    <button onclick="earnWord('loan');next()">New word: loan</button>`),
-  ()=>renderMC("q251a", next),
-  ()=>renderMC("q251b", next),
-  ()=>renderTF("q251c", next),
+    ${acctCard(15,"Kai · before the bread")}
+    <div class="card"><p>Rana gives Kai a card that is connected to his <strong>checking account</strong>. He taps it to pay $3 for bread.</p></div>
+    ${acctCard(12,"Kai · right after tapping")}
+    <div class="card"><p>The money left his own checking <strong>right away</strong> — like a withdrawal he can tap.</p>
+    <p>That is a <strong>debit card</strong>. It spends money you already have. It needs his PIN, and everything from Modules 22 and 23 still applies: look before you pay, and keep the PIN secret.</p></div>
+    <button onclick="earnWord('debitcard');next()">New word: debit card</button>`),
+  ()=>renderMC("q271a", next),
+  ()=>renderTF("q271b", next),
 ];
 
 /* =====================================================================
-   LESSON 2 — Interest, Flipped
+   LESSON 2 — The Card That Spends the Bank's Money
 ===================================================================== */
 const L2=[
-  ()=>show(`<div class="kicker">Lesson 2 · Interest, flipped</div>
-    <div class="recap"><strong>So far:</strong> borrowing is using someone else’s money. A loan comes with an agreement.</div>
-    <div class="card"><p>Kai has seen interest before. The bank pays <em>him</em> a little thank-you, because it gets to use his money.</p>
-    <p>Now flip it around. Tavo is using the <em>bank’s</em> money. So who pays the thank-you this time?</p></div>
-    <button onclick="next()">Tavo does</button>`),
+  ()=>show(`<div class="kicker">Lesson 2 · The other card</div>
+    <div class="recap"><strong>So far:</strong> a debit card spends your own money from checking, right away.</div>
+    ${acctCard(20,"Nilo · before a week of tapping")}
+    <div class="card"><p>Nilo taps his <em>other</em> card all week — sweet cakes, a hat, snacks, kite string.</p></div>
+    ${acctCard(20,"Nilo · after a week of tapping")}
+    <div class="card"><p>Kai stares. "It didn’t go down at all!"</p>
+    <p>"That’s the trick," Nilo says. "This card doesn’t use my money. The <strong>bank</strong> pays. Every tap is a small loan."</p></div>
+    <button onclick="next()">So what is it?</button>`),
   ()=>show(`<div class="kicker">Lesson 2</div>
-    <div class="compare">
-      <div class="box win"><div class="n">Kai SAVES $10</div><div class="v">gets back more</div><div class="d">The bank pays Kai interest</div></div>
-      <div class="box" style="border-color:var(--shell)"><div class="n">Tavo BORROWS $10</div><div class="v">pays back more</div><div class="d">Tavo pays the bank interest</div></div>
-    </div>
-    <div class="card"><p>Same word, opposite directions. <strong>Whoever gets to use the money pays the thank-you.</strong></p>
-    <p>That is why the poster said borrow $10, pay back $12. The extra is interest — the price of using money that is not yours.</p>
-    <p>So borrowing makes things cost more than their price. The $30 boat repair will cost Tavo <em>more</em> than $30 by the time he is done.</p></div>
-    <button onclick="next()">Practice</button>`),
-  ()=>renderMC("q252a", next),
-  ()=>renderTF("q252b", next),
-  ()=>renderMC("q252c", next),
+    <div class="card"><p>That is a <strong>credit card</strong>. It pays with the bank’s money, and you pay the bank back later. <em>Credit</em> means the bank trusts you to pay it back.</p>
+    <p>Here is the danger Nilo learned the hard way: <strong>because his checking never moved, it did not feel like spending.</strong> Four little taps, no number going down, no alarm bells.</p>
+    <p>Every one of them was borrowing.</p></div>
+    <button onclick="earnWord('creditcard');next()">New word: credit card</button>`),
+  ()=>renderMC("q272a", next),
+  ()=>renderMC("q272b", next),
+  ()=>renderTF("q272c", next),
 ];
 
 /* =====================================================================
-   LESSON 3 — Borrow or Wait? (sorting simulator)
-   The rule of thumb taught: a real need that cannot wait, or something
-   that helps you keep earning → borrowing MIGHT make sense. A want you
-   could save for → wait and save (free, and savings grows).
+   LESSON 3 — The Bill (+ debit-or-credit sort)
 ===================================================================== */
-const CASES=[
-  {t:"Kai wants sweet cakes for everyone at the market this week.", borrow:false,
-   why:"A want, and a small one. Paying extra for cakes makes no sense — wait and use wants money from the budget."},
-  {t:"Tavo’s boat engine broke. Without the boat he cannot fish or earn anything.", borrow:true,
-   why:"A real need, and fixing it lets him keep earning — which is how he pays the loan back. This is when borrowing can make sense."},
-  {t:"Kai sees a fancy hat he wants right now.", borrow:false,
-   why:"A want that can wait. Borrowing would make the hat cost more than its price. Save up instead."},
-  {t:"A family’s roof is leaking, and storm season starts next week.", borrow:true,
-   why:"A real need that cannot wait. Paying a bit extra to fix it now can be worth it — as long as they can pay it back."},
-  {t:"Kai has $21 for his $30 sail. A few more weeks of saving would cover it.", borrow:false,
-   why:"He is almost there! Waiting a few weeks is free, and his savings even grows while he waits. Borrowing would mean paying interest instead."}
+const FACTS=[
+  {t:"Money leaves your checking the moment you tap.", credit:false, why:"Debit. It spends money you already have, right away."},
+  {t:"A bill arrives later, listing everything you tapped.", credit:true, why:"Credit. The bank paid first; the bill is how you pay the bank back."},
+  {t:"Every tap is a small loan.", credit:true, why:"Credit. The bank is lending you the money each time."},
+  {t:"It can cause an overdraft if you do not look at your balance.", credit:false, why:"Debit. It spends from checking, so the look-before-you-pay rule still applies."},
+  {t:"If you do not pay the whole bill, the rest becomes debt with interest.", credit:true, why:"Credit. Whatever is left unpaid is debt — and debt grows."},
+  {t:"It only spends money you already have.", credit:false, why:"Debit. No borrowing involved."}
 ];
 const L3=[
-  ()=>show(`<div class="kicker">Lesson 3 · Borrow or wait?</div>
-    <div class="recap"><strong>So far:</strong> the borrower pays interest, so borrowing usually costs more than the price.</div>
-    <div class="card"><p>Kai thinks about his sail. He could borrow and have it this week…</p>
-    <p>Rana gives him the two questions to ask before borrowing <em>anything</em>:</p>
-    <p style="text-align:center; font-size:18px"><strong>Can I pay it back on time?<br>Is having it NOW worth paying extra?</strong></p>
-    <p>For a want you could save for, the answer to the second one is almost always no. For a real need that cannot wait — or something that keeps you earning — it can be yes.</p></div>
-    <button onclick="next()">Sort five situations</button>`),
+  ()=>show(`<div class="kicker">Lesson 3 · The bill</div>
+    <div class="recap"><strong>So far:</strong> a credit card spends the bank’s money, and it does not feel like spending.</div>
+    ${billCard()}
+    <div class="card"><p>At the end of the month, the bill arrives. Every tap, added up. And a date: pay by the 15th.</p>
+    <p>Nilo has a choice, and it decides everything:</p>
+    <p><strong>Pay the whole bill by the date</strong> → usually no interest at all. The bank lent him the money for free.</p>
+    <p><strong>Pay only part</strong> → whatever is left becomes <strong>debt</strong>, and from Module 26 you know what debt does. It grows.</p></div>
+    <button onclick="next()">Debit or credit? Sort six facts</button>`),
   ()=>{
     let i=0;
     function draw(){
-      if(i>=CASES.length){ addXP(6); next(); return; }
-      const c=CASES[i];
-      show(`<div class="kicker">Borrow or wait? · ${i+1} of ${CASES.length}</div>
-        <div class="item">${c.t}</div>
-        <div class="sortbar"><button class="wait" id="sWait">🫙 Wait &amp; save</button><button class="bor" id="sBor">🤝 Borrowing might make sense</button></div>
+      if(i>=FACTS.length){ addXP(6); next(); return; }
+      const f=FACTS[i];
+      show(`<div class="kicker">Debit or credit? · ${i+1} of ${FACTS.length}</div>
+        <div class="item">${f.t}</div>
+        <div class="sortbar"><button class="deb" id="sDeb">Debit card</button><button class="cred" id="sCred">Credit card</button></div>
         <div id="fb"></div><div id="cont"></div>`);
       let done=false;
-      function pick(saysBorrow){
+      function pick(saysCredit){
         if(done) return;
-        const ok = saysBorrow===c.borrow;
-        document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?'Right — ':'Think again. ')+c.why+'</div>';
+        const ok = saysCredit===f.credit;
+        document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?'Right — ':'Not quite. ')+f.why+(ok?'':' Try again.')+'</div>';
         revealFB();
         if(ok){
           done=true; addXP(1);
-          document.getElementById("sWait").disabled=true; document.getElementById("sBor").disabled=true;
-          document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(i<CASES.length-1?"Next":"Done")+'</button>';
+          document.getElementById("sDeb").disabled=true; document.getElementById("sCred").disabled=true;
+          document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(i<FACTS.length-1?"Next":"Done")+'</button>';
           window._n=()=>{ i++; draw(); };
           revealFB();
         }
       }
-      document.getElementById("sWait").onclick=()=>pick(false);
-      document.getElementById("sBor").onclick=()=>pick(true);
+      document.getElementById("sDeb").onclick=()=>pick(false);
+      document.getElementById("sCred").onclick=()=>pick(true);
     }
     draw();
   },
-  ()=>show(`<div class="kicker">Lesson 3 · Kai decides</div>
-    <div class="card"><p>Kai keeps saving for his sail. A few more weeks, no extra cost — and the bank keeps paying <em>him</em> a little while he waits.</p>
-    <p>Tavo takes his loan, fixes his boat, and is back on the water by Friday. Both of them made the right call — for different reasons.</p></div>
-    <button onclick="next()">Practice</button>`),
-  ()=>renderMC("q253a", next),
-  ()=>renderMC("q253c", next),
+  ()=>renderMC("q273a", next),
+  ()=>renderMC("q273c", next),
 ];
 const META=[
-  {title:"The Poster", sub:"Borrow $10, pay back $12?", emoji:"📜"},
-  {title:"Interest, Flipped", sub:"Who pays whom — and why", emoji:"🔄"},
-  {title:"Borrow or Wait?", sub:"Two questions before borrowing anything", emoji:"🤔"},
+  {title:"The Card That Spends Your Money", sub:"Debit: your checking, right away", emoji:"💳"},
+  {title:"The Card That Spends the Bank’s", sub:"Credit: every tap is a small loan", emoji:"🏦"},
+  {title:"The Bill", sub:"Pay it all, and sort debit from credit", emoji:"🧾"},
 ];
 
 

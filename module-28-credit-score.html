@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Borrowing — Module 25</title>
+<title>Your Credit Score — Module 28</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap');
   :root{
@@ -131,14 +131,17 @@
   .compare .box .v{font-size:22px; font-weight:700; font-family:"Fraunces",Georgia,serif}
   .spin{display:inline-block; width:16px; height:16px; border:3px solid #fff; border-top-color:transparent; border-radius:50%; animation:sp 1s linear infinite; vertical-align:-3px}
   @keyframes sp{to{transform:rotate(360deg)}}
-  .poster{background:#fffdf5; border:2px solid var(--sand-deep); border-radius:6px; padding:18px 16px; margin-bottom:14px; text-align:center; box-shadow:0 3px 0 var(--sand-deep); transform:rotate(-1deg)}
-  .poster .big{font-family:"Fraunces",Georgia,serif; font-weight:700; font-size:22px; line-height:1.2}
-  .poster .small{font-size:14px; color:var(--ink-soft); margin-top:6px}
-  .flow{display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap; font-size:15px; font-weight:600; margin:6px 0 2px}
-  .flow .pill{background:var(--lagoon); border-radius:999px; padding:6px 12px}
-  .compare .box .d{font-size:13px; color:var(--ink-soft); margin-top:6px}
-  .sortbar .wait{background:var(--good)}
-  .sortbar .bor{background:var(--shell)}
+  .gauge{background:#fff; border:2px solid #d9e2de; border-radius:14px; padding:16px; margin-bottom:12px}
+  .gauge .who{font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-weight:700; margin-bottom:8px}
+  .gtrack{position:relative; height:18px; border-radius:999px; background:linear-gradient(90deg,#a94436 0%,#e8b84b 50%,#2e7d5b 100%)}
+  .gpin{position:absolute; top:-7px; width:6px; height:32px; background:var(--ink); border-radius:3px; transform:translateX(-50%); transition:left .5s ease; box-shadow:0 0 0 3px #fff}
+  .gends{display:flex; justify-content:space-between; font-size:12px; color:var(--ink-soft); margin-top:8px; font-weight:600}
+  .sortbar .up{background:var(--good)}
+  .sortbar .down{background:var(--bad)}
+  .cal{display:inline-block; background:#fff; border:2px solid var(--bad); border-radius:10px; overflow:hidden; text-align:center; min-width:72px; vertical-align:middle}
+  .cal .m, .cal .d{display:block}
+  .cal .m{background:var(--bad); color:#fff; font-size:11px; font-weight:700; letter-spacing:.1em; padding:2px 0}
+  .cal .d{font-family:"Fraunces",Georgia,serif; font-weight:700; font-size:28px; padding:2px 0}
 </style>
 </head>
 <body>
@@ -165,7 +168,7 @@
     <button onclick="quickAsk('Quiz me')">Quiz me</button>
   </div>
   <div class="tp-in">
-    <input id="tin" placeholder="Ask about borrowing and loans…" onkeydown="if(event.key==='Enter')sendTutor()">
+    <input id="tin" placeholder="Ask about credit scores and due dates…" onkeydown="if(event.key==='Enter')sendTutor()">
     <button onclick="sendTutor()">Send</button>
   </div>
 </div>
@@ -175,83 +178,78 @@
 
 <script>
 /* =====================================================================
-   CONTENT — Module 25: Borrowing  (opens the Credit block)
-   Vocab: borrow, loan.  (lend is used as the everyday verb here too —
-   it was held back until this module.)
-   Big idea: interest runs in BOTH directions. M21 taught "the bank pays
-   you for using your money." M25 flips it: when you use someone else's
-   money, YOU pay. Concept over computation: pay-back amounts are shown
-   only as "more than you got" — no rates, no percentages, no "how much
-   interest" questions.
-   Callback: in M21 Kai learned the bank puts saved money to work
-   "helping other people with their own plans" — this is where he finds
-   out what that meant.
+   CONTENT — Module 28: Your Credit Score
+   Vocab: credit score, due date.
+   "due date" follows show-then-name: M27's bill said "pay by the 15th";
+   here it is named.
+   Deliberately NO score numbers (no 300–850 range): the score is a
+   gauge from "less trusted" to "more trusted". What moves it is the
+   concept being taught — mostly, paying back on time. A common
+   misconception is addressed directly: a credit score is about your
+   record of paying back, not about how much money you have.
 ===================================================================== */
 const VOCAB = {
-  borrow:{term:"borrow", def:"To use someone else’s money (or thing) now, and give it back later. When you borrow money, you usually pay back MORE than you got."},
-  loan:{term:"loan", def:"Money you borrow, with an agreement about when you will pay it back and how much extra (interest) you will pay for using it."}
+  creditscore:{term:"credit score", def:"A number that shows banks how well you have paid back money before. Paying on time makes it go up. Missing payments makes it go down."},
+  duedate:{term:"due date", def:"The date on a bill by which you must pay. Paying by the due date avoids late fees — and is the biggest thing that builds a good credit score."}
 };
 
 const QUESTIONS = {
-  "q251a":{type:"mc", prompt:"What does it mean to borrow money?", concept:"borrow", opts:[
-    {t:"Use someone else’s money now and give it back later", ok:true, fb:"Right. The money is yours to use — for a while. The giving-back part is not optional."},
-    {t:"Get money as a gift that you keep forever", ok:false, fb:"A gift stays with you. Borrowed money has to go back to whoever it came from."},
-    {t:"Earn money by working", ok:false, fb:"Earning is money you keep because you worked for it. Borrowed money has to be paid back."}]},
-  "q251b":{type:"mc", prompt:"Where does a bank get the money it lends out as loans?", concept:"loan", opts:[
-    {t:"Partly from the money savers like Kai leave in the bank", ok:true, fb:"Right! This is what Module 21 meant by the bank “putting your money to work.” Kai’s savings helps make someone else’s loan possible."},
-    {t:"It prints brand-new money for every loan", ok:false, fb:"Not the way to think about it here. A big part of what a bank lends comes from money that savers keep there."},
-    {t:"From the fees it charges for paper statements", ok:false, fb:"Fees are small. The big pool the bank lends from is the money savers leave with it."}]},
-  "q251c":{type:"tf", prompt:"True or false: a loan comes with an agreement about when you will pay it back.", answer:true, concept:"loan",
-    good:"Right. A loan is not “pay back whenever.” There is an agreement — when, and how much — before you get the money.",
-    bad:"A loan always comes with an agreement. You know WHEN you must pay it back, and how much, before you ever get the money."},
-  "q252a":{type:"mc", prompt:"Kai SAVES $10 in the bank. Tavo BORROWS $10 from the bank. Who pays interest to whom?", concept:"loan", opts:[
-    {t:"The bank pays Kai. Tavo pays the bank.", ok:true, fb:"Exactly. Same word, opposite directions. Whoever gets to USE the money pays the thank-you."},
-    {t:"The bank pays both of them", ok:false, fb:"Only the saver gets paid. Tavo is using the bank’s money, so he is the one who pays."},
-    {t:"Kai and Tavo both pay the bank", ok:false, fb:"Kai is letting the bank use his money — so the bank pays HIM. Only the borrower pays."}]},
-  "q252b":{type:"tf", prompt:"True or false: if you borrow $10, you usually pay back exactly $10.", answer:false, concept:"borrow",
-    good:"Right. You usually pay back more than $10. The extra is interest — the price of using someone else’s money.",
-    bad:"Usually you pay back MORE than you borrowed. The extra is interest — this time going from you to whoever lent it."},
-  "q252c":{type:"mc", prompt:"Why does borrowing usually make something cost more?", concept:"borrow", opts:[
-    {t:"You pay the price, plus interest for using someone else’s money", ok:true, fb:"Right. A $10 net paid for with a loan ends up costing more than $10 by the time it is all paid back."},
-    {t:"Shops charge more if you borrowed", ok:false, fb:"The shop charges the normal price. The extra comes from the LOAN — the interest you pay the bank."},
-    {t:"It doesn’t — borrowing is free", ok:false, fb:"Borrowing money is almost never free. The interest you pay back is what makes it cost more."}]},
-  "q253a":{type:"mc", prompt:"What should Kai ask himself BEFORE borrowing?", concept:"borrow", opts:[
-    {t:"“Can I pay it back on time — and is this worth paying extra for?”", ok:true, fb:"Right. Two questions: can I really pay it back, and is having it NOW worth paying more than the price?"},
-    {t:"“Will they let me?”", ok:false, fb:"Being allowed to borrow is not the same as it being a good idea. Ask: can I pay it back, and is it worth the extra?"},
-    {t:"“How fast can I spend it?”", ok:false, fb:"That is the question that gets people in trouble. Ask first whether you can pay it back and whether it is worth the extra."}]},
-  "q253c":{type:"mc", prompt:"Kai wants a new sail. He could borrow now, or save for a few more weeks. Why is saving usually the better choice for something like this?", concept:"borrow", opts:[
-    {t:"Saving costs nothing extra — and his savings even grows with interest while he waits", ok:true, fb:"Right. Waiting a few weeks is free. Borrowing would mean paying interest instead of earning it."},
-    {t:"Saving is faster than borrowing", ok:false, fb:"Borrowing is actually faster! That is its one advantage. But it costs extra — saving does not."},
-    {t:"Banks never lend money for sails", ok:false, fb:"They might! The reason to wait is cost: borrowing means paying interest, saving means earning it."}]},
-  "q253b":{type:"mc", transfer:true, prompt:"Mika lets Kai use her fishing rod for a week. When he gives it back, he adds a fish as thanks. Who borrowed, and what is the fish like?", concept:"borrow", opts:[
-    {t:"Kai borrowed the rod — and the fish is like the interest a borrower pays", ok:true, fb:"Exactly. Kai used something that was not his, gave it back, and added a little extra for the use of it. That is the whole shape of a loan."},
-    {t:"Mika borrowed — the fish was hers", ok:false, fb:"Mika owns the rod. Kai is the one who used it and gave it back, so Kai borrowed."},
-    {t:"Nobody borrowed — it was a trade", ok:false, fb:"In a trade, things swap for good. Here the rod went BACK to Mika. Using something and returning it is borrowing."}]}
+  "q281a":{type:"mc", prompt:"What is a credit score?", concept:"creditscore", opts:[
+    {t:"A number that shows banks how well you have paid back money before", ok:true, fb:"Right. It is a bank’s quick way of asking: when this person borrowed before, did they pay it back?"},
+    {t:"How much money you have in savings", ok:false, fb:"Savings does not set the score. It is about your record of borrowing and paying back."},
+    {t:"The number of cards you own", ok:false, fb:"Owning cards is not the score. The score shows how well you have paid back what you borrowed."}]},
+  "q281b":{type:"mc", prompt:"Why did the bank say yes to Tavo and no to Nilo?", concept:"creditscore", opts:[
+    {t:"Tavo has a record of paying back on time; Nilo has missed payments", ok:true, fb:"Right. The bank looked at their past. Tavo’s record says he pays back. Nilo’s record says he sometimes does not."},
+    {t:"Tavo has more money than Nilo", ok:false, fb:"It was not about who has more money. It was about who has paid back on time before."},
+    {t:"The bank just likes Tavo more", ok:false, fb:"It is not about liking. The bank looked at each person’s record of paying back."}]},
+  "q281c":{type:"tf", prompt:"True or false: having lots of money in savings automatically gives you a high credit score.", answer:false, concept:"creditscore",
+    good:"Right. Savings is great, but the credit score is about your record of borrowing and paying back on time.",
+    bad:"Surprising, but no. The credit score only looks at how you have handled borrowed money — mostly whether you paid back on time."},
+  "q282a":{type:"mc", prompt:"What is a due date?", concept:"duedate", opts:[
+    {t:"The date on a bill by which you must pay", ok:true, fb:"Right. Nilo’s bill said “pay by the 15th” — the 15th was the due date."},
+    {t:"The day you get paid for work", ok:false, fb:"That is payday. A due date is when a bill must be paid."},
+    {t:"The day a store opens", ok:false, fb:"A due date is about bills: the last day to pay on time."}]},
+  "q282b":{type:"mc", prompt:"What is the BIGGEST thing that builds a good credit score?", concept:"duedate", opts:[
+    {t:"Paying every bill by its due date", ok:true, fb:"Right. On time, every time. Nothing matters more to the score."},
+    {t:"Borrowing as much as possible", ok:false, fb:"Borrowing lots does not help — and borrowing lots all at once can make the score go down."},
+    {t:"Having a nice-looking card", ok:false, fb:"How the card looks does nothing. Paying by the due date is what counts."}]},
+  "q282c":{type:"tf", prompt:"True or false: missing a due date can lower your credit score.", answer:true, concept:"duedate",
+    good:"Right. A missed due date goes on your record — and it usually brings a late fee too.",
+    bad:"It really can. A missed due date goes on your record, and banks see it."},
+  "q283a":{type:"mc", prompt:"Why does a good credit score matter?", concept:"creditscore", opts:[
+    {t:"When you really need to borrow, it is easier to get a yes — and often you pay less extra", ok:true, fb:"Right. Tavo got his net loan fast. A good record opens doors when you need them."},
+    {t:"It lets you skip paying bills", ok:false, fb:"Nobody gets to skip bills! A good score just makes banks more willing to trust you."},
+    {t:"It adds money to your savings", ok:false, fb:"A score does not add money. It helps when you need to borrow — easier yes, often less extra to pay."}]},
+  "q283c":{type:"mc", prompt:"Nilo’s score is low. What can he do?", concept:"creditscore", opts:[
+    {t:"Pay every bill on time from now on — the score rises slowly", ok:true, fb:"Right. Scores are not stuck. A new record of on-time payments slowly builds trust back."},
+    {t:"Nothing — a low score is forever", ok:false, fb:"Not forever! Paying on time, again and again, slowly rebuilds it."},
+    {t:"Borrow a lot more to show he can", ok:false, fb:"Borrowing lots at once can lower it further. The fix is on-time payments, one after another."}]},
+  "q283b":{type:"mc", transfer:true, prompt:"Mika always gives back what she borrows, on time. Jojo usually forgets. Who will friends be happy to lend to next time?", concept:"creditscore", opts:[
+    {t:"Mika — her record shows she gives things back", ok:true, fb:"Exactly. Nobody wrote down a number, but everyone keeps a kind of score. A credit score is the same idea, written down."},
+    {t:"Jojo — he needs things more", ok:false, fb:"Needing something does not make people trust you. Friends look at who has given things back before."},
+    {t:"Both the same — the past does not matter", ok:false, fb:"The past matters a lot. People lend more easily to someone with a record of giving things back."}]}
 };
 
 const CFG = {
-  n:25, title:"Borrowing", homeSub:"Four short lessons. Using someone else’s money — and what it costs.",
-  pool:["q251a","q251b","q251c","q252a","q252b","q252c","q253a","q253c"], transfer:"q253b",
-  quest:"You learned what it means to borrow, why a loan costs more than the price, and when waiting beats borrowing.",
-  failKeys:"The keys: borrowing means using someone else’s money and paying it back, a loan comes with an agreement, and the borrower pays interest — so it usually costs more than the price.",
-  badge:" · Credit block begins 🔑",
-  nextFile:"module-26-debt.html",
-  passStory:'<p><strong>You now own:</strong> borrow and loan — and the other half of interest.</p>'+
-    '<p>Tavo got his loan and fixed his boat. Every week at the market he pays a little of it back, and Kai watches him check it off.</p>'+
-    '<p>"What happens," Kai asks one day, "if someone borrows and then… can’t pay it back?"</p>'+
-    '<p>Tavo stops smiling for a second. "That," he says, "is the part nobody puts on the poster."</p>'+
-    '<p class="muted">Module 26: Debt.</p>'
+  n:28, title:"Your Credit Score", homeSub:"Four short lessons. Who is keeping score — and how to keep it high.",
+  pool:["q281a","q281b","q281c","q282a","q282b","q282c","q283a","q283c"], transfer:"q283b",
+  quest:"You learned what a credit score is, why due dates matter so much, and how a score is built back up.",
+  failKeys:"The keys: a credit score shows how well you have paid back before (not how much money you have), paying by the due date is the biggest thing that builds it, and a low score can slowly be rebuilt.",
+  nextFile:"module-29-credit-challenge.html",
+  passStory:'<p><strong>You now own:</strong> credit score and due date — and the one habit that matters most: on time, every time.</p>'+
+    '<p>Rana finds Kai at the harbor. "You’ve learned borrowing, debt, cards, and scores. When you are grown, you’ll have a card of your own someday."</p>'+
+    '<p>She hands him a pretend one, cut from a coconut shell. "So let’s practice. One whole month. Your card. Your bills. Your choices."</p>'+
+    '<p class="muted">Module 29: The Credit Challenge.</p>'
 };
 
-const TUTOR_HELLO = "Hi! Ask me anything about borrowing, loans, or why the borrower pays interest — or tap a button below.";
-const TUTOR_SYS = "You are the tutor inside Module 25 (Borrowing) of a financial-literacy app — the first module of the Credit block. The learner may be a child or an adult. "+
-  "They know from earlier modules: money, dollar, cent, add, subtract, buy, sell, pay, earn, spend, need, save, goal, percent, bank, deposit, withdraw, balance, checking, savings, transaction, notification, interest, grow, fee, overdraft, PIN, scam, budget, cushion. "+
-  "From THIS module: borrow (use someone else's money or thing now and give it back later), loan (money you borrow, with an agreement about when you pay it back and how much extra you pay), and lend (the everyday verb for the other side). "+
-  "Core ideas: interest runs both ways — the bank pays savers, borrowers pay whoever lent the money, so borrowing usually makes things cost more than the price; the bank lends out money that savers leave there (this is what 'the bank puts your money to work' meant in Module 21); before borrowing ask 'can I pay it back on time, and is having it now worth paying extra?'; saving up is usually cheaper for wants, while borrowing can make sense for a real need that cannot wait or something that helps you keep earning. "+
-  "TEACHING STYLE: concepts over calculations. Never calculate interest, a rate, a percentage, or a payment amount, even if asked. Say 'more than you borrowed' instead of a number. If asked how much, explain warmly that the exact math comes much later. "+
-  "STRICT RULES: never use these words (later modules): lender (say 'the bank' or 'whoever lends'), credit card, credit score, debt, default, APR, interest rate, minimum payment, invest, stock, tax, insurance. You may say 'credit' only as the name of this section of the app. If the learner uses a later word, answer briefly in plain words and say it is coming later. Never encourage a child to borrow money. "+
-  "Story context: a poster at the trading post said 'IF YOU BORROW $10 TODAY, PAY BACK $12 AT HARVEST'. Tavo's boat engine broke, and without the boat he cannot fish or earn, so he took a loan from the bank to fix it and pays a little back each week. Kai learned that his own savings is part of what the bank lends out. Kai decided to keep saving for his sail instead of borrowing. "+
-  "Never repeat a failed explanation — switch analogies (a borrowed fishing rod returned with a fish, a library book, using a friend's bike). Keep answers under 80 words, warm, honest, never mark wrong ideas right. If asked 'Quiz me', ask ONE simple WHY or WHO question and wait.";
+const TUTOR_HELLO = "Hi! Ask me anything about credit scores or due dates — or tap a button below.";
+const TUTOR_SYS = "You are the tutor inside Module 28 (Your Credit Score) of a financial-literacy app, in the Credit block. The learner may be a child or an adult. "+
+  "They know from earlier modules: money, dollar, cent, add, subtract, buy, sell, pay, earn, spend, need, save, goal, percent, bank, deposit, withdraw, balance, checking, savings, transaction, notification, interest, grow, fee, overdraft, PIN, scam, budget, cushion, borrow, loan, lend, owe, debt, debit card, credit card. "+
+  "From THIS module: credit score (a number that shows banks how well you have paid back before; on-time payments raise it, missed payments and borrowing lots all at once lower it; it is NOT about how much money you have) and due date (the date on a bill by which you must pay). A good score makes it easier to get a yes when you really need to borrow, and often means paying less extra. A low score can be rebuilt slowly with on-time payments. "+
+  "TEACHING STYLE: concepts over calculations. Do not give score numbers or ranges (no 300-850), rates, or percentages; describe the score as 'more trusted' vs 'less trusted'. Do not list detailed scoring formulas. "+
+  "STRICT RULES: never use these words (later modules): minimum payment, lender (say 'the bank' or 'whoever lends'), credit limit, credit utilization, credit report, credit bureau, APR, interest rate, bankruptcy, collections, invest, stock, tax, insurance. If the learner uses a later word, answer briefly in plain words and say it is coming later. Children do not have credit scores yet; say so gently if asked. "+
+  "Story context: the bank said yes fast to Tavo's new net loan because of his good record, and no to Nilo because of missed payments. Kai learned what a credit score is, what a due date is, sorted actions by whether they push a score up or down, and saw that Nilo can rebuild by paying on time. "+
+  "Never repeat a failed explanation — switch analogies (a friend who always returns borrowed things, a report card for paying back, trust that takes time to build). Keep answers under 80 words, warm, honest, never mark wrong ideas right. If asked 'Quiz me', ask ONE simple 'up or down?' question and wait.";
 
 /* =====================================================================
    STATE + PERSISTENCE
@@ -261,21 +259,21 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 
 async function loadState(){
   try{
-    const r = await window.storage.get("mod25-state");
+    const r = await window.storage.get("mod28-state");
     if(r && r.value){ S = Object.assign(S, JSON.parse(r.value)); return; }
   } catch(e){ }
   try{
-    const saved = localStorage.getItem("mod25-state");
+    const saved = localStorage.getItem("mod28-state");
     if(saved){ S = Object.assign(S, JSON.parse(saved)); }
-    for(let i=24;i>=1;i--){
+    for(let i=27;i>=1;i--){
       const prev = localStorage.getItem("mod"+i+"-state");
       if(prev){ const p = JSON.parse(prev); if(p.xp > S.xp) S.xp = p.xp; }
     }
   } catch(e){ }
 }
 async function saveState(){
-  try{ await window.storage.set("mod25-state", JSON.stringify(S)); }catch(e){
-    try{ localStorage.setItem("mod25-state", JSON.stringify(S)); }catch(e2){}
+  try{ await window.storage.set("mod28-state", JSON.stringify(S)); }catch(e){
+    try{ localStorage.setItem("mod28-state", JSON.stringify(S)); }catch(e2){}
   }
 }
 function addXP(n){ S.xp+=n; document.getElementById("xpBox").textContent = S.xp+" XP"; saveState(); }
@@ -383,126 +381,117 @@ function renderTF(qid,onDone){
 }
 
 /* =====================================================================
-   SIMULATOR — M25 has no balances. The visual is a money FLOW: who
-   hands money to whom, and which direction the interest goes.
+   SIMULATOR — a trust gauge (red → gold → green) with a moving pin.
+   No numbers on it on purpose.
 ===================================================================== */
-function flow(parts){ return '<div class="flow">'+parts.map(p=>p==='→'?'<span>→</span>':'<span class="pill">'+p+'</span>').join('')+'</div>'; }
+function gauge(pos, who){
+  const p=Math.max(4,Math.min(96,pos));
+  return '<div class="gauge"><div class="who">'+who+'</div><div class="gtrack"><div class="gpin" style="left:'+p+'%"></div></div>'+
+    '<div class="gends"><span>less trusted</span><span>more trusted</span></div></div>';
+}
+function cal(d){ return '<span class="cal"><span class="m">DUE</span><span class="d">'+d+'</span></span>'; }
 
 /* =====================================================================
-   LESSON 1 — The Poster
+   LESSON 1 — Who's Keeping Score?
 ===================================================================== */
 const L1=[
-  ()=>show(`<div class="kicker">Lesson 1 · The poster</div>
-    <div class="recap"><strong>Kai’s story so far:</strong> One whole month, run perfectly. Then a paper on the trading post board.</div>
-    <div class="poster"><div class="big">IF YOU BORROW $10 TODAY…</div><div class="small">…pay back $12 at harvest. Ask at FinLit Bank.</div></div>
-    <div class="card"><p>Kai reads it twice. "So someone gives me $10… and later I give them $12? Why would anybody do that?"</p>
-    <p>Tavo is standing right behind him, looking at the same poster. "I might," he says quietly.</p></div>
-    <button onclick="next()">Why would Tavo?</button>`),
+  ()=>show(`<div class="kicker">Lesson 1 · Who’s keeping score?</div>
+    <div class="recap"><strong>Kai’s story so far:</strong> Tavo got a fast yes on a new loan. Nilo got a no. Same bank, same week.</div>
+    <div class="card"><p>Rana explains. "Before a bank lends, it wants to know one thing: <em>if we lend to you, will you pay it back?</em>"</p>
+    <p>"It can’t see the future. So it looks at the past."</p></div>
+    ${gauge(85,"Tavo")}
+    ${gauge(22,"Nilo")}
+    <button onclick="next()">What is it looking at?</button>`),
   ()=>show(`<div class="kicker">Lesson 1</div>
-    <div class="scene">🚤💥<div class="cap">Tavo’s boat engine broke. No boat, no fishing. No fishing, no earning.</div></div>
-    <div class="card"><p>Tavo has $10 saved. The repair costs $30. If he waits to save the rest, he cannot fish — so he cannot earn — so he can never save the rest.</p>
-    <p>So he is thinking about using someone else’s money now, and giving it back later. That is called <strong>borrowing</strong>.</p></div>
-    <button onclick="earnWord('borrow');next()">New word: borrow</button>`),
-  ()=>show(`<div class="kicker">Lesson 1 · Where the money comes from</div>
-    <div class="card"><p>Tavo goes to the bank. They agree: the bank will lend him $20 now, and he will pay it back a little each week, plus some extra, by harvest.</p>
-    <p>Money you borrow, with an agreement like that, is called a <strong>loan</strong>.</p>
-    <p>And here is the part that makes Kai stop in his tracks. Remember Module 21 — the bank “puts your money to work, helping other people with their own plans”?</p></div>
-    ${flow(["Kai saves","→","the bank","→","lends to Tavo"])}
-    <div class="card" style="margin-top:12px"><p style="margin:0"><strong>This is what it meant.</strong> Money savers leave in the bank is part of what the bank lends out.</p></div>
-    <button onclick="earnWord('loan');next()">New word: loan</button>`),
-  ()=>renderMC("q251a", next),
-  ()=>renderMC("q251b", next),
-  ()=>renderTF("q251c", next),
+    <div class="card"><p>Every time someone borrows and pays back, it goes on a record. That record is boiled down into one number: a <strong>credit score</strong>.</p>
+    <p>A credit score shows banks how well you have paid back money before. Higher means more trusted.</p>
+    <p>Tavo has paid his boat loan every single week. Nilo skipped payments on his jacket and his card. The bank did not guess — it looked.</p>
+    <p>One surprise: <strong>the score is not about how much money you have.</strong> It is about how you have handled borrowed money.</p></div>
+    <button onclick="earnWord('creditscore');next()">New word: credit score</button>`),
+  ()=>renderMC("q281a", next),
+  ()=>renderMC("q281b", next),
+  ()=>renderTF("q281c", next),
 ];
 
 /* =====================================================================
-   LESSON 2 — Interest, Flipped
+   LESSON 2 — The Date That Matters Most (up-or-down sort)
 ===================================================================== */
+const ACTIONS=[
+  {t:"Pays the whole credit card bill by the due date.", up:true, why:"On time — exactly what banks want to see."},
+  {t:"Misses the due date by two weeks.", up:false, why:"A missed due date goes on the record, and a late fee usually comes too."},
+  {t:"Pays the boat loan on time, every week, for a whole year.", up:true, why:"A long record of on-time payments is the strongest thing there is."},
+  {t:"Borrows lots of new loans all at once.", up:false, why:"Grabbing lots of new borrowing at once makes banks nervous."},
+  {t:"Ignores the bank’s letters and does not pay.", up:false, why:"Missed payments are the fastest way down."},
+  {t:"Pays a small bill on time, every month.", up:true, why:"Small or not, on time is on time. It all builds trust."}
+];
 const L2=[
-  ()=>show(`<div class="kicker">Lesson 2 · Interest, flipped</div>
-    <div class="recap"><strong>So far:</strong> borrowing is using someone else’s money. A loan comes with an agreement.</div>
-    <div class="card"><p>Kai has seen interest before. The bank pays <em>him</em> a little thank-you, because it gets to use his money.</p>
-    <p>Now flip it around. Tavo is using the <em>bank’s</em> money. So who pays the thank-you this time?</p></div>
-    <button onclick="next()">Tavo does</button>`),
-  ()=>show(`<div class="kicker">Lesson 2</div>
-    <div class="compare">
-      <div class="box win"><div class="n">Kai SAVES $10</div><div class="v">gets back more</div><div class="d">The bank pays Kai interest</div></div>
-      <div class="box" style="border-color:var(--shell)"><div class="n">Tavo BORROWS $10</div><div class="v">pays back more</div><div class="d">Tavo pays the bank interest</div></div>
-    </div>
-    <div class="card"><p>Same word, opposite directions. <strong>Whoever gets to use the money pays the thank-you.</strong></p>
-    <p>That is why the poster said borrow $10, pay back $12. The extra is interest — the price of using money that is not yours.</p>
-    <p>So borrowing makes things cost more than their price. The $30 boat repair will cost Tavo <em>more</em> than $30 by the time he is done.</p></div>
-    <button onclick="next()">Practice</button>`),
-  ()=>renderMC("q252a", next),
-  ()=>renderTF("q252b", next),
-  ()=>renderMC("q252c", next),
-];
-
-/* =====================================================================
-   LESSON 3 — Borrow or Wait? (sorting simulator)
-   The rule of thumb taught: a real need that cannot wait, or something
-   that helps you keep earning → borrowing MIGHT make sense. A want you
-   could save for → wait and save (free, and savings grows).
-===================================================================== */
-const CASES=[
-  {t:"Kai wants sweet cakes for everyone at the market this week.", borrow:false,
-   why:"A want, and a small one. Paying extra for cakes makes no sense — wait and use wants money from the budget."},
-  {t:"Tavo’s boat engine broke. Without the boat he cannot fish or earn anything.", borrow:true,
-   why:"A real need, and fixing it lets him keep earning — which is how he pays the loan back. This is when borrowing can make sense."},
-  {t:"Kai sees a fancy hat he wants right now.", borrow:false,
-   why:"A want that can wait. Borrowing would make the hat cost more than its price. Save up instead."},
-  {t:"A family’s roof is leaking, and storm season starts next week.", borrow:true,
-   why:"A real need that cannot wait. Paying a bit extra to fix it now can be worth it — as long as they can pay it back."},
-  {t:"Kai has $21 for his $30 sail. A few more weeks of saving would cover it.", borrow:false,
-   why:"He is almost there! Waiting a few weeks is free, and his savings even grows while he waits. Borrowing would mean paying interest instead."}
-];
-const L3=[
-  ()=>show(`<div class="kicker">Lesson 3 · Borrow or wait?</div>
-    <div class="recap"><strong>So far:</strong> the borrower pays interest, so borrowing usually costs more than the price.</div>
-    <div class="card"><p>Kai thinks about his sail. He could borrow and have it this week…</p>
-    <p>Rana gives him the two questions to ask before borrowing <em>anything</em>:</p>
-    <p style="text-align:center; font-size:18px"><strong>Can I pay it back on time?<br>Is having it NOW worth paying extra?</strong></p>
-    <p>For a want you could save for, the answer to the second one is almost always no. For a real need that cannot wait — or something that keeps you earning — it can be yes.</p></div>
-    <button onclick="next()">Sort five situations</button>`),
+  ()=>show(`<div class="kicker">Lesson 2 · The date that matters most</div>
+    <div class="recap"><strong>So far:</strong> a credit score shows how well you have paid back before.</div>
+    <div class="card"><p>Remember Nilo’s bill in Module 27? At the bottom it said: <strong>pay by the 15th</strong>. ${cal(15)}</p>
+    <p>That date has a name: the <strong>due date</strong> — the date on a bill by which you must pay.</p>
+    <p>Of everything that moves a credit score, paying by the due date matters most. <strong>On time, every time.</strong></p></div>
+    <button onclick="earnWord('duedate');next()">New word: due date</button>`),
   ()=>{
-    let i=0;
+    let i=0, pos=50;
     function draw(){
-      if(i>=CASES.length){ addXP(6); next(); return; }
-      const c=CASES[i];
-      show(`<div class="kicker">Borrow or wait? · ${i+1} of ${CASES.length}</div>
-        <div class="item">${c.t}</div>
-        <div class="sortbar"><button class="wait" id="sWait">🫙 Wait &amp; save</button><button class="bor" id="sBor">🤝 Borrowing might make sense</button></div>
+      if(i>=ACTIONS.length){ addXP(6); next(); return; }
+      const a=ACTIONS[i];
+      show(`<div class="kicker">Up or down? · ${i+1} of ${ACTIONS.length}</div>
+        ${gauge(pos,"Someone’s credit score")}
+        <div class="item">${a.t}</div>
+        <div class="sortbar"><button class="up" id="sUp">⬆ Score goes up</button><button class="down" id="sDown">⬇ Score goes down</button></div>
         <div id="fb"></div><div id="cont"></div>`);
       let done=false;
-      function pick(saysBorrow){
+      function pick(saysUp){
         if(done) return;
-        const ok = saysBorrow===c.borrow;
-        document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?'Right — ':'Think again. ')+c.why+'</div>';
+        const ok = saysUp===a.up;
+        document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?'Right — ':'Not quite. ')+a.why+(ok?'':' Try again.')+'</div>';
         revealFB();
         if(ok){
           done=true; addXP(1);
-          document.getElementById("sWait").disabled=true; document.getElementById("sBor").disabled=true;
-          document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(i<CASES.length-1?"Next":"Done")+'</button>';
+          pos += a.up ? 12 : -12;
+          document.querySelector(".gauge").outerHTML=gauge(pos,"Someone’s credit score");
+          document.getElementById("sUp").disabled=true; document.getElementById("sDown").disabled=true;
+          document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(i<ACTIONS.length-1?"Next":"Done")+'</button>';
           window._n=()=>{ i++; draw(); };
           revealFB();
         }
       }
-      document.getElementById("sWait").onclick=()=>pick(false);
-      document.getElementById("sBor").onclick=()=>pick(true);
+      document.getElementById("sUp").onclick=()=>pick(true);
+      document.getElementById("sDown").onclick=()=>pick(false);
     }
     draw();
   },
-  ()=>show(`<div class="kicker">Lesson 3 · Kai decides</div>
-    <div class="card"><p>Kai keeps saving for his sail. A few more weeks, no extra cost — and the bank keeps paying <em>him</em> a little while he waits.</p>
-    <p>Tavo takes his loan, fixes his boat, and is back on the water by Friday. Both of them made the right call — for different reasons.</p></div>
+  ()=>renderMC("q282a", next),
+  ()=>renderMC("q282b", next),
+  ()=>renderTF("q282c", next),
+];
+
+/* =====================================================================
+   LESSON 3 — Why It Matters (and how it comes back)
+===================================================================== */
+const L3=[
+  ()=>show(`<div class="kicker">Lesson 3 · Why it matters</div>
+    <div class="recap"><strong>So far:</strong> paying by the due date is what builds a score.</div>
+    <div class="card"><p>Why should Kai care about a number he will not have for years?</p>
+    <p>Because someday he might <em>need</em> to borrow — like Tavo did when his engine broke. When that day comes:</p>
+    <p>✅ A good score → a faster yes, and often <strong>less extra to pay</strong>.<br>
+    ❌ A low score → maybe a no, or <strong>more extra to pay</strong> for the same loan.</p>
+    <p>The habits Kai builds now — a budget, looking before he pays, paying back what he owes — are the same ones that build a good score later.</p></div>
+    <button onclick="next()">What about Nilo?</button>`),
+  ()=>show(`<div class="kicker">Lesson 3 · Climbing back</div>
+    ${gauge(22,"Nilo — this month")}
+    ${gauge(55,"Nilo — a year of on-time payments later")}
+    <div class="card"><p>A low score is not forever. Nilo pays every bill by its due date, month after month. Slowly, the pin moves.</p>
+    <p>Trust takes a long time to build and a short time to lose. But it <strong>can</strong> be built back.</p></div>
     <button onclick="next()">Practice</button>`),
-  ()=>renderMC("q253a", next),
-  ()=>renderMC("q253c", next),
+  ()=>renderMC("q283a", next),
+  ()=>renderMC("q283c", next),
 ];
 const META=[
-  {title:"The Poster", sub:"Borrow $10, pay back $12?", emoji:"📜"},
-  {title:"Interest, Flipped", sub:"Who pays whom — and why", emoji:"🔄"},
-  {title:"Borrow or Wait?", sub:"Two questions before borrowing anything", emoji:"🤔"},
+  {title:"Who’s Keeping Score?", sub:"Why the bank said yes to Tavo and no to Nilo", emoji:"📊"},
+  {title:"The Date That Matters Most", sub:"Up or down? Sort six choices", emoji:"📅"},
+  {title:"Why It Matters", sub:"And how a score comes back", emoji:"🌱"},
 ];
 
 
