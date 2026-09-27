@@ -179,7 +179,14 @@ const MODULES = [
     title:"Digital Banking", sub:"Your whole account, in your pocket", emoji:"📱", block:"Banking", lessons:4},
   {id:21, file:"module-21-interest.html", stateKey:"mod21-state",
     title:"Interest", sub:"Money that grows on its own", emoji:"📈", block:"Banking", lessons:4},
-  {id:17, title:"What Is a Bank?", sub:"Where money lives", emoji:"🏦", block:"Banking", lessons:4, comingSoon:true},
+  {id:22, file:"module-22-fees-and-overdrafts.html", stateKey:"mod22-state",
+    title:"Fees & Overdrafts", sub:"Why going below zero costs extra", emoji:"🕳️", block:"Banking", lessons:4},
+  {id:23, file:"module-23-protecting-your-money.html", stateKey:"mod23-state",
+    title:"Protecting Your Money", sub:"Your secret number, and spotting a trick", emoji:"🔐", block:"Banking", lessons:4},
+  {id:24, file:"module-24-banking-challenge.html", stateKey:"mod24-state",
+    title:"The Banking Challenge", sub:"A budget, a cushion, and one whole month", emoji:"🏁", block:"Banking", lessons:4},
+  {id:25, file:"module-25-borrowing.html", stateKey:"mod25-state",
+    title:"Borrowing", sub:"Using someone else's money — and what it costs", emoji:"🤝", block:"Credit", lessons:4},
 ];
 
 /* =====================================================================
@@ -309,7 +316,7 @@ async function render(){
   });
 
   // Coming soon teaser
-  html += '<div class="coming"><strong>More modules coming soon</strong>Module 22: Fees & Overdrafts is next. Check back soon!</div>';
+  html += '<div class="coming"><strong>More modules coming soon</strong>Module 26 is next — the Credit block continues. Check back soon!</div>';
 
   document.getElementById("main").innerHTML = html;
 }

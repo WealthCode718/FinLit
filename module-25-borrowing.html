@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Interest — Module 21</title>
+<title>Borrowing — Module 25</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap');
   :root{
@@ -131,6 +131,14 @@
   .compare .box .v{font-size:22px; font-weight:700; font-family:"Fraunces",Georgia,serif}
   .spin{display:inline-block; width:16px; height:16px; border:3px solid #fff; border-top-color:transparent; border-radius:50%; animation:sp 1s linear infinite; vertical-align:-3px}
   @keyframes sp{to{transform:rotate(360deg)}}
+  .poster{background:#fffdf5; border:2px solid var(--sand-deep); border-radius:6px; padding:18px 16px; margin-bottom:14px; text-align:center; box-shadow:0 3px 0 var(--sand-deep); transform:rotate(-1deg)}
+  .poster .big{font-family:"Fraunces",Georgia,serif; font-weight:700; font-size:22px; line-height:1.2}
+  .poster .small{font-size:14px; color:var(--ink-soft); margin-top:6px}
+  .flow{display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap; font-size:15px; font-weight:600; margin:6px 0 2px}
+  .flow .pill{background:var(--lagoon); border-radius:999px; padding:6px 12px}
+  .compare .box .d{font-size:13px; color:var(--ink-soft); margin-top:6px}
+  .sortbar .wait{background:var(--good)}
+  .sortbar .bor{background:var(--shell)}
 </style>
 </head>
 <body>
@@ -157,7 +165,7 @@
     <button onclick="quickAsk('Quiz me')">Quiz me</button>
   </div>
   <div class="tp-in">
-    <input id="tin" placeholder="Ask about interest…" onkeydown="if(event.key==='Enter')sendTutor()">
+    <input id="tin" placeholder="Ask about borrowing and loans…" onkeydown="if(event.key==='Enter')sendTutor()">
     <button onclick="sendTutor()">Send</button>
   </div>
 </div>
@@ -167,48 +175,83 @@
 
 <script>
 /* =====================================================================
-   CONTENT — Module 21: Interest
-   Vocab: interest, grow.
-   DESIGN SHIFT (per product decision): concept over computation.
-   No percentages, no rate math, no "calculate X% of Y" anywhere in
-   this module. Interest is taught as an IDEA — money can increase on
-   its own, without a deposit, because the bank uses it and pays you
-   for letting it. Mastery questions test WHY and WHEN, never compute.
+   CONTENT — Module 25: Borrowing  (opens the Credit block)
+   Vocab: borrow, loan.  (lend is used as the everyday verb here too —
+   it was held back until this module.)
+   Big idea: interest runs in BOTH directions. M21 taught "the bank pays
+   you for using your money." M25 flips it: when you use someone else's
+   money, YOU pay. Concept over computation: pay-back amounts are shown
+   only as "more than you got" — no rates, no percentages, no "how much
+   interest" questions.
+   Callback: in M21 Kai learned the bank puts saved money to work
+   "helping other people with their own plans" — this is where he finds
+   out what that meant.
 ===================================================================== */
 const VOCAB = {
-  interest:{term:"interest", def:"A little extra money the bank adds to your account just for keeping your money there. You do not have to do anything — it happens on its own."},
-  grow:{term:"grow", def:"To get bigger over time, on its own. Savings with interest can grow even if nobody deposits a single new dollar."}
+  borrow:{term:"borrow", def:"To use someone else’s money (or thing) now, and give it back later. When you borrow money, you usually pay back MORE than you got."},
+  loan:{term:"loan", def:"Money you borrow, with an agreement about when you will pay it back and how much extra (interest) you will pay for using it."}
 };
 
 const QUESTIONS = {
-  "q211a":{type:"mc", prompt:"What is interest?", concept:"interest", opts:[
-    {t:"A little extra money the bank adds just for keeping your money there", ok:true, fb:"Right. No deposit needed — the bank adds a bit more, on its own, as a thank-you for leaving the money with them."},
-    {t:"Money you have to pay the bank", ok:false, fb:"The other way around here! This kind of interest is money the bank pays YOU, not money you owe."},
-    {t:"A fee for having an account", ok:false, fb:"Not a fee at all — a fee takes money away. Interest ADDS a little, for free."}]},
-  "q211b":{type:"mc", prompt:"Why does a bank pay you interest at all?", concept:"interest", opts:[
-    {t:"Because the bank uses the money you leave with them, so they share a little back", ok:true, fb:"Right. The bank does not just let it sit in a vault — it puts the money to work, and pays you a small thank-you for the use of it."},
-    {t:"Because the bank feels generous", ok:false, fb:"It is not a gift out of kindness — it is a genuine thank-you for the bank being able to use your money while it sits there."},
-    {t:"Because you asked for it", ok:false, fb:"Nobody has to ask. Interest happens automatically, as part of what a savings account does."}]},
-  "q212a":{type:"mc", prompt:"Kai checks his savings and it is a little bigger than last month, even though he deposited nothing. What happened?", concept:"grow", opts:[
-    {t:"Interest — the money grew on its own", ok:true, fb:"Right — exactly what Rana meant. No deposit, no withdrawal, and the number still went up."},
-    {t:"The bank made a mistake", ok:false, fb:"No mistake at all! This is interest doing exactly what it is supposed to do."},
-    {t:"Someone else added money for him", ok:false, fb:"Nobody added anything. The account itself grew a little, which is exactly what interest does."}]},
-  "q212b":{type:"tf", prompt:"True or false: a tin under a floorboard can earn interest.", answer:false, concept:"interest",
-    good:"Right — a tin just sits there. Interest is something a BANK pays, for money it can actually use. A tin never grows on its own.",
-    bad:"Think about who is paying the interest. A bank pays it because it can use your money. A tin cannot use anything — it just sits. No bank, no interest."},
-  "q213a":{type:"mc", prompt:"Which grows more over a year: $10 sitting in savings with interest, or $10 sitting in a tin?", concept:"grow", opts:[
-    {t:"The $10 in savings — the tin never grows on its own", ok:true, fb:"Right. A tin is exactly $10 a year from now, forever. Savings with interest can end up being a little more."},
-    {t:"They grow the same", ok:false, fb:"Not the same at all — the tin stays flat, always. Savings with interest has a real chance to grow."},
-    {t:"The tin — money is safer outside a bank", ok:false, fb:"Interest has nothing to do with safety and everything to do with growth. Only the savings account has any chance of growing on its own."}]},
-  "q213c":{type:"mc", prompt:"Does interest work faster on more money, or the same amount, or slower?", concept:"grow", opts:[
-    {t:"Faster — more money sitting there generally means more interest added", ok:true, fb:"Right. The idea scales with the amount. Keep more in savings, and there is more for the bank to use, and more interest comes back."},
-    {t:"Exactly the same no matter how much is in the account", ok:false, fb:"Not quite — a bigger balance generally earns more interest, since it scales with how much is sitting there."},
-    {t:"Slower — small amounts grow best", ok:false, fb:"Backwards! More money sitting in savings generally means more interest, not less."}]},
-  "q213b":{type:"mc", transfer:true, prompt:"Tavo lets Rana use his boat for a season, and she gives him a little extra fish as thanks each week. Is that a similar idea to interest?", concept:"interest", opts:[
-    {t:"Yes — letting someone use something of yours, and getting a little something back for it", ok:true, fb:"Exactly. Tavo is not doing anything, just like Kai isn\'t. He let someone use something valuable, and a little extra came back as thanks. That is the whole shape of interest."},
-    {t:"No — boats and money are completely different", ok:false, fb:"The object changed, not the idea. Something valuable got used by someone else, and a little extra came back. Same shape as interest."},
-    {t:"No — Tavo should get his boat back, not fish", ok:false, fb:"He gets the boat back too! The fish is the EXTRA, on top of getting his own boat back — same as Kai keeping his $10 AND getting a bit more."}]}
+  "q251a":{type:"mc", prompt:"What does it mean to borrow money?", concept:"borrow", opts:[
+    {t:"Use someone else’s money now and give it back later", ok:true, fb:"Right. The money is yours to use — for a while. The giving-back part is not optional."},
+    {t:"Get money as a gift that you keep forever", ok:false, fb:"A gift stays with you. Borrowed money has to go back to whoever it came from."},
+    {t:"Earn money by working", ok:false, fb:"Earning is money you keep because you worked for it. Borrowed money has to be paid back."}]},
+  "q251b":{type:"mc", prompt:"Where does a bank get the money it lends out as loans?", concept:"loan", opts:[
+    {t:"Partly from the money savers like Kai leave in the bank", ok:true, fb:"Right! This is what Module 21 meant by the bank “putting your money to work.” Kai’s savings helps make someone else’s loan possible."},
+    {t:"It prints brand-new money for every loan", ok:false, fb:"Not the way to think about it here. A big part of what a bank lends comes from money that savers keep there."},
+    {t:"From the fees it charges for paper statements", ok:false, fb:"Fees are small. The big pool the bank lends from is the money savers leave with it."}]},
+  "q251c":{type:"tf", prompt:"True or false: a loan comes with an agreement about when you will pay it back.", answer:true, concept:"loan",
+    good:"Right. A loan is not “pay back whenever.” There is an agreement — when, and how much — before you get the money.",
+    bad:"A loan always comes with an agreement. You know WHEN you must pay it back, and how much, before you ever get the money."},
+  "q252a":{type:"mc", prompt:"Kai SAVES $10 in the bank. Tavo BORROWS $10 from the bank. Who pays interest to whom?", concept:"loan", opts:[
+    {t:"The bank pays Kai. Tavo pays the bank.", ok:true, fb:"Exactly. Same word, opposite directions. Whoever gets to USE the money pays the thank-you."},
+    {t:"The bank pays both of them", ok:false, fb:"Only the saver gets paid. Tavo is using the bank’s money, so he is the one who pays."},
+    {t:"Kai and Tavo both pay the bank", ok:false, fb:"Kai is letting the bank use his money — so the bank pays HIM. Only the borrower pays."}]},
+  "q252b":{type:"tf", prompt:"True or false: if you borrow $10, you usually pay back exactly $10.", answer:false, concept:"borrow",
+    good:"Right. You usually pay back more than $10. The extra is interest — the price of using someone else’s money.",
+    bad:"Usually you pay back MORE than you borrowed. The extra is interest — this time going from you to the lender."},
+  "q252c":{type:"mc", prompt:"Why does borrowing usually make something cost more?", concept:"borrow", opts:[
+    {t:"You pay the price, plus interest for using someone else’s money", ok:true, fb:"Right. A $10 net paid for with a loan ends up costing more than $10 by the time it is all paid back."},
+    {t:"Shops charge more if you borrowed", ok:false, fb:"The shop charges the normal price. The extra comes from the LOAN — the interest you pay the lender."},
+    {t:"It doesn’t — borrowing is free", ok:false, fb:"Borrowing money is almost never free. The interest you pay back is what makes it cost more."}]},
+  "q253a":{type:"mc", prompt:"What should Kai ask himself BEFORE borrowing?", concept:"borrow", opts:[
+    {t:"“Can I pay it back on time — and is this worth paying extra for?”", ok:true, fb:"Right. Two questions: can I really pay it back, and is having it NOW worth paying more than the price?"},
+    {t:"“Will they let me?”", ok:false, fb:"Being allowed to borrow is not the same as it being a good idea. Ask: can I pay it back, and is it worth the extra?"},
+    {t:"“How fast can I spend it?”", ok:false, fb:"That is the question that gets people in trouble. Ask first whether you can pay it back and whether it is worth the extra."}]},
+  "q253c":{type:"mc", prompt:"Kai wants a new sail. He could borrow now, or save for a few more weeks. Why is saving usually the better choice for something like this?", concept:"borrow", opts:[
+    {t:"Saving costs nothing extra — and his savings even grows with interest while he waits", ok:true, fb:"Right. Waiting a few weeks is free. Borrowing would mean paying interest instead of earning it."},
+    {t:"Saving is faster than borrowing", ok:false, fb:"Borrowing is actually faster! That is its one advantage. But it costs extra — saving does not."},
+    {t:"Banks never lend money for sails", ok:false, fb:"They might! The reason to wait is cost: borrowing means paying interest, saving means earning it."}]},
+  "q253b":{type:"mc", transfer:true, prompt:"Mika lets Kai use her fishing rod for a week. When he gives it back, he adds a fish as thanks. Who borrowed, and what is the fish like?", concept:"borrow", opts:[
+    {t:"Kai borrowed the rod — and the fish is like the interest a borrower pays", ok:true, fb:"Exactly. Kai used something that was not his, gave it back, and added a little extra for the use of it. That is the whole shape of a loan."},
+    {t:"Mika borrowed — the fish was hers", ok:false, fb:"Mika owns the rod. Kai is the one who used it and gave it back, so Kai borrowed."},
+    {t:"Nobody borrowed — it was a trade", ok:false, fb:"In a trade, things swap for good. Here the rod went BACK to Mika. Using something and returning it is borrowing."}]}
 };
+
+const CFG = {
+  n:25, title:"Borrowing", homeSub:"Four short lessons. Using someone else’s money — and what it costs.",
+  pool:["q251a","q251b","q251c","q252a","q252b","q252c","q253a","q253c"], transfer:"q253b",
+  quest:"You learned what it means to borrow, why a loan costs more than the price, and when waiting beats borrowing.",
+  failKeys:"The keys: borrowing means using someone else’s money and paying it back, a loan comes with an agreement, and the borrower pays interest — so it usually costs more than the price.",
+  badge:" · Credit block begins 🔑",
+  nextFile:null,
+  passStory:'<p><strong>You now own:</strong> borrow and loan — and the other half of interest.</p>'+
+    '<p>Tavo got his loan and fixed his boat. Every week at the market he pays a little of it back, and Kai watches him check it off.</p>'+
+    '<p>"What happens," Kai asks one day, "if someone borrows and then… can’t pay it back?"</p>'+
+    '<p>Tavo stops smiling for a second. "That," he says, "is the part nobody puts on the poster."</p>'+
+    '<p class="muted">Module 26 continues the Credit block. (Coming soon.)</p>'
+};
+
+const TUTOR_HELLO = "Hi! Ask me anything about borrowing, loans, or why the borrower pays interest — or tap a button below.";
+const TUTOR_SYS = "You are the tutor inside Module 25 (Borrowing) of a financial-literacy app — the first module of the Credit block. The learner may be a child or an adult. "+
+  "They know from earlier modules: money, dollar, cent, add, subtract, buy, sell, pay, earn, spend, need, save, goal, percent, bank, deposit, withdraw, balance, checking, savings, transaction, notification, interest, grow, fee, overdraft, PIN, scam, budget, cushion. "+
+  "From THIS module: borrow (use someone else's money or thing now and give it back later), loan (money you borrow, with an agreement about when you pay it back and how much extra you pay), and lend (the everyday verb for the other side). "+
+  "Core ideas: interest runs both ways — the bank pays savers, borrowers pay the lender, so borrowing usually makes things cost more than the price; the bank lends out money that savers leave there (this is what 'the bank puts your money to work' meant in Module 21); before borrowing ask 'can I pay it back on time, and is having it now worth paying extra?'; saving up is usually cheaper for wants, while borrowing can make sense for a real need that cannot wait or something that helps you keep earning. "+
+  "TEACHING STYLE: concepts over calculations. Never calculate interest, a rate, a percentage, or a payment amount, even if asked. Say 'more than you borrowed' instead of a number. If asked how much, explain warmly that the exact math comes much later. "+
+  "STRICT RULES: never use these words (later modules): credit card, credit score, debt, default, APR, interest rate, minimum payment, invest, stock, tax, insurance. You may say 'credit' only as the name of this section of the app. If the learner uses a later word, answer briefly in plain words and say it is coming later. Never encourage a child to borrow money. "+
+  "Story context: a poster at the trading post said 'IF YOU BORROW $10 TODAY, PAY BACK $12 AT HARVEST'. Tavo's boat engine broke, and without the boat he cannot fish or earn, so he took a loan from the bank to fix it and pays a little back each week. Kai learned that his own savings is part of what the bank lends out. Kai decided to keep saving for his sail instead of borrowing. "+
+  "Never repeat a failed explanation — switch analogies (a borrowed fishing rod returned with a fish, a library book, using a friend's bike). Keep answers under 80 words, warm, honest, never mark wrong ideas right. If asked 'Quiz me', ask ONE simple WHY or WHO question and wait.";
 
 /* =====================================================================
    STATE + PERSISTENCE
@@ -218,21 +261,21 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 
 async function loadState(){
   try{
-    const r = await window.storage.get("mod21-state");
+    const r = await window.storage.get("mod25-state");
     if(r && r.value){ S = Object.assign(S, JSON.parse(r.value)); return; }
   } catch(e){ }
   try{
-    const saved = localStorage.getItem("mod21-state");
+    const saved = localStorage.getItem("mod25-state");
     if(saved){ S = Object.assign(S, JSON.parse(saved)); }
-    for(let i=20;i>=1;i--){
+    for(let i=24;i>=1;i--){
       const prev = localStorage.getItem("mod"+i+"-state");
       if(prev){ const p = JSON.parse(prev); if(p.xp > S.xp) S.xp = p.xp; }
     }
   } catch(e){ }
 }
 async function saveState(){
-  try{ await window.storage.set("mod21-state", JSON.stringify(S)); }catch(e){
-    try{ localStorage.setItem("mod21-state", JSON.stringify(S)); }catch(e2){}
+  try{ await window.storage.set("mod25-state", JSON.stringify(S)); }catch(e){
+    try{ localStorage.setItem("mod25-state", JSON.stringify(S)); }catch(e2){}
   }
 }
 function addXP(n){ S.xp+=n; document.getElementById("xpBox").textContent = S.xp+" XP"; saveState(); }
@@ -340,100 +383,129 @@ function renderTF(qid,onDone){
 }
 
 /* =====================================================================
-   SIMULATOR — M21 shows growth WITHOUT any rate math on screen.
-   The point is felt, not calculated: a number goes up between visits,
-   nobody touched it, and more money grows more. No % anywhere.
+   SIMULATOR — M25 has no balances. The visual is a money FLOW: who
+   hands money to whom, and which direction the interest goes.
 ===================================================================== */
-function money(n){ return "$" + n.toFixed(2); }
-function growCard(from,to,label){
-  return '<div class="grow"><div class="lbl2">'+label+'</div>'+
-    '<div style="font-size:26px; font-weight:700; font-family:\'Fraunces\',Georgia,serif">'+money(from)+'</div>'+
-    '<div class="arrow">↓ nobody touched it ↓</div>'+
-    '<div style="font-size:32px; font-weight:700; font-family:\'Fraunces\',Georgia,serif; color:var(--good)">'+money(to)+'</div></div>';
-}
+function flow(parts){ return '<div class="flow">'+parts.map(p=>p==='→'?'<span>→</span>':'<span class="pill">'+p+'</span>').join('')+'</div>'; }
 
 /* =====================================================================
-   LESSON 1 — The Impossible Number
+   LESSON 1 — The Poster
 ===================================================================== */
 const L1=[
-  ()=>show('<div class="kicker">Lesson 1 · The impossible number</div>'+
-    '<div class="recap"><strong>Kai\'s story so far:</strong> Both accounts, every transaction, right from the island. Then Rana says something that makes no sense.</div>'+
-    '<div class="scene">🤨💭<div class="cap">"Your savings will be a little bigger next month. You do not have to do anything."</div></div>'+
-    '<button onclick="next()">That can\'t be right</button>'),
-  ()=>show('<div class="kicker">Lesson 1</div>'+
-    '<div class="card"><p>Kai checks the very next month. Rana was right.</p></div>'+
-    growCard(15.00, 15.08, "Kai\'s savings, one month apart")+
-    '<div class="card"><p>No deposit. No withdrawal. The number just… went up.</p>'+
-    '<p>This is called <strong>interest</strong> — a little extra the bank adds to your account, on its own, just for keeping your money there.</p></div>'+
-    '<button onclick="earnWord(\'interest\');next()">New word: interest</button>'),
-  ()=>show('<div class="kicker">Lesson 1 · Why would a bank do that?</div>'+
-    '<div class="card"><p>It sounds like a magic trick, but it isn\'t. Here is what is really going on:</p>'+
-    '<p>The bank does not lock your money in a box and forget about it. It <strong>puts the money to work</strong> helping other people with their own plans.</p>'+
-    '<p>Because the bank gets to use your money, it pays you a little something back. That little something is interest.</p>'+
-    '<p>You let the bank use your money without even trying. Interest is the thank-you.</p></div>'+
-    '<button onclick="next()">Practice</button>'),
-  ()=>renderMC("q211a", next),
-  ()=>renderMC("q211b", next),
+  ()=>show(`<div class="kicker">Lesson 1 · The poster</div>
+    <div class="recap"><strong>Kai’s story so far:</strong> One whole month, run perfectly. Then a paper on the trading post board.</div>
+    <div class="poster"><div class="big">IF YOU BORROW $10 TODAY…</div><div class="small">…pay back $12 at harvest. Ask at FinLit Bank.</div></div>
+    <div class="card"><p>Kai reads it twice. "So someone gives me $10… and later I give them $12? Why would anybody do that?"</p>
+    <p>Tavo is standing right behind him, looking at the same poster. "I might," he says quietly.</p></div>
+    <button onclick="next()">Why would Tavo?</button>`),
+  ()=>show(`<div class="kicker">Lesson 1</div>
+    <div class="scene">🚤💥<div class="cap">Tavo’s boat engine broke. No boat, no fishing. No fishing, no earning.</div></div>
+    <div class="card"><p>Tavo has $10 saved. The repair costs $30. If he waits to save the rest, he cannot fish — so he cannot earn — so he can never save the rest.</p>
+    <p>So he is thinking about using someone else’s money now, and giving it back later. That is called <strong>borrowing</strong>.</p></div>
+    <button onclick="earnWord('borrow');next()">New word: borrow</button>`),
+  ()=>show(`<div class="kicker">Lesson 1 · Where the money comes from</div>
+    <div class="card"><p>Tavo goes to the bank. They agree: the bank will lend him $20 now, and he will pay it back a little each week, plus some extra, by harvest.</p>
+    <p>Money you borrow, with an agreement like that, is called a <strong>loan</strong>.</p>
+    <p>And here is the part that makes Kai stop in his tracks. Remember Module 21 — the bank “puts your money to work, helping other people with their own plans”?</p></div>
+    ${flow(["Kai saves","→","the bank","→","lends to Tavo"])}
+    <div class="card" style="margin-top:12px"><p style="margin:0"><strong>This is what it meant.</strong> Money savers leave in the bank is part of what the bank lends out.</p></div>
+    <button onclick="earnWord('loan');next()">New word: loan</button>`),
+  ()=>renderMC("q251a", next),
+  ()=>renderMC("q251b", next),
+  ()=>renderTF("q251c", next),
 ];
 
 /* =====================================================================
-   LESSON 2 — Growing While You Sleep
+   LESSON 2 — Interest, Flipped
 ===================================================================== */
 const L2=[
-  ()=>show('<div class="kicker">Lesson 2 · Growing while you sleep</div>'+
-    '<div class="recap"><strong>So far:</strong> interest is a little extra, added on its own, as a thank-you.</div>'+
-    '<div class="card"><p>Here is the part that actually matters: interest does not need Kai to do anything at all.</p>'+
-    '<p>Not a deposit. Not a chore. Not even remembering it exists.</p>'+
-    '<p>Money in a savings account can <strong>grow</strong> — get a little bigger over time — while Kai is fishing, sleeping, or off on an adventure completely unrelated to money.</p></div>'+
-    '<button onclick="earnWord(\'grow\');next()">New word: grow</button>'),
-  ()=>show('<div class="kicker">Lesson 2 · The tin, one more time</div>'+
-    '<div class="card"><p>Picture Kai\'s old tin, still sitting under that floorboard, with $15 inside.</p></div>'+
-    '<div class="compare">'+
-      '<div class="box"><div class="n">Tin — one year later</div><div class="v">$15</div></div>'+
-      '<div class="box win"><div class="n">Savings — one year later</div><div class="v">a little more</div></div>'+
-    '</div>'+
-    '<div class="card"><p>The tin is exactly $15, forever, no matter how long it sits. It cannot grow — nobody is using that money for anything.</p>'+
-    '<p>The savings account can grow, because the bank is putting it to work. Same $15 to start. Very different year ahead.</p></div>'+
-    '<button onclick="next()">Practice</button>'),
-  ()=>renderMC("q212a", next),
-  ()=>renderTF("q212b", next),
+  ()=>show(`<div class="kicker">Lesson 2 · Interest, flipped</div>
+    <div class="recap"><strong>So far:</strong> borrowing is using someone else’s money. A loan comes with an agreement.</div>
+    <div class="card"><p>Kai has seen interest before. The bank pays <em>him</em> a little thank-you, because it gets to use his money.</p>
+    <p>Now flip it around. Tavo is using the <em>bank’s</em> money. So who pays the thank-you this time?</p></div>
+    <button onclick="next()">Tavo does</button>`),
+  ()=>show(`<div class="kicker">Lesson 2</div>
+    <div class="compare">
+      <div class="box win"><div class="n">Kai SAVES $10</div><div class="v">gets back more</div><div class="d">The bank pays Kai interest</div></div>
+      <div class="box" style="border-color:var(--shell)"><div class="n">Tavo BORROWS $10</div><div class="v">pays back more</div><div class="d">Tavo pays the bank interest</div></div>
+    </div>
+    <div class="card"><p>Same word, opposite directions. <strong>Whoever gets to use the money pays the thank-you.</strong></p>
+    <p>That is why the poster said borrow $10, pay back $12. The extra is interest — the price of using money that is not yours.</p>
+    <p>So borrowing makes things cost more than their price. The $30 boat repair will cost Tavo <em>more</em> than $30 by the time he is done.</p></div>
+    <button onclick="next()">Practice</button>`),
+  ()=>renderMC("q252a", next),
+  ()=>renderTF("q252b", next),
+  ()=>renderMC("q252c", next),
 ];
 
 /* =====================================================================
-   LESSON 3 — More Money, More Growth
+   LESSON 3 — Borrow or Wait? (sorting simulator)
+   The rule of thumb taught: a real need that cannot wait, or something
+   that helps you keep earning → borrowing MIGHT make sense. A want you
+   could save for → wait and save (free, and savings grows).
 ===================================================================== */
+const CASES=[
+  {t:"Kai wants sweet cakes for everyone at the market this week.", borrow:false,
+   why:"A want, and a small one. Paying extra for cakes makes no sense — wait and use wants money from the budget."},
+  {t:"Tavo’s boat engine broke. Without the boat he cannot fish or earn anything.", borrow:true,
+   why:"A real need, and fixing it lets him keep earning — which is how he pays the loan back. This is when borrowing can make sense."},
+  {t:"Kai sees a fancy hat he wants right now.", borrow:false,
+   why:"A want that can wait. Borrowing would make the hat cost more than its price. Save up instead."},
+  {t:"A family’s roof is leaking, and storm season starts next week.", borrow:true,
+   why:"A real need that cannot wait. Paying a bit extra to fix it now can be worth it — as long as they can pay it back."},
+  {t:"Kai has $21 for his $30 sail. A few more weeks of saving would cover it.", borrow:false,
+   why:"He is almost there! Waiting a few weeks is free, and his savings even grows while he waits. Borrowing would mean paying interest instead."}
+];
 const L3=[
-  ()=>show('<div class="kicker">Lesson 3 · More money, more growth</div>'+
-    '<div class="recap"><strong>So far:</strong> a tin never grows. Savings can, on its own.</div>'+
-    '<div class="scene">🤔<div class="cap">Kai wonders: does it matter HOW MUCH is in savings? Or does everyone get the same little bit of growth?</div></div>'+
-    '<button onclick="next()">Let\'s see</button>'),
-  ()=>show('<div class="kicker">Lesson 3</div>'+
-    '<div class="card"><p>Think about the reason interest exists in the first place: the bank is using your money.</p>'+
-    '<p>If Kai keeps $15 in savings, the bank can put $15 to work. If he keeps $150, the bank can put $150 to work.</p>'+
-    '<p><strong>More money sitting there means more for the bank to use — which generally means more comes back.</strong></p>'+
-    '<p>This is exactly why the goal-money habit from Module 19 matters even more now. Money kept safely in savings is not just protected — it is quietly working.</p></div>'+
-    '<button onclick="next()">Practice</button>'),
-  ()=>renderMC("q213a", next),
-  ()=>renderMC("q213c", next),
+  ()=>show(`<div class="kicker">Lesson 3 · Borrow or wait?</div>
+    <div class="recap"><strong>So far:</strong> the borrower pays interest, so borrowing usually costs more than the price.</div>
+    <div class="card"><p>Kai thinks about his sail. He could borrow and have it this week…</p>
+    <p>Rana gives him the two questions to ask before borrowing <em>anything</em>:</p>
+    <p style="text-align:center; font-size:18px"><strong>Can I pay it back on time?<br>Is having it NOW worth paying extra?</strong></p>
+    <p>For a want you could save for, the answer to the second one is almost always no. For a real need that cannot wait — or something that keeps you earning — it can be yes.</p></div>
+    <button onclick="next()">Sort five situations</button>`),
+  ()=>{
+    let i=0;
+    function draw(){
+      if(i>=CASES.length){ addXP(6); next(); return; }
+      const c=CASES[i];
+      show(`<div class="kicker">Borrow or wait? · ${i+1} of ${CASES.length}</div>
+        <div class="item">${c.t}</div>
+        <div class="sortbar"><button class="wait" id="sWait">🫙 Wait &amp; save</button><button class="bor" id="sBor">🤝 Borrowing might make sense</button></div>
+        <div id="fb"></div><div id="cont"></div>`);
+      let done=false;
+      function pick(saysBorrow){
+        if(done) return;
+        const ok = saysBorrow===c.borrow;
+        document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?'Right — ':'Think again. ')+c.why+'</div>';
+        revealFB();
+        if(ok){
+          done=true; addXP(1);
+          document.getElementById("sWait").disabled=true; document.getElementById("sBor").disabled=true;
+          document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(i<CASES.length-1?"Next":"Done")+'</button>';
+          window._n=()=>{ i++; draw(); };
+          revealFB();
+        }
+      }
+      document.getElementById("sWait").onclick=()=>pick(false);
+      document.getElementById("sBor").onclick=()=>pick(true);
+    }
+    draw();
+  },
+  ()=>show(`<div class="kicker">Lesson 3 · Kai decides</div>
+    <div class="card"><p>Kai keeps saving for his sail. A few more weeks, no extra cost — and the bank keeps paying <em>him</em> a little while he waits.</p>
+    <p>Tavo takes his loan, fixes his boat, and is back on the water by Friday. Both of them made the right call — for different reasons.</p></div>
+    <button onclick="next()">Practice</button>`),
+  ()=>renderMC("q253a", next),
+  ()=>renderMC("q253c", next),
+];
+const META=[
+  {title:"The Poster", sub:"Borrow $10, pay back $12?", emoji:"📜"},
+  {title:"Interest, Flipped", sub:"Who pays whom — and why", emoji:"🔄"},
+  {title:"Borrow or Wait?", sub:"Two questions before borrowing anything", emoji:"🤔"},
 ];
 
-/* =====================================================================
-   LESSON 4 — Mastery
-===================================================================== */
-let mastery = {qs:[], idx:0, score:0};
-const L4=[
-  ()=>{
-    const pool=["q211a","q211b","q212a","q212b","q213a","q213c"].sort(()=>Math.random()-.5).slice(0,4);
-    mastery={qs:[...pool,"q213b"].sort(()=>Math.random()-.5), idx:0, score:0};
-    show('<div class="kicker">Lesson 4 · Show what you know</div>'+
-      '<div class="recap"><strong>Module 21 quest:</strong> You learned why money can grow on its own — and why a tin never will.</div>'+
-      '<h1 class="display">Five questions.</h1>'+
-      '<p>Get 4 of 5 right and Module 21 is yours.</p>'+
-      '<button onclick="next()">Start</button>');
-  },
-  ()=>{ masteryQ(); },
-  ()=>{ finishMastery(mastery.score>=4); },
-];
+
 function masteryQ(){
   if(mastery.idx>=mastery.qs.length){ next(); return; }
   const qid=mastery.qs[mastery.idx];
@@ -478,25 +550,40 @@ function renderTFM(qid,onDone){
   document.getElementById("tT").onclick=e=>pick(true,e.target);
   document.getElementById("tF").onclick=e=>pick(false,e.target);
 }
+
+/* =====================================================================
+   LESSON 4 — Mastery (shared shape: 4 random from pool + 1 transfer)
+===================================================================== */
+let mastery = {qs:[], idx:0, score:0};
+const L4=[
+  ()=>{
+    const pool=CFG.pool.slice().sort(()=>Math.random()-.5).slice(0,4);
+    mastery={qs:[...pool,CFG.transfer].sort(()=>Math.random()-.5), idx:0, score:0};
+    show('<div class="kicker">Lesson 4 · Show what you know</div>'+
+      '<div class="recap"><strong>Module '+CFG.n+' quest:</strong> '+CFG.quest+'</div>'+
+      '<h1 class="display">Five questions.</h1>'+
+      '<p>Get 4 of 5 right and Module '+CFG.n+' is yours.</p>'+
+      '<button onclick="next()">Start</button>');
+  },
+  ()=>{ masteryQ(); },
+  ()=>{ finishMastery(mastery.score>=4); },
+];
 function finishMastery(pass){
   if(pass && !S.masteryPassed){ S.masteryPassed=true; addXP(20); }
   saveState();
   if(pass){
     show('<div class="night"><div class="lantern">🏮</div>'+
-      '<h1 class="display" style="color:#fff">Module 21 complete</h1>'+
-      '<p style="color:#cfe0ee">Quiz: '+mastery.score+'/5 ✓</p></div>'+
-      '<div class="card"><p><strong>You now own:</strong> interest and grow — Kai finally understands why his own money seemed to have a mind of its own.</p>'+
-      '<p>A week later Kai scrolls through his feed, proud of every line. Market morning. Bread. And then one he does not recognize at all: <strong>"Paper statement \u2212$1.00."</strong></p>'+
-      '<p>"Wait," Kai says. "Interest goes UP on its own. What is this one doing going DOWN?"</p>'+
-      '<p class="muted">Module 22: Fees & Overdrafts.</p></div>'+
-      '<button style="margin-bottom:10px" onclick="window.location.href=\'module-22-fees-and-overdrafts.html\'">Continue to Module 22</button>'+
+      '<h1 class="display" style="color:#fff">Module '+CFG.n+' complete</h1>'+
+      '<p style="color:#cfe0ee">Quiz: '+mastery.score+'/5 ✓'+(CFG.badge||'')+'</p></div>'+
+      '<div class="card">'+CFG.passStory+'</div>'+
+      (CFG.nextFile?'<button style="margin-bottom:10px" onclick="window.location.href=\''+CFG.nextFile+'\'">Continue to Module '+(CFG.n+1)+'</button>':'')+
       '<button class="btn-ghost" style="margin-bottom:10px" onclick="window.location.href=\'index.html\'">🗺️ Back to all modules</button>'+
-      '<button class="btn-ghost" onclick="goHome()">Stay in Module 21</button>');
+      '<button class="btn-ghost" onclick="goHome()">Stay in Module '+CFG.n+'</button>');
     S.done[3]=true; saveState();
   } else {
     show('<div class="kicker">Almost there</div>'+
       '<h1 class="display">One more try</h1>'+
-      '<p>You got '+mastery.score+' of 5. The keys: interest is a thank-you the bank adds on its own, a tin can never grow, and more money sitting in savings generally means more growth.</p>'+
+      '<p>You got '+mastery.score+' of 5. '+CFG.failKeys+'</p>'+
       '<button onclick="S.step=0;render()">Try again</button>'+
       '<button class="btn-ghost" style="margin-top:10px" onclick="toggleTutor(true)">Talk with the tutor</button>'+
       '<button class="btn-ghost" style="margin-top:10px" onclick="goHome()">Back home</button>');
@@ -504,9 +591,9 @@ function finishMastery(pass){
 }
 
 const LESSONS=[
-  {title:"The Impossible Number", sub:"Money that grew without a deposit", steps:L1, emoji:"🤨"},
-  {title:"Growing While You Sleep", sub:"Why a tin can never do this", steps:L2, emoji:"😴"},
-  {title:"More Money, More Growth", sub:"Does the amount in savings matter?", steps:L3, emoji:"📈"},
+  {title:META[0].title, sub:META[0].sub, steps:L1, emoji:META[0].emoji},
+  {title:META[1].title, sub:META[1].sub, steps:L2, emoji:META[1].emoji},
+  {title:META[2].title, sub:META[2].sub, steps:L3, emoji:META[2].emoji},
   {title:"Show What You Know", sub:"Mastery check", steps:L4, emoji:"🏮"},
 ];
 
@@ -515,8 +602,8 @@ const LESSONS=[
 ===================================================================== */
 function goHome(){
   dots(4, S.done.filter(Boolean).length-1);
-  let html='<div class="kicker">Module 21</div><h1 class="display">Interest</h1>'+
-    '<p class="muted">Four short lessons. Money that grows on its own.</p>';
+  let html='<div class="kicker">Module '+CFG.n+'</div><h1 class="display">'+CFG.title+'</h1>'+
+    '<p class="muted">'+CFG.homeSub+'</p>';
   LESSONS.forEach((l,i)=>{
     const locked = i>0 && !S.done[i-1];
     const done = S.done[i];
@@ -524,11 +611,12 @@ function goHome(){
       '<span class="em">'+(done?'✅':locked?'🔒':l.emoji)+'</span><strong>'+l.title+'</strong><br>'+
       '<span class="muted" style="font-weight:400">'+l.sub+'</span></button>';
   });
-  if(S.masteryPassed) html+='<div class="night" style="margin-top:8px"><div class="lantern">🏮</div><p style="color:#cfe0ee">Module 21 mastered · '+S.xp+' XP</p></div>';
+  if(S.masteryPassed) html+='<div class="night" style="margin-top:8px"><div class="lantern">🏮</div><p style="color:#cfe0ee">Module '+CFG.n+' mastered · '+S.xp+' XP</p></div>';
   html+='<button class="btn-ghost" style="margin-top:14px" onclick="window.location.href=\'index.html\'">🗺️ Back to all modules</button>';
   show(html);
 }
 function startLesson(i){ S.lesson=i; S.step=0; saveState(); render(); }
+
 
 /* =====================================================================
    TUTOR
@@ -538,7 +626,7 @@ function toggleTutor(on){
   document.getElementById("tutorPanel").classList.toggle("on",on);
   document.getElementById("tutorOverlay").classList.toggle("on",on);
   saveState();
-  if(on&&tHist.length===0) tMsg("a","Hi! Ask me anything about interest and how money can grow on its own — or tap a button below.");
+  if(on&&tHist.length===0) tMsg("a",TUTOR_HELLO);
 }
 document.getElementById("tutorBtn").onclick=()=>toggleTutor(true);
 function tMsg(who,txt){ const d=document.createElement("div"); d.className="msg "+who; d.textContent=txt; document.getElementById("tlog").appendChild(d); d.scrollIntoView({behavior:"smooth"}); }
@@ -548,12 +636,7 @@ async function sendTutor(){
   inp.value=""; tMsg("u",txt); tHist.push({role:"user",content:txt});
   const think=document.createElement("div"); think.className="msg a"; think.innerHTML='<span class="spin" style="border-color:var(--ink);border-top-color:transparent"></span>';
   document.getElementById("tlog").appendChild(think);
-  const sys="You are the tutor inside Module 21 (Interest) of a financial-literacy app, in the Banking block. The learner may be a child or an adult. "+
-    "They know from earlier modules: money, dollar, cent, add, subtract, buy, sell, pay, earn, spend, save, goal, percent, bank, deposit, withdraw, balance, checking, savings, transaction, notification. From THIS module: interest (a little extra the bank adds to your account on its own, as a thank-you for letting the bank use your money) and grow (getting bigger over time without a deposit). The core ideas, taught WITHOUT any rate or percentage math: a tin can never grow because nobody is using that money; a bank can pay interest because it puts your money to work; more money sitting in savings generally means more interest comes back. "+
-    "IMPORTANT TEACHING STYLE for this module: this app has deliberately chosen CONCEPTS over CALCULATIONS for interest. Do not calculate a percentage, an interest rate, or a specific dollar amount of interest under any circumstances, even if asked directly for a number or a formula. If a learner asks \'how much interest would I earn\' or asks for a percentage, warmly explain that the exact math is a much later topic, and redirect to the concept: the more that sits in savings, the more comes back, and it happens whether or not you do anything. Keep every answer about WHY and WHETHER, never HOW MUCH. "+
-    "STRICT RULES: never use these words (later modules): borrow, loan, lend, credit, debt, APY, compound interest by name, rate, percentage of interest, fees, overdraft, being charged (Module 22), invest, stock market (Module 41+), budget, tax. "+
-    "Story context: Rana told Kai his savings would grow without him doing anything; his $15 became $15.08 with no deposit; Kai wondered why, and learned the bank uses deposited money and pays a thank-you; he compared a tin (always exactly $15) against savings (which can grow); he wondered whether the AMOUNT matters, and learned more money sitting there generally means more growth. "+
-    "Never repeat a failed explanation — switch analogies (lending a friend your bike and them giving you a small thank-you gift, a garden that grows a little every season without replanting, a seed that quietly adds to itself). Keep answers under 80 words, warm, honest, never mark wrong ideas right. If asked \'Quiz me\', ask ONE simple WHY or WHETHER question about interest — never a calculation — and wait.";
+  const sys=TUTOR_SYS;
   try{
     const controller=new AbortController(); const timeout=setTimeout(()=>controller.abort(),8000);
     const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},

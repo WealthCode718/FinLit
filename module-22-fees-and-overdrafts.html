@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Interest — Module 21</title>
+<title>Fees & Overdrafts — Module 22</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap');
   :root{
@@ -131,6 +131,15 @@
   .compare .box .v{font-size:22px; font-weight:700; font-family:"Fraunces",Georgia,serif}
   .spin{display:inline-block; width:16px; height:16px; border:3px solid #fff; border-top-color:transparent; border-radius:50%; animation:sp 1s linear infinite; vertical-align:-3px}
   @keyframes sp{to{transform:rotate(360deg)}}
+  .acct.neg{background:linear-gradient(135deg,#a94436 0%,#7a2e25 100%)}
+  .acct .zero{display:inline-block; margin-top:6px; font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; background:rgba(255,255,255,.18); border-radius:6px; padding:2px 8px}
+  .buyrow{background:#fff; border:2px solid #d9e2de; border-radius:14px; padding:16px; text-align:center; margin-bottom:12px}
+  .buyrow .it{font-size:40px; line-height:1.1}
+  .buyrow .nm{font-size:18px; font-weight:700; margin-top:4px}
+  .buyrow .pr{font-size:15px; color:var(--ink-soft)}
+  .choice{display:flex; gap:10px; margin-bottom:10px}
+  .choice button{flex:1}
+  .choice .wait{background:#fff; color:var(--ink); border:2px solid var(--ink)}
 </style>
 </head>
 <body>
@@ -157,7 +166,7 @@
     <button onclick="quickAsk('Quiz me')">Quiz me</button>
   </div>
   <div class="tp-in">
-    <input id="tin" placeholder="Ask about interest…" onkeydown="if(event.key==='Enter')sendTutor()">
+    <input id="tin" placeholder="Ask about fees and overdrafts…" onkeydown="if(event.key==='Enter')sendTutor()">
     <button onclick="sendTutor()">Send</button>
   </div>
 </div>
@@ -167,48 +176,77 @@
 
 <script>
 /* =====================================================================
-   CONTENT — Module 21: Interest
-   Vocab: interest, grow.
-   DESIGN SHIFT (per product decision): concept over computation.
-   No percentages, no rate math, no "calculate X% of Y" anywhere in
-   this module. Interest is taught as an IDEA — money can increase on
-   its own, without a deposit, because the bank uses it and pays you
-   for letting it. Mastery questions test WHY and WHEN, never compute.
+   CONTENT — Module 22: Fees & Overdrafts
+   Vocab: fee, overdraft.
+   Concept over computation (continues M21's principle): the learner
+   never calculates a fee. The skill tested is WHETHER a payment fits
+   the balance, and WHY going below zero costs more than the price.
+   Numbers stay whole and small so the only question is "enough or not?"
 ===================================================================== */
 const VOCAB = {
-  interest:{term:"interest", def:"A little extra money the bank adds to your account just for keeping your money there. You do not have to do anything — it happens on its own."},
-  grow:{term:"grow", def:"To get bigger over time, on its own. Savings with interest can grow even if nobody deposits a single new dollar."}
+  fee:{term:"fee", def:"Money a bank takes out of your account — for a service, or for breaking one of its rules. Interest adds money. A fee takes it away. Many fees can be avoided if you know the rules."},
+  overdraft:{term:"overdraft", def:"When you spend or take out more than your balance, so it goes below zero. The bank covers the gap for a moment — and usually charges a fee for it."}
 };
 
 const QUESTIONS = {
-  "q211a":{type:"mc", prompt:"What is interest?", concept:"interest", opts:[
-    {t:"A little extra money the bank adds just for keeping your money there", ok:true, fb:"Right. No deposit needed — the bank adds a bit more, on its own, as a thank-you for leaving the money with them."},
-    {t:"Money you have to pay the bank", ok:false, fb:"The other way around here! This kind of interest is money the bank pays YOU, not money you owe."},
-    {t:"A fee for having an account", ok:false, fb:"Not a fee at all — a fee takes money away. Interest ADDS a little, for free."}]},
-  "q211b":{type:"mc", prompt:"Why does a bank pay you interest at all?", concept:"interest", opts:[
-    {t:"Because the bank uses the money you leave with them, so they share a little back", ok:true, fb:"Right. The bank does not just let it sit in a vault — it puts the money to work, and pays you a small thank-you for the use of it."},
-    {t:"Because the bank feels generous", ok:false, fb:"It is not a gift out of kindness — it is a genuine thank-you for the bank being able to use your money while it sits there."},
-    {t:"Because you asked for it", ok:false, fb:"Nobody has to ask. Interest happens automatically, as part of what a savings account does."}]},
-  "q212a":{type:"mc", prompt:"Kai checks his savings and it is a little bigger than last month, even though he deposited nothing. What happened?", concept:"grow", opts:[
-    {t:"Interest — the money grew on its own", ok:true, fb:"Right — exactly what Rana meant. No deposit, no withdrawal, and the number still went up."},
-    {t:"The bank made a mistake", ok:false, fb:"No mistake at all! This is interest doing exactly what it is supposed to do."},
-    {t:"Someone else added money for him", ok:false, fb:"Nobody added anything. The account itself grew a little, which is exactly what interest does."}]},
-  "q212b":{type:"tf", prompt:"True or false: a tin under a floorboard can earn interest.", answer:false, concept:"interest",
-    good:"Right — a tin just sits there. Interest is something a BANK pays, for money it can actually use. A tin never grows on its own.",
-    bad:"Think about who is paying the interest. A bank pays it because it can use your money. A tin cannot use anything — it just sits. No bank, no interest."},
-  "q213a":{type:"mc", prompt:"Which grows more over a year: $10 sitting in savings with interest, or $10 sitting in a tin?", concept:"grow", opts:[
-    {t:"The $10 in savings — the tin never grows on its own", ok:true, fb:"Right. A tin is exactly $10 a year from now, forever. Savings with interest can end up being a little more."},
-    {t:"They grow the same", ok:false, fb:"Not the same at all — the tin stays flat, always. Savings with interest has a real chance to grow."},
-    {t:"The tin — money is safer outside a bank", ok:false, fb:"Interest has nothing to do with safety and everything to do with growth. Only the savings account has any chance of growing on its own."}]},
-  "q213c":{type:"mc", prompt:"Does interest work faster on more money, or the same amount, or slower?", concept:"grow", opts:[
-    {t:"Faster — more money sitting there generally means more interest added", ok:true, fb:"Right. The idea scales with the amount. Keep more in savings, and there is more for the bank to use, and more interest comes back."},
-    {t:"Exactly the same no matter how much is in the account", ok:false, fb:"Not quite — a bigger balance generally earns more interest, since it scales with how much is sitting there."},
-    {t:"Slower — small amounts grow best", ok:false, fb:"Backwards! More money sitting in savings generally means more interest, not less."}]},
-  "q213b":{type:"mc", transfer:true, prompt:"Tavo lets Rana use his boat for a season, and she gives him a little extra fish as thanks each week. Is that a similar idea to interest?", concept:"interest", opts:[
-    {t:"Yes — letting someone use something of yours, and getting a little something back for it", ok:true, fb:"Exactly. Tavo is not doing anything, just like Kai isn\'t. He let someone use something valuable, and a little extra came back as thanks. That is the whole shape of interest."},
-    {t:"No — boats and money are completely different", ok:false, fb:"The object changed, not the idea. Something valuable got used by someone else, and a little extra came back. Same shape as interest."},
-    {t:"No — Tavo should get his boat back, not fish", ok:false, fb:"He gets the boat back too! The fish is the EXTRA, on top of getting his own boat back — same as Kai keeping his $10 AND getting a bit more."}]}
+  "q221a":{type:"mc", prompt:"What is a fee?", concept:"fee", opts:[
+    {t:"Money a bank takes out of your account for a service or for breaking a rule", ok:true, fb:"Right. A fee is a charge. It makes your balance smaller, even though you did not buy anything."},
+    {t:"A little extra the bank adds for keeping your money there", ok:false, fb:"That is interest — the opposite! Interest adds money. A fee takes money away."},
+    {t:"Money you earn by working", ok:false, fb:"Earning brings money in. A fee sends money out — to the bank."}]},
+  "q221b":{type:"mc", prompt:"Kai is charged $1 every month for a paper statement in the mail. What is the best way to stop that fee?", concept:"fee", opts:[
+    {t:"Read his transactions on his phone instead, and turn off the paper statement", ok:true, fb:"Exactly. He already reads everything on his phone. Same information, no fee. Knowing the rule is what saved him."},
+    {t:"Close his savings account", ok:false, fb:"That would not touch the paper fee at all — and he would lose his interest. Fix the rule that causes the fee instead."},
+    {t:"Nothing — fees can never be avoided", ok:false, fb:"Many fees CAN be avoided once you know why they happen. This one ends the day Kai switches to reading on his phone."}]},
+  "q221c":{type:"tf", prompt:"True or false: interest and fees both add money to your account.", answer:false, concept:"fee",
+    good:"Right — they point in opposite directions. Interest adds a little. A fee takes some away.",
+    bad:"Only interest adds. A fee is money the bank takes OUT. They point in opposite directions."},
+  "q222a":{type:"mc", prompt:"What is an overdraft?", concept:"overdraft", opts:[
+    {t:"Spending more than your balance, so it goes below zero", ok:true, fb:"Right. The balance does not just hit zero — it goes past it, and the bank has to cover the gap."},
+    {t:"Having a lot of money in savings", ok:false, fb:"That is a great thing to have, but it is not an overdraft. An overdraft means your balance went below zero."},
+    {t:"Any deposit bigger than $10", ok:false, fb:"Deposits make your balance bigger. An overdraft is when it goes the other way — all the way below zero."}]},
+  "q222b":{type:"mc", prompt:"Why does an overdraft cost more than just the price of what you bought?", concept:"overdraft", opts:[
+    {t:"The bank adds a fee on top — and your next deposit has to fill the gap first", ok:true, fb:"Right. You pay the price, then a fee, and then part of your next money is already used up before you even see it."},
+    {t:"It doesn't — you only ever pay the price", ok:false, fb:"Look back at Kai's net. The price was $9, but going below zero added a $5 fee on top. The overdraft itself costs money."},
+    {t:"Because the shop charges extra", ok:false, fb:"The shop charged the normal price. The extra came from the BANK, as an overdraft fee."}]},
+  "q222c":{type:"tf", prompt:"True or false: if the bank lets a payment go through, that means you had enough money.", answer:false, concept:"overdraft",
+    good:"Right — that is the trap. Some banks let a payment go through anyway, then charge a fee because you did NOT have enough.",
+    bad:"That is the trap Kai fell into. Some banks let a payment go through even when the balance is too small — and then charge a fee for it."},
+  "q223a":{type:"mc", prompt:"What is the best habit for never having an overdraft?", concept:"overdraft", opts:[
+    {t:"Look at your balance before you pay for something", ok:true, fb:"Exactly. One look answers the only question that matters: is there enough? Kai’s phone makes that look take two seconds."},
+    {t:"Pay first, check the balance at the end of the month", ok:false, fb:"By the end of the month the fee has already happened. The look has to come BEFORE the payment."},
+    {t:"Only shop on weekends", ok:false, fb:"The day does not matter. What matters is looking at the balance before paying."}]},
+  "q223c":{type:"mc", prompt:"Kai has $4 in checking. The sandals he wants cost $6. What should he do?", concept:"overdraft", opts:[
+    {t:"Wait — save up until his balance covers the sandals", ok:true, fb:"Right. $4 is less than $6, so paying now would go below zero. Waiting costs nothing. An overdraft costs a fee."},
+    {t:"Pay now and hope the bank lets it through", ok:false, fb:"Even if the bank lets it through, the balance goes below zero and a fee lands on top. Waiting is free."},
+    {t:"Pay now — it is only $2 more than he has", ok:false, fb:"Being a little short is still being short. Below zero is below zero, and the fee does not care how small the gap was."}]},
+  "q223b":{type:"mc", transfer:true, prompt:"The island library lets you take a book home for one week. If you bring it back late, you pay $1. What is that $1?", concept:"fee", opts:[
+    {t:"A fee — a charge for breaking a rule, and you can avoid it by returning the book on time", ok:true, fb:"Exactly. Same shape as a bank fee: a rule, a charge for breaking it, and an easy way to never pay it."},
+    {t:"Interest — the library is thanking you", ok:false, fb:"Interest adds money to YOU. This $1 goes from you to the library. That makes it a fee."},
+    {t:"The price of the book", ok:false, fb:"You are not buying the book — you bring it back. The $1 is only charged for being late. That is a fee."}]}
 };
+
+const CFG = {
+  n:22, title:"Fees & Overdrafts", homeSub:"Four short lessons. Why going below zero costs more than the price.",
+  pool:["q221a","q221b","q221c","q222a","q222b","q222c","q223a","q223c"], transfer:"q223b",
+  quest:"You learned what a fee is, why an overdraft costs extra, and the one habit that prevents it.",
+  failKeys:"The keys: a fee takes money away (interest adds it), an overdraft means going below zero, and one look at your balance before paying prevents it.",
+  nextFile:"module-23-protecting-your-money.html",
+  passStory:'<p><strong>You now own:</strong> fee and overdraft — and the habit that keeps both away: look before you pay.</p>'+
+    '<p>That night Kai’s phone buzzes again. But this message is different. It does not say money in or money out.</p>'+
+    '<p style="text-align:center"><strong>"FinLit Bank: Your account is LOCKED. Reply with your secret number in the next 10 minutes or lose everything!"</strong></p>'+
+    '<p>Kai’s thumb hovers over the screen.</p>'+
+    '<p class="muted">Module 23: Protecting Your Money.</p>'
+};
+
+const TUTOR_HELLO = "Hi! Ask me anything about fees, overdrafts, or staying above zero — or tap a button below.";
+const TUTOR_SYS = "You are the tutor inside Module 22 (Fees & Overdrafts) of a financial-literacy app, in the Banking block. The learner may be a child or an adult. "+
+  "They know from earlier modules: money, dollar, cent, add, subtract, buy, sell, pay, earn, spend, need, save, goal, percent, bank, deposit, withdraw, balance, checking, savings, transaction, notification, interest, grow. "+
+  "From THIS module: fee (money a bank takes out of your account for a service or for breaking a rule; the opposite direction from interest; many fees can be avoided by knowing the rules) and overdraft (spending more than your balance so it goes below zero; the bank covers the gap for a moment and usually charges a fee; the next deposit has to fill the gap first). "+
+  "Core habit: look at your balance BEFORE you pay. If the balance is smaller than the price, wait. "+
+  "TEACHING STYLE: concepts over calculations. Never compute a fee, a percentage, or a rate. You may compare two whole-dollar amounts to decide if there is enough (for example $4 is less than $6, so there is not enough). Keep answers about WHY and WHETHER. Do not teach negative-number arithmetic; say 'below zero' or 'short by'. "+
+  "STRICT RULES: never use these words (later modules): borrow, loan, lend, credit, debt, owe, APR, rate, PIN, scam, password, cushion, budget, invest, tax, insurance. If the learner uses one, answer briefly in plain words and say it is coming later. "+
+  "Story context: a $1 paper statement fee appeared in Kai's feed; he stopped it by reading on his phone instead. Later he had $6 in checking, paid $9 for a net without looking, went $3 below zero, and got a $5 overdraft fee on top. Then he practiced deciding pay-or-wait by looking at his balance first. "+
+  "Never repeat a failed explanation — switch analogies (a cup that overflows, a late library book, a line you should not step past). Keep answers under 80 words, warm, honest, never mark wrong ideas right. If asked 'Quiz me', ask ONE simple WHY or WHETHER question and wait.";
 
 /* =====================================================================
    STATE + PERSISTENCE
@@ -218,21 +256,21 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 
 async function loadState(){
   try{
-    const r = await window.storage.get("mod21-state");
+    const r = await window.storage.get("mod22-state");
     if(r && r.value){ S = Object.assign(S, JSON.parse(r.value)); return; }
   } catch(e){ }
   try{
-    const saved = localStorage.getItem("mod21-state");
+    const saved = localStorage.getItem("mod22-state");
     if(saved){ S = Object.assign(S, JSON.parse(saved)); }
-    for(let i=20;i>=1;i--){
+    for(let i=21;i>=1;i--){
       const prev = localStorage.getItem("mod"+i+"-state");
       if(prev){ const p = JSON.parse(prev); if(p.xp > S.xp) S.xp = p.xp; }
     }
   } catch(e){ }
 }
 async function saveState(){
-  try{ await window.storage.set("mod21-state", JSON.stringify(S)); }catch(e){
-    try{ localStorage.setItem("mod21-state", JSON.stringify(S)); }catch(e2){}
+  try{ await window.storage.set("mod22-state", JSON.stringify(S)); }catch(e){
+    try{ localStorage.setItem("mod22-state", JSON.stringify(S)); }catch(e2){}
   }
 }
 function addXP(n){ S.xp+=n; document.getElementById("xpBox").textContent = S.xp+" XP"; saveState(); }
@@ -340,100 +378,162 @@ function renderTF(qid,onDone){
 }
 
 /* =====================================================================
-   SIMULATOR — M21 shows growth WITHOUT any rate math on screen.
-   The point is felt, not calculated: a number goes up between visits,
-   nobody touched it, and more money grows more. No % anywhere.
+   SIMULATOR — M22 lets the balance go BELOW ZERO for the first time.
+   A red account card is the whole visual for "overdraft". No negative-
+   number arithmetic is asked of the learner; the words "below zero"
+   carry the idea.
 ===================================================================== */
-function money(n){ return "$" + n.toFixed(2); }
-function growCard(from,to,label){
-  return '<div class="grow"><div class="lbl2">'+label+'</div>'+
-    '<div style="font-size:26px; font-weight:700; font-family:\'Fraunces\',Georgia,serif">'+money(from)+'</div>'+
-    '<div class="arrow">↓ nobody touched it ↓</div>'+
-    '<div style="font-size:32px; font-weight:700; font-family:\'Fraunces\',Georgia,serif; color:var(--good)">'+money(to)+'</div></div>';
+function money(n){ return (n<0?"−":"") + "$" + Math.abs(n).toFixed(2); }
+function acctCard(bal, note){
+  return '<div class="acct'+(bal<0?' neg':'')+'"><div class="lbl">Checking</div>'+
+    '<div class="bal">'+money(bal)+'</div>'+
+    '<div class="who">'+(note||'Kai')+'</div>'+
+    (bal<0?'<div class="zero">below zero</div>':'')+'</div>';
+}
+function feed(rows){
+  let h='<div class="phone"><div class="pbar"><span>FinLit Bank</span><span>Checking</span></div><div class="feed">';
+  rows.forEach(r=>{
+    h+='<div class="fitem"><span><span class="day">'+r.day+'</span><br>'+r.label+'</span>'+
+       '<span class="amt'+(r.amt<0?' out':'')+'">'+(r.amt<0?'−':'+')+'$'+Math.abs(r.amt).toFixed(2)+'</span></div>';
+  });
+  return h+'</div></div>';
 }
 
 /* =====================================================================
-   LESSON 1 — The Impossible Number
+   LESSON 1 — The Line Nobody Bought
 ===================================================================== */
 const L1=[
-  ()=>show('<div class="kicker">Lesson 1 · The impossible number</div>'+
-    '<div class="recap"><strong>Kai\'s story so far:</strong> Both accounts, every transaction, right from the island. Then Rana says something that makes no sense.</div>'+
-    '<div class="scene">🤨💭<div class="cap">"Your savings will be a little bigger next month. You do not have to do anything."</div></div>'+
-    '<button onclick="next()">That can\'t be right</button>'),
-  ()=>show('<div class="kicker">Lesson 1</div>'+
-    '<div class="card"><p>Kai checks the very next month. Rana was right.</p></div>'+
-    growCard(15.00, 15.08, "Kai\'s savings, one month apart")+
-    '<div class="card"><p>No deposit. No withdrawal. The number just… went up.</p>'+
-    '<p>This is called <strong>interest</strong> — a little extra the bank adds to your account, on its own, just for keeping your money there.</p></div>'+
-    '<button onclick="earnWord(\'interest\');next()">New word: interest</button>'),
-  ()=>show('<div class="kicker">Lesson 1 · Why would a bank do that?</div>'+
-    '<div class="card"><p>It sounds like a magic trick, but it isn\'t. Here is what is really going on:</p>'+
-    '<p>The bank does not lock your money in a box and forget about it. It <strong>puts the money to work</strong> helping other people with their own plans.</p>'+
-    '<p>Because the bank gets to use your money, it pays you a little something back. That little something is interest.</p>'+
-    '<p>You let the bank use your money without even trying. Interest is the thank-you.</p></div>'+
-    '<button onclick="next()">Practice</button>'),
-  ()=>renderMC("q211a", next),
-  ()=>renderMC("q211b", next),
+  ()=>show(`<div class="kicker">Lesson 1 · The line nobody bought</div>
+    <div class="recap"><strong>Kai’s story so far:</strong> His savings grew on its own. Interest — a thank-you from the bank. So why is there a line in his feed that went the other way?</div>
+    ${feed([{day:"Mon",label:"Market morning",amt:5},{day:"Tue",label:"Paper statement",amt:-1},{day:"Wed",label:"Bread",amt:-2}])}
+    <div class="card"><p>Kai knows the market money. He knows the bread. But <strong>"Paper statement, −$1.00"</strong>? He never bought any paper.</p></div>
+    <button onclick="next()">Ask Rana</button>`),
+  ()=>show(`<div class="kicker">Lesson 1</div>
+    <div class="scene">📄✉️<div class="cap">"Every month the bank mails you a paper list of your transactions," Rana says. "And this bank charges for it."</div></div>
+    <div class="card"><p>That $1 is called a <strong>fee</strong> — money a bank takes out of your account for a service, or for breaking one of its rules.</p>
+    <p>Kai did not buy anything. The bank took it anyway, because the rules said so.</p>
+    <p>Put it next to last module’s word: <strong>interest adds a little. A fee takes some away.</strong></p></div>
+    <button onclick="earnWord('fee');next()">New word: fee</button>`),
+  ()=>show(`<div class="kicker">Lesson 1 · Knowing the rule</div>
+    <div class="card"><p>Here is the good news. Kai already reads every transaction on his phone. He does not need the paper at all.</p>
+    <p>He taps one switch in the app: <strong>paper statement — off</strong>.</p>
+    <p>Next month, no paper. No fee. Same information, for free.</p>
+    <p style="text-align:center; font-size:19px"><strong>Many fees can be avoided — once you know the rule that causes them.</strong></p></div>
+    <button onclick="next()">Practice</button>`),
+  ()=>renderMC("q221a", next),
+  ()=>renderMC("q221b", next),
+  ()=>renderTF("q221c", next),
 ];
 
 /* =====================================================================
-   LESSON 2 — Growing While You Sleep
+   LESSON 2 — Below Zero
 ===================================================================== */
 const L2=[
-  ()=>show('<div class="kicker">Lesson 2 · Growing while you sleep</div>'+
-    '<div class="recap"><strong>So far:</strong> interest is a little extra, added on its own, as a thank-you.</div>'+
-    '<div class="card"><p>Here is the part that actually matters: interest does not need Kai to do anything at all.</p>'+
-    '<p>Not a deposit. Not a chore. Not even remembering it exists.</p>'+
-    '<p>Money in a savings account can <strong>grow</strong> — get a little bigger over time — while Kai is fishing, sleeping, or off on an adventure completely unrelated to money.</p></div>'+
-    '<button onclick="earnWord(\'grow\');next()">New word: grow</button>'),
-  ()=>show('<div class="kicker">Lesson 2 · The tin, one more time</div>'+
-    '<div class="card"><p>Picture Kai\'s old tin, still sitting under that floorboard, with $15 inside.</p></div>'+
-    '<div class="compare">'+
-      '<div class="box"><div class="n">Tin — one year later</div><div class="v">$15</div></div>'+
-      '<div class="box win"><div class="n">Savings — one year later</div><div class="v">a little more</div></div>'+
-    '</div>'+
-    '<div class="card"><p>The tin is exactly $15, forever, no matter how long it sits. It cannot grow — nobody is using that money for anything.</p>'+
-    '<p>The savings account can grow, because the bank is putting it to work. Same $15 to start. Very different year ahead.</p></div>'+
-    '<button onclick="next()">Practice</button>'),
-  ()=>renderMC("q212a", next),
-  ()=>renderTF("q212b", next),
+  ()=>show(`<div class="kicker">Lesson 2 · Below zero</div>
+    <div class="recap"><strong>So far:</strong> a fee takes money away, and many fees can be dodged by knowing the rules.</div>
+    ${acctCard(6,"Kai · end of a busy week")}
+    <div class="card"><p>Kai has $6 in checking. At the trading post there is a brand-new fishing net for $9.</p>
+    <p>He is excited. He does not look at his phone. He just pays.</p></div>
+    <button onclick="next()">What happens?</button>`),
+  ()=>show(`<div class="kicker">Lesson 2</div>
+    ${acctCard(-3,"after the $9 net")}
+    <div class="card"><p>The payment went through! But look at the balance. There is a little minus sign in front: <strong>−$3.00</strong>.</p>
+    <p>That means <strong>below zero</strong>. Kai did not just run out of money — he spent $3 he never had. The bank covered the gap for him, for a moment.</p>
+    <p>This is called an <strong>overdraft</strong>: spending more than your balance, so it goes below zero.</p></div>
+    <button onclick="earnWord('overdraft');next()">New word: overdraft</button>`),
+  ()=>show(`<div class="kicker">Lesson 2 · The buzz</div>
+    <div class="notif"><span class="bell">🔔</span><span><strong>FinLit Bank</strong><br>Overdraft fee: −$5.00. Your balance is below zero.</span></div>
+    ${acctCard(-8,"after the overdraft fee")}
+    <div class="card"><p>Covering that gap was not free. The bank charged an <strong>overdraft fee</strong> — and now Kai is even further below zero.</p>
+    <p>The net cost $9. Not looking cost him <strong>$5 more on top</strong>.</p></div>
+    <button onclick="next()">Then what?</button>`),
+  ()=>show(`<div class="kicker">Lesson 2 · Filling the hole</div>
+    <div class="card"><p>On Monday Kai earns $10 at the market and deposits it.</p>
+    <p>But he does not get to use all $10. Part of it goes first to <strong>filling the hole</strong> below zero — money already spent before it even arrived.</p>
+    <p>That is the real sting of an overdraft. It costs the price, <strong>plus</strong> a fee, <strong>plus</strong> it eats into money you have not even earned yet.</p></div>
+    <button onclick="next()">Practice</button>`),
+  ()=>renderMC("q222a", next),
+  ()=>renderMC("q222b", next),
+  ()=>renderTF("q222c", next),
 ];
 
 /* =====================================================================
-   LESSON 3 — More Money, More Growth
+   LESSON 3 — Look Before You Pay (pay-or-wait simulator)
+   Correct choice = Pay if balance covers price, else Wait. A wrong
+   "Pay" shows what WOULD happen but is not applied; the learner picks
+   again. The only skill is comparing two whole numbers.
 ===================================================================== */
+const SHOP=[
+  {em:"🍞", nm:"Bread and fruit", pr:3},
+  {em:"🪝", nm:"Fish hooks", pr:4},
+  {em:"🪁", nm:"A bright red kite", pr:7},
+  {em:"💧", nm:"Water jug", pr:2},
+  {em:"🩴", nm:"New sandals", pr:6}
+];
 const L3=[
-  ()=>show('<div class="kicker">Lesson 3 · More money, more growth</div>'+
-    '<div class="recap"><strong>So far:</strong> a tin never grows. Savings can, on its own.</div>'+
-    '<div class="scene">🤔<div class="cap">Kai wonders: does it matter HOW MUCH is in savings? Or does everyone get the same little bit of growth?</div></div>'+
-    '<button onclick="next()">Let\'s see</button>'),
-  ()=>show('<div class="kicker">Lesson 3</div>'+
-    '<div class="card"><p>Think about the reason interest exists in the first place: the bank is using your money.</p>'+
-    '<p>If Kai keeps $15 in savings, the bank can put $15 to work. If he keeps $150, the bank can put $150 to work.</p>'+
-    '<p><strong>More money sitting there means more for the bank to use — which generally means more comes back.</strong></p>'+
-    '<p>This is exactly why the goal-money habit from Module 19 matters even more now. Money kept safely in savings is not just protected — it is quietly working.</p></div>'+
-    '<button onclick="next()">Practice</button>'),
-  ()=>renderMC("q213a", next),
-  ()=>renderMC("q213c", next),
+  ()=>show(`<div class="kicker">Lesson 3 · Look before you pay</div>
+    <div class="recap"><strong>So far:</strong> an overdraft costs the price, plus a fee, plus a hole in your next deposit.</div>
+    <div class="card"><p>Kai makes himself one rule. Before paying for anything, he opens his phone and asks a single question:</p>
+    <p style="text-align:center; font-size:19px"><strong>Is my balance at least as big as the price?</strong></p>
+    <p>Yes → pay. No → wait. That is the whole rule. Now you try it with Kai’s next trip to the market.</p></div>
+    <button onclick="next()">Start with $12</button>`),
+  ()=>{
+    let bal=12, i=0;
+    function draw(){
+      if(i>=SHOP.length){ addXP(6); next(); return; }
+      const it=SHOP[i];
+      show(`<div class="kicker">Pay or wait · ${i+1} of ${SHOP.length}</div>
+        ${acctCard(bal,"Kai · checking right now")}
+        <div class="buyrow"><div class="it">${it.em}</div><div class="nm">${it.nm}</div><div class="pr">costs $${it.pr}</div></div>
+        <div class="choice"><button id="pPay">Pay now</button><button class="wait" id="pWait">Wait</button></div>
+        <div id="fb"></div><div id="cont"></div>`);
+      const enough = bal>=it.pr;
+      let done=false;
+      function finish(msg){
+        done=true;
+        document.getElementById("pPay").disabled=true; document.getElementById("pWait").disabled=true;
+        document.getElementById("fb").innerHTML='<div class="feedback good">'+msg+'</div>';
+        document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(i<SHOP.length-1?"Next item":"Done")+'</button>';
+        window._n=()=>{ i++; draw(); };
+        revealFB();
+      }
+      document.getElementById("pPay").onclick=()=>{
+        if(done) return;
+        if(enough){ bal-=it.pr; addXP(1);
+          finish(`Right — $${bal+it.pr} covers $${it.pr}. Paid, and the balance stays above zero.`);
+          document.querySelector(".acct").outerHTML=acctCard(bal,"Kai · checking right now");
+        } else {
+          document.getElementById("fb").innerHTML='<div class="feedback bad">Look again: the balance is $'+bal+' and the price is $'+it.pr+'. Paying would go below zero — and an overdraft fee would land on top. Try the other choice.</div>';
+          revealFB();
+        }
+      };
+      document.getElementById("pWait").onclick=()=>{
+        if(done) return;
+        if(!enough){ addXP(1);
+          finish(`Right — $${bal} is less than $${it.pr}. Waiting costs nothing. Kai can save up and come back for it.`);
+        } else {
+          document.getElementById("fb").innerHTML='<div class="feedback bad">You can wait if you like — but there is enough here: $'+bal+' covers $'+it.pr+'. The rule says this one is safe to pay. Try again.</div>';
+          revealFB();
+        }
+      };
+    }
+    draw();
+  },
+  ()=>show(`<div class="kicker">Lesson 3 · Rana’s extra trick</div>
+    <div class="card"><p>Kai finished the market with money left and <strong>zero</strong> fees. One look, every time.</p>
+    <p>Rana shares one more trick: "I keep a few dollars in checking that I pretend are not there. If I ever forget to look, those few dollars catch me before I go below zero."</p>
+    <p>And the goal money? It stays in savings, where Kai does not spend it by accident — and where it keeps growing.</p></div>
+    <button onclick="next()">Practice</button>`),
+  ()=>renderMC("q223a", next),
+  ()=>renderMC("q223c", next),
+];
+const META=[
+  {title:"The Line Nobody Bought", sub:"A charge Kai never agreed to", emoji:"📄"},
+  {title:"Below Zero", sub:"What happens when you pay without looking", emoji:"🕳️"},
+  {title:"Look Before You Pay", sub:"Pay or wait? One rule decides", emoji:"👀"},
 ];
 
-/* =====================================================================
-   LESSON 4 — Mastery
-===================================================================== */
-let mastery = {qs:[], idx:0, score:0};
-const L4=[
-  ()=>{
-    const pool=["q211a","q211b","q212a","q212b","q213a","q213c"].sort(()=>Math.random()-.5).slice(0,4);
-    mastery={qs:[...pool,"q213b"].sort(()=>Math.random()-.5), idx:0, score:0};
-    show('<div class="kicker">Lesson 4 · Show what you know</div>'+
-      '<div class="recap"><strong>Module 21 quest:</strong> You learned why money can grow on its own — and why a tin never will.</div>'+
-      '<h1 class="display">Five questions.</h1>'+
-      '<p>Get 4 of 5 right and Module 21 is yours.</p>'+
-      '<button onclick="next()">Start</button>');
-  },
-  ()=>{ masteryQ(); },
-  ()=>{ finishMastery(mastery.score>=4); },
-];
+
 function masteryQ(){
   if(mastery.idx>=mastery.qs.length){ next(); return; }
   const qid=mastery.qs[mastery.idx];
@@ -478,25 +578,40 @@ function renderTFM(qid,onDone){
   document.getElementById("tT").onclick=e=>pick(true,e.target);
   document.getElementById("tF").onclick=e=>pick(false,e.target);
 }
+
+/* =====================================================================
+   LESSON 4 — Mastery (shared shape: 4 random from pool + 1 transfer)
+===================================================================== */
+let mastery = {qs:[], idx:0, score:0};
+const L4=[
+  ()=>{
+    const pool=CFG.pool.slice().sort(()=>Math.random()-.5).slice(0,4);
+    mastery={qs:[...pool,CFG.transfer].sort(()=>Math.random()-.5), idx:0, score:0};
+    show('<div class="kicker">Lesson 4 · Show what you know</div>'+
+      '<div class="recap"><strong>Module '+CFG.n+' quest:</strong> '+CFG.quest+'</div>'+
+      '<h1 class="display">Five questions.</h1>'+
+      '<p>Get 4 of 5 right and Module '+CFG.n+' is yours.</p>'+
+      '<button onclick="next()">Start</button>');
+  },
+  ()=>{ masteryQ(); },
+  ()=>{ finishMastery(mastery.score>=4); },
+];
 function finishMastery(pass){
   if(pass && !S.masteryPassed){ S.masteryPassed=true; addXP(20); }
   saveState();
   if(pass){
     show('<div class="night"><div class="lantern">🏮</div>'+
-      '<h1 class="display" style="color:#fff">Module 21 complete</h1>'+
-      '<p style="color:#cfe0ee">Quiz: '+mastery.score+'/5 ✓</p></div>'+
-      '<div class="card"><p><strong>You now own:</strong> interest and grow — Kai finally understands why his own money seemed to have a mind of its own.</p>'+
-      '<p>A week later Kai scrolls through his feed, proud of every line. Market morning. Bread. And then one he does not recognize at all: <strong>"Paper statement \u2212$1.00."</strong></p>'+
-      '<p>"Wait," Kai says. "Interest goes UP on its own. What is this one doing going DOWN?"</p>'+
-      '<p class="muted">Module 22: Fees & Overdrafts.</p></div>'+
-      '<button style="margin-bottom:10px" onclick="window.location.href=\'module-22-fees-and-overdrafts.html\'">Continue to Module 22</button>'+
+      '<h1 class="display" style="color:#fff">Module '+CFG.n+' complete</h1>'+
+      '<p style="color:#cfe0ee">Quiz: '+mastery.score+'/5 ✓'+(CFG.badge||'')+'</p></div>'+
+      '<div class="card">'+CFG.passStory+'</div>'+
+      (CFG.nextFile?'<button style="margin-bottom:10px" onclick="window.location.href=\''+CFG.nextFile+'\'">Continue to Module '+(CFG.n+1)+'</button>':'')+
       '<button class="btn-ghost" style="margin-bottom:10px" onclick="window.location.href=\'index.html\'">🗺️ Back to all modules</button>'+
-      '<button class="btn-ghost" onclick="goHome()">Stay in Module 21</button>');
+      '<button class="btn-ghost" onclick="goHome()">Stay in Module '+CFG.n+'</button>');
     S.done[3]=true; saveState();
   } else {
     show('<div class="kicker">Almost there</div>'+
       '<h1 class="display">One more try</h1>'+
-      '<p>You got '+mastery.score+' of 5. The keys: interest is a thank-you the bank adds on its own, a tin can never grow, and more money sitting in savings generally means more growth.</p>'+
+      '<p>You got '+mastery.score+' of 5. '+CFG.failKeys+'</p>'+
       '<button onclick="S.step=0;render()">Try again</button>'+
       '<button class="btn-ghost" style="margin-top:10px" onclick="toggleTutor(true)">Talk with the tutor</button>'+
       '<button class="btn-ghost" style="margin-top:10px" onclick="goHome()">Back home</button>');
@@ -504,9 +619,9 @@ function finishMastery(pass){
 }
 
 const LESSONS=[
-  {title:"The Impossible Number", sub:"Money that grew without a deposit", steps:L1, emoji:"🤨"},
-  {title:"Growing While You Sleep", sub:"Why a tin can never do this", steps:L2, emoji:"😴"},
-  {title:"More Money, More Growth", sub:"Does the amount in savings matter?", steps:L3, emoji:"📈"},
+  {title:META[0].title, sub:META[0].sub, steps:L1, emoji:META[0].emoji},
+  {title:META[1].title, sub:META[1].sub, steps:L2, emoji:META[1].emoji},
+  {title:META[2].title, sub:META[2].sub, steps:L3, emoji:META[2].emoji},
   {title:"Show What You Know", sub:"Mastery check", steps:L4, emoji:"🏮"},
 ];
 
@@ -515,8 +630,8 @@ const LESSONS=[
 ===================================================================== */
 function goHome(){
   dots(4, S.done.filter(Boolean).length-1);
-  let html='<div class="kicker">Module 21</div><h1 class="display">Interest</h1>'+
-    '<p class="muted">Four short lessons. Money that grows on its own.</p>';
+  let html='<div class="kicker">Module '+CFG.n+'</div><h1 class="display">'+CFG.title+'</h1>'+
+    '<p class="muted">'+CFG.homeSub+'</p>';
   LESSONS.forEach((l,i)=>{
     const locked = i>0 && !S.done[i-1];
     const done = S.done[i];
@@ -524,11 +639,12 @@ function goHome(){
       '<span class="em">'+(done?'✅':locked?'🔒':l.emoji)+'</span><strong>'+l.title+'</strong><br>'+
       '<span class="muted" style="font-weight:400">'+l.sub+'</span></button>';
   });
-  if(S.masteryPassed) html+='<div class="night" style="margin-top:8px"><div class="lantern">🏮</div><p style="color:#cfe0ee">Module 21 mastered · '+S.xp+' XP</p></div>';
+  if(S.masteryPassed) html+='<div class="night" style="margin-top:8px"><div class="lantern">🏮</div><p style="color:#cfe0ee">Module '+CFG.n+' mastered · '+S.xp+' XP</p></div>';
   html+='<button class="btn-ghost" style="margin-top:14px" onclick="window.location.href=\'index.html\'">🗺️ Back to all modules</button>';
   show(html);
 }
 function startLesson(i){ S.lesson=i; S.step=0; saveState(); render(); }
+
 
 /* =====================================================================
    TUTOR
@@ -538,7 +654,7 @@ function toggleTutor(on){
   document.getElementById("tutorPanel").classList.toggle("on",on);
   document.getElementById("tutorOverlay").classList.toggle("on",on);
   saveState();
-  if(on&&tHist.length===0) tMsg("a","Hi! Ask me anything about interest and how money can grow on its own — or tap a button below.");
+  if(on&&tHist.length===0) tMsg("a",TUTOR_HELLO);
 }
 document.getElementById("tutorBtn").onclick=()=>toggleTutor(true);
 function tMsg(who,txt){ const d=document.createElement("div"); d.className="msg "+who; d.textContent=txt; document.getElementById("tlog").appendChild(d); d.scrollIntoView({behavior:"smooth"}); }
@@ -548,12 +664,7 @@ async function sendTutor(){
   inp.value=""; tMsg("u",txt); tHist.push({role:"user",content:txt});
   const think=document.createElement("div"); think.className="msg a"; think.innerHTML='<span class="spin" style="border-color:var(--ink);border-top-color:transparent"></span>';
   document.getElementById("tlog").appendChild(think);
-  const sys="You are the tutor inside Module 21 (Interest) of a financial-literacy app, in the Banking block. The learner may be a child or an adult. "+
-    "They know from earlier modules: money, dollar, cent, add, subtract, buy, sell, pay, earn, spend, save, goal, percent, bank, deposit, withdraw, balance, checking, savings, transaction, notification. From THIS module: interest (a little extra the bank adds to your account on its own, as a thank-you for letting the bank use your money) and grow (getting bigger over time without a deposit). The core ideas, taught WITHOUT any rate or percentage math: a tin can never grow because nobody is using that money; a bank can pay interest because it puts your money to work; more money sitting in savings generally means more interest comes back. "+
-    "IMPORTANT TEACHING STYLE for this module: this app has deliberately chosen CONCEPTS over CALCULATIONS for interest. Do not calculate a percentage, an interest rate, or a specific dollar amount of interest under any circumstances, even if asked directly for a number or a formula. If a learner asks \'how much interest would I earn\' or asks for a percentage, warmly explain that the exact math is a much later topic, and redirect to the concept: the more that sits in savings, the more comes back, and it happens whether or not you do anything. Keep every answer about WHY and WHETHER, never HOW MUCH. "+
-    "STRICT RULES: never use these words (later modules): borrow, loan, lend, credit, debt, APY, compound interest by name, rate, percentage of interest, fees, overdraft, being charged (Module 22), invest, stock market (Module 41+), budget, tax. "+
-    "Story context: Rana told Kai his savings would grow without him doing anything; his $15 became $15.08 with no deposit; Kai wondered why, and learned the bank uses deposited money and pays a thank-you; he compared a tin (always exactly $15) against savings (which can grow); he wondered whether the AMOUNT matters, and learned more money sitting there generally means more growth. "+
-    "Never repeat a failed explanation — switch analogies (lending a friend your bike and them giving you a small thank-you gift, a garden that grows a little every season without replanting, a seed that quietly adds to itself). Keep answers under 80 words, warm, honest, never mark wrong ideas right. If asked \'Quiz me\', ask ONE simple WHY or WHETHER question about interest — never a calculation — and wait.";
+  const sys=TUTOR_SYS;
   try{
     const controller=new AbortController(); const timeout=setTimeout(()=>controller.abort(),8000);
     const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},

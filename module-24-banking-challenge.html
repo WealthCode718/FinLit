@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Banking Challenge — Module 24</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap');
+  :root{
+    --ink:#123a3f; --ink-soft:#3d6166; --lagoon:#ecf5f2; --card:#ffffff;
+    --sand:#f3ead8; --sand-deep:#e5d7bc; --shell:#c96f4a; --shell-soft:#f4e0d6;
+    --night:#0e1b2c; --gold:#e8b84b; --good:#2e7d5b; --bad:#a94436;
+    --radius:14px; --shadow:0 2px 10px rgba(18,58,63,.08);
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html,body{height:100%}
+  body{font-family:"Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif; background:var(--lagoon); color:var(--ink); font-size:17px; line-height:1.5; -webkit-font-smoothing:antialiased}
+  .display{font-family:"Fraunces",Georgia,serif; font-weight:700; letter-spacing:-.01em}
+  #app{max-width:560px; margin:0 auto; min-height:100dvh; display:flex; flex-direction:column}
+  header{position:sticky; top:0; z-index:20; background:var(--lagoon); padding:12px 16px 8px; border-bottom:1px solid #d9e6e1}
+  .hrow{display:flex; align-items:center; justify-content:space-between; gap:10px}
+  .xp{font-weight:700; font-size:14px; background:var(--ink); color:#fff; border-radius:999px; padding:4px 12px; white-space:nowrap}
+  .dots{display:flex; gap:6px}
+  .dot{width:9px; height:9px; border-radius:50%; background:#cfe0da; transition:background .3s}
+  .dot.on{background:var(--shell)}
+  .shelf{display:flex; gap:8px; margin-top:8px; min-height:30px; flex-wrap:wrap}
+  .shelf-label{font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-soft); align-self:center}
+  .word-chip{font-size:13px; font-weight:600; background:var(--sand); border:1.5px solid var(--sand-deep); border-radius:8px; padding:3px 10px; cursor:pointer; color:var(--ink)}
+  .word-chip:focus-visible{outline:3px solid var(--shell)}
+  main{flex:1; padding:20px 16px 110px}
+  .screen{display:none; animation:fade .35s ease}
+  .screen.on{display:block}
+  @keyframes fade{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+  @media (prefers-reduced-motion: reduce){ *{animation:none!important; transition:none!important} }
+  h1{font-size:30px; line-height:1.15; margin-bottom:6px}
+  h2{font-size:22px; line-height:1.2; margin-bottom:10px}
+  .kicker{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--shell); font-weight:700; margin-bottom:8px}
+  p{margin-bottom:12px}
+  .muted{color:var(--ink-soft); font-size:15px}
+  .card{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px; margin-bottom:14px}
+  .recap{background:#f0ebe1; border-left:4px solid var(--shell); border-radius:0 10px 10px 0; padding:10px 14px; margin-bottom:14px; font-size:14px}
+  .scene{background:linear-gradient(180deg,#bfe0d6 0%, #e9dfc6 78%, #dcc9a2 100%); border-radius:var(--radius); padding:26px 20px; text-align:center; margin-bottom:16px; font-size:44px; line-height:1.2; box-shadow:var(--shadow)}
+  .scene .cap{font-size:15px; color:var(--ink); margin-top:8px}
+  button{font:inherit; cursor:pointer; border:none; border-radius:12px; padding:13px 18px; background:var(--ink); color:#fff; font-weight:700; width:100%}
+  button:focus-visible{outline:3px solid var(--shell); outline-offset:2px}
+  button:disabled{opacity:.45; cursor:default}
+  .btn-ghost{background:transparent; color:var(--ink); border:2px solid var(--ink)}
+  .btn-row{display:flex; gap:10px}
+  .opt{display:block; width:100%; text-align:left; background:#fff; color:var(--ink); border:2px solid #d9e2de; font-weight:600; margin-bottom:10px; border-radius:12px; padding:14px 16px}
+  .opt .em{font-size:26px; margin-right:10px; vertical-align:-3px}
+  .opt.right{border-color:var(--good); background:#eef7f2}
+  .opt.wrong{border-color:var(--bad); background:#faf0ee}
+  .feedback{border-left:4px solid var(--ink); background:var(--sand); border-radius:0 10px 10px 0; padding:12px 14px; margin:10px 0 14px; font-size:15px}
+  .feedback.good{border-color:var(--good)}
+  .feedback.bad{border-color:var(--bad)}
+  .cut-viz{background:#fff; border:2px solid #d9e2de; border-radius:14px; padding:16px; text-align:center; margin-bottom:12px; font-size:30px}
+  .cut-viz .n{font-size:14px; color:var(--ink-soft); font-weight:600; margin-top:4px}
+  .modal-bg{position:fixed; inset:0; background:rgba(14,27,44,.55); display:none; z-index:40; align-items:center; justify-content:center; padding:24px}
+  .modal-bg.on{display:flex}
+  .word-card{background:var(--sand); border-radius:18px; padding:28px 24px; max-width:380px; width:100%; text-align:center; border:3px solid var(--sand-deep); animation:flip .5s ease}
+  @keyframes flip{from{transform:rotateY(80deg); opacity:0} to{transform:none; opacity:1}}
+  .word-card .w{font-size:34px; margin-bottom:8px}
+  .word-card .d{font-size:17px; color:var(--ink)}
+  #tutorBtn{position:fixed; right:16px; bottom:16px; width:auto; z-index:30; border-radius:999px; padding:13px 18px; background:var(--shell); box-shadow:0 4px 14px rgba(201,111,74,.4); font-size:15px}
+  .modal-overlay{position:fixed; inset:0; background:rgba(14,27,44,.65); z-index:49; display:none}
+  .modal-overlay.on{display:block}
+  #tutorPanel{position:fixed; inset:auto 0 0 0; max-width:560px; margin:0 auto; height:78dvh; background:#fff; border-radius:18px 18px 0 0; box-shadow:0 -6px 30px rgba(14,27,44,.25); z-index:50; display:none; flex-direction:column}
+  #tutorPanel.on{display:flex}
+  .tp-head{display:flex; justify-content:space-between; align-items:center; padding:14px 16px; border-bottom:1px solid #eee}
+  .tp-head button{width:auto; padding:10px 16px; font-size:15px; background:var(--shell); color:#fff; font-weight:700; border-radius:8px}
+  #tlog{flex:1; overflow-y:auto; padding:14px 16px; display:flex; flex-direction:column; gap:10px}
+  .msg{max-width:86%; padding:10px 14px; border-radius:14px; font-size:15px}
+  .msg.u{align-self:flex-end; background:var(--ink); color:#fff; border-bottom-right-radius:4px}
+  .msg.a{align-self:flex-start; background:var(--sand); border-bottom-left-radius:4px}
+  .tp-quick{display:flex; gap:8px; padding:0 16px 8px; flex-wrap:wrap}
+  .tp-quick button{width:auto; font-size:13px; padding:7px 12px; background:#fff; color:var(--ink); border:1.5px solid var(--ink); border-radius:999px}
+  .tp-in{display:flex; gap:8px; padding:10px 16px 18px; border-top:1px solid #eee}
+  .tp-in input{flex:1; font:inherit; padding:12px 14px; border:2px solid #d9e2de; border-radius:12px}
+  .tp-in button{width:auto; padding:12px 16px}
+  .night{background:linear-gradient(180deg,#0e1b2c 0%, #1b3247 100%); color:#fff; border-radius:var(--radius); padding:34px 22px; text-align:center; margin-bottom:16px}
+  .lantern{font-size:56px; animation:glow 2.2s ease infinite alternate}
+  @keyframes glow{from{filter:drop-shadow(0 0 4px var(--gold))} to{filter:drop-shadow(0 0 22px var(--gold))}}
+  .acct{background:linear-gradient(135deg,#123a3f 0%,#1b3247 100%); color:#fff; border-radius:16px; padding:20px; margin-bottom:14px; box-shadow:0 4px 16px rgba(18,58,63,.25)}
+  .acct .lbl{font-size:11px; letter-spacing:.14em; text-transform:uppercase; opacity:.75}
+  .acct .bal{font-size:42px; font-weight:700; font-family:"Fraunces",Georgia,serif; margin:2px 0}
+  .acct .who{font-size:14px; opacity:.8}
+  .txn{background:#fff; border:2px solid #d9e2de; border-radius:12px; padding:11px 14px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; font-size:15px; animation:fade .3s ease}
+  .txn .amt{font-weight:700; color:var(--good); white-space:nowrap}
+  .txn .amt.out{color:var(--bad)}
+  .txn-empty{color:var(--ink-soft); font-size:15px; font-style:italic; padding:10px 0}
+  .tin{background:var(--sand); border:2px dashed var(--sand-deep); border-radius:14px; padding:16px; text-align:center; margin-bottom:12px}
+  .tin .n{font-size:14px; color:var(--ink-soft); margin-top:4px}
+  .ledger{background:#fff; border:2px solid #d9e2de; border-radius:14px; overflow:hidden; margin-bottom:12px}
+  .lrow{display:flex; justify-content:space-between; align-items:center; gap:10px; padding:11px 14px; border-bottom:1px solid #eef2f0; font-size:15px}
+  .lrow:last-child{border-bottom:none}
+  .lrow.head{background:var(--sand); font-weight:700; font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft)}
+  .lrow .run{font-weight:700; font-family:"Fraunces",Georgia,serif; white-space:nowrap}
+  .lrow .mv{font-weight:700; white-space:nowrap; color:var(--good)}
+  .lrow .mv.out{color:var(--bad)}
+  .lrow.pending{background:#fffdf5}
+  .duo{display:flex; gap:10px; margin-bottom:14px}
+  .duo .acct{flex:1; margin-bottom:0; padding:16px 13px}
+  .duo .acct .bal{font-size:29px}
+  .duo .acct .lbl{font-size:10px}
+  .duo .acct .who{font-size:12px; opacity:.75}
+  .acct.save{background:linear-gradient(135deg,#2e7d5b 0%,#1b5540 100%)}
+  .sortbar{display:flex; gap:10px; margin-bottom:12px}
+  .sortbar button{flex:1; font-size:15px; padding:14px 8px}
+  .sortbar .chk{background:var(--ink)}
+  .sortbar .sav{background:var(--good)}
+  .item{background:#fff; border:2px solid #d9e2de; border-radius:14px; padding:18px 16px; text-align:center; margin-bottom:12px; font-size:18px; font-weight:600}
+  .item .sub{font-size:14px; font-weight:400; color:var(--ink-soft); margin-top:4px}
+  .phone{background:#0e1b2c; border-radius:22px; padding:12px 10px 14px; margin-bottom:14px; box-shadow:0 6px 22px rgba(14,27,44,.3)}
+  .phone .pbar{display:flex; justify-content:space-between; color:#8fa8bd; font-size:11px; padding:2px 8px 8px; letter-spacing:.04em}
+  .feed{background:#fff; border-radius:14px; overflow:hidden}
+  .fitem{display:flex; justify-content:space-between; align-items:center; gap:8px; padding:11px 13px; border-bottom:1px solid #eef2f0; font-size:14px}
+  .fitem:last-child{border-bottom:none}
+  .fitem .day{font-size:10px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.08em}
+  .fitem .amt{font-weight:700; white-space:nowrap; color:var(--good)}
+  .fitem .amt.out{color:var(--bad)}
+  .fitem .run{font-size:11px; color:var(--ink-soft)}
+  .notif{background:var(--sand); border:2px solid var(--sand-deep); border-radius:12px; padding:11px 14px; margin-bottom:10px; font-size:14px; display:flex; gap:10px; align-items:flex-start}
+  .notif .bell{font-size:17px; line-height:1.2}
+  .grow{background:#fff; border:2px solid var(--good); border-radius:14px; padding:20px; text-align:center; margin-bottom:12px}
+  .grow .arrow{font-size:22px; color:var(--good); margin:2px 0}
+  .grow .lbl2{font-size:13px; color:var(--ink-soft)}
+  .compare{display:flex; gap:10px; margin-bottom:12px}
+  .compare .box{flex:1; background:#fff; border:2px solid #d9e2de; border-radius:14px; padding:14px 10px; text-align:center}
+  .compare .box.win{border-color:var(--good); background:#eef7f2}
+  .compare .box .n{font-size:12px; color:var(--ink-soft); margin-bottom:4px}
+  .compare .box .v{font-size:22px; font-weight:700; font-family:"Fraunces",Georgia,serif}
+  .spin{display:inline-block; width:16px; height:16px; border:3px solid #fff; border-top-color:transparent; border-radius:50%; animation:sp 1s linear infinite; vertical-align:-3px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .jar{display:flex; align-items:center; gap:10px; background:#fff; border:2px solid #d9e2de; border-radius:14px; padding:12px 14px; margin-bottom:10px}
+  .jar .jl{flex:1}
+  .jar .jl strong{display:block; font-size:16px}
+  .jar .jl span{font-size:13px; color:var(--ink-soft)}
+  .jar .jv{font-family:"Fraunces",Georgia,serif; font-weight:700; font-size:24px; min-width:52px; text-align:center}
+  .jar button{width:44px; height:44px; padding:0; border-radius:10px; font-size:22px; line-height:1}
+  .jar button.minus{background:#fff; color:var(--ink); border:2px solid var(--ink)}
+  .left{text-align:center; font-weight:700; margin:4px 0 12px; font-size:16px}
+  .left.zero{color:var(--good)}
+  .week{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:#fff; background:var(--shell); display:inline-block; border-radius:6px; padding:2px 10px; margin-bottom:8px; font-weight:700}
+  .stars{font-size:28px; letter-spacing:4px; text-align:center; margin:6px 0}
+  .recaplist{list-style:none}
+  .recaplist li{padding:8px 0; border-bottom:1px solid #eef2f0}
+  .recaplist li:last-child{border-bottom:none}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="hrow">
+      <div class="dots" id="dots"></div>
+      <div class="xp" id="xpBox">0 XP</div>
+    </div>
+    <div class="shelf" id="shelf"><span class="shelf-label">Words you own:</span></div>
+  </header>
+  <main id="main"></main>
+</div>
+
+<button id="tutorBtn" aria-label="Ask the tutor">Ask the tutor 💬</button>
+<div class="modal-overlay" id="tutorOverlay" onclick="if(event.target===this)toggleTutor(false)"></div>
+<div id="tutorPanel" role="dialog" aria-label="Tutor chat">
+  <div class="tp-head"><strong class="display">Tutor</strong><button onclick="toggleTutor(false)">✕ Close</button></div>
+  <div id="tlog"></div>
+  <div class="tp-quick">
+    <button onclick="quickAsk('Explain it differently')">Explain differently</button>
+    <button onclick="quickAsk('Make it easier')">Make it easier</button>
+    <button onclick="quickAsk('Give me an example')">Give example</button>
+    <button onclick="quickAsk('Quiz me')">Quiz me</button>
+  </div>
+  <div class="tp-in">
+    <input id="tin" placeholder="Ask about budgets and cushions…" onkeydown="if(event.key==='Enter')sendTutor()">
+    <button onclick="sendTutor()">Send</button>
+  </div>
+</div>
+<div class="modal-bg" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="word-card" id="wordCard"></div>
+</div>
+
+<script>
+/* =====================================================================
+   CONTENT — Module 24: The Banking Challenge (season finale)
+   Vocab: budget, cushion.
+   "cushion" follows the show-then-name pattern: Rana's trick of keeping a
+   few dollars in checking she pretends are not there was SHOWN in M22 L3
+   and is NAMED here.
+   The budget builder uses small whole-number addition — the math IS the
+   concept (every dollar gets a job), so arithmetic stays, but a live
+   "left to plan" counter means the learner never has to hold a sum in
+   their head. The month challenge tests choices, not calculations.
+===================================================================== */
+const VOCAB = {
+  budget:{term:"budget", def:"A plan for your money BEFORE you spend it. Every dollar gets a job: needs first, then savings for your goal, then wants with what is left."},
+  cushion:{term:"cushion", def:"A little money you keep in checking and plan never to spend. If a surprise comes, or you forget to look, the cushion catches you before you go below zero."}
+};
+
+const QUESTIONS = {
+  "q241a":{type:"mc", prompt:"What is a budget?", concept:"budget", opts:[
+    {t:"A plan for your money before you spend it", ok:true, fb:"Right. The key word is BEFORE. A budget decides each dollar’s job while the money is still all there."},
+    {t:"A list of what you already spent", ok:false, fb:"That is looking back — like reading the feed. A budget looks ahead: it plans the money before it moves."},
+    {t:"A special kind of bank account", ok:false, fb:"A budget is not an account. It is a plan — and it works with the checking and savings accounts you already have."}]},
+  "q241b":{type:"mc", prompt:"Kai makes his budget. What order should his dollars get their jobs?", concept:"budget", opts:[
+    {t:"Needs first, then savings for the goal, then wants with what is left", ok:true, fb:"Right — the same order from Modules 10 and 11. Needs keep you going. Savings gets paid before wants can gobble it up."},
+    {t:"Wants first, then needs, then savings if anything is left", ok:false, fb:"If wants go first, the needs might not get covered — and savings almost never happens. Needs come first."},
+    {t:"It does not matter, as long as he writes it down", ok:false, fb:"The order matters a lot. Needs first, then savings, then wants — so the important jobs are never left without money."}]},
+  "q241c":{type:"tf", prompt:"True or false: a budget is only useful for people with lots of money.", answer:false, concept:"budget",
+    good:"Right. A budget matters MOST when money is small — every dollar has to count.",
+    bad:"The opposite! When there is only a little money, planning each dollar’s job matters even more."},
+  "q242a":{type:"mc", prompt:"What is a cushion?", concept:"cushion", opts:[
+    {t:"A little money kept in checking that you plan never to spend, to catch surprises", ok:true, fb:"Right. It sits there quietly — until the day you need it, and then it keeps you above zero."},
+    {t:"Money set aside for fun things", ok:false, fb:"That is your wants money. A cushion is money you plan NOT to spend — it is there to catch you."},
+    {t:"The extra the bank adds to savings", ok:false, fb:"That is interest. A cushion is money YOU leave in checking on purpose, as a safety catch."}]},
+  "q242b":{type:"mc", prompt:"Why does Kai keep his cushion in CHECKING, not savings?", concept:"cushion", opts:[
+    {t:"Payments come out of checking — so that is where the catch needs to be", ok:true, fb:"Right. If something goes wrong with a payment, it happens in checking. The cushion sits right where it can catch it."},
+    {t:"Because checking pays more interest", ok:false, fb:"It is the other way around for Kai — interest is a savings thing. The cushion lives in checking because that is where payments happen."},
+    {t:"It does not matter where it is", ok:false, fb:"It matters! A cushion in savings cannot catch a payment that comes out of checking."}]},
+  "q242c":{type:"tf", prompt:"True or false: a cushion is money you plan to spend on wants.", answer:false, concept:"cushion",
+    good:"Right. A cushion is the money you plan NOT to spend. Its only job is to catch you.",
+    bad:"Not quite. Wants money is for spending. A cushion is the opposite: money you plan never to spend, so it can catch a surprise."},
+  "q243a":{type:"mc", prompt:"At the end of Kai’s month, his savings was a little bigger than everything he had put in. Why?", concept:"budget", opts:[
+    {t:"Interest — money in savings can grow on its own", ok:true, fb:"Right. His plan put money in savings early, and the bank added a little on top while it sat there."},
+    {t:"The cushion moved into savings by itself", ok:false, fb:"The cushion stays in checking. The extra in savings came from interest."},
+    {t:"A mistake — savings should always match exactly what you put in", ok:false, fb:"No mistake! That little extra is interest, doing exactly what Module 21 said it would."}]},
+  "q243b":{type:"mc", transfer:true, prompt:"Before fishing season, Tavo decides: some fish will feed his family, some he will sell for his boat goal, and a few he can trade for fun. What is Tavo doing?", concept:"budget", opts:[
+    {t:"Making a budget — giving each part a job before the season even starts", ok:true, fb:"Exactly. No money in sight yet — just fish — but the idea is the same: plan every part’s job before it gets used up."},
+    {t:"Nothing about money — it is only fish", ok:false, fb:"The things changed, not the idea. Needs first, then the goal, then fun — decided ahead of time. That is a budget."},
+    {t:"Wasting time — he should decide when he catches them", ok:false, fb:"Deciding in the moment is how the fun part eats the goal part. Planning first is the whole point of a budget."}]}
+};
+
+const CFG = {
+  n:24, title:"The Banking Challenge", homeSub:"Four short lessons. Make a plan, add a cushion, then run one whole month.",
+  pool:["q241a","q241b","q241c","q242a","q242b","q242c","q243a"], transfer:"q243b",
+  quest:"You built a budget, added a cushion, and ran Kai’s month without a single overdraft.",
+  failKeys:"The keys: a budget plans money BEFORE it is spent (needs, then savings, then wants), a cushion sits in checking so surprises cannot push you below zero, and savings can grow with interest.",
+  badge:" · Banking season complete 🏦",
+  nextFile:"module-25-borrowing.html",
+  passStory:'<p><strong>You now own:</strong> budget and cushion — and the whole first Banking season.</p>'+
+    '<p>Kai started with a tin under a floorboard. Now he runs his own month: a plan, two accounts, a cushion, a phone that tells him everything, and a secret no trickster can get.</p>'+
+    '<p>But at the market the next week, Kai spots something new pinned to the trading post board — a paper with big letters across the top: <strong>"IF YOU BORROW $10 TODAY…"</strong></p>'+
+    '<p>"Borrow?" Kai asks. "Like… someone gives ME money? And then what?"</p>'+
+    '<p class="muted">Module 25: Borrowing — the first step into Credit.</p>'
+};
+
+const TUTOR_HELLO = "Hi! Ask me anything about budgets, cushions, or Kai’s month — or tap a button below.";
+const TUTOR_SYS = "You are the tutor inside Module 24 (The Banking Challenge) of a financial-literacy app — the finale of the first Banking season. The learner may be a child or an adult. "+
+  "They know from earlier modules: money, dollar, cent, add, subtract, buy, sell, pay, earn, spend, need, save, goal, percent, bank, deposit, withdraw, balance, checking, savings, transaction, notification, interest, grow, fee, overdraft, PIN, scam. "+
+  "From THIS module: budget (a plan for your money BEFORE you spend it; every dollar gets a job: needs first, then savings for the goal, then wants with what is left) and cushion (a little money kept in checking that you plan never to spend, so a surprise or a forgotten look cannot push you below zero). "+
+  "TEACHING STYLE: the budget uses small whole-dollar adding, which is fine. Never compute interest, percentages, or rates. Keep most answers about WHY and WHETHER. "+
+  "STRICT RULES: never use these words (later modules): borrow, loan, lend, credit, debt, owe, APR, rate, invest, stock, tax, insurance, emergency fund. If the learner uses one, answer briefly in plain words and say it is coming later. "+
+  "Story context: Kai earned $20 and built a budget (needs $8, the rest split between savings and wants). Rana named her trick from Module 22 — the cushion. Then Kai ran a whole month: payday into the plan, a kite from wants money, a scam message deleted, a surprise rope caught by the cushion, and interest nudging his savings up. No fees, no overdraft. "+
+  "Never repeat a failed explanation — switch analogies (giving each fish a job before the season, a seatbelt, jars on a shelf). Keep answers under 80 words, warm, honest, never mark wrong ideas right. If asked 'Quiz me', ask ONE simple question and wait.";
+
+/* =====================================================================
+   STATE + PERSISTENCE
+===================================================================== */
+let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false,false], masteryPassed:false,
+          acct:{checking:0, savings:0} };
+
+async function loadState(){
+  try{
+    const r = await window.storage.get("mod24-state");
+    if(r && r.value){ S = Object.assign(S, JSON.parse(r.value)); return; }
+  } catch(e){ }
+  try{
+    const saved = localStorage.getItem("mod24-state");
+    if(saved){ S = Object.assign(S, JSON.parse(saved)); }
+    for(let i=23;i>=1;i--){
+      const prev = localStorage.getItem("mod"+i+"-state");
+      if(prev){ const p = JSON.parse(prev); if(p.xp > S.xp) S.xp = p.xp; }
+    }
+  } catch(e){ }
+}
+async function saveState(){
+  try{ await window.storage.set("mod24-state", JSON.stringify(S)); }catch(e){
+    try{ localStorage.setItem("mod24-state", JSON.stringify(S)); }catch(e2){}
+  }
+}
+function addXP(n){ S.xp+=n; document.getElementById("xpBox").textContent = S.xp+" XP"; saveState(); }
+function earnWord(k){
+  if(S.shelf.includes(k)) return;
+  S.shelf.push(k); renderShelf(); saveState();
+  showWordCard(k);
+}
+function renderShelf(){
+  const el=document.getElementById("shelf");
+  el.innerHTML='<span class="shelf-label">Words you own:</span>';
+  S.shelf.forEach(k=>{
+    if(!VOCAB[k]) return;
+    const b=document.createElement("button"); b.className="word-chip"; b.textContent=VOCAB[k].term;
+    b.onclick=()=>showWordCard(k); el.appendChild(b);
+  });
+}
+function showWordCard(k){
+  const v=VOCAB[k]; if(!v) return;
+  document.getElementById("wordCard").innerHTML =
+    '<div class="w display">'+v.term+'</div><div class="d">'+v.def+'</div>' +
+    '<button style="margin-top:18px" onclick="closeModal()">Got it</button>';
+  document.getElementById("modal").classList.add("on");
+}
+function closeModal(){ document.getElementById("modal").classList.remove("on"); }
+
+/* =====================================================================
+   SCREEN ENGINE
+===================================================================== */
+const M = document.getElementById("main");
+function show(html){ M.innerHTML='<div class="screen on">'+html+'</div>'; window.scrollTo(0,0); }
+function revealFB(){ setTimeout(function(){
+  var ids=["cont","c2","fb","fb2"];
+  for(var i=0;i<ids.length;i++){
+    var el=document.getElementById(ids[i]);
+    if(el && el.innerHTML && el.innerHTML.trim()){
+      if(el.scrollIntoView) el.scrollIntoView({behavior:"smooth", block:"nearest"});
+      return;
+    }
+  }
+},80); }
+function dots(n,i){
+  const d=document.getElementById("dots"); d.innerHTML="";
+  for(let k=0;k<n;k++){const s=document.createElement("span");s.className="dot"+(k<=i?" on":"");d.appendChild(s);}
+}
+function next(){ S.step++; saveState(); render(); }
+function render(){
+  const les=LESSONS[S.lesson];
+  dots(les.steps.length, S.step);
+  if(S.step>=les.steps.length){ lessonComplete(); return; }
+  les.steps[S.step]();
+}
+function lessonComplete(){
+  if(!S.done[S.lesson]){ S.done[S.lesson]=true; addXP(10); }
+  saveState();
+  goHome();
+}
+function renderMC(qid, onDone){
+  const q=QUESTIONS[qid];
+  let html='<div class="kicker">Question</div><h2 class="display">'+q.prompt+'</h2><div id="opts">';
+  q.opts.forEach((o,i)=>{ html+='<button class="opt" data-i="'+i+'">'+o.t+'</button>'; });
+  html+='</div><div id="fb"></div><div id="cont"></div>';
+  show(html);
+  let answered=false, firstShot=!(qid in S.firstTry);
+  document.querySelectorAll(".opt").forEach(btn=>{
+    btn.onclick=()=>{
+      const i=+btn.dataset.i, o=q.opts[i];
+      if(answered && o.ok===false) return;
+      btn.classList.add(o.ok?"right":"wrong");
+      document.getElementById("fb").innerHTML='<div class="feedback '+(o.ok?'good':'bad')+'">'+o.fb+'</div>';
+      revealFB();
+      if(o.ok){
+        if(firstShot && !answered){ S.firstTry[qid]=true; addXP(2); }
+        answered=true;
+        document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
+        document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>';
+        revealFB();
+        window._c=()=>onDone;
+      } else { answered=true; S.firstTry[qid]=false; }
+      saveState();
+    };
+  });
+}
+function renderTF(qid,onDone){
+  const q=QUESTIONS[qid];
+  show('<div class="kicker">True or false</div><h2 class="display">'+q.prompt+'</h2>'+
+    '<div class="btn-row"><button class="opt" id="tT">True</button><button class="opt" id="tF">False</button></div>'+
+    '<div id="fb"></div><div id="cont"></div>');
+  let firstShot=!(qid in S.firstTry), answered=false;
+  function pick(val,el){
+    const ok = (val===q.answer);
+    el.classList.add(ok?"right":"wrong");
+    document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?q.good:q.bad)+'</div>';
+    revealFB();
+    if(ok){
+      if(firstShot && !answered){S.firstTry[qid]=true; addXP(2);}
+      document.getElementById("tT").disabled=true; document.getElementById("tF").disabled=true;
+      document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>'; window._c=()=>onDone;
+      revealFB();
+    } else { S.firstTry[qid]=false; }
+    answered=true; saveState();
+  }
+  document.getElementById("tT").onclick=e=>pick(true,e.target);
+  document.getElementById("tF").onclick=e=>pick(false,e.target);
+}
+
+/* =====================================================================
+   SIMULATOR — M24 brings back both accounts (M19 duo card) and adds a
+   budget builder. The month challenge applies only the correct choice
+   to the balances (a wrong pick explains itself and lets you choose
+   again), so the numbers stay predictable — the same design as the
+   M22 pay-or-wait drill. First-try picks earn stars.
+===================================================================== */
+function money(n){ return (n<0?"−":"") + "$" + Math.abs(n).toFixed(2); }
+function duoCard(){
+  return '<div class="duo">'+
+    '<div class="acct"><div class="lbl">Checking</div><div class="bal">'+money(S.acct.checking)+'</div><div class="who">spend soon</div></div>'+
+    '<div class="acct save"><div class="lbl">Savings</div><div class="bal">'+money(S.acct.savings)+'</div><div class="who">for the goal</div></div>'+
+    '</div>';
+}
+
+/* ---------- budget builder ---------- */
+const PAY=20, NEEDS_MIN=8;
+let BUD={needs:0, save:0, wants:0};
+function budLeft(){ return PAY-BUD.needs-BUD.save-BUD.wants; }
+function bump(k,d){
+  if(d>0 && budLeft()<=0) return;
+  if(d<0 && BUD[k]<=0) return;
+  BUD[k]+=d; drawBudget();
+}
+function jar(k,label,hint){
+  return '<div class="jar"><div class="jl"><strong>'+label+'</strong><span>'+hint+'</span></div>'+
+    '<button class="minus" aria-label="less '+label+'" onclick="bump(\''+k+'\',-1)">−</button>'+
+    '<div class="jv">$'+BUD[k]+'</div>'+
+    '<button aria-label="more '+label+'" onclick="bump(\''+k+'\',1)">+</button></div>';
+}
+function drawBudget(){
+  const left=budLeft();
+  show(`<div class="kicker">Lesson 1 · Build Kai’s budget</div>
+    <div class="card"><p>Kai earned <strong>$20</strong> this week. His needs (food and rope) cost <strong>$8</strong>. He wants savings for his sail AND a little fun. Give every dollar a job.</p></div>
+    ${jar("needs","Needs","food and rope · at least $8")}
+    ${jar("save","Savings","for the sail goal")}
+    ${jar("wants","Wants","fun, with what is left")}
+    <div class="left${left===0?' zero':''}">${left===0?'Every dollar has a job ✓':'Left to plan: $'+left}</div>
+    <div id="fb"></div>
+    <button id="bLock" onclick="lockBudget()">Lock in the plan</button>
+    <div id="cont"></div>`);
+}
+function lockBudget(){
+  let msg=null;
+  if(budLeft()>0) msg="There is still $"+budLeft()+" without a job. A budget plans EVERY dollar.";
+  else if(BUD.needs<NEEDS_MIN) msg="Needs come first! Food and rope cost $8, and the Needs jar only has $"+BUD.needs+".";
+  else if(BUD.save<1) msg="The sail goal gets nothing this week? Savings comes right after needs — give it at least a little.";
+  const fb=document.getElementById("fb");
+  if(msg){ fb.innerHTML='<div class="feedback bad">'+msg+'</div>'; revealFB(); return; }
+  fb.innerHTML='<div class="feedback good">A real budget. Needs covered with $'+BUD.needs+', $'+BUD.save+' for the sail, and $'+BUD.wants+' to enjoy — all decided before a single dollar moved.</div>';
+  document.getElementById("bLock").disabled=true;
+  document.querySelectorAll(".jar button").forEach(b=>b.disabled=true);
+  document.getElementById("cont").innerHTML='<button onclick="addXP(4);next()">Continue</button>';
+  revealFB();
+}
+
+/* =====================================================================
+   LESSON 1 — A Plan Before the Money Moves
+===================================================================== */
+const L1=[
+  ()=>show(`<div class="kicker">Lesson 1 · A plan before the money moves</div>
+    <div class="recap"><strong>Kai’s story so far:</strong> Bank, balance, checking and savings, his phone, interest, fees, and a PIN nobody can get. Now Rana wants to see him run it all.</div>
+    <div class="scene">🗓️💵<div class="cap">"Before your money arrives," Rana says, "decide what every dollar is going to do."</div></div>
+    <button onclick="next()">Why before?</button>`),
+  ()=>show(`<div class="kicker">Lesson 1</div>
+    <div class="card"><p>Money without a plan has a way of disappearing — a sweet cake here, a trinket there — until the needs and the goal are left with nothing.</p>
+    <p>A <strong>budget</strong> fixes that. It is a plan for your money <strong>before</strong> you spend it. Every dollar gets a job, in this order:</p>
+    <ol class="steps" style="padding-left:20px">
+      <li><strong>Needs first</strong> — the things you cannot go without (Module 10).</li>
+      <li><strong>Savings for the goal</strong> — paid before wants can eat it (Module 11).</li>
+      <li><strong>Wants</strong> — with what is left, guilt-free.</li>
+    </ol></div>
+    <button onclick="earnWord('budget');next()">New word: budget</button>`),
+  ()=>{ BUD={needs:0, save:0, wants:0}; drawBudget(); },
+  ()=>renderMC("q241a", next),
+  ()=>renderMC("q241b", next),
+  ()=>renderTF("q241c", next),
+];
+
+/* =====================================================================
+   LESSON 2 — The Cushion
+===================================================================== */
+const L2=[
+  ()=>show(`<div class="kicker">Lesson 2 · Rana’s trick, named</div>
+    <div class="recap"><strong>So far:</strong> a budget gives every dollar a job before it moves.</div>
+    <div class="card"><p>Remember Rana’s trick from Module 22? "I keep a few dollars in checking that I pretend are not there."</p>
+    <p>That money has a name. It is a <strong>cushion</strong> — a little money you keep in checking and plan never to spend.</p>
+    <p>It is not for wants. It is not for the goal. Its only job is to <strong>catch you</strong>.</p></div>
+    <button onclick="earnWord('cushion');next()">New word: cushion</button>`),
+  ()=>show(`<div class="kicker">Lesson 2 · Why it matters</div>
+    <div class="card"><p>Surprise: Tavo’s goat chews through Kai’s rope. A new one costs $4, today. Payday is next week.</p></div>
+    <div class="compare">
+      <div class="box"><div class="n">No cushion — $1 left</div><div class="v" style="color:var(--bad)">below zero</div><div class="n" style="margin-top:4px">+ an overdraft fee</div></div>
+      <div class="box win"><div class="n">$5 cushion — $6 left</div><div class="v">$2 left</div><div class="n" style="margin-top:4px">no fee, no stress</div></div>
+    </div>
+    <div class="card"><p>Same week. Same rope. The only difference is a few dollars Kai decided ahead of time not to touch.</p>
+    <p>And it lives in <strong>checking</strong>, because that is where payments come from — right where the catch is needed.</p></div>
+    <button onclick="next()">Practice</button>`),
+  ()=>renderMC("q242a", next),
+  ()=>renderMC("q242b", next),
+  ()=>renderTF("q242c", next),
+];
+
+/* =====================================================================
+   LESSON 3 — One Whole Month (challenge)
+===================================================================== */
+const MONTH=[
+  {wk:"Week 1 · Payday", story:"Kai’s $20 from the market lands in checking. His budget says $8 needs, $6 savings, $6 wants. He keeps a $5 cushion in checking.",
+   pre:()=>{ S.acct={checking:5, savings:15}; }, opts:[
+    {t:"Move the $6 savings part to savings right away", ok:true, fb:"Right. Savings gets paid early, before wants have a chance at it. The plan is working.",
+     apply:()=>{ S.acct.checking=5+20-6; S.acct.savings=21; }},
+    {t:"Leave all $20 in checking and decide later", ok:false, fb:"“Later” is how money without a job gets spent. The budget already decided — move the savings part now."},
+    {t:"Spend $15 on a fancy hat to celebrate", ok:false, fb:"That would wipe out the needs AND the goal in one go. The budget gave wants $6, not $15."}]},
+  {wk:"Week 2 · Market day", story:"Kai pays for food and rope ($8, his needs). Then he spots a kite for $5. His wants money for the month is $6.",
+   pre:()=>{ S.acct.checking=19-8; }, opts:[
+    {t:"Buy it — the kite fits inside his wants money", ok:true, fb:"Right. This is exactly what wants money is for. A budget is not about never having fun — it is about fun that fits.",
+     apply:()=>{ S.acct.checking=6; }},
+    {t:"Move $5 back out of savings to pay for it", ok:false, fb:"No need to touch the goal! The wants money already covers the kite. Savings stays for the sail."},
+    {t:"Skip it — budgets mean no fun", ok:false, fb:"A budget plans for wants on purpose. The kite fits his wants money, so he can enjoy it."}]},
+  {wk:"Week 3 · A message", story:"Kai’s phone buzzes: “You WON a free boat!! Tap this link and enter your PIN to claim it. Offer ends in 1 hour!”",
+   pre:()=>{}, opts:[
+    {t:"Delete it and tell Rana", ok:true, fb:"Right. Prize he never entered, asks for his PIN, rushes him. Three warning signs. A scam, every time."},
+    {t:"Tap the link just to see", ok:false, fb:"The link could lead straight to the trickster. Too good to be true, a PIN request, a rush — that is a scam."},
+    {t:"Reply and ask if it is real", ok:false, fb:"Replying talks to the trickster. There is nothing to check — the real bank never asks for your PIN."}]},
+  {wk:"Week 4 · Surprise!", story:"The goat strikes again — Kai needs a new rope, $4, today. Payday is next week.",
+   pre:()=>{}, opts:[
+    {t:"Look at the balance first: $6 covers $4 — pay", ok:true, fb:"Right. One look, enough money, no overdraft. And notice: without his $5 cushion, he would have had only $1. The cushion just caught him.",
+     apply:()=>{ S.acct.checking=2; }},
+    {t:"Take it out of savings", ok:false, fb:"Checking already covers it — that is what the cushion is for. The sail money can stay put."},
+    {t:"Pay without looking — it will probably be fine", ok:false, fb:"“Probably” is how overdrafts happen. The rule from Module 22: look first, every time."}]},
+  {wk:"End of month", story:"A notification arrives: <em>Savings grew: $21.00 → $21.10.</em> Kai did not deposit anything this week.",
+   pre:()=>{}, opts:[
+    {t:"Interest — his savings grew on its own", ok:true, fb:"Right. The money he saved early did not just sit there — it grew a little.",
+     apply:()=>{ S.acct.savings=21.10; }},
+    {t:"The cushion moved over by itself", ok:false, fb:"The cushion never moves — it is still sitting in checking. The extra in savings is interest."},
+    {t:"A mistake — he should report it", ok:false, fb:"No mistake! A little extra with no deposit is interest, exactly as Module 21 promised."}]}
+];
+let monthStars=0;
+const L3=[
+  ()=>{ S.acct={checking:5, savings:15}; monthStars=0; saveState();
+    show(`<div class="kicker">Lesson 3 · One whole month</div>
+    <div class="recap"><strong>So far:</strong> a budget plans every dollar, and a cushion catches surprises.</div>
+    ${duoCard()}
+    <div class="card"><p>Here is Kai at the start of the month: a $5 cushion in checking and $15 saved toward his sail.</p>
+    <p>Five moments are coming. Pick what Kai should do. Get it right the first time to earn a ⭐.</p></div>
+    <button onclick="next()">Start the month</button>`); },
+  ()=>{
+    let i=0;
+    function draw(){
+      if(i>=MONTH.length){ addXP(6); saveState(); next(); return; }
+      const w=MONTH[i]; w.pre();
+      const shuffled=w.opts.map((o,k)=>({o,k})).sort(()=>Math.random()-.5);
+      show(`<div class="week">${w.wk}</div>
+        ${duoCard()}
+        <div class="card"><p style="margin:0">${w.story}</p></div>
+        <div id="opts">${shuffled.map(x=>'<button class="opt" data-bot="1" data-k="'+x.k+'">'+x.o.t+'</button>').join('')}</div>
+        <div id="fb"></div><div id="cont"></div>`);
+      let first=true, done=false;
+      document.querySelectorAll("#opts .opt").forEach(btn=>{
+        btn.onclick=()=>{
+          if(done) return;
+          const o=w.opts[+btn.dataset.k];
+          btn.classList.add(o.ok?"right":"wrong");
+          document.getElementById("fb").innerHTML='<div class="feedback '+(o.ok?'good':'bad')+'">'+o.fb+(o.ok?'':' Pick again.')+'</div>';
+          revealFB();
+          if(o.ok){
+            done=true; if(first){ monthStars++; addXP(1); }
+            if(o.apply) o.apply(); saveState();
+            document.querySelector(".duo").outerHTML=duoCard();
+            document.querySelectorAll("#opts .opt").forEach(b=>b.disabled=true);
+            document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(i<MONTH.length-1?"Next week":"See the month")+'</button>';
+            window._n=()=>{ i++; draw(); };
+            revealFB();
+          } else { first=false; btn.disabled=true; }
+        };
+      });
+    }
+    draw();
+  },
+  ()=>show(`<div class="kicker">Lesson 3 · Kai’s month</div>
+    ${duoCard()}
+    <div class="stars">${"⭐".repeat(monthStars)}${"☆".repeat(MONTH.length-monthStars)}</div>
+    <p class="muted" style="text-align:center">${monthStars} of ${MONTH.length} on the first try</p>
+    <div class="card"><ul class="recaplist">
+      <li>✅ <strong>Zero overdrafts, zero fees.</strong> He looked before every payment.</li>
+      <li>✅ <strong>Savings: $15 → $21.10.</strong> Paid early, then grew with interest.</li>
+      <li>✅ <strong>The cushion caught one surprise.</strong> And it is still standing guard.</li>
+      <li>✅ <strong>One scam, deleted.</strong> His PIN never left his head.</li>
+    </ul></div>
+    <button onclick="next()">Practice</button>`),
+  ()=>renderMC("q243a", next),
+];
+const META=[
+  {title:"A Plan Before the Money Moves", sub:"Build Kai’s first budget", emoji:"🗓️"},
+  {title:"The Cushion", sub:"Rana’s trick finally gets a name", emoji:"🛋️"},
+  {title:"One Whole Month", sub:"Five moments. Every choice is yours.", emoji:"🏁"},
+];
+
+
+function masteryQ(){
+  if(mastery.idx>=mastery.qs.length){ next(); return; }
+  const qid=mastery.qs[mastery.idx];
+  const q=QUESTIONS[qid];
+  const cont=()=>{ mastery.idx++; masteryQ(); };
+  if(q.type==="tf"){ renderTFM(qid,cont); } else { renderMCM(qid,cont); }
+}
+function renderMCM(qid,onDone){
+  const q=QUESTIONS[qid];
+  let html='<div class="kicker">Mastery · '+(mastery.idx+1)+' of '+mastery.qs.length+'</div><h2 class="display">'+q.prompt+'</h2>';
+  q.opts.forEach((o,i)=>html+='<button class="opt" data-i="'+i+'">'+o.t+'</button>');
+  html+='<div id="fb"></div><div id="cont"></div>'; show(html);
+  let answered=false;
+  document.querySelectorAll(".opt").forEach(btn=>{
+    btn.onclick=()=>{
+      if(answered) return; answered=true;
+      const o=q.opts[+btn.dataset.i];
+      btn.classList.add(o.ok?"right":"wrong");
+      if(o.ok) mastery.score++;
+      document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
+      document.getElementById("fb").innerHTML='<div class="feedback '+(o.ok?'good':'bad')+'">'+o.fb+'</div>';
+      document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>'; window._c=()=>onDone;
+      revealFB();
+    };
+  });
+}
+function renderTFM(qid,onDone){
+  const q=QUESTIONS[qid];
+  show('<div class="kicker">Mastery · '+(mastery.idx+1)+' of '+mastery.qs.length+'</div><h2 class="display">'+q.prompt+'</h2>'+
+    '<div class="btn-row"><button class="opt" id="tT">True</button><button class="opt" id="tF">False</button></div>'+
+    '<div id="fb"></div><div id="cont"></div>');
+  let answered=false;
+  function pick(v,el){
+    if(answered)return; answered=true;
+    const ok=(v===q.answer); if(ok)mastery.score++;
+    el.classList.add(ok?"right":"wrong");
+    document.getElementById("tT").disabled=true;document.getElementById("tF").disabled=true;
+    document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?q.good:q.bad)+'</div>';
+    document.getElementById("cont").innerHTML='<button onclick="(_c())()">Continue</button>'; window._c=()=>onDone;
+    revealFB();
+  }
+  document.getElementById("tT").onclick=e=>pick(true,e.target);
+  document.getElementById("tF").onclick=e=>pick(false,e.target);
+}
+
+/* =====================================================================
+   LESSON 4 — Mastery (shared shape: 4 random from pool + 1 transfer)
+===================================================================== */
+let mastery = {qs:[], idx:0, score:0};
+const L4=[
+  ()=>{
+    const pool=CFG.pool.slice().sort(()=>Math.random()-.5).slice(0,4);
+    mastery={qs:[...pool,CFG.transfer].sort(()=>Math.random()-.5), idx:0, score:0};
+    show('<div class="kicker">Lesson 4 · Show what you know</div>'+
+      '<div class="recap"><strong>Module '+CFG.n+' quest:</strong> '+CFG.quest+'</div>'+
+      '<h1 class="display">Five questions.</h1>'+
+      '<p>Get 4 of 5 right and Module '+CFG.n+' is yours.</p>'+
+      '<button onclick="next()">Start</button>');
+  },
+  ()=>{ masteryQ(); },
+  ()=>{ finishMastery(mastery.score>=4); },
+];
+function finishMastery(pass){
+  if(pass && !S.masteryPassed){ S.masteryPassed=true; addXP(20); }
+  saveState();
+  if(pass){
+    show('<div class="night"><div class="lantern">🏮</div>'+
+      '<h1 class="display" style="color:#fff">Module '+CFG.n+' complete</h1>'+
+      '<p style="color:#cfe0ee">Quiz: '+mastery.score+'/5 ✓'+(CFG.badge||'')+'</p></div>'+
+      '<div class="card">'+CFG.passStory+'</div>'+
+      (CFG.nextFile?'<button style="margin-bottom:10px" onclick="window.location.href=\''+CFG.nextFile+'\'">Continue to Module '+(CFG.n+1)+'</button>':'')+
+      '<button class="btn-ghost" style="margin-bottom:10px" onclick="window.location.href=\'index.html\'">🗺️ Back to all modules</button>'+
+      '<button class="btn-ghost" onclick="goHome()">Stay in Module '+CFG.n+'</button>');
+    S.done[3]=true; saveState();
+  } else {
+    show('<div class="kicker">Almost there</div>'+
+      '<h1 class="display">One more try</h1>'+
+      '<p>You got '+mastery.score+' of 5. '+CFG.failKeys+'</p>'+
+      '<button onclick="S.step=0;render()">Try again</button>'+
+      '<button class="btn-ghost" style="margin-top:10px" onclick="toggleTutor(true)">Talk with the tutor</button>'+
+      '<button class="btn-ghost" style="margin-top:10px" onclick="goHome()">Back home</button>');
+  }
+}
+
+const LESSONS=[
+  {title:META[0].title, sub:META[0].sub, steps:L1, emoji:META[0].emoji},
+  {title:META[1].title, sub:META[1].sub, steps:L2, emoji:META[1].emoji},
+  {title:META[2].title, sub:META[2].sub, steps:L3, emoji:META[2].emoji},
+  {title:"Show What You Know", sub:"Mastery check", steps:L4, emoji:"🏮"},
+];
+
+/* =====================================================================
+   HOME
+===================================================================== */
+function goHome(){
+  dots(4, S.done.filter(Boolean).length-1);
+  let html='<div class="kicker">Module '+CFG.n+'</div><h1 class="display">'+CFG.title+'</h1>'+
+    '<p class="muted">'+CFG.homeSub+'</p>';
+  LESSONS.forEach((l,i)=>{
+    const locked = i>0 && !S.done[i-1];
+    const done = S.done[i];
+    html+='<button class="opt" '+(locked?'disabled':'')+' onclick="startLesson('+i+')">'+
+      '<span class="em">'+(done?'✅':locked?'🔒':l.emoji)+'</span><strong>'+l.title+'</strong><br>'+
+      '<span class="muted" style="font-weight:400">'+l.sub+'</span></button>';
+  });
+  if(S.masteryPassed) html+='<div class="night" style="margin-top:8px"><div class="lantern">🏮</div><p style="color:#cfe0ee">Module '+CFG.n+' mastered · '+S.xp+' XP</p></div>';
+  html+='<button class="btn-ghost" style="margin-top:14px" onclick="window.location.href=\'index.html\'">🗺️ Back to all modules</button>';
+  show(html);
+}
+function startLesson(i){ S.lesson=i; S.step=0; saveState(); render(); }
+
+
+/* =====================================================================
+   TUTOR
+===================================================================== */
+let tHist=[];
+function toggleTutor(on){
+  document.getElementById("tutorPanel").classList.toggle("on",on);
+  document.getElementById("tutorOverlay").classList.toggle("on",on);
+  saveState();
+  if(on&&tHist.length===0) tMsg("a",TUTOR_HELLO);
+}
+document.getElementById("tutorBtn").onclick=()=>toggleTutor(true);
+function tMsg(who,txt){ const d=document.createElement("div"); d.className="msg "+who; d.textContent=txt; document.getElementById("tlog").appendChild(d); d.scrollIntoView({behavior:"smooth"}); }
+function quickAsk(t){ document.getElementById("tin").value=t; sendTutor(); }
+async function sendTutor(){
+  const inp=document.getElementById("tin"); const txt=inp.value.trim(); if(!txt) return;
+  inp.value=""; tMsg("u",txt); tHist.push({role:"user",content:txt});
+  const think=document.createElement("div"); think.className="msg a"; think.innerHTML='<span class="spin" style="border-color:var(--ink);border-top-color:transparent"></span>';
+  document.getElementById("tlog").appendChild(think);
+  const sys=TUTOR_SYS;
+  try{
+    const controller=new AbortController(); const timeout=setTimeout(()=>controller.abort(),8000);
+    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:300,system:sys,messages:tHist.slice(-10)}),signal:controller.signal});
+    clearTimeout(timeout);
+    const data=await r.json();
+    const out=(data.content||[]).filter(c=>c.type==="text").map(c=>c.text).join("").trim() || "I lost my thread. Ask again?";
+    think.remove(); tMsg("a",out); tHist.push({role:"assistant",content:out});
+  }catch(e){
+    think.remove(); tMsg("a","I can't think right now. Try again in a moment — or tap the word cards up top to review.");
+  }
+}
+
+/* ---------- boot ---------- */
+(async function(){
+  await loadState();
+  document.getElementById("xpBox").textContent=S.xp+" XP";
+  renderShelf();
+  goHome();
+})();
+</script>
+</body>
+</html>
