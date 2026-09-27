@@ -182,7 +182,9 @@
   <div class="word-card" id="wordCard"></div>
 </div>
 
+<script src="finlit-core.js"></script>
 <script>
+const MODULE_N = 29;
 /* =====================================================================
    CONTENT — Module 29: The Credit Challenge (Credit block finale)
    Vocab: lender, minimum payment.
@@ -257,26 +259,9 @@ const TUTOR_SYS = "You are the tutor inside Module 29 (The Credit Challenge) of 
 let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false,false], masteryPassed:false,
           acct:{checking:0, savings:0} };
 
-async function loadState(){
-  try{
-    const r = await window.storage.get("mod29-state");
-    if(r && r.value){ S = Object.assign(S, JSON.parse(r.value)); return; }
-  } catch(e){ }
-  try{
-    const saved = localStorage.getItem("mod29-state");
-    if(saved){ S = Object.assign(S, JSON.parse(saved)); }
-    for(let i=28;i>=1;i--){
-      const prev = localStorage.getItem("mod"+i+"-state");
-      if(prev){ const p = JSON.parse(prev); if(p.xp > S.xp) S.xp = p.xp; }
-    }
-  } catch(e){ }
-}
-async function saveState(){
-  try{ await window.storage.set("mod29-state", JSON.stringify(S)); }catch(e){
-    try{ localStorage.setItem("mod29-state", JSON.stringify(S)); }catch(e2){}
-  }
-}
-function addXP(n){ S.xp+=n; document.getElementById("xpBox").textContent = S.xp+" XP"; saveState(); }
+async function loadState(){ S = await FL.load(MODULE_N, S); }
+async function saveState(){ await FL.save(MODULE_N, S); }
+function addXP(n){ FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -324,11 +309,12 @@ function render(){
   const les=LESSONS[S.lesson];
   dots(les.steps.length, S.step);
   if(S.step>=les.steps.length){ lessonComplete(); return; }
+  FL.checkpoint(S, LESSONS); saveState();
   les.steps[S.step]();
 }
 function lessonComplete(){
   if(!S.done[S.lesson]){ S.done[S.lesson]=true; addXP(10); }
-  saveState();
+  FL.lessonDone(S); saveState();
   goHome();
 }
 function renderMC(qid, onDone){
@@ -623,6 +609,7 @@ function goHome(){
   dots(4, S.done.filter(Boolean).length-1);
   let html='<div class="kicker">Module '+CFG.n+'</div><h1 class="display">'+CFG.title+'</h1>'+
     '<p class="muted">'+CFG.homeSub+'</p>';
+  html+=FL.resumeCard(S, LESSONS);
   LESSONS.forEach((l,i)=>{
     const locked = i>0 && !S.done[i-1];
     const done = S.done[i];
@@ -630,11 +617,11 @@ function goHome(){
       '<span class="em">'+(done?'✅':locked?'🔒':l.emoji)+'</span><strong>'+l.title+'</strong><br>'+
       '<span class="muted" style="font-weight:400">'+l.sub+'</span></button>';
   });
-  if(S.masteryPassed) html+='<div class="night" style="margin-top:8px"><div class="lantern">🏮</div><p style="color:#cfe0ee">Module '+CFG.n+' mastered · '+S.xp+' XP</p></div>';
+  if(S.masteryPassed) html+='<div class="night" style="margin-top:8px"><div class="lantern">🏮</div><p style="color:#cfe0ee">Module '+CFG.n+' mastered · '+S.xp+' XP earned here</p></div>';
   html+='<button class="btn-ghost" style="margin-top:14px" onclick="window.location.href=\'index.html\'">🗺️ Back to all modules</button>';
   show(html);
 }
-function startLesson(i){ S.lesson=i; S.step=0; saveState(); render(); }
+function startLesson(i){ FL.startLesson(S, i); saveState(); render(); }
 
 
 /* =====================================================================
@@ -672,7 +659,7 @@ async function sendTutor(){
 /* ---------- boot ---------- */
 (async function(){
   await loadState();
-  document.getElementById("xpBox").textContent=S.xp+" XP";
+  document.getElementById("xpBox").textContent=FL.displayXP(S)+" XP";
   renderShelf();
   goHome();
 })();

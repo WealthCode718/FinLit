@@ -1,0 +1,23 @@
+name: FinLit checks
+
+# Runs the full test suite (tools/test_all.py) on every push and pull request.
+# A red X on GitHub means a check failed; open the run to see which one.
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install browser test tools
+        run: |
+          pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Run checks
+        run: python tools/test_all.py

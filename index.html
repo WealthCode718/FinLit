@@ -121,6 +121,7 @@
   <main id="main"></main>
 </div>
 
+<script src="finlit-core.js"></script>
 <script>
 /* =====================================================================
    MODULE REGISTRY — add new modules here as they're built
@@ -220,46 +221,21 @@ const MODULES = [
 /* =====================================================================
    LOAD PROGRESS FROM ALL MODULE STATES
 ===================================================================== */
-async function loadAllProgress(){
-  const progress = {};
-  for(const mod of MODULES){
-    if(!mod.stateKey) continue;
-    let state = null;
-    // Try window.storage first, then localStorage
-    try{
-      const r = await window.storage.get(mod.stateKey);
-      if(r && r.value) state = JSON.parse(r.value);
-    }catch(e){}
-    if(!state){
-      try{
-        const s = localStorage.getItem(mod.stateKey);
-        if(s) state = JSON.parse(s);
-      }catch(e){}
-    }
-    if(state){
-      progress[mod.id] = {
-        xp: state.xp || 0,
-        mastered: state.masteryPassed || false,
-        lessonsDown: (state.done || []).filter(Boolean).length,
-        shelf: state.shelf || []
-      };
-    }
-  }
-  return progress;
-}
+/* progress loading lives in finlit-core.js (FL.courseProgress) */
 
 /* =====================================================================
    RENDER
 ===================================================================== */
 async function render(){
-  const progress = await loadAllProgress();
+  // XP is added up across modules by the shared engine (finlit-core.js),
+  // including a one-time starting balance carried over from older saves.
+  const { totalXP, progress } = await FL.courseProgress(MODULES);
 
   // Calculate totals
-  let totalXP = 0, totalMastered = 0, allWords = [];
+  let totalMastered = 0, allWords = [];
   MODULES.forEach(mod=>{
     const p = progress[mod.id];
     if(p){
-      totalXP = Math.max(totalXP, p.xp);
       if(p.mastered) totalMastered++;
       p.shelf.forEach(w=>{ if(!allWords.includes(w)) allWords.push(w); });
     }
@@ -267,7 +243,7 @@ async function render(){
 
   document.getElementById("xpBadge").textContent = totalXP + " XP";
   // Progress is measured against the modules that exist; the rest of the roadmap is shown separately.
-  const PLANNED_TOTAL = 52, available = MODULES.length, planned = Math.max(0, PLANNED_TOTAL - available);
+  const PLANNED_TOTAL = FL.PLANNED_TOTAL, available = MODULES.length, planned = Math.max(0, PLANNED_TOTAL - available);
   document.getElementById("progText").textContent = totalMastered + " of " + available + " modules" +
     (planned ? " · " + planned + " more planned" : "");
   document.getElementById("progFill").style.width = (available ? totalMastered/available*100 : 0).toFixed(1)+"%";
@@ -306,13 +282,13 @@ async function render(){
     mods.forEach(mod=>{
       const p = progress[mod.id];
       const mastered = p && p.mastered;
-      const started = p && p.lessonsDown > 0;
+      const started = !!(p && (p.lessonsDown > 0 || p.started));
       const prevMod = MODULES.find(m=>m.id===mod.id-1);
       const prevMastered = !prevMod || (progress[prevMod.id] && progress[prevMod.id].mastered);
       const locked = mod.comingSoon || (!mastered && !prevMastered && mod.id > 1);
       const isActive = !mastered && !locked && (started || prevMastered);
 
-      let statusIcon = mastered ? "✅ Done" : locked ? "🔒 Locked" : isActive ? "▶ Continue" : "▶ Start";
+      let statusIcon = mastered ? "✅ Done" : locked ? "🔒 Locked" : (isActive && started) ? "▶ Continue" : "▶ Start";
       let cardClass = mastered ? "done" : locked ? "locked" : isActive ? "active" : "";
 
       if(mod.comingSoon){
