@@ -71,12 +71,12 @@ const CFG = {
   pool:["q401a","q401b","q401c","q402a","q402b","q403a"], transfer:"q403b",
   quest:"You watched prices climb in an old price book, saw a tin of money lose buying power, and compared it with savings that earns interest.",
   failKeys:"The keys: inflation is prices on almost everything slowly going up over the years; your dollars do not disappear, but their buying power shrinks; savings that earns interest keeps up better than a tin; and inflation is not a reason to spend everything today.",
-  nextFile:null,
+  nextFile:"module-41-making-money-work.html",
   passStory:'<p><strong>You now own:</strong> inflation and buying power.</p>'+
     '<p>Kai looks at the two jars on Rana’s screen. The tin fell a long way behind. The savings did much better, but it still slipped a little.</p>'+
     '<p>"So even savings can fall behind?" he asks.</p>'+
     '<p>"A little, sometimes," Rana says. "That is why I asked what your money could do if it went out to work. Some kinds of work can grow faster than prices. But they come with more risk, and you already know how to think about risk."</p>'+
-    '<p class="muted">Module 41 continues the new block. (Coming soon.)</p>'
+    '<p class="muted">Module 41: Making Money Work.</p>'
 };
 
 const TUTOR_HELLO = "Hi! Ask me anything about inflation, buying power, or why a tin of money slowly falls behind. Or tap a button below.";
