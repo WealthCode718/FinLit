@@ -74,12 +74,12 @@ const CFG = {
   quest:"You read a policy, sorted covered from not covered, and got ready for the big storm season using every tool in the block.",
   failKeys:"The keys: a policy is the written agreement, coverage is what it will pay for (not everything), your emergency fund covers the deductible, and real insurance always comes in writing.",
   badge:" · Risk & Insurance block complete 🛡️",
-  nextFile:null,
+  nextFile:"module-40-inflation.html",
   passStory:'<p><strong>You now own:</strong> policy and coverage — and the whole Risk & Insurance block.</p>'+
     '<p>The big storm comes and goes. Kai’s boat is tied down, his emergency fund is full, his policy is in a dry drawer, and his sail is patched and flying.</p>'+
     '<p>On the first calm morning, Rana sits beside him on the dock. "Your money is safe now. Savings, a fund, insurance. That is the defense."</p>'+
     '<p>She looks out at the water. "Now, what if some of it could do more than sit safely? What if it could go out and work?"</p>'+
-    '<p class="muted">Module 40 begins a new block. (Coming soon.)</p>'
+    '<p class="muted">Module 40: Inflation.</p>'
 };
 
 const TUTOR_HELLO = "Hi! Ask me anything about policies, coverage, or getting ready for storm season — or tap a button below.";
