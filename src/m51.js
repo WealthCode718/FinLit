@@ -74,12 +74,12 @@ const CFG = {
   pool:["q511a","q511b","q511c","q512a","q512b","q513a"], transfer:"q513b",
   quest:"You sorted Kai's things into own and owe, found his net worth, built his financial plan step by step, and updated it as life changed.",
   failKeys:"The keys: net worth is everything you own minus everything you owe; a financial plan puts income, a needs budget, an emergency fund, paying off costly debt, and long-term investing in order; and you check the plan whenever life changes.",
-  nextFile:null,
+  nextFile:"module-52-final-island-challenge.html",
   passStory:'<p><strong>You now own:</strong> net worth and financial plan.</p>'+
     '<p>Kai pins his one-page plan above his bed, next to the very first shell he ever traded.</p>'+
     '<p>Rana, Tavo, Nalu, and Mika gather on the dock. "One last thing," Rana says. "A plan on paper is good. A plan that survives real life is better."</p>'+
     '<p>Tavo grins. "Let’s fast-forward through Kai’s life, and see if his plan holds."</p>'+
-    '<p class="muted">Module 52: The Final Island Challenge. (Coming soon.)</p>'
+    '<p class="muted">Module 52: The Final Island Challenge.</p>'
 };
 
 const TUTOR_HELLO = "Hi! Ask me anything about net worth, building a financial plan, or keeping it up to date. Or tap a button below.";

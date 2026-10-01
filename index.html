@@ -254,6 +254,8 @@ const MODULES = [
     title:"Long-Term Goals", sub:"Retirement, and why small and early wins", emoji:"🌅", block:"Your Money Life", lessons:4},
   {id:51, file:"module-51-your-money-plan.html", stateKey:"mod51-state",
     title:"Your Money Plan", sub:"Net worth, and your whole plan on one page", emoji:"🗺️", block:"Your Money Life", lessons:4},
+  {id:52, file:"module-52-final-island-challenge.html", stateKey:"mod52-state",
+    title:"The Final Island Challenge", sub:"Kai's whole life, and the habits you'll keep", emoji:"🏝️", block:"Your Money Life", lessons:4},
 ];
 
 /* Every word a learner can earn, with the same term and definition the module's word card uses.
@@ -678,6 +680,14 @@ const VOCAB = {
   "finplan": {
     "term": "financial plan",
     "def": "Your whole money picture on one page, in order: know your income, budget for needs, build an emergency fund, pay off costly debt, then invest for the long term, with room for goals and giving. Check it whenever life changes."
+  },
+  "wellbeing": {
+    "term": "financial well-being",
+    "def": "Feeling secure about your money today and ready for tomorrow: needs covered, a cushion for surprises, no debt you can't handle, and choices about the future. It's about habits and plans, not just how much you earn."
+  },
+  "habit": {
+    "term": "habit",
+    "def": "Something you do so often it becomes automatic. Small money habits, like checking your balance or saving a little from every paycheck, add up to a whole life."
   }
 };
 
@@ -782,7 +792,9 @@ async function render(){
   });
 
   // Coming soon teaser
-  html += '<div class="coming"><strong>More modules coming soon</strong>Module 40 is next — a new block begins. Check back soon!</div>';
+  html += (MODULES.length >= JOURNEY_MODULES)
+    ? '<div class="coming"><strong>🏝️ That’s the whole island!</strong>All '+MODULES.length+' modules are here. Replay any module, or tap a word above to review it.</div>'
+    : '<div class="coming"><strong>More modules coming soon</strong>Module '+(MODULES.length+1)+' is next. Check back soon!</div>';
 
   mainEl.innerHTML = html;
   const defEl = document.getElementById("wordDef");
