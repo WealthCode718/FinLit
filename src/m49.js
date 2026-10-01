@@ -76,12 +76,12 @@ const CFG = {
   quest:"You read the fine print on three offers, compared three stalls to find real value, and handled a busy week of ads, contracts, rights, and giving.",
   failKeys:"The keys: fine print is where the real details hide, so read it before saying yes; comparison shopping means checking several sellers for price, quality, promises, and what buyers say; and every Money World skill (spot ad tricks, read contracts, use your rights, check charities) works together.",
   badge:" · Money World block complete 🌍",
-  nextFile:null,
+  nextFile:"module-50-long-term-goals.html",
   passStory:'<p><strong>You now own:</strong> fine print and comparison shopping, and the whole Money World block.</p>'+
     '<p>Kai sits on the dock with his notebook. He’s learned to earn, save, borrow, protect, invest, and now to handle a whole world that wants his money.</p>'+
     '<p>Tavo sits down beside him, slower than he used to. "I’ve fished for thirty years," he says. "One day, I’ll stop. When that day comes, what will I live on?"</p>'+
     '<p>Kai looks at him. He had never thought about that.</p>'+
-    '<p class="muted">Module 50 begins the final block. (Coming soon.)</p>'
+    '<p class="muted">Module 50: Long-Term Goals.</p>'
 };
 
 const TUTOR_HELLO = "Hi! Ask me anything about fine print, comparison shopping, or any skill from the Money World block. Or tap a button below.";
