@@ -75,12 +75,12 @@ const CFG = {
   pool:["q461a","q461b","q461c","q462a","q462b","q463a"], transfer:"q463b",
   quest:"You spotted five tricks on a snack poster, sorted facts from feeling-pushers, handled a pop-up sale, and picked real value over a low price.",
   failKeys:"The keys: advertising is paid messages to make you want to buy; watch for rush, crowd pressure, paid famous people, opinions dressed as facts, and tiny print; facts you can check are useful; and value is what you really get for the price: quality, how long it lasts, and how much you'll use it.",
-  nextFile:null,
+  nextFile:"module-47-contracts-and-your-rights.html",
   passStory:'<p><strong>You now own:</strong> advertising and value.</p>'+
     '<p>Kai walks past the Sparkle Snack poster again. This time he reads the tiny print, smiles, and keeps walking.</p>'+
     '<p>At Nalu’s stand, a man is waving a long paper. "Sign here and your stand gets a fancy new blender every year!"</p>'+
     '<p>Nalu frowns at the paper. "Kai, help me read this before I sign anything."</p>'+
-    '<p class="muted">Module 47 continues the Money World block. (Coming soon.)</p>'
+    '<p class="muted">Module 47: Contracts & Your Rights.</p>'
 };
 
 const TUTOR_HELLO = "Hi! Ask me anything about advertising tricks, sponsored videos, or how to judge real value. Or tap a button below.";
