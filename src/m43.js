@@ -76,12 +76,12 @@ const CFG = {
   pool:["q431a","q431b","q431c","q432a","q432b","q433a"], transfer:"q433b",
   quest:"You compared all-in-one-stand with a spread-out basket, sorted businesses that rise together from ones that balance out, and watched an investment fund barely notice a shop closing.",
   failKeys:"The keys: to diversify is to spread money across many DIFFERENT kinds of investments; it lowers risk but doesn't remove it, and it also means no single big win; an investment fund is a shared pot that owns pieces of many businesses; and it's not the same as your emergency fund, which stays in savings.",
-  nextFile:null,
+  nextFile:"module-44-growing-over-time.html",
   passStory:'<p><strong>You now own:</strong> diversify and investment fund.</p>'+
     '<p>Kai looks at his little basket: a juice stand, an umbrella shop, a fishing boat, a bakery, and now a slice of the island fund too.</p>'+
     '<p>"Spread out, not all in one stand," he says.</p>'+
     '<p>Tavo laughs. "Now the hard part. Leave it alone and let time do the work. I’ll show you what thirty years can do."</p>'+
-    '<p class="muted">Module 44 continues the Investing block. (Coming soon.)</p>'
+    '<p class="muted">Module 44: Growing Over Time.</p>'
 };
 
 const TUTOR_HELLO = "Hi! Ask me anything about diversifying, investment funds, or why not to keep everything in one stand. Or tap a button below.";
