@@ -73,12 +73,12 @@ const CFG = {
   pool:["q411a","q411b","q411c","q412a","q412b","q413a"], transfer:"q413b",
   quest:"You watched a net pay for itself, sorted spend, save, and invest, compared a steady savings account with a bumpy investment, and decided when money is ready to go to work.",
   failKeys:"The keys: to invest is to put money into something now, hoping it brings more back later; the return is what comes back, and it can be a loss; savings is steady and small, investing can grow more but can go down; and only invest money you won't need soon, after the emergency fund is full and debts are paid.",
-  nextFile:null,
+  nextFile:"module-42-owning-a-piece.html",
   passStory:'<p><strong>You now own:</strong> invest and return.</p>'+
     '<p>Kai’s net hangs on the dock, a little worn now, still catching more fish than the old one ever did.</p>'+
     '<p>"A net is one way to put money to work," Rana says. "But you can only use one net at a time."</p>'+
     '<p>She points at the juice stand by the harbor, then at Tavo’s boat. "What if your money could own a small piece of something much bigger than a net?"</p>'+
-    '<p class="muted">Module 42 continues the Investing block. (Coming soon.)</p>'
+    '<p class="muted">Module 42: Owning a Piece.</p>'
 };
 
 const TUTOR_HELLO = "Hi! Ask me anything about investing, returns, or when money is ready to go to work. Or tap a button below.";

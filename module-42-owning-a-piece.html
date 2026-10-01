@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FinLit — Making Money Work — Module 41</title>
+<title>FinLit — Owning a Piece — Module 42</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap');
   :root{
@@ -131,23 +131,19 @@
   .compare .box .v{font-size:22px; font-weight:700; font-family:"Fraunces",Georgia,serif}
   .spin{display:inline-block; width:16px; height:16px; border:3px solid #fff; border-top-color:transparent; border-radius:50%; animation:sp 1s linear infinite; vertical-align:-3px}
   @keyframes sp{to{transform:rotate(360deg)}}
-  .sortbar{flex-wrap:wrap}
-  .sortbar .sp{background:var(--bad)}
-  .sortbar .sv{background:var(--good)}
-  .sortbar .iv{background:var(--shell)}
+  .grid10{display:grid; grid-template-columns:repeat(5,1fr); gap:6px; margin:6px 0 10px}
+  .grid10 div{aspect-ratio:1; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; color:#fff; text-align:center; line-height:1.1; padding:2px}
+  .grid10 .o-nalu{background:#8a9a93} .grid10 .o-kai{background:var(--shell)} .grid10 .o-tavo{background:var(--ink)} .grid10 .o-rana{background:var(--good)}
+  .grid10 .o-open{background:#fff; border:2px dashed var(--sand-deep); color:var(--ink-soft)}
+  .stand{background:#fff; border:2px solid #d9e2de; border-radius:14px; padding:12px 14px; margin-bottom:12px}
+  .stand .hd{font-family:"Fraunces",Georgia,serif; font-weight:700; font-size:18px; margin-bottom:4px}
+  .ledger{background:#fffdf5; border:2px solid var(--sand-deep); border-radius:10px; padding:12px 14px; margin-bottom:12px; font-size:15px}
+  .ledger .row{display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px dashed var(--sand-deep)}
+  .ledger .row.tot{font-weight:700; border-bottom:none; padding-top:8px}
+  .ledger .row.hide span:last-child{color:transparent; background:#eef2f0; border-radius:6px; min-width:48px}
+  .ledger .pos{color:var(--good)} .ledger .neg{color:var(--bad)}
   .week{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:#fff; background:var(--shell); display:inline-block; border-radius:6px; padding:2px 10px; margin-bottom:8px; font-weight:700}
   .stars{font-size:28px; letter-spacing:4px; text-align:center; margin:6px 0}
-  .payback{background:#fff; border:2px solid #d9e2de; border-radius:14px; padding:12px 14px; margin-bottom:12px}
-  .payback .lbl{font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-weight:700; display:flex; justify-content:space-between}
-  .payback .bar{height:16px; border-radius:999px; background:#eef2f0; overflow:hidden; margin-top:8px; position:relative}
-  .payback .bar div{height:100%; background:var(--good); border-radius:999px; transition:width .5s ease}
-  .payback .note{font-size:14px; margin-top:8px}
-  .jars{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px}
-  .jar{background:#fff; border:2px solid #d9e2de; border-radius:14px; padding:12px 14px; min-width:0}
-  .jar .lbl{font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-weight:700}
-  .jar .amt{font-family:"Fraunces",Georgia,serif; font-size:28px; font-weight:700; margin:2px 0 4px}
-  .jar .trail{font-size:13px; color:var(--ink-soft); line-height:1.5}
-  .jar .up{color:var(--good); font-weight:700} .jar .dn{color:var(--bad); font-weight:700}
   /* Shared island UX — tap targets, focus, no sideways scroll */
   html,body{overflow-x:clip}
   a.back-hub,button.back-lessons{
@@ -206,7 +202,7 @@
     <button onclick="quickAsk('Quiz me')">Quiz me</button>
   </div>
   <div class="tp-in">
-    <input id="tin" placeholder="Ask about investing and returns…" onkeydown="if(event.key==='Enter')sendTutor()">
+    <input id="tin" placeholder="Ask about stock and profit…" onkeydown="if(event.key==='Enter')sendTutor()">
     <button onclick="sendTutor()">Send</button>
   </div>
 </div>
@@ -216,76 +212,77 @@
 
 <script src="finlit-core.js"></script>
 <script>
-const MODULE_N = 41;
+const MODULE_N = 42;
 /* =====================================================================
-   MODULE 41 — MAKING MONEY WORK  (Investing block, 2 of 6)
-   Vocab: invest, return.
-   Concept over computation: small running totals only (M6/M18 skills).
-   L1 shows investing as buying a better net (money that brings money
-   back), then sorts spend / save / invest. L2 lets learners watch savings
-   (steady, small) next to an investment (bumpy, can go down). L3 is a
-   "ready to invest?" challenge: emergency fund first, debt first, money
-   needed soon stays put, "guaranteed" big returns are a scam sign.
-   Held back for later modules: owning part of a business (M42),
-   spreading money out (M43), growth on growth over time (M44).
+   MODULE 42 — OWNING A PIECE  (Investing block, 3 of 6)
+   Vocab: stock, profit.  ("business" has been used informally since
+   M9/M30 and is not a shelf word.)
+   L1: Nalu splits her juice stand into 10 equal pieces (M13/M14 callback)
+       to pay for a second stand; Kai buys one. Named: stock.
+   L2: Profit day. A good month (sales − costs = profit, split 10 ways),
+       a rainy month (no profit), then what a piece could sell for.
+       Two ways a stock can bring a return; both can go down.
+   L3: Would you buy a piece? Includes "all eggs in one stand" as
+       show-then-name for M43 (diversify).
+   Concept over computation: only small subtraction and ÷10.
 ===================================================================== */
 const VOCAB = {
-  invest:{term:"invest", def:"To put money into something now because you hope it will bring you more money later. It might, and it might not. That is the risk."},
-  return:{term:"return", def:"What an investment brings back to you. A good return means you got back more than you put in. A return can also be small, or even a loss."}
+  stock:{term:"stock", def:"A small piece of owning a business. If a business is split into 10 equal pieces and you buy one, you own 1/10 of it."},
+  profit:{term:"profit", def:"The money a business has left after it pays all its costs. Owners share in the profit. Some months there is none."}
 };
 
 const QUESTIONS = {
-  "q411a":{type:"mc", prompt:"Kai pays $20 for a bigger net so he can catch and sell more fish. Why is this investing and not just spending?", concept:"invest", opts:[
-    {t:"He is using money now on something he hopes will bring more money back later", ok:true, fb:"Right. The net is a tool that can earn. That is what makes it investing."},
-    {t:"Because it cost more than $10", ok:false, fb:"The price does not decide it. Investing means putting money into something you hope will bring more money back later, like a net that catches more fish."},
-    {t:"Because he paid with money from his savings", ok:false, fb:"Where the money came from does not decide it. What matters is that the net can bring money back. That is investing."}]},
-  "q411b":{type:"mc", prompt:"The bigger net cost $20. After six weeks, it has brought Kai $30 more than his old net would have. What is his return so far?", concept:"return", opts:[
-    {t:"$10 more than he put in — a good return", ok:true, fb:"Right. $30 came back for a $20 net: all of his money back, plus $10."},
-    {t:"$30, because that is what came back", ok:false, fb:"$30 came back, but $20 of it just paid for the net. The return beyond what he put in is $10."},
-    {t:"Nothing yet, because the net is not free", ok:false, fb:"The net already paid for itself and then some: $30 back on $20 is $10 more than he put in."}]},
-  "q411c":{type:"tf", prompt:"True or false: buying a movie ticket is investing.", answer:false, concept:"invest",
-    good:"Right. A movie ticket can be a great want, but it will not bring money back. That is spending.",
-    bad:"Look again. A movie ticket is fun, but it does not bring money back later. That is spending, not investing."},
-  "q412a":{type:"mc", prompt:"In the game, which one went DOWN in one of the seasons?", concept:"return", opts:[
-    {t:"The investment — returns can go up and down", ok:true, fb:"Right. Season 2 was bad for the net. Investments can have bad seasons, and sometimes end lower than they started."},
-    {t:"The savings account", ok:false, fb:"The savings went up a little every season. The investment was the bumpy one."},
-    {t:"Neither — investing only goes up", ok:false, fb:"The investment fell in season 2. Investing is never a sure thing. That is the risk."}]},
-  "q412b":{type:"mc", prompt:"What is the big trade between saving and investing?", concept:"invest", opts:[
-    {t:"Savings is safe with a small return; investing can bring more but can also lose", ok:true, fb:"Right. More chance to grow comes with more risk. You learned to weigh risk back in Module 35."},
-    {t:"Investing is always better because it grows more", ok:false, fb:"It can grow more, but it can also lose. Savings is steadier. Each has a job."},
-    {t:"Savings is always better because it never grows", ok:false, fb:"Savings does grow, with interest, just slowly and safely. Investing can grow more, with more risk. Each has a job."}]},
-  "q413a":{type:"mc", prompt:"Which money is the best fit for investing?", concept:"invest", opts:[
-    {t:"Money you won't need for a long time, after the emergency fund is full and debts are paid", ok:true, fb:"Right. That money can ride out a bad season, because you are not counting on it next week."},
-    {t:"Your emergency fund, so it can grow bigger", ok:false, fb:"The emergency fund has to be ready on a bad day. If an investment has a bad season right then, it isn't there. Keep it in savings."},
-    {t:"The money for next week's needs", ok:false, fb:"If the investment has a bad week, you can't pay for needs. Only invest money you won't need for a long time."}]},
-  "q413b":{type:"mc", transfer:true, prompt:"Lena spends $15 on a class to learn to fix bikes, hoping to earn money fixing her neighbors' bikes. What is she doing?", concept:"invest", opts:[
-    {t:"Investing in herself: money now that she hopes will bring money back later", ok:true, fb:"Exactly. Not a net this time, but a skill. Same idea: money now, hoping for more later, with no promise."},
-    {t:"Just spending, because a class is not a thing you can hold", ok:false, fb:"A skill can earn money just like a tool can. She is investing in herself."},
-    {t:"Saving, because she will use the skill later", ok:false, fb:"Saving means keeping the money. She spent it on a skill that might bring money back. That is investing."}]}
+  "q421a":{type:"mc", prompt:"Nalu splits her juice stand into 10 equal pieces. Kai buys 1 piece. What does Kai have?", concept:"stock", opts:[
+    {t:"Stock: he owns 1/10 of the juice stand", ok:true, fb:"Right. A stock is a small piece of owning the business. His piece is 1 of 10."},
+    {t:"A loan: Nalu owes him $10 back", ok:false, fb:"With a loan, the borrower must pay you back. Kai didn't lend Nalu money. He bought a piece of the stand, so he is part owner."},
+    {t:"A coupon for 10 free juices", ok:false, fb:"He didn't buy juice. He bought a piece of the stand itself. That is stock."}]},
+  "q421b":{type:"mc", prompt:"Why did Nalu sell pieces of her stand at all?", concept:"stock", opts:[
+    {t:"To get money to grow the business, a second stand, without borrowing", ok:true, fb:"Right. Selling pieces brought in $60. In return, she now shares the stand with its new owners."},
+    {t:"Because the stand was about to close", ok:false, fb:"The stand was doing well. Nalu wanted money to open a second one."},
+    {t:"Because the bank told her to", ok:false, fb:"It was Nalu's choice. She wanted money for a second stand without taking a loan."}]},
+  "q421c":{type:"tf", prompt:"True or false: if you own stock in a business, you own a small piece of that business.", answer:true, concept:"stock",
+    good:"Right. That is exactly what stock is: a piece of owning.",
+    bad:"Look again. A stock IS a small piece of owning a business. Kai owns 1 of Nalu's 10 pieces."},
+  "q422a":{type:"mc", prompt:"In one month, the stand sold $60 of juice and paid $40 in costs. What was the profit?", concept:"profit", opts:[
+    {t:"$20 — what's left after all the costs", ok:true, fb:"Right. $60 in, $40 out for costs, $20 left. That's the profit."},
+    {t:"$60 — everything it sold", ok:false, fb:"$60 is what came in, but $40 went right back out for mangoes, cups, and Nalu's pay. Profit is what's LEFT: $20."},
+    {t:"$100 — sales plus costs", ok:false, fb:"Costs are taken away, not added. $60 − $40 = $20 profit."}]},
+  "q422b":{type:"mc", prompt:"It rains all month. The stand sells less than its costs. What does Kai's piece earn from profit this month?", concept:"profit", opts:[
+    {t:"Nothing. No profit means nothing to share", ok:true, fb:"Right. Owners share the profit, and in a rainy month there isn't any. That's part of owning."},
+    {t:"$2, the same as every month", ok:false, fb:"Kai only gets a part of the profit when there IS one. This month there was none."},
+    {t:"Nalu has to pay him back his $10", ok:false, fb:"Kai is an owner, not a lender. Owners share the good months and the bad ones."}]},
+  "q423a":{type:"mc", prompt:"Kai wants to put ALL the money he's ready to invest into Nalu's stand. What's the risk?", concept:"stock", opts:[
+    {t:"If that one stand has big trouble, he could lose all of it at once", ok:true, fb:"Right. Everything in one place means one bad event hits all of it. Next module is about what to do instead."},
+    {t:"There's no risk, because the stand is popular", ok:false, fb:"Popular stands still have rainy months, broken blenders, or a new stand next door. Everything in one place is a big risk."},
+    {t:"The only risk is that Nalu won't let him", ok:false, fb:"The bigger risk: if that one stand struggles, ALL his invested money struggles with it."}]},
+  "q423b":{type:"mc", transfer:true, prompt:"A bakery in Lena's town is split into 20 equal pieces. Lena's mom buys 2. The bakery has a great year and some profit is shared with the owners. What is true?", concept:"profit", opts:[
+    {t:"She owns 2/20 of the bakery, so she gets a part of the shared profit", ok:true, fb:"Exactly. Different business, same idea: she owns stock, so she shares in the profit when there is some."},
+    {t:"She gets all the profit, because she bought 2 pieces", ok:false, fb:"There are 20 pieces and she owns 2. The profit is shared among all the owners."},
+    {t:"She gets free bread, which is what stock means", ok:false, fb:"Stock means owning a piece of the business. The return comes from profit, or selling the piece later, not free bread."}]}
 };
 
 const CFG = {
-  n:41, title:"Making Money Work", homeSub:"Four short lessons. What it means to invest, what a return is, and when you're ready.",
-  pool:["q411a","q411b","q411c","q412a","q412b","q413a"], transfer:"q413b",
-  quest:"You watched a net pay for itself, sorted spend, save, and invest, compared a steady savings account with a bumpy investment, and decided when money is ready to go to work.",
-  failKeys:"The keys: to invest is to put money into something now, hoping it brings more back later; the return is what comes back, and it can be a loss; savings is steady and small, investing can grow more but can go down; and only invest money you won't need soon, after the emergency fund is full and debts are paid.",
-  nextFile:"module-42-owning-a-piece.html",
-  passStory:'<p><strong>You now own:</strong> invest and return.</p>'+
-    '<p>Kai’s net hangs on the dock, a little worn now, still catching more fish than the old one ever did.</p>'+
-    '<p>"A net is one way to put money to work," Rana says. "But you can only use one net at a time."</p>'+
-    '<p>She points at the juice stand by the harbor, then at Tavo’s boat. "What if your money could own a small piece of something much bigger than a net?"</p>'+
-    '<p class="muted">Module 42: Owning a Piece.</p>'
+  n:42, title:"Owning a Piece", homeSub:"Four short lessons. What stock is, what profit is, and how owners share the good months and the bad ones.",
+  pool:["q421a","q421b","q421c","q422a","q422b","q423a"], transfer:"q423b",
+  quest:"You bought a piece of Nalu's juice stand, worked out its profit in a good month and a rainy one, and weighed when a piece is worth buying.",
+  failKeys:"The keys: stock is a small piece of owning a business; profit is what's left after all costs; owners share profit when there is some and get nothing when there isn't; a piece can later sell for more or less than you paid; and putting everything in one business is a big risk.",
+  nextFile:null,
+  passStory:'<p><strong>You now own:</strong> stock and profit, and a real piece of a juice stand.</p>'+
+    '<p>Kai sips a mango juice at the new beach stand. "What if a storm wrecks both stands?" he asks.</p>'+
+    '<p>"Then every owner feels it," Nalu says.</p>'+
+    '<p>Rana nods. "That is why smart owners don’t keep everything in one stand. Next time, we spread it out."</p>'+
+    '<p class="muted">Module 43 continues the Investing block. (Coming soon.)</p>'
 };
 
-const TUTOR_HELLO = "Hi! Ask me anything about investing, returns, or when money is ready to go to work. Or tap a button below.";
-const TUTOR_SYS = "You are the tutor inside Module 41 (Making Money Work) of a financial-literacy app, part of the Investing block. The learner may be a child or an adult. "+
-  "They know from earlier modules: money, dollar, cent, add, subtract, multiply, buy, sell, pay, price, cost, earn, work, spend, need, save, goal, percent, bank, deposit, withdraw, balance, checking, savings, transaction, notification, interest, grow, fee, overdraft, PIN, scam, budget, cushion, borrow, loan, lend, owe, debt, debit card, credit card, credit score, due date, lender, minimum payment, employer, wage, paycheck, income, tax, take-home pay, sales tax, receipt, tax return, refund, risk, loss, emergency, emergency fund, insurance, premium, claim, deductible, policy, coverage, inflation, buying power. "+
-  "From THIS module: invest (to put money into something now because you hope it will bring more money later; it might not) and return (what an investment brings back; it can be more than you put in, small, or a loss). "+
-  "Key points: tools and skills can be investments (a better net, a class); spending on wants is not investing; savings is steady with a small return and investing can bring more but can go down, which is risk; only invest money you won't need for a long time, after the emergency fund is full and costly debts are paid; anyone promising a big 'guaranteed' return fast is a scam sign. "+
-  "TEACHING STYLE: concepts over calculations. Never give return percentages or predict returns. Do not recommend any specific company, product, app, or coin. "+
-  "STRICT RULES: never use these words (later modules): stock, share (as in part of a company), bond, fund (except 'emergency fund'), diversify, portfolio, compound, retirement, index, dividend. If the learner uses one, answer briefly in plain words and say it is coming later. "+
-  "Story context: after learning about inflation, Kai paid $20 for a bigger net that brought an extra $5 of fish each week; after six weeks it had brought back $30, so $10 more than it cost. Rana then showed him a game: $30 in savings grew a little every season ($31, $32, $33, $34) while $30 in a net-and-boat plan went $36, then down to $33 in a bad season, then $40, then $44. Finally Kai decided when money is ready to invest: not the emergency fund, not money for next week, debts first, and never a 'guaranteed double your money' stranger. "+
-  "Never repeat a failed explanation: switch examples (a bike-fixing class, a lemonade stand's cooler, a sewing machine). Keep answers under 80 words, warm, honest, never mark wrong ideas right. If asked 'Quiz me', ask ONE simple 'spend, save, or invest?' question and wait.";
+const TUTOR_HELLO = "Hi! Ask me anything about stock, profit, or owning a piece of a business. Or tap a button below.";
+const TUTOR_SYS = "You are the tutor inside Module 42 (Owning a Piece) of a financial-literacy app, part of the Investing block. The learner may be a child or an adult. "+
+  "They know from earlier modules: money, dollar, cent, add, subtract, multiply, divide, split, fraction, buy, sell, pay, price, cost, earn, work, spend, need, save, goal, percent, bank, deposit, withdraw, balance, checking, savings, interest, grow, fee, scam, budget, borrow, loan, lend, owe, debt, credit card, lender, employer, wage, paycheck, income, tax, risk, loss, emergency fund, insurance, inflation, buying power, invest, return. "+
+  "From THIS module: stock (a small piece of owning a business; people also call a piece a 'share') and profit (the money a business has left after paying all its costs; owners share in it; some months there is none). "+
+  "Key points: a business may sell pieces to raise money to grow instead of borrowing; an owner is not a lender, so nobody has to pay an owner back; a stock can bring a return in two ways: a part of the profit when the business shares it (some businesses keep profit to grow instead), or selling the piece later for more than you paid; both can go down, and a piece can sell for less than you paid or become worth nothing if the business fails; putting everything into one business is a big risk. "+
+  "TEACHING STYLE: concepts over calculations. Never recommend any real company, stock, app, or coin, and never predict prices. "+
+  "STRICT RULES: never use these words (later modules): diversify, portfolio, compound, retirement, index, fund (except 'emergency fund'), bond, dividend, stock market, broker. If the learner uses one, answer briefly in plain words and say it is coming later. "+
+  "Story context: Nalu runs a mango juice stand by the harbor and wanted $60 for a second stand. She split the business into 10 equal pieces at $10 each, kept 4, and sold 1 to Kai, 3 to Tavo, and 2 to Rana. In a good month the stand sold $60 and paid $40 in costs (mangoes, cups, Nalu's own pay), leaving $20 profit, so each piece got $2. In a rainy month it sold $30 against $35 of costs: no profit, nothing shared. When the second stand did well, someone offered Kai $15 for his piece; when a rival stand opened, offers dropped to $6. "+
+  "Never repeat a failed explanation: switch examples (a bakery split into 20 pieces, a pizza shared by friends, a fishing boat owned by four families). Keep answers under 80 words, warm, honest, never mark wrong ideas right. If asked 'Quiz me', ask ONE simple 'profit or no profit?' question and wait.";
 
 /* =====================================================================
    STATE + PERSISTENCE
@@ -401,176 +398,156 @@ function renderTF(qid,onDone){
 }
 
 /* =====================================================================
-   SIMULATORS — the net payback bar, and savings vs. investment seasons.
+   SIMULATORS — the 10-piece ownership grid, and the profit ledger.
 ===================================================================== */
-const NET_COST=20, NET_WEEKLY=5, NET_WEEKS=6;
-function payback(w){
-  const back=w*NET_WEEKLY, pct=Math.min(100, back/NET_COST*100);
-  const note = w===0 ? 'The net cost $20. Nothing back yet.'
-    : back<NET_COST ? '$'+back+' back so far. $'+(NET_COST-back)+' to go before the net has paid for itself.'
-    : back===NET_COST ? '$20 back. The net has paid for itself!'
-    : '$'+back+' back. That is all $20, plus <strong>$'+(back-NET_COST)+' more</strong>.';
-  return '<div class="payback"><div class="lbl"><span>🎣 Bigger net · week '+w+'</span><span>$'+back+' back</span></div>'+
-    '<div class="bar"><div style="width:'+pct+'%"></div></div><div class="note">'+note+'</div></div>';
+const OWN_ORDER=["kai","tavo","tavo","tavo","rana","rana","nalu","nalu","nalu","nalu"];
+const OWN_NAME={kai:"Kai",tavo:"Tavo",rana:"Rana",nalu:"Nalu"};
+function grid(owners){
+  return '<div class="grid10">'+owners.map(o=>'<div class="o-'+o+'">'+(o==="open"?"$10":OWN_NAME[o])+'</div>').join('')+'</div>';
 }
-const SORT=[
-  {t:"🎬 A movie ticket", a:"sp", why:"Fun, but it won’t bring money back. Spending."},
-  {t:"🏦 $10 into the savings account", a:"sv", why:"Kept safe, growing slowly with interest. Saving."},
-  {t:"🎣 A stronger fishing rod to catch more fish to sell", a:"iv", why:"A tool that can bring money back. Investing."},
-  {t:"🍬 A bag of sweets", a:"sp", why:"A treat. It won’t bring money back. Spending."},
-  {t:"🧵 Sewing supplies so Mika can sell fixed-up bags", a:"iv", why:"Supplies that can earn. Investing."}
+const MONTHS=[
+  {nm:"A sunny month", sales:60, costs:[["🥭 Mangoes",20],["🥤 Cups",5],["👩 Nalu’s pay",15]]},
+  {nm:"A rainy month", sales:30, costs:[["🥭 Mangoes",15],["🥤 Cups",5],["👩 Nalu’s pay",15]]}
 ];
-const LABEL={sp:"Spend", sv:"Save", iv:"Invest"};
-const SEASONS=[
-  {s:"Start", sav:30, inv:30, story:"Kai puts $30 in savings, and Rana’s game puts another $30 into a net-and-boat fishing plan."},
-  {s:"Season 1", sav:31, inv:36, story:"Big schools of fish. The plan brings back a lot."},
-  {s:"Season 2", sav:32, inv:33, story:"Stormy months. Fewer trips, and a torn net to repair. The plan goes DOWN."},
-  {s:"Season 3", sav:33, inv:40, story:"Calm seas again. The plan climbs back up."},
-  {s:"Season 4", sav:34, inv:44, story:"Another good season."}
-];
-function trail(key,k){
-  return SEASONS.slice(1,k+1).map((x,i)=>{ const d=x[key]-SEASONS[i][key]; return '<span class="'+(d>=0?'up':'dn')+'">'+(d>=0?'▲ +$':'▼ −$')+Math.abs(d)+'</span>'; }).join(' ');
-}
-function seasonJars(k){
-  const s=SEASONS[k];
-  return '<div class="week">'+s.s+'</div><div class="card"><p style="margin:0">'+s.story+'</p></div>'+
-    '<div class="jars"><div class="jar"><div class="lbl">🏦 Savings</div><div class="amt">$'+s.sav+'</div><div class="trail">'+trail('sav',k)+'</div></div>'+
-    '<div class="jar"><div class="lbl">🎣 Invested</div><div class="amt">$'+s.inv+'</div><div class="trail">'+trail('inv',k)+'</div></div></div>';
+function ledger(m, shown){
+  const cost=m.costs.reduce((a,c)=>a+c[1],0), p=m.sales-cost;
+  let h='<div class="ledger"><div class="row"><span>💰 Juice sold</span><span class="pos">+$'+m.sales+'</span></div>';
+  m.costs.forEach(c=>{ h+='<div class="row"><span>'+c[0]+'</span><span class="neg">−$'+c[1]+'</span></div>'; });
+  h+='<div class="row tot'+(shown?'':' hide')+'"><span>Left after costs</span><span class="'+(p>0?'pos':'neg')+'">'+(shown?(p>0?'$'+p:'−$'+(-p)):'??')+'</span></div></div>';
+  return h;
 }
 
 /* =====================================================================
-   LESSON 1 — The Better Net
+   LESSON 1 — A Piece of the Stand
 ===================================================================== */
 const L1=[
-  ()=>show(`<div class="kicker">Lesson 1 · The better net</div>
-    <div class="recap"><strong>Kai’s story so far:</strong> Inflation slowly shrinks buying power. Savings keeps up better than a tin, but can still slip a little. Rana asked what his money could do if it went out to work.</div>
-    <div class="card"><p>Kai’s old net catches about 10 fish a week. At the market, a bigger, stronger net costs <strong>$20</strong>.</p>
-    <p>"With that net I could catch 15," Kai says. "Five more fish is $5 more every week."</p>
-    <p>"Then that $20 would not just be spent," Rana says. "It would be <em>working</em> for you. Try it."</p></div>
-    <button onclick="next()">Buy the net</button>`),
+  ()=>show(`<div class="kicker">Lesson 1 · A piece of the stand</div>
+    <div class="recap"><strong>Kai’s story so far:</strong> Investing means putting money to work, hoping for a return. Kai’s bigger net did that. Rana asked what it would be like to own a piece of something bigger than a net.</div>
+    <div class="card"><p>Nalu runs the mango juice stand by the harbor. There’s always a line. She wants to open a <strong>second stand</strong> by the beach, and it will cost <strong>$60</strong>.</p>
+    <p>"I don’t want to borrow and pay interest," Nalu says. "So here’s my idea. I’ll split my business into 10 equal pieces, like you split things back in Module 13. I’ll sell some pieces for $10 each."</p></div>
+    <button onclick="next()">See the pieces</button>`),
   ()=>{
-    let w=0;
+    let n=0;
+    const TEXT=["Kai buys 1 piece for $10.","Tavo buys 3 pieces for $30.","Rana buys 2 pieces for $20.","Nalu keeps the other 4."];
+    const STEP=[1,4,6,10];
     function draw(){
-      show(`<div class="kicker">Lesson 1 · Week by week</div>
-        ${payback(w)}
-        <div id="cont">${w<NET_WEEKS
-          ? '<button data-bot="1" onclick="window._w()">🎣 Fish one more week</button>'
-          : '<div class="feedback good">Six weeks: the net paid for itself and brought back $10 more.</div><button onclick="next()">Continue</button>'}</div>`);
-      window._w=()=>{ w++; draw(); };
+      const k = n===0?0:STEP[n-1];
+      const owners=OWN_ORDER.map((o,i)=> i<k ? o : "open");
+      const done=n>=STEP.length;
+      show(`<div class="kicker">Lesson 1 · Nalu’s 10 pieces</div>
+        <div class="stand"><div class="hd">🥭 Nalu’s Juice Stand</div>${grid(owners)}
+        <p class="muted" style="margin:0">${n===0?"10 equal pieces. Each one is 1/10 of the stand.":TEXT.slice(0,n).join(" ")}</p></div>
+        <div id="cont">${done
+          ? '<div class="feedback good">Nalu raised $60 for the second stand. Now the stand has four owners, and Kai owns 1/10 of it.</div><button onclick="next()">Continue</button>'
+          : '<button data-bot="1" onclick="window._b()">'+TEXT[n].replace(/\.$/,'')+'</button>'}</div>`);
+      window._b=()=>{ n++; draw(); };
     }
     draw();
   },
   ()=>show(`<div class="kicker">Lesson 1 · A new word</div>
-    <div class="card"><p>Kai didn’t just spend $20. He put money into something now because he hoped it would bring more money back later.</p>
-    <p>That is called investing. To <strong>invest</strong>.</p></div>
-    <button onclick="earnWord('invest');next()">New word: invest</button>`),
-  ()=>show(`<div class="kicker">Lesson 1 · Another new word</div>
-    <div class="card"><p>What an investment brings back is its <strong>return</strong>. Kai put in $20 and got back $30: all his money, plus $10.</p>
-    <p>"Hope is the key word," Rana says. "A net can tear. The fish can move away. A return is never a promise."</p></div>
-    <button onclick="earnWord('return');next()">New word: return</button>`),
-  ()=>{
-    let i=0;
-    function draw(){
-      if(i>=SORT.length){ addXP(5); next(); return; }
-      const m=SORT[i];
-      show(`<div class="kicker">Spend, save, or invest? · ${i+1} of ${SORT.length}</div>
-        <div class="item">${m.t}</div>
-        <div class="sortbar"><button class="sp" id="bsp">Spend</button><button class="sv" id="bsv">Save</button><button class="iv" id="biv">Invest</button></div>
-        <div id="fb"></div><div id="cont"></div>`);
-      let done=false;
-      function pick(a){
-        if(done) return;
-        const ok=a===m.a;
-        document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?'Right. ':'Not quite. ')+(ok?m.why:'Ask: will it bring money back later, or keep money safe, or is it just used up? Try again.')+'</div>';
-        revealFB();
-        if(ok){
-          done=true; addXP(1);
-          ["bsp","bsv","biv"].forEach(id=>document.getElementById(id).disabled=true);
-          document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(i<SORT.length-1?"Next":"Done")+'</button>';
-          window._n=()=>{ i++; draw(); };
-          revealFB();
-        }
-      }
-      document.getElementById("bsp").onclick=()=>pick("sp");
-      document.getElementById("bsv").onclick=()=>pick("sv");
-      document.getElementById("biv").onclick=()=>pick("iv");
-    }
-    draw();
-  },
-  ()=>renderMC("q411a", next),
-  ()=>renderMC("q411b", next),
-  ()=>renderTF("q411c", next),
+    <div class="stand"><div class="hd">🥭 Nalu’s Juice Stand</div>${grid(OWN_ORDER)}</div>
+    <div class="card"><p>Kai’s little square has a name. A small piece of owning a business is called <strong>stock</strong>.</p>
+    <p>Kai isn’t a lender. Nalu doesn’t owe him $10. He’s a part <em>owner</em>. When the stand does well, he shares in it. When it struggles, he shares in that too.</p>
+    <p class="muted">Big businesses split themselves into millions of pieces, so lots of people can each own a tiny bit.</p></div>
+    <button onclick="earnWord('stock');next()">New word: stock</button>`),
+  ()=>renderMC("q421a", next),
+  ()=>renderMC("q421b", next),
+  ()=>renderTF("q421c", next),
 ];
 
 /* =====================================================================
-   LESSON 2 — Steady or Bumpy?
+   LESSON 2 — Profit Day
 ===================================================================== */
 const L2=[
-  ()=>show(`<div class="kicker">Lesson 2 · Steady or bumpy?</div>
-    <div class="recap"><strong>So far:</strong> to invest is to put money to work, hoping for a return.</div>
-    <div class="card"><p>"So investing always wins?" Kai asks.</p>
-    <p>Rana opens her money game again. "Let’s watch four seasons. Savings on one side, an investment on the other. Same $30 each."</p></div>
-    <button onclick="next()">Start the seasons</button>`),
   ()=>{
-    let k=0;
+    show(`<div class="kicker">Lesson 2 · Profit day</div>
+    <div class="recap"><strong>So far:</strong> stock is a piece of owning a business. Kai owns 1 of 10 pieces.</div>
+    <div class="card"><p>At the end of the month, Nalu opens her notebook and calls the owners over.</p>
+    <p>"Not all the money we took in is ours to keep," she says. "First we pay every cost."</p></div>
+    ${ledger(MONTHS[0],false)}
+    <div class="card"><p>Juice sold: $60. Costs: $20 + $5 + $15. How much is left?</p></div>
+    <div class="btn-row" id="opts"><button class="opt" data-bot="1" data-v="60">$60</button><button class="opt" data-bot="1" data-v="20">$20</button><button class="opt" data-bot="1" data-v="40">$40</button></div>
+    <div id="fb"></div><div id="cont"></div>`);
+    const FB={"60":"$60 is what came IN. The costs still have to come out. Try again.","40":"$40 is the costs added up. What's left after taking them away from $60? Try again.","20":"Right. $60 − $40 of costs = $20 left."};
+    let done=false;
+    document.querySelectorAll("#opts .opt").forEach(btn=>{
+      btn.onclick=()=>{
+        if(done) return;
+        const ok=btn.dataset.v==="20";
+        btn.classList.add(ok?"right":"wrong");
+        document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+FB[btn.dataset.v]+'</div>';
+        revealFB();
+        if(ok){ done=true; addXP(1);
+          document.querySelectorAll("#opts .opt").forEach(b=>b.disabled=true);
+          document.getElementById("cont").innerHTML='<button onclick="next()">Continue</button>'; revealFB();
+        } else btn.disabled=true;
+      };
+    });
+  },
+  ()=>show(`<div class="kicker">Lesson 2 · A new word</div>
+    ${ledger(MONTHS[0],true)}
+    <div class="card"><p>The money a business has left after it pays all its costs is its <strong>profit</strong>.</p>
+    <p>This month the profit is $20. Nalu decides to share it with the owners: $20 split into 10 pieces is <strong>$2 a piece</strong>. Kai gets $2. Tavo gets $6. Rana gets $4. Nalu gets $8.</p>
+    <p class="muted">Some businesses share profit like this. Others keep it to grow bigger.</p></div>
+    <button onclick="earnWord('profit');next()">New word: profit</button>`),
+  ()=>{
+    let shown=false;
     function draw(){
-      const last=k>=SEASONS.length-1;
-      show(`<div class="kicker">Lesson 2 · Savings vs. investing</div>
-        ${seasonJars(k)}
-        <div id="cont">${last
-          ? '<div class="feedback good">Savings: steady, a little every season, $34. The investment: bumpy, down one season, and this time it ended at $44.</div><button onclick="next()">Continue</button>'
-          : '<button data-bot="1" onclick="window._w()">⏩ Next season</button>'}</div>`);
-      window._w=()=>{ k++; draw(); };
+      show(`<div class="kicker">Lesson 2 · The next month</div>
+        <div class="week">${MONTHS[1].nm}</div>
+        <div class="card"><p style="margin:0">It rains for weeks. Hardly anyone wants cold juice.</p></div>
+        ${ledger(MONTHS[1],shown)}
+        <div id="cont">${shown
+          ? '<div class="feedback bad">$30 in, $35 of costs. No profit, so there’s nothing to share. Kai gets $0 this month.</div><button onclick="next()">Continue</button>'
+          : '<button data-bot="1" onclick="window._s()">Work it out</button>'}</div>`);
+      window._s=()=>{ shown=true; draw(); };
     }
     draw();
   },
-  ()=>show(`<div class="kicker">Lesson 2 · The catch</div>
-    <div class="card"><p>"This time it ended higher," Rana says. "But if the storms had lasted three seasons, it could have ended <em>below</em> $30. Nobody knows ahead of time."</p>
-    <p>Savings is steady and safe, with a small return. Investing can bring a bigger return, but it can also go down.</p>
-    <p style="text-align:center"><strong>A chance for more comes with more risk.</strong></p>
-    <p>That is the same risk you learned to weigh in Module 35: how likely, and how big?</p></div>
+  ()=>show(`<div class="kicker">Lesson 2 · What is a piece worth?</div>
+    <div class="card"><p>Months later, the second stand is a hit. Mika offers Kai <strong>$15</strong> for his piece. He paid $10.</p>
+    <p>Then a new stand opens next door, with cheaper juice. Now the best offer for a piece is <strong>$6</strong>.</p>
+    <p>So a stock can bring a return in two ways:</p>
+    <ul class="recaplist"><li>💵 A part of the <strong>profit</strong>, when the business shares it.</li><li>🔁 <strong>Selling</strong> your piece later for more than you paid.</li></ul>
+    <p style="text-align:center"><strong>Both can go down. A piece can even end up worth less than you paid.</strong></p></div>
     <button onclick="next()">Practice</button>`),
-  ()=>renderMC("q412a", next),
-  ()=>renderMC("q412b", next),
+  ()=>renderMC("q422a", next),
+  ()=>renderMC("q422b", next),
 ];
 
 /* =====================================================================
-   LESSON 3 — Ready to Invest? (challenge)
+   LESSON 3 — Would You Buy a Piece? (challenge)
 ===================================================================== */
 const MOVES=[
-  {wk:"The emergency fund", story:"Kai’s emergency fund is full. Mika says: \"Put it all into fishing gear to sell! It will grow faster.\"", opts:[
-    {t:"No. The emergency fund stays in savings, ready for a bad day", ok:true, fb:"Right. If the gear doesn’t sell the week his roof leaks, the fund isn’t there. Its job is to be ready, not to grow fast."},
-    {t:"Yes, a bigger fund is a better fund", ok:false, fb:"An investment can be down right when the emergency comes. The fund’s job is to be ready. Keep it in savings."},
-    {t:"Put half in, just to try", ok:false, fb:"Even half could be down on the day he needs it. The emergency fund stays safe in savings."}]},
-  {wk:"A stranger at the dock", story:"A stranger says: \"Give me $20 today and I GUARANTEE you get $40 back next week. No risk!\"", opts:[
-    {t:"Say no. A “guaranteed” big return with no risk is a scam sign", ok:true, fb:"Right. Real investing never comes with a promise. Big return, no risk, and a rush? That is Module 23 all over again."},
-    {t:"Pay, because doubling your money is a great return", ok:false, fb:"No real investment can promise that. “Guaranteed” plus a rush is a classic scam."},
-    {t:"Pay $10 to test it first", ok:false, fb:"Any money to this stranger is likely gone. No real investment promises a sure, fast double."}]},
-  {wk:"Money for next week", story:"Kai has $15 set aside to pay his boat fee next week. Could he invest it until then?", opts:[
-    {t:"No. Money needed soon stays safe, because an investment can be down next week", ok:true, fb:"Right. Only invest money that can wait through a bad season."},
-    {t:"Yes, a week is plenty of time to grow", ok:false, fb:"A week is plenty of time to go DOWN. If it drops, he can’t pay the fee. Money needed soon stays safe."},
-    {t:"Yes, and borrow if it goes down", ok:false, fb:"Then a bad week turns into debt. Money needed soon stays safe."}]},
-  {wk:"A card balance", story:"Kai still owes $12 on a credit card that charges him extra every month. He also has $12 extra this month.", opts:[
-    {t:"Pay off the card first. Getting rid of costly debt comes before investing", ok:true, fb:"Right. The card’s cost is certain. An investment’s return is not. Clear the debt first."},
-    {t:"Invest the $12 and hope it grows faster than the card’s cost", ok:false, fb:"The card’s cost is a sure thing. The return is just a hope. Pay the debt first."},
-    {t:"Split it and make only the minimum payment", ok:false, fb:"Minimum payments keep the costly debt around longer (Module 29). Pay it off first."}]},
-  {wk:"A goal ten years away", story:"Emergency fund full. No debts. Kai has $30 he won’t need for years, for a bigger boat someday.", opts:[
-    {t:"This money is a good fit to invest, knowing it can have bad seasons", ok:true, fb:"Right. Money that can wait years can ride out a bad season. That is the money investing is for."},
-    {t:"Keep it in a tin under the bed", ok:false, fb:"You saw in Module 40 how a tin loses buying power. This money can wait, so it can go to work."},
-    {t:"Spend it now before prices rise", ok:false, fb:"Then there is no boat money at all. This money can wait, which makes it a good fit to invest."}]}
+  {wk:"Two stands", story:"Two stands sell pieces for $10. One has long lines and an owner who keeps careful notes. The other is closed half the time, and nobody knows its costs.", opts:[
+    {t:"The busy, well-run stand looks like the better piece to own, though it’s still not a sure thing", ok:true, fb:"Right. You’re buying a piece of the business, so look at the business. Even a good one can have bad months."},
+    {t:"Either one, since stock always goes up", ok:false, fb:"Stock can go down, and a business nobody can explain is a big risk. Look at the business first."},
+    {t:"The closed one, because nobody else wants it", ok:false, fb:"Nobody wanting it is a warning sign, not a bargain. Look at how the business is actually doing."}]},
+  {wk:"A stranger’s offer", story:"A stranger says: \"Buy a piece of my gold mine on a faraway island! $20 now, and I GUARANTEE it doubles by next month. Today only!\"", opts:[
+    {t:"Say no. Nobody can promise a piece will double, and the rush is a scam sign", ok:true, fb:"Right. Real owners share real ups and downs. “Guaranteed” plus “today only” is a scam, like in Modules 23 and 41."},
+    {t:"Buy it, because gold is always valuable", ok:false, fb:"You can’t see the mine, and no piece can be guaranteed to double. That’s a scam."},
+    {t:"Buy just one piece to test it", ok:false, fb:"Any money to this stranger is likely gone. Say no."}]},
+  {wk:"All in one stand?", story:"Kai has $40 he’s ready to invest. He loves Nalu’s stand and wants to buy 4 more pieces with all of it.", opts:[
+    {t:"Maybe not all of it. If this one stand has big trouble, all his money has trouble too", ok:true, fb:"Right. Everything in one place means one storm hits all of it. Rana has a plan for this, coming next module."},
+    {t:"Yes, all of it. Nalu’s stand is the best on the island", ok:false, fb:"Even the best stand can be hit by a storm or a new rival. All in one stand means one bad event hits everything."},
+    {t:"Yes, and borrow more to buy extra pieces", ok:false, fb:"Borrowing to buy pieces means he could owe money even if the stand does badly. Big risk."}]},
+  {wk:"A rough patch", story:"The rival stand opens. Offers for pieces drop to $6. Kai doesn’t need this money for years.", opts:[
+    {t:"Remember why he bought it. One rough patch isn’t the whole story, and he isn’t in a hurry", ok:true, fb:"Right. Money that can wait doesn’t have to be sold in a bad moment. Nothing is promised, but panic isn’t a plan."},
+    {t:"Sell right now at $6 before it drops to zero", ok:false, fb:"Maybe it drops more, maybe it recovers. Nobody knows. Selling in a panic locks in the loss. He isn’t in a hurry, so he can think it through."},
+    {t:"Ask Nalu to give him back his $10", ok:false, fb:"Owners aren’t lenders. Nalu doesn’t owe him $10. He owns a piece, through ups and downs."}]}
 ];
 let iStars=0;
 const L3=[
   ()=>{ iStars=0;
-    show(`<div class="kicker">Lesson 3 · Ready to invest?</div>
-    <div class="recap"><strong>So far:</strong> investing can bring a bigger return, but it can go down.</div>
-    <div class="card"><p>"The real question," Rana says, "is not <em>how</em> to invest. It is <em>which money</em> is ready."</p>
-    <p>Five moments. Get each right the first time to earn a ⭐.</p></div>
+    show(`<div class="kicker">Lesson 3 · Would you buy a piece?</div>
+    <div class="recap"><strong>So far:</strong> stock is a piece of owning; profit is what’s left after costs; both can go down.</div>
+    <div class="card"><p>Word spreads. Other islanders start selling pieces of their businesses too. Rana helps Kai think each one through.</p>
+    <p>Four moments. Get each right the first time to earn a ⭐.</p></div>
     <button onclick="next()">Start</button>`); },
   ()=>{
     let i=0;
     function draw(){
-      if(i>=MOVES.length){ addXP(5); next(); return; }
+      if(i>=MOVES.length){ addXP(4); next(); return; }
       const w=MOVES[i];
       const shuffled=w.opts.map((o,k)=>({o,k})).sort(()=>Math.random()-.5);
       show(`<div class="week">${w.wk}</div>
@@ -600,19 +577,19 @@ const L3=[
   ()=>show(`<div class="kicker">Lesson 3 · How you did</div>
     <div class="stars">${"⭐".repeat(iStars)}${"☆".repeat(MOVES.length-iStars)}</div>
     <p class="muted" style="text-align:center">${iStars} of ${MOVES.length} on the first try</p>
-    <div class="card"><p><strong>Before you invest, check:</strong></p><ul class="recaplist">
-      <li>✅ Emergency fund full, and staying in savings.</li>
-      <li>✅ Costly debts paid off.</li>
-      <li>✅ The money can wait a long time.</li>
-      <li>✅ No one is promising a “guaranteed” big return.</li>
+    <div class="card"><ul class="recaplist">
+      <li>✅ Look at the <strong>business</strong> before buying a piece.</li>
+      <li>✅ “Guaranteed to double” is a scam sign.</li>
+      <li>✅ Everything in one business is a big risk.</li>
+      <li>✅ One rough patch isn’t the whole story, and panic isn’t a plan.</li>
     </ul></div>
     <button onclick="next()">Practice</button>`),
-  ()=>renderMC("q413a", next),
+  ()=>renderMC("q423a", next),
 ];
 const META=[
-  {title:"The Better Net", sub:"Money that brings money back", emoji:"🎣"},
-  {title:"Steady or Bumpy?", sub:"Savings vs. investing over four seasons", emoji:"🎢"},
-  {title:"Ready to Invest?", sub:"Which money is ready to go to work", emoji:"✅"},
+  {title:"A Piece of the Stand", sub:"Nalu splits her business into 10", emoji:"🥭"},
+  {title:"Profit Day", sub:"What’s left after costs, and who gets it", emoji:"📒"},
+  {title:"Would You Buy a Piece?", sub:"Four choices about owning stock", emoji:"🤔"},
 ];
 
 
@@ -723,7 +700,7 @@ function goHome(){
       '<span class="muted" style="font-weight:400">'+l.sub+'</span></button>';
   });
   if(S.masteryPassed) html+='<div class="night" style="margin-top:8px"><div class="lantern">🏮</div><p style="color:#cfe0ee">Module '+CFG.n+' mastered · '+S.xp+' XP earned here</p></div>';
-  html+='<button class="btn-ghost" style="margin-top:14px" onclick="window.location.href=\'module-40-inflation.html\'">← Module 40</button>';
+  html+='<button class="btn-ghost" style="margin-top:14px" onclick="window.location.href=\'module-41-making-money-work.html\'">← Module 41</button>';
   html+='<button class="btn-ghost" style="margin-top:10px" onclick="window.location.href=\'index.html\'">🗺️ Back to all modules</button>';
   show(html);
 }
