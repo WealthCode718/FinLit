@@ -71,12 +71,12 @@ const CFG = {
   pool:["q441a","q441b","q441c","q442a","q442b","q443a"], transfer:"q443b",
   quest:"You watched Kai's growth speed up when he left it in, saw how much the starting age matters, and learned that compound growth works against you in debt.",
   failKeys:"The keys: compound growth is growth earning its own growth, so it speeds up over time; time is the biggest ingredient, so starting early matters; long-term money is money you won't need for many years; real investments still bounce and nothing is promised; and debt compounds against you.",
-  nextFile:null,
+  nextFile:"module-45-investing-challenge.html",
   passStory:'<p><strong>You now own:</strong> compound growth and long-term.</p>'+
     '<p>Tavo closes his old notebook. "Thirty years ago I put a little in and mostly left it alone. Storms came. Bad years came. I didn’t panic, and I didn’t touch it."</p>'+
     '<p>He smiles at Kai. "You have something I didn’t have at your age: you already know all this. Time is on your side."</p>'+
     '<p>Rana stands up. "Now let’s see if you can put the whole block together."</p>'+
-    '<p class="muted">Module 45: The Investing Challenge. (Coming soon.)</p>'
+    '<p class="muted">Module 45: The Investing Challenge.</p>'
 };
 
 const TUTOR_HELLO = "Hi! Ask me anything about compound growth, starting early, or long-term money. Or tap a button below.";
