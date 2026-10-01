@@ -74,13 +74,13 @@ const CFG = {
   quest:"You matched plans to four islanders, wrote Kai's investment plan, and stuck to it through ten years of temptations, scams, and a crash.",
   failKeys:"The keys: risk tolerance depends on when you need the money and how you handle drops; an investment plan puts the emergency fund first, pays off costly debt, and invests only long-term money, spread out; and you follow the plan on the hard days, not your panic.",
   badge:" · Investing block complete 📈",
-  nextFile:null,
+  nextFile:"module-46-ads-and-real-value.html",
   passStory:'<p><strong>You now own:</strong> risk tolerance and investment plan, and the whole Investing block.</p>'+
     '<p>Kai folds his plan and puts it in the dry drawer, right next to his insurance policy.</p>'+
     '<p>"Savings for safety. Insurance for big losses. Investing for the long term," Rana says. "You can protect money and grow it now."</p>'+
     '<p>On the way home, a huge painted sign at the market catches Kai’s eye: <em>BEST SNACK EVER! EVERYONE LOVES IT! ONLY TODAY!</em></p>'+
     '<p>Rana raises an eyebrow. "Next, let’s talk about the people who want your money."</p>'+
-    '<p class="muted">Module 46 begins a new block. (Coming soon.)</p>'
+    '<p class="muted">Module 46: Ads & Real Value.</p>'
 };
 
 const TUTOR_HELLO = "Hi! Ask me anything about risk tolerance, building an investment plan, or sticking to it. Or tap a button below.";

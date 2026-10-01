@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FinLit — The Investing Challenge — Module 45</title>
+<title>FinLit — Ads & Real Value — Module 46</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap');
   :root{
@@ -132,21 +132,23 @@
   .spin{display:inline-block; width:16px; height:16px; border:3px solid #fff; border-top-color:transparent; border-radius:50%; animation:sp 1s linear infinite; vertical-align:-3px}
   @keyframes sp{to{transform:rotate(360deg)}}
   .week{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:#fff; background:var(--shell); display:inline-block; border-radius:6px; padding:2px 10px; margin-bottom:8px; font-weight:700}
-  .stars{font-size:28px; letter-spacing:4px; text-align:center; margin:6px 0}
-  .sortbar{flex-wrap:wrap}
-  .sortbar button{min-width:90px}
-  .sortbar .s1{background:var(--good)} .sortbar .s2{background:var(--ink)} .sortbar .s3{background:var(--shell)}
-  .who{background:#fff; border:2px solid #d9e2de; border-radius:14px; padding:14px 16px; margin-bottom:12px}
-  .who .nm{font-family:"Fraunces",Georgia,serif; font-weight:700; font-size:20px; margin-bottom:4px}
-  .plan{background:#fffdf5; border:2px solid var(--sand-deep); border-radius:10px; padding:14px 16px; margin-bottom:12px; font-size:14px}
-  .plan .hd{font-family:"Fraunces",Georgia,serif; font-weight:700; font-size:18px; text-align:center; margin-bottom:8px}
-  .plan .row{display:flex; justify-content:space-between; gap:8px; padding:5px 0; border-bottom:1px dashed var(--sand-deep)}
-  .plan .row span:last-child{font-weight:700; text-align:right}
-  .plan .rule{margin-top:8px; font-size:13px; color:var(--ink-soft)}
-  .meter{background:#fff; border:2px solid #d9e2de; border-radius:14px; padding:12px 14px; margin-bottom:12px}
-  .meter .lbl{font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-weight:700; display:flex; justify-content:space-between}
-  .meter .bar{height:14px; border-radius:999px; background:#eef2f0; overflow:hidden; margin-top:8px}
-  .meter .bar div{height:100%; background:var(--good); border-radius:999px; transition:width .5s ease}
+  .poster{background:#fff3c4; border:3px solid #e0a526; border-radius:14px; padding:16px; margin-bottom:12px; text-align:center}
+  .poster .big{font-family:"Fraunces",Georgia,serif; font-size:24px; font-weight:800; color:#b4321d; line-height:1.15}
+  .poster .tk{display:inline-block; margin:5px 3px; padding:6px 10px; border-radius:10px; border:2px dashed #c58a12; background:#fffaf0; color:#8a3a12; cursor:pointer; font-weight:800; font-size:15px; min-height:44px}
+  .poster .tk.found{background:#e8f3ee; border:2px solid var(--good); color:var(--good)}
+  .poster .tiny .tk{font-size:11px; font-weight:600; color:#7a6a4a}
+  .tally{text-align:center; font-weight:700; margin-bottom:8px}
+  .phone{background:#1b2b33; color:#fff; border-radius:18px; padding:14px; margin-bottom:12px}
+  .phone .pop{background:#ff5c8a; border-radius:12px; padding:12px; text-align:center}
+  .phone .pop .h{font-size:20px; font-weight:800}
+  .phone .pop .t{font-size:13px; opacity:.9}
+  .vs{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px}
+  .vs button{background:#fff; color:var(--ink); border:2px solid #d9e2de; border-radius:14px; padding:12px 10px; text-align:left; font-size:14px; line-height:1.35; min-height:44px}
+  .vs button .e{font-size:28px; display:block}
+  .vs button .p{font-family:"Fraunces",Georgia,serif; font-size:22px; font-weight:700; display:block; margin:2px 0}
+  .vs button.right{border-color:var(--good); background:#e8f3ee}
+  .vs button.wrong{border-color:var(--bad); background:#f8e6e3}
+  .sortbar .fa{background:var(--good)} .sortbar .fe{background:var(--shell)}
   /* Shared island UX — tap targets, focus, no sideways scroll */
   html,body{overflow-x:clip}
   a.back-hub,button.back-lessons{
@@ -205,7 +207,7 @@
     <button onclick="quickAsk('Quiz me')">Quiz me</button>
   </div>
   <div class="tp-in">
-    <input id="tin" placeholder="Ask about risk tolerance and investment plans…" onkeydown="if(event.key==='Enter')sendTutor()">
+    <input id="tin" placeholder="Ask about advertising and real value…" onkeydown="if(event.key==='Enter')sendTutor()">
     <button onclick="sendTutor()">Send</button>
   </div>
 </div>
@@ -215,79 +217,77 @@
 
 <script src="finlit-core.js"></script>
 <script>
-const MODULE_N = 45;
+const MODULE_N = 46;
 /* =====================================================================
-   MODULE 45 — THE INVESTING CHALLENGE  (Investing block finale, 6 of 6)
-   Vocab: risk tolerance, investment plan.
-   L1: Four islanders, four situations: mostly savings / a mix / mostly
-       the investment fund. Time AND feelings matter; the best plan is
-       one you can stick with. Named: risk tolerance.
-   L2: Kai's plan builder: five money pots go to savings, pay it off,
-       or the investment fund (M36, M29, M41 rules). Named: investment plan.
-   L3: Ten-year challenge with a "plan strength" meter: all-in temptation,
-       a crash year, rising prices, a "Coconut Coin" scam, a big-fee fund,
-       a raise. Every rule from M40–M44 in one run.
-   No real products named; outcomes are story numbers, not predictions.
+   MODULE 46 — ADS & REAL VALUE  (Money World block, 1 of 4)
+   Vocab: advertising, value.
+   L1: Spot five tricks on the Sparkle Snack poster (opinion as fact,
+       crowd pressure, rush, paid famous person, tiny print). Named:
+       advertising. Ads aren't evil; some lines are useful facts.
+   L2: Fact or feeling? sort, then a pop-up "gem sale" in Kai's phone
+       game (online ads, sponsored videos, in-game offers).
+   L3: Pick the better value in three pairs; cheap isn't always better
+       value, and a "sale" on something you don't need isn't value.
+       Named: value.
+   PISA link: financial landscape, consumer awareness.
 ===================================================================== */
 const VOCAB = {
-  risktol:{term:"risk tolerance", def:"How much up-and-down you can handle without panicking or needing the money. It depends on WHEN you need the money and how you FEEL when it drops."},
-  invplan:{term:"investment plan", def:"Your written rules for money: what stays safe in savings, what debt gets paid off first, what gets invested for the long term, and what you'll do when it drops."}
+  advertising:{term:"advertising", def:"Messages that sellers pay for to make you want to buy their things: signs, videos, pop-ups, songs, even famous people. Some parts are useful facts. Some parts are tricks to make you feel rushed or left out."},
+  value:{term:"value", def:"What you really get for what you pay: how good it is, how long it lasts, and how much you'll actually use it. A low price is not the same as good value."}
 };
 
 const QUESTIONS = {
-  "q451a":{type:"mc", prompt:"What is risk tolerance?", concept:"risktol", opts:[
-    {t:"How much up-and-down you can handle without panicking or needing the money", ok:true, fb:"Right. It depends on when you need the money and how you feel when it drops."},
-    {t:"How much money you are allowed to lose by law", ok:false, fb:"No law sets that. Risk tolerance is about you: when you need the money, and how you handle drops."},
-    {t:"How risky a business is", ok:false, fb:"That's the business's risk. Risk tolerance is about the person: how much up-and-down they can handle."}]},
-  "q451b":{type:"mc", prompt:"Mika needs her money in one year to buy a bike. What kind of plan fits her?", concept:"risktol", opts:[
-    {t:"Mostly savings, because one year is too short to ride out a bad year", ok:true, fb:"Right. If the fund drops right before she needs the money, there's no time to wait for it to recover."},
-    {t:"Mostly the investment fund, so it grows faster", ok:false, fb:"It might grow, or it might be down right when she needs the bike money. One year isn't long-term."},
-    {t:"All in one business she likes", ok:false, fb:"That's the riskiest choice of all, for money she needs in a year. Mostly savings fits."}]},
-  "q451c":{type:"tf", prompt:"True or false: the best plan is always the one with the biggest possible return.", answer:false, concept:"risktol",
-    good:"Right. The best plan is one that fits when you need the money, and one you can actually stick with when it drops.",
-    bad:"Look again. A plan that makes you panic and sell in a bad year can end up worse. The best plan fits your time and your nerves."},
-  "q452a":{type:"mc", prompt:"Which list is the best order for Kai's investment plan?", concept:"invplan", opts:[
-    {t:"Fill the emergency fund, pay off costly debt, then invest long-term money", ok:true, fb:"Right. Safety first, then the sure win of clearing debt, then let long-term money go to work."},
-    {t:"Invest everything first, then build an emergency fund later", ok:false, fb:"Without an emergency fund, one bad day could force him to sell in a down year or borrow. Emergency fund first."},
-    {t:"Invest first, pay the card's minimum forever", ok:false, fb:"The card's interest compounds against him for sure. Pay it off before investing."}]},
-  "q452b":{type:"mc", prompt:"Why should an investment plan be written down?", concept:"invplan", opts:[
-    {t:"So you can follow your calm thinking when a scary year or a shiny offer comes", ok:true, fb:"Right. You make the plan on a calm day, then follow it on the hard days."},
-    {t:"Because a written plan guarantees a profit", ok:false, fb:"Nothing guarantees a profit. A written plan just keeps you from panicking or chasing scams."},
-    {t:"So the bank can use it", ok:false, fb:"It's for you. It helps you stick to your own rules when things get bumpy."}]},
-  "q453a":{type:"mc", prompt:"In a crash year, Kai's island fund drops from $130 to $100. His plan says this money is for 15 years from now. What does the plan tell him to do?", concept:"invplan", opts:[
-    {t:"Stick to the plan. It's long-term money, and he expected bad years", ok:true, fb:"Right. He wrote this plan on a calm day for exactly this kind of year."},
-    {t:"Sell everything so it can't drop more", ok:false, fb:"That locks in the drop and stops compound growth. His plan says this money can wait 15 years."},
-    {t:"Move his emergency fund into the fund to buy more", ok:false, fb:"The emergency fund stays in savings, always. That's rule number one of the plan."}]},
-  "q453b":{type:"mc", transfer:true, prompt:"Lena's family has two goals: a trip next summer, and helping Lena with school costs in 15 years. Their emergency fund is full and they have no debt. Which plan fits?", concept:"invplan", opts:[
-    {t:"Trip money in savings; school money in a spread-out investment fund for the long term", ok:true, fb:"Exactly. Short-term goal: keep it safe. Long-term goal: let it grow, spread out, through the ups and downs."},
-    {t:"Both in the investment fund, to grow faster", ok:false, fb:"The trip is next summer. That's not long-term, and the fund could be down right when they need it."},
-    {t:"Both in a tin at home", ok:false, fb:"A tin loses buying power to inflation (Module 40), and 15 years in a tin is a long time to fall behind."}]}
+  "q461a":{type:"mc", prompt:"What is advertising?", concept:"advertising", opts:[
+    {t:"Messages sellers pay for to make you want to buy their things", ok:true, fb:"Right. Signs, videos, pop-ups, and paid famous people are all advertising."},
+    {t:"Fair reviews written by people who tested the product", ok:false, fb:"A fair review isn't paid for by the seller. Advertising is the seller's own message, made to get you to buy."},
+    {t:"Rules that say what stores are allowed to sell", ok:false, fb:"That's not it. Advertising is messages sellers pay for, to make you want their things."}]},
+  "q461b":{type:"mc", prompt:"An ad shouts “ONLY TODAY! HURRY!” What is that trick trying to do?", concept:"advertising", opts:[
+    {t:"Rush you so you buy before you stop and think", ok:true, fb:"Right. Scammers use the same trick (Module 23). A good deal usually survives one night of thinking."},
+    {t:"Help you plan your budget", ok:false, fb:"It does the opposite. The rush is there so you skip the planning."},
+    {t:"Tell you a useful fact about the product", ok:false, fb:"“Hurry” tells you nothing about the product. It's pressure, not information."}]},
+  "q461c":{type:"tf", prompt:"True or false: if a famous person is in an ad for a product, the product must be good.", answer:false, concept:"advertising",
+    good:"Right. Famous people are often paid to be in ads. Being in an ad isn't proof that something is good.",
+    bad:"Look again. Famous people are often PAID to be in ads. That's not proof the product is good."},
+  "q462a":{type:"mc", prompt:"Which line from an ad is a useful FACT, not a feeling-pusher?", concept:"advertising", opts:[
+    {t:"“$2 a cup. Made with mango and lime. Open 8 to 5 at the harbor.”", ok:true, fb:"Right. Price, what's in it, where and when. You can check all of that."},
+    {t:"“The most amazing drink you'll ever taste!”", ok:false, fb:"That's an opinion dressed up as a fact. You can't check “most amazing.”"},
+    {t:"“Everyone cool is drinking it!”", ok:false, fb:"That's crowd pressure, trying to make you feel left out. It tells you nothing about the drink."}]},
+  "q462b":{type:"mc", prompt:"A pop-up in Kai's game: “GEM PACK 80% OFF! 2 hours left!” What's the smartest first move?", concept:"advertising", opts:[
+    {t:"Pause. Ask: do I need it, is it in my budget, and would I want it tomorrow?", ok:true, fb:"Right. A countdown timer is a rush trick. Your budget doesn't change just because a clock is ticking."},
+    {t:"Buy fast before the timer ends", ok:false, fb:"The timer is there so you don't think. 80% off something you don't need is still money spent."},
+    {t:"Buy two, because it's 80% off", ok:false, fb:"A discount on something you didn't plan to buy isn't saving money. It's spending money."}]},
+  "q463a":{type:"mc", prompt:"Sandals A cost $4 and break after about 2 months. Sandals B cost $10 and last a whole year. Which is better value for a year of walking?", concept:"value", opts:[
+    {t:"Sandals B. Kai would need about 6 pairs of A in a year, which is $24", ok:true, fb:"Right. The cheaper price wasn't the better value. B costs $10 for the whole year."},
+    {t:"Sandals A, because $4 is less than $10", ok:false, fb:"Per pair, yes. But A breaks every 2 months: 6 pairs × $4 = $24 for the year, more than B's $10."},
+    {t:"They are the same value", ok:false, fb:"Count the pairs: about 6 of A in a year is $24. One pair of B is $10."}]},
+  "q463b":{type:"mc", transfer:true, prompt:"Lena sees a video of a popular gamer holding a $40 headset: “Use my code for 10% off, today only!” The video has a tiny “sponsored” label. What's true?", concept:"advertising", opts:[
+    {t:"It's an ad. The gamer is paid, and “today only” is a rush. Lena should compare before buying", ok:true, fb:"Exactly. Different place, same tricks: a paid famous person and a rush. “Sponsored” means advertising."},
+    {t:"It's an honest review, because the gamer uses it", ok:false, fb:"“Sponsored” means the seller paid for it. That makes it advertising, not a fair review."},
+    {t:"10% off means she's saving money, so she should buy it now", ok:false, fb:"She only saves if she needed a headset anyway and it's good value. Compare first. The rush is a trick."}]}
 };
 
 const CFG = {
-  n:45, title:"The Investing Challenge", homeSub:"Four short lessons. Match plans to people, write Kai's investment plan, then live ten years of it.",
-  pool:["q451a","q451b","q451c","q452a","q452b","q453a"], transfer:"q453b",
-  quest:"You matched plans to four islanders, wrote Kai's investment plan, and stuck to it through ten years of temptations, scams, and a crash.",
-  failKeys:"The keys: risk tolerance depends on when you need the money and how you handle drops; an investment plan puts the emergency fund first, pays off costly debt, and invests only long-term money, spread out; and you follow the plan on the hard days, not your panic.",
-  badge:" · Investing block complete 📈",
-  nextFile:"module-46-ads-and-real-value.html",
-  passStory:'<p><strong>You now own:</strong> risk tolerance and investment plan, and the whole Investing block.</p>'+
-    '<p>Kai folds his plan and puts it in the dry drawer, right next to his insurance policy.</p>'+
-    '<p>"Savings for safety. Insurance for big losses. Investing for the long term," Rana says. "You can protect money and grow it now."</p>'+
-    '<p>On the way home, a huge painted sign at the market catches Kai’s eye: <em>BEST SNACK EVER! EVERYONE LOVES IT! ONLY TODAY!</em></p>'+
-    '<p>Rana raises an eyebrow. "Next, let’s talk about the people who want your money."</p>'+
-    '<p class="muted">Module 46: Ads & Real Value.</p>'
+  n:46, title:"Ads & Real Value", homeSub:"Four short lessons. Spot the tricks in advertising, and learn to judge real value.",
+  pool:["q461a","q461b","q461c","q462a","q462b","q463a"], transfer:"q463b",
+  quest:"You spotted five tricks on a snack poster, sorted facts from feeling-pushers, handled a pop-up sale, and picked real value over a low price.",
+  failKeys:"The keys: advertising is paid messages to make you want to buy; watch for rush, crowd pressure, paid famous people, opinions dressed as facts, and tiny print; facts you can check are useful; and value is what you really get for the price: quality, how long it lasts, and how much you'll use it.",
+  nextFile:null,
+  passStory:'<p><strong>You now own:</strong> advertising and value.</p>'+
+    '<p>Kai walks past the Sparkle Snack poster again. This time he reads the tiny print, smiles, and keeps walking.</p>'+
+    '<p>At Nalu’s stand, a man is waving a long paper. "Sign here and your stand gets a fancy new blender every year!"</p>'+
+    '<p>Nalu frowns at the paper. "Kai, help me read this before I sign anything."</p>'+
+    '<p class="muted">Module 47 continues the Money World block. (Coming soon.)</p>'
 };
 
-const TUTOR_HELLO = "Hi! Ask me anything about risk tolerance, building an investment plan, or sticking to it. Or tap a button below.";
-const TUTOR_SYS = "You are the tutor inside Module 45 (The Investing Challenge) of a financial-literacy app, the finale of the Investing block. The learner may be a child or an adult. "+
-  "They know from earlier modules: money, dollar, cent, add, subtract, multiply, divide, fraction, buy, sell, pay, price, cost, earn, spend, need, save, goal, percent, bank, deposit, withdraw, balance, savings, interest, grow, fee, scam, budget, borrow, loan, owe, debt, credit card, minimum payment, wage, income, tax, risk, loss, emergency, emergency fund, insurance, policy, inflation, buying power, invest, return, stock, profit, diversify, investment fund, compound growth, long-term. "+
-  "From THIS module: risk tolerance (how much up-and-down you can handle without panicking or needing the money; it depends on WHEN you need the money and how you FEEL when it drops) and investment plan (your written rules: emergency fund stays in savings, costly debt paid off first, only long-term money invested, spread out, low fees, and what you will do in a bad year). "+
-  "Key points: money needed soon fits mostly savings; long-term money can be mostly in a spread-out investment fund; a mix suits partly-soon goals or nervous investors; the best plan is one you can stick with; write the plan on a calm day and follow it on hard days; 'guaranteed' or 'today only' offers are scams; adding a little regularly helps. "+
-  "TEACHING STYLE: concepts over calculations. Never give a growth rate, never predict returns, never recommend a real fund, company, app, or coin, and do not give personal advice about anyone's real money; speak about the story and general ideas. "+
-  "STRICT RULES: never use these words (later modules): retirement, dividend, broker, portfolio, bond, advertising. If the learner uses one, answer briefly in plain words and say it is coming later or is a grown-up detail. "+
-  "Story context: Kai matched plans to four islanders (Mika: bike in one year → mostly savings; Kai: boat in 20 years → mostly the fund; Tavo: new boat in 3 years plus long-term money → a mix; Nalu: 20 years but panics at drops → a steadier mix she can stick with). Then he wrote his plan: emergency fund $60 in savings, $20 card balance paid off, $30 ferry trip next month in savings, $100 boat money and $40 extra into the island investment fund. Then he lived ten years: stayed spread out instead of going all in on Nalu's stand, stuck to the plan when the fund dropped from $130 to $100, topped up his emergency fund when prices rose, refused 'Coconut Coin' that promised to triple, chose a low-fee fund, and added part of a raise to his plan. In the story his invested money ended around $300. "+
-  "Never repeat a failed explanation: switch examples (a farmer planning crops for a season vs. an orchard for decades, a hiker packing for a day vs. a month). Keep answers under 80 words, warm, honest, never mark wrong ideas right. If asked 'Quiz me', ask ONE simple 'savings or investment fund?' question and wait.";
+const TUTOR_HELLO = "Hi! Ask me anything about advertising tricks, sponsored videos, or how to judge real value. Or tap a button below.";
+const TUTOR_SYS = "You are the tutor inside Module 46 (Ads & Real Value) of a financial-literacy app, the first module of the Money World block. The learner may be a child or an adult. "+
+  "They know from earlier modules: money, dollar, cent, add, subtract, multiply, divide, percent, discount, price, cost, buy, sell, pay, spend, need, save, goal, budget, bank, savings, interest, fee, scam, borrow, debt, credit card, wage, income, tax, sales tax, receipt, refund, risk, emergency fund, insurance, policy, inflation, invest, return, stock, profit, diversify, investment fund, compound growth, long-term, risk tolerance, investment plan. "+
+  "From THIS module: advertising (messages sellers pay for to make you want to buy: signs, videos, pop-ups, songs, famous people, 'sponsored' posts; some parts are useful checkable facts like price, ingredients, and hours; other parts are tricks) and value (what you really get for what you pay: quality, how long it lasts, how much you'll use it; a low price is not the same as good value). "+
+  "Tricks to name: opinion dressed as fact ('best ever'), crowd pressure ('everyone loves it'), rush ('only today', countdown timers), paid famous people or creators, tiny print hiding the real price or conditions, and 'sale' prices on things you don't need. Advertising isn't evil; it can tell you real facts, so the skill is separating facts from feelings. "+
+  "TEACHING STYLE: concepts over calculations; small multiplication is fine for value comparisons. Never name or criticize real brands, companies, games, or creators. "+
+  "STRICT RULES: never use these words (later modules): contract, terms and conditions, donate, charity, retirement. If the learner uses one, answer briefly in plain words and say it is coming later. "+
+  "Story context: a new cart's poster shouted 'SPARKLE SNACK! BEST SNACK EVER! EVERYONE LOVES IT! ONLY TODAY! Surf champ Leilani eats it every day!' with tiny print saying the $1 price was for the first bite-size bag only and full bags cost $3. Kai spotted the tricks, sorted fact lines from feeling lines, paused on a pop-up 'GEM PACK 80% OFF, 2 hours left' in his phone game, and compared value: $4 sandals that break every 2 months (about 6 pairs, $24 a year) vs. $10 sandals that last a year. "+
+  "Never repeat a failed explanation: switch examples (a cereal box with a cartoon, a toy commercial, a 'limited edition' sticker). Keep answers under 80 words, warm, honest, never mark wrong ideas right. If asked 'Quiz me', ask ONE simple 'fact or feeling?' question and wait.";
 
 /* =====================================================================
    STATE + PERSISTENCE
@@ -403,216 +403,170 @@ function renderTF(qid,onDone){
 }
 
 /* =====================================================================
-   SIMULATORS — people-to-plan sort, Kai's plan builder, and the
-   ten-year challenge with a plan-strength meter.
+   INTERACTIVES — tappable poster tricks, fact/feeling sort, phone
+   pop-up, and value pairs.
 ===================================================================== */
-const PEOPLE=[
-  {e:"👧", nm:"Mika", t:"Saving $80 for a bike she wants to buy next year.", a:"s1", why:"One year is too short to ride out a bad year. Mostly savings."},
-  {e:"🧒", nm:"Kai", t:"Saving for a bigger boat in 20 years. When his fund drops, he shrugs and waits.", a:"s3", why:"Long-term money and steady nerves: mostly a spread-out investment fund."},
-  {e:"👴", nm:"Tavo", t:"Needs part of his money for a new motor in 3 years. The rest is for the long term.", a:"s2", why:"Part soon, part long-term: a mix. Soon money stays safe; long-term money can grow."},
-  {e:"👩", nm:"Nalu", t:"Won't need the money for 20 years, but when it drops, she can't sleep and wants to sell everything.", a:"s2", why:"Her time says invest, but her nerves say steadier. A mix she can stick with beats a plan she'll panic out of."}
+const TRICKS=[
+  {id:"t1", t:"BEST SNACK EVER!", why:"An opinion dressed up as a fact. Who decided it's the best? You can't check that."},
+  {id:"t2", t:"EVERYONE LOVES IT!", why:"Crowd pressure. It wants you to feel left out if you don't buy. And it can't be true: not everyone has even tried it."},
+  {id:"t3", t:"ONLY TODAY!", why:"A rush. If you hurry, you don't stop to think. Scammers use this exact trick (Module 23)."},
+  {id:"t4", t:"Surf champ Leilani eats it every day!", why:"A famous person, very likely paid to say this. Being in an ad isn't proof something is good."},
+  {id:"t5", t:"*$1 for first bite-size bag only. Full bags $3.", why:"Tiny print. The big $1 isn't the real price of a normal bag. Always read the small words."}
 ];
-const PLABEL={s1:"Mostly savings", s2:"A mix", s3:"Mostly fund"};
-const POTS=[
-  {t:"🛟 Emergency fund · $60", a:"sav", why:"Always ready for a bad day. Stays in savings."},
-  {t:"💳 Credit card balance · $20", a:"pay", why:"Costly debt compounds against you. Pay it off first."},
-  {t:"⛴️ Ferry trip next month · $30", a:"sav", why:"Needed soon, so not long-term. Savings."},
-  {t:"⛵ Bigger boat in 20 years · $100", a:"inv", why:"Long-term. Spread out in the investment fund."},
-  {t:"🌱 Extra money, no plans for 15+ years · $40", a:"inv", why:"Long-term money is exactly what investing is for."}
-];
-const PLAB={sav:"🏦 Savings", pay:"✂️ Pay it off", inv:"🫙 Investment fund"};
-function planCard(n){
-  return '<div class="plan"><div class="hd">Kai’s Investment Plan</div>'+
-    POTS.slice(0,n).map(p=>'<div class="row"><span>'+p.t+'</span><span>'+PLAB[p.a]+'</span></div>').join('')+
-    (n>=POTS.length?'<div class="rule">If the fund drops: stick to the plan. If someone says “guaranteed”: walk away.</div>':'')+'</div>';
+function poster(found){
+  const tk=id=>{ const x=TRICKS.find(t=>t.id===id); return '<button class="tk'+(found.has(id)?' found':'')+'" data-bot="1" data-id="'+id+'">'+x.t+'</button>'; };
+  return '<div class="poster"><div class="big">✨ SPARKLE SNACK ✨</div>'+
+    '<div>'+tk("t1")+tk("t2")+'</div><div class="big" style="font-size:34px">ONLY $1*</div>'+
+    '<div>'+tk("t3")+'</div><div>🏄 '+tk("t4")+'</div><div class="tiny">'+tk("t5")+'</div></div>';
 }
-let strength=0, cStars=0;
-function meter(){ return '<div class="meter"><div class="lbl"><span>📋 Plan strength</span><span>'+strength+'%</span></div><div class="bar"><div style="width:'+strength+'%"></div></div></div>'; }
-const YEARS=[
-  {wk:"Year 1", story:"The fund is up nicely. Mika says: \"Nalu’s stand did amazing this year. Sell your fund and put it ALL in Nalu’s stand!\"", opts:[
-    {t:"Stay spread out, as the plan says", ok:true, fb:"Right. One great year doesn’t make one stand safe. Diversify (Module 43)."},
-    {t:"Go all in on Nalu’s stand", ok:false, fb:"Everything in one stand means one storm hits all of it. The plan says spread out."},
-    {t:"Sell everything and keep it in a tin", ok:false, fb:"A tin loses buying power (Module 40), and this is long-term money. Stick to the plan."}]},
-  {wk:"Year 3", story:"A crash year hits the whole island. Kai’s fund drops from $130 to $100. Neighbors are selling in a panic.", opts:[
-    {t:"Stick to the plan. This money is for 17 more years", ok:true, fb:"Right. He wrote the plan on a calm day for exactly this kind of year."},
-    {t:"Sell it all before it drops further", ok:false, fb:"That locks in the drop and stops the compound growth. The plan says long-term money waits."},
-    {t:"Move the emergency fund in to buy more", ok:false, fb:"The emergency fund stays in savings, no matter what. Rule number one."}]},
-  {wk:"Year 5", story:"Prices on the island have crept up. A repair that cost $50 now costs $60. Kai’s emergency fund is still $60.", opts:[
-    {t:"Top up the emergency fund so it still covers a real emergency", ok:true, fb:"Right. Inflation shrinks buying power, so the safety pot needs to grow with prices too."},
-    {t:"Move the emergency fund into the investment fund to beat inflation", ok:false, fb:"The emergency fund must be ready on any day. Keep it in savings and top it up instead."},
-    {t:"Do nothing, because $60 is $60", ok:false, fb:"$60 buys less than it used to (Module 40). Top it up so it still covers a real emergency."}]},
-  {wk:"Year 6", story:"A smooth talker at the dock: \"Coconut Coin! It TRIPLES every year, guaranteed! Everyone’s getting rich. Buy before tonight!\"", opts:[
-    {t:"Walk away. “Guaranteed,” “everyone,” and “before tonight” are scam signs", ok:true, fb:"Right. No real investment triples on a promise. The plan says: guaranteed means walk away."},
-    {t:"Put the ferry money in, just this once", ok:false, fb:"That’s money needed soon, sent to a likely scam. Walk away."},
-    {t:"Put in half his fund", ok:false, fb:"Nothing real is guaranteed to triple. This is a scam. Walk away."}]},
-  {wk:"Year 8", story:"Two island funds own nearly the same businesses. Kai’s current one charges a big fee every year. The other charges a tiny one.", opts:[
-    {t:"Notice the fee. When two are nearly the same, the lower fee leaves more to grow", ok:true, fb:"Right. Fees come out every year, good or bad, and they also stop that money from compounding."},
-    {t:"Keep the big fee, since higher price means better", ok:false, fb:"Not when they own nearly the same businesses. The big fee just takes more of the growth."},
-    {t:"Fees don’t matter over ten years", ok:false, fb:"Over many years, fees matter even more, because the money they take can’t compound."}]},
-  {wk:"Year 10", story:"Kai gets a raise at work: $10 more each month.", opts:[
-    {t:"Enjoy some of it, and add some to the plan every month", ok:true, fb:"Right. A little added regularly gives compound growth more to work with, and he still gets to enjoy his raise."},
-    {t:"Spend all of it every month", ok:false, fb:"It’s his choice, but adding even a little to long-term money is how plans grow."},
-    {t:"Put all of it into the emergency fund forever", ok:false, fb:"The emergency fund only needs to be big enough. Once it is, extra long-term money can go to work."}]}
+const LINES=[
+  {t:"“$2 a cup, at the harbor, 8 to 5.”", a:"fa", why:"Price, place, hours. You can check all of it."},
+  {t:"“You deserve the BEST. You deserve Sparkle.”", a:"fe", why:"Flattery to make you feel something. No information."},
+  {t:"“Made with mango, lime, and ice.”", a:"fa", why:"What's in it. That's useful to know."},
+  {t:"“Don't be the only one who hasn't tried it!”", a:"fe", why:"Crowd pressure. It's trying to make you feel left out."},
+  {t:"“Big bag: 20 pieces.”", a:"fa", why:"A number you can count. That helps you compare value."}
+];
+const PAIRS=[
+  {q:"A year of walking to the dock. Which is better value?", a:{e:"🩴",p:"$4",d:"Shiny sandals. Break after about 2 months."}, b:{e:"👡",p:"$10",d:"Plain sandals. Last a whole year."}, ans:"b",
+    why:"About 6 pairs of the $4 ones in a year = $24. The $10 pair does the whole year. The cheaper price was the worse value."},
+  {q:"Kai wants something to help him fish. Which is better value?", a:{e:"💎",p:"$5",d:"Game gems, 80% off! He'd use them once."}, b:{e:"🪝",p:"$5",d:"A set of strong hooks. He'd use them every day for a year."}, ans:"b",
+    why:"Same price, very different value. Something you'll use every day for a year beats something you'll use once, even “80% off.”"},
+  {q:"Kai needs a new rope for his boat. Which is better value?", a:{e:"🪢",p:"$4",d:"Good rope, regular price. Exactly what he needs."}, b:{e:"🎒",p:"$12",d:"A fancy bag. “SALE! Was $20!” He doesn't need a bag."}, ans:"a",
+    why:"A “sale” on something you don't need isn't saving $8. It's spending $12. The rope is what he needs."}
 ];
 
 /* =====================================================================
-   LESSON 1 — A Plan for Every Person
+   LESSON 1 — The Big Sign
 ===================================================================== */
 const L1=[
-  ()=>show(`<div class="kicker">Lesson 1 · A plan for every person</div>
-    <div class="recap"><strong>The Investing block so far:</strong> inflation shrinks buying power; investing puts money to work; stock is owning a piece; diversify; compound growth needs long-term money.</div>
-    <div class="card"><p>Word has spread: Kai knows about investing. Four islanders ask Rana the same question: "Should my money be in savings or the investment fund?"</p>
-    <p>"It depends on the person," Rana says. "Two things matter. <strong>When</strong> do you need the money? And <strong>how do you feel</strong> when it drops?"</p></div>
-    <button onclick="next()">Meet them</button>`),
+  ()=>show(`<div class="kicker">Lesson 1 · The big sign</div>
+    <div class="recap"><strong>Kai’s story so far:</strong> Kai can earn, save, borrow wisely, protect, and invest money. Now there are people who want his money: sellers.</div>
+    <div class="card"><p>A bright new cart rolls into the market with a giant poster. Kids crowd around it. Kai feels a pull to buy one right now.</p>
+    <p>Rana stops beside him. "That poster was made by people who are very good at their job. Let’s see how many tricks you can find."</p></div>
+    <button onclick="next()">Look at the poster</button>`),
   ()=>{
-    let i=0;
+    const found=new Set(); let last=null;
     function draw(){
-      if(i>=PEOPLE.length){ addXP(4); next(); return; }
-      const p=PEOPLE[i];
-      show(`<div class="kicker">Which plan fits? · ${i+1} of ${PEOPLE.length}</div>
-        <div class="who"><div class="nm">${p.e} ${p.nm}</div><p style="margin:0">${p.t}</p></div>
-        <div class="sortbar"><button class="s1" id="b1">Mostly savings</button><button class="s2" id="b2">A mix</button><button class="s3" id="b3">Mostly fund</button></div>
-        <div id="fb"></div><div id="cont"></div>`);
-      let done=false;
-      function pick(a){
-        if(done) return;
-        const ok=a===p.a;
-        document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?'Right. '+p.why:'Think about two things: when they need the money, and how they handle drops. Try again.')+'</div>';
-        revealFB();
-        if(ok){
-          done=true; addXP(1);
-          ["b1","b2","b3"].forEach(id=>document.getElementById(id).disabled=true);
-          document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(i<PEOPLE.length-1?"Next":"Done")+'</button>';
-          window._n=()=>{ i++; draw(); };
-          revealFB();
-        }
-      }
-      document.getElementById("b1").onclick=()=>pick("s1");
-      document.getElementById("b2").onclick=()=>pick("s2");
-      document.getElementById("b3").onclick=()=>pick("s3");
+      const all=found.size>=TRICKS.length;
+      show(`<div class="kicker">Lesson 1 · Spot the tricks</div>
+        <p class="tally">Tap each trick on the poster · ${found.size} of ${TRICKS.length} found</p>
+        ${poster(found)}
+        <div id="fb">${last?'<div class="feedback good">'+last.why+'</div>':''}</div>
+        <div id="cont">${all?'<button onclick="next()">All five found!</button>':''}</div>`);
+      document.querySelectorAll(".poster .tk").forEach(b=>{ b.onclick=()=>{
+        const id=b.dataset.id; if(!found.has(id)){ found.add(id); addXP(1); }
+        last=TRICKS.find(t=>t.id===id); draw(); revealFB(); }; });
     }
     draw();
   },
   ()=>show(`<div class="kicker">Lesson 1 · A new word</div>
-    <div class="card"><p>How much up-and-down someone can handle, without panicking or needing the money, is their <strong>risk tolerance</strong>.</p>
-    <p>Nalu taught Kai something important: the plan with the biggest possible return isn’t always the best. <strong>The best plan is one you can stick with.</strong></p></div>
-    <button onclick="earnWord('risktol');next()">New word: risk tolerance</button>`),
-  ()=>renderMC("q451a", next),
-  ()=>renderMC("q451b", next),
-  ()=>renderTF("q451c", next),
+    <div class="card"><p>Messages that sellers pay for, to make you want to buy, are called <strong>advertising</strong>. Signs, videos, songs, pop-ups, and famous people holding a product are all advertising.</p>
+    <p>"Is advertising bad?" Kai asks.</p>
+    <p>"Not always," says Rana. "An ad can tell you real facts: the price, what’s in it, where to find it. The trick is to keep the facts and ignore the pushing."</p></div>
+    <button onclick="earnWord('advertising');next()">New word: advertising</button>`),
+  ()=>renderMC("q461a", next),
+  ()=>renderMC("q461b", next),
+  ()=>renderTF("q461c", next),
 ];
 
 /* =====================================================================
-   LESSON 2 — Kai Writes His Plan
+   LESSON 2 — Fact or Feeling?
 ===================================================================== */
 const L2=[
-  ()=>show(`<div class="kicker">Lesson 2 · Kai writes his plan</div>
-    <div class="recap"><strong>So far:</strong> risk tolerance depends on when you need the money and how you handle drops.</div>
-    <div class="card"><p>"Now you," Rana says, handing Kai a pencil. "Remember your insurance policy? Real plans get written down. Write your money plan on a calm day, so you can follow it on a scary one."</p>
-    <p>Kai has five pots of money. For each one, choose where it goes.</p></div>
-    <button onclick="next()">Start writing</button>`),
+  ()=>show(`<div class="kicker">Lesson 2 · Fact or feeling?</div>
+    <div class="recap"><strong>So far:</strong> advertising is paid messages to make you want to buy. Some parts are facts; some are tricks.</div>
+    <div class="card"><p>Rana gives Kai a test. "For each line, ask yourself: can I <em>check</em> this? Or is it just trying to make me <em>feel</em> something?"</p></div>
+    <button onclick="next()">Sort the lines</button>`),
   ()=>{
     let i=0;
     function draw(){
-      if(i>=POTS.length){ addXP(5); next(); return; }
-      const p=POTS[i];
-      show(`<div class="kicker">Kai’s plan · ${i+1} of ${POTS.length}</div>
-        ${planCard(i)}
-        <div class="item">${p.t}</div>
-        <div class="sortbar"><button class="s1" id="ps">🏦 Savings</button><button class="s2" id="pp">✂️ Pay it off</button><button class="s3" id="pi">🫙 Fund</button></div>
+      if(i>=LINES.length){ addXP(5); next(); return; }
+      const m=LINES[i];
+      show(`<div class="kicker">Fact or feeling? · ${i+1} of ${LINES.length}</div>
+        <div class="item">${m.t}</div>
+        <div class="sortbar"><button class="fa" id="bfa">✅ Useful fact</button><button class="fe" id="bfe">💭 Feeling-pusher</button></div>
         <div id="fb"></div><div id="cont"></div>`);
       let done=false;
       function pick(a){
         if(done) return;
-        const ok=a===p.a;
-        document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?'Right. '+p.why:'Ask: is it for emergencies, is it debt, is it needed soon, or is it long-term? Try again.')+'</div>';
+        const ok=a===m.a;
+        document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?'Right. '+m.why:'Ask: could I check this? Try again.')+'</div>';
         revealFB();
         if(ok){
           done=true; addXP(1);
-          ["ps","pp","pi"].forEach(id=>document.getElementById(id).disabled=true);
-          document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(i<POTS.length-1?"Next":"See the plan")+'</button>';
+          document.getElementById("bfa").disabled=true; document.getElementById("bfe").disabled=true;
+          document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(i<LINES.length-1?"Next":"Done")+'</button>';
           window._n=()=>{ i++; draw(); };
           revealFB();
         }
       }
-      document.getElementById("ps").onclick=()=>pick("sav");
-      document.getElementById("pp").onclick=()=>pick("pay");
-      document.getElementById("pi").onclick=()=>pick("inv");
+      document.getElementById("bfa").onclick=()=>pick("fa");
+      document.getElementById("bfe").onclick=()=>pick("fe");
     }
     draw();
   },
-  ()=>show(`<div class="kicker">Lesson 2 · Another new word</div>
-    ${planCard(POTS.length)}
-    <div class="card"><p>Written rules for your money, covering what stays safe, what debt goes first, what gets invested for the long term, and what you’ll do when it drops, make an <strong>investment plan</strong>.</p></div>
-    <button onclick="earnWord('invplan');next()">New word: investment plan</button>`),
-  ()=>renderMC("q452a", next),
-  ()=>renderMC("q452b", next),
+  ()=>show(`<div class="kicker">Lesson 2 · Ads in your pocket</div>
+    <div class="card"><p>That night, Kai plays a game on his phone. Suddenly:</p></div>
+    <div class="phone"><div class="pop"><div class="h">💎 GEM PACK 80% OFF! 💎</div><div class="t">⏰ Only 1:59:42 left! Your friends already bought theirs!</div></div></div>
+    <div class="card"><p>Same tricks, new place: a countdown <strong>rush</strong>, <strong>crowd pressure</strong> ("your friends"), and a big <strong>discount</strong> on something he hadn’t planned to buy.</p>
+    <p>Ads are everywhere online too: pop-ups in games, and videos where creators are paid to show products. Look for small labels like “ad” or “sponsored.”</p></div>
+    <button onclick="next()">Practice</button>`),
+  ()=>renderMC("q462a", next),
+  ()=>renderMC("q462b", next),
 ];
 
 /* =====================================================================
-   LESSON 3 — Ten Years (challenge)
+   LESSON 3 — Real Value
 ===================================================================== */
 const L3=[
-  ()=>{ strength=0; cStars=0;
-    show(`<div class="kicker">Lesson 3 · Ten years</div>
-    <div class="recap"><strong>So far:</strong> Kai wrote his plan.</div>
-    ${meter()}
-    <div class="card"><p>Writing a plan is the easy part. Now Kai has to <em>live</em> it. Six moments over ten years will test him.</p>
-    <p>Each right choice makes the plan stronger. Right the first time earns a ⭐.</p></div>
-    <button onclick="next()">Start year 1</button>`); },
+  ()=>show(`<div class="kicker">Lesson 3 · Real value</div>
+    <div class="recap"><strong>So far:</strong> keep the facts in an ad, and ignore the pushing.</div>
+    <div class="card"><p>"So how do I decide what’s worth buying?" Kai asks.</p>
+    <p>"Not just by the price," says Tavo, who has bought a lot of rope in thirty years. "Ask what you really <em>get</em> for what you pay."</p>
+    <p>Three choices. Tap the better buy in each pair.</p></div>
+    <button onclick="next()">Compare</button>`),
   ()=>{
     let i=0;
     function draw(){
-      if(i>=YEARS.length){ addXP(6); next(); return; }
-      const w=YEARS[i];
-      const shuffled=w.opts.map((o,k)=>({o,k})).sort(()=>Math.random()-.5);
-      show(`<div class="week">${w.wk}</div>
-        ${meter()}
-        <div class="card"><p style="margin:0">${w.story}</p></div>
-        <div id="opts">${shuffled.map(x=>'<button class="opt" data-bot="1" data-k="'+x.k+'">'+x.o.t+'</button>').join('')}</div>
+      if(i>=PAIRS.length){ addXP(3); next(); return; }
+      const p=PAIRS[i];
+      const btn=(k,o)=>'<button class="opt-v" data-bot="1" data-k="'+k+'"><span class="e">'+o.e+'</span><span class="p">'+o.p+'</span>'+o.d+'</button>';
+      show(`<div class="kicker">Which is better value? · ${i+1} of ${PAIRS.length}</div>
+        <div class="card"><p style="margin:0">${p.q}</p></div>
+        <div class="vs">${btn("a",p.a)}${btn("b",p.b)}</div>
         <div id="fb"></div><div id="cont"></div>`);
-      let first=true, done=false;
-      document.querySelectorAll("#opts .opt").forEach(btn=>{
-        btn.onclick=()=>{
-          if(done) return;
-          const o=w.opts[+btn.dataset.k];
-          btn.classList.add(o.ok?"right":"wrong");
-          document.getElementById("fb").innerHTML='<div class="feedback '+(o.ok?'good':'bad')+'">'+o.fb+(o.ok?'':' Pick again.')+'</div>';
+      let done=false;
+      document.querySelectorAll(".vs button").forEach(b=>{ b.onclick=()=>{
+        if(done) return;
+        const ok=b.dataset.k===p.ans;
+        b.classList.add(ok?"right":"wrong");
+        document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?'Right. '+p.why:'Think about how long it lasts and how much it will really be used. Try again.')+'</div>';
+        revealFB();
+        if(ok){
+          done=true; addXP(1);
+          document.querySelectorAll(".vs button").forEach(x=>x.disabled=true);
+          document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(i<PAIRS.length-1?"Next":"Done")+'</button>';
+          window._n=()=>{ i++; draw(); };
           revealFB();
-          if(o.ok){
-            done=true; if(first){ cStars++; addXP(1); }
-            strength=Math.round((i+1)/YEARS.length*100);
-            document.querySelector(".meter").outerHTML=meter();
-            document.querySelectorAll("#opts .opt").forEach(b=>b.disabled=true);
-            document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(i<YEARS.length-1?"Next":"Ten years later")+'</button>';
-            window._n=()=>{ i++; draw(); };
-            revealFB();
-          } else { first=false; btn.disabled=true; }
-        };
-      });
+        } else b.disabled=true;
+      }; });
     }
     draw();
   },
-  ()=>show(`<div class="kicker">Lesson 3 · Ten years later</div>
-    ${meter()}
-    <div class="stars">${"⭐".repeat(cStars)}${"☆".repeat(YEARS.length-cStars)}</div>
-    <p class="muted" style="text-align:center">${cStars} of ${YEARS.length} on the first try</p>
-    <div class="card"><p>In this story, Kai’s invested money went through a crash, a scam, and a big-fee fund, and still ended around <strong>$300</strong>. Real investing promises nothing. But Kai gave his money the best chance:</p>
+  ()=>show(`<div class="kicker">Lesson 3 · A new word</div>
+    <div class="card"><p>What you really get for what you pay, meaning how good it is, how long it lasts, and how much you’ll actually use it, is called <strong>value</strong>.</p>
     <ul class="recaplist">
-      <li>✅ <strong>Spread out</strong>, never all in one stand.</li>
-      <li>✅ <strong>Stuck to the plan</strong> in the crash year.</li>
-      <li>✅ <strong>Topped up</strong> the emergency fund as prices rose.</li>
-      <li>✅ <strong>Walked away</strong> from “guaranteed.”</li>
-      <li>✅ <strong>Watched the fees.</strong></li>
-      <li>✅ <strong>Kept adding</strong> a little.</li>
+      <li>💲 A low <strong>price</strong> isn’t always good value. Cheap things that break can cost more.</li>
+      <li>🏷️ A <strong>sale</strong> on something you don’t need isn’t saving. It’s spending.</li>
+      <li>🔁 Something you’ll <strong>use a lot</strong> is often worth paying more for.</li>
     </ul></div>
-    <button onclick="next()">Practice</button>`),
-  ()=>renderMC("q453a", next),
+    <button onclick="earnWord('value');next()">New word: value</button>`),
+  ()=>renderMC("q463a", next),
 ];
 const META=[
-  {title:"A Plan for Every Person", sub:"Four islanders, four kinds of plan", emoji:"🧭"},
-  {title:"Kai Writes His Plan", sub:"Five pots of money, one written plan", emoji:"📝"},
-  {title:"Ten Years", sub:"Live the plan through six big moments", emoji:"🏁"},
+  {title:"The Big Sign", sub:"Spot five tricks on one poster", emoji:"📣"},
+  {title:"Fact or Feeling?", sub:"Sort ad lines, and a pop-up sale", emoji:"📱"},
+  {title:"Real Value", sub:"Price isn’t the same as value", emoji:"⚖️"},
 ];
 
 
@@ -723,7 +677,7 @@ function goHome(){
       '<span class="muted" style="font-weight:400">'+l.sub+'</span></button>';
   });
   if(S.masteryPassed) html+='<div class="night" style="margin-top:8px"><div class="lantern">🏮</div><p style="color:#cfe0ee">Module '+CFG.n+' mastered · '+S.xp+' XP earned here</p></div>';
-  html+='<button class="btn-ghost" style="margin-top:14px" onclick="window.location.href=\'module-44-growing-over-time.html\'">← Module 44</button>';
+  html+='<button class="btn-ghost" style="margin-top:14px" onclick="window.location.href=\'module-45-investing-challenge.html\'">← Module 45</button>';
   html+='<button class="btn-ghost" style="margin-top:10px" onclick="window.location.href=\'index.html\'">🗺️ Back to all modules</button>';
   show(html);
 }
