@@ -72,11 +72,11 @@ const CFG = {
   pool:["q481a","q481b","q481c","q482a","q482b","q483a"], transfer:"q483b",
   quest:"You chose how much of Kai's week to give, sorted real requests from suspicious ones, and learned to make a gift fit the real need.",
   failKeys:"The keys: to donate is to give money, things, or time freely; how much is your choice and small gifts count; a charity is a group that uses donations to help, and a real one is open and never rushes you; and the best gift fits the real need without leaving your own needs unpaid.",
-  nextFile:null,
+  nextFile:"module-49-money-world-challenge.html",
   passStory:'<p><strong>You now own:</strong> donate and charity.</p>'+
     '<p>A week later, the low village’s boats are back on the water. Kai’s afternoon of mending nets is out there somewhere, catching fish.</p>'+
     '<p>Rana walks him back to the market. "Ads, contracts, rights, giving. That’s the money world around you. Ready to see how you’d handle all of it in one busy week?"</p>'+
-    '<p class="muted">Module 49: The Money World Challenge. (Coming soon.)</p>'
+    '<p class="muted">Module 49: The Money World Challenge.</p>'
 };
 
 const TUTOR_HELLO = "Hi! Ask me anything about giving, donating time or things, or how to check a charity is real. Or tap a button below.";
