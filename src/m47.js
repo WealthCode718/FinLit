@@ -68,12 +68,12 @@ const CFG = {
   pool:["q471a","q471b","q471c","q472a","q472b","q473a"], transfer:"q473b",
   quest:"You found the catches in Nalu's blender contract, spotted a free-trial agreement, stood up for your rights with a broken flashlight, and decided when to sign and when to walk away.",
   failKeys:"The keys: a contract is an agreement you must follow, so read all of it before signing, especially the total cost and how to cancel; a free trial is a contract too; consumer rights mean you can ask for a fix, a new one, or a refund when something is broken or not as promised; and pressure to sign right now is a reason to slow down.",
-  nextFile:null,
+  nextFile:"module-48-giving-and-sharing.html",
   passStory:'<p><strong>You now own:</strong> contract and consumer rights.</p>'+
     '<p>Nalu hands the paper back to the blender man. "No, thank you. I’ll buy my own blender for $40."</p>'+
     '<p>That afternoon a storm floods the low village across the bay. Families lose their boats and their nets. Kai looks at his savings, then at Rana.</p>'+
     '<p>"I want to help," he says. "But how do I know my money gets to the people who need it?"</p>'+
-    '<p class="muted">Module 48 continues the Money World block. (Coming soon.)</p>'
+    '<p class="muted">Module 48: Giving & Sharing.</p>'
 };
 
 const TUTOR_HELLO = "Hi! Ask me anything about contracts, small print, free trials, or your rights when you buy something. Or tap a button below.";
