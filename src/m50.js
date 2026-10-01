@@ -81,12 +81,12 @@ const CFG = {
   pool:["q501a","q501b","q501c","q502a","q502b","q503a"], transfer:"q503b",
   quest:"You helped Tavo see what pays the bills after fishing stops, watched Pua's small early start beat Leo's bigger late one, and sorted goals across a lifetime.",
   failKeys:"The keys: retirement is when paid work stops but needs keep going; it's paid for by money built up while working; a retirement account is special long-term money, often with extra help, and taking it out early costs you; and starting small and early beats starting big and late.",
-  nextFile:null,
+  nextFile:"module-51-your-money-plan.html",
   passStory:'<p><strong>You now own:</strong> retirement and retirement account.</p>'+
     '<p>Tavo smiles. "Turns out I did better than I thought. I put a little away for thirty years and mostly left it alone."</p>'+
     '<p>Kai opens his notebook to a clean page. "If I have goals for this week and goals for when I’m old… I need one plan that holds all of it."</p>'+
     '<p>Rana nods. "Then let’s build it. Everything you’ve learned, on one page."</p>'+
-    '<p class="muted">Module 51: Your Money Plan. (Coming soon.)</p>'
+    '<p class="muted">Module 51: Your Money Plan.</p>'
 };
 
 const TUTOR_HELLO = "Hi! Ask me anything about retirement, retirement accounts, or long-term goals. Or tap a button below.";
