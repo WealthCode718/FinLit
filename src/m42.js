@@ -70,12 +70,12 @@ const CFG = {
   pool:["q421a","q421b","q421c","q422a","q422b","q423a"], transfer:"q423b",
   quest:"You bought a piece of Nalu's juice stand, worked out its profit in a good month and a rainy one, and weighed when a piece is worth buying.",
   failKeys:"The keys: stock is a small piece of owning a business; profit is what's left after all costs; owners share profit when there is some and get nothing when there isn't; a piece can later sell for more or less than you paid; and putting everything in one business is a big risk.",
-  nextFile:null,
+  nextFile:"module-43-spreading-it-out.html",
   passStory:'<p><strong>You now own:</strong> stock and profit, and a real piece of a juice stand.</p>'+
     '<p>Kai sips a mango juice at the new beach stand. "What if a storm wrecks both stands?" he asks.</p>'+
     '<p>"Then every owner feels it," Nalu says.</p>'+
     '<p>Rana nods. "That is why smart owners don’t keep everything in one stand. Next time, we spread it out."</p>'+
-    '<p class="muted">Module 43 continues the Investing block. (Coming soon.)</p>'
+    '<p class="muted">Module 43: Spreading It Out.</p>'
 };
 
 const TUTOR_HELLO = "Hi! Ask me anything about stock, profit, or owning a piece of a business. Or tap a button below.";
