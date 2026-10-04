@@ -163,7 +163,7 @@ const L1=[
         show(`<div class="kicker">Offer ${i+1} of ${OFFERS.length}</div>
           <div class="offer"><div class="big">${o.big}</div><div class="fp${shown?'':' hidden'}">${o.fp}</div></div>
           ${shown
-            ? '<p style="text-align:center"><strong>What’s the real deal?</strong></p><div id="opts">'+o.opts.map((x,k)=>'<button class="opt" data-bot="1" data-k="'+k+'">'+x.t+'</button>').join('')+'</div><div id="fb"></div><div id="cont"></div>'
+            ? '<p style="text-align:center"><strong>What’s the real deal?</strong></p><div id="opts">'+o.opts.map((x,k)=>({x,k})).sort(()=>Math.random()-.5).map(({x,k})=>'<button class="opt" data-bot="1" data-k="'+k+'">'+x.t+'</button>').join('')+'</div><div id="fb"></div><div id="cont"></div>'
             : '<div id="cont"><button data-bot="1" onclick="window._r()">🔍 Read the fine print</button></div>'}`);
         window._r=()=>{ shown=true; paint(); };
         if(shown) document.querySelectorAll("#opts .opt").forEach(btn=>{ btn.onclick=()=>{

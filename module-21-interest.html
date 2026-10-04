@@ -311,7 +311,7 @@ function lessonComplete(){
 function renderMC(qid, onDone){
   const q=QUESTIONS[qid];
   let html='<div class="kicker">Question</div><h2 class="display">'+q.prompt+'</h2><div id="opts">';
-  q.opts.forEach((o,i)=>{ html+='<button class="opt" data-i="'+i+'">'+o.t+'</button>'; });
+  [...q.opts.keys()].sort(()=>Math.random()-.5).forEach(i=>{ html+='<button class="opt" data-i="'+i+'">'+q.opts[i].t+'</button>'; }); /* shuffled so the right answer isn't always first */
   html+='</div><div id="fb"></div><div id="cont"></div>';
   show(html);
   let answered=false, firstShot=!(qid in S.firstTry);
@@ -462,7 +462,7 @@ function masteryQ(){
 function renderMCM(qid,onDone){
   const q=QUESTIONS[qid];
   let html='<div class="kicker">Mastery · '+(mastery.idx+1)+' of '+mastery.qs.length+'</div><h2 class="display">'+q.prompt+'</h2>';
-  q.opts.forEach((o,i)=>html+='<button class="opt" data-i="'+i+'">'+o.t+'</button>');
+  [...q.opts.keys()].sort(()=>Math.random()-.5).forEach(i=>html+='<button class="opt" data-i="'+i+'">'+q.opts[i].t+'</button>'); /* shuffled so the right answer isn't always first */
   html+='<div id="fb"></div><div id="cont"></div>'; show(html);
   let answered=false;
   document.querySelectorAll(".opt").forEach(btn=>{

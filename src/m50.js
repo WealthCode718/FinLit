@@ -8,7 +8,7 @@ placeholder=Ask about retirement and long-term goals…
   .life{background:#fff; border:2px solid #d9e2de; border-radius:14px; padding:12px 14px; margin-bottom:12px}
   .life .track{display:flex; height:26px; border-radius:999px; overflow:hidden; margin:8px 0 6px}
   .life .track div{display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff}
-  .life .kid{background:#9fb7ad} .life .work{background:var(--good)} .life .ret{background:var(--shell)}
+  .life .kid{background:#d6e3dd; color:var(--ink)!important} .life .work{background:var(--good)} .life .ret{background:var(--shell)}
   .life .legend{font-size:12px; color:var(--ink-soft); display:flex; justify-content:space-between}
   .buckets{display:grid; grid-template-columns:1fr; gap:8px; margin-bottom:12px}
   .bucket{background:#fff; color:var(--ink); border:2px solid #d9e2de; border-radius:14px; padding:12px 14px; text-align:left; font-size:14px; font-weight:400; line-height:1.4; min-height:44px}
