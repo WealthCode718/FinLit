@@ -165,33 +165,33 @@ const VOCAB = {
 };
 
 const QUESTIONS = {
-  "q91a":{type:"mc", prompt:"What does it mean to EARN money?", concept:"earn", opts:[
-    {t:"Find money on the beach", ok:false, fb:"Lucky, but that's finding, not earning. Earning means someone PAYS you — for work they wanted done."},
-    {t:"Get money by doing work someone wants", ok:true, fb:"Exactly. Your effort goes out, money comes in. It's the first time in this whole story that money flows INTO the pocket."},
-    {t:"Ask nicely until someone gives you money", ok:false, fb:"That would be a gift. Earning means you GAVE something back: your work."}]},
-  "q91b":{type:"mc", prompt:"Kai carries fruit baskets all morning. The trader hands Kai $2. Why did she pay?", concept:"work", opts:[
-    {t:"She felt sorry for Kai", ok:false, fb:"No pity here — this was a trade! Her morning went better WITH Kai's help than without it. The help was worth the $2 to her."},
-    {t:"Kai's help was worth $2 to her", ok:true, fb:"Right — worth strikes again. She wanted the help more than she wanted the $2. Same rule as the mango, applied to work."},
-    {t:"Everyone must pay helpers by law", ok:false, fb:"No island law needed. She paid because she WANTED the help — worth lives in wanting, for work just like for firewood."}]},
-  "q92a":{type:"mc", prompt:"Two helpers carry baskets. One works all morning, one works 10 minutes. Who earns more?", concept:"earn", opts:[
-    {t:"The all-morning helper", ok:true, fb:"Right. More work given = more earned. The trader got more help, so more money flows back."},
-    {t:"The 10-minute helper", ok:false, fb:"Ten minutes of help is worth less than a whole morning. More work given = more earned."},
-    {t:"They must earn exactly the same", ok:false, fb:"Earning follows the work. A whole morning of help is worth more to the trader than 10 minutes."}]},
-  "q92b":{type:"tf", prompt:"True or false: you can earn money doing any work — even work nobody asked for.", answer:false, concept:"work",
-    good:"Right — remember where worth lives: in WANTING. Work nobody wants is like sand on the beach — effort alone doesn't earn; wanted effort does.",
-    bad:"Think of the bucket of sand from Module 1: nobody pays for it because nobody wants it. Work is the same — it earns money only when someone WANTS it done."},
-  "q93a":{type:"mc", prompt:"When Kai earns $2 for carrying baskets, who is SELLING?", concept:"earn", opts:[
-    {t:"Kai — selling work", ok:true, fb:"Deep connection! Earning IS selling. Kai gave the thing (a morning of work) and got money. The trader was buying help."},
-    {t:"The trader — selling baskets", ok:false, fb:"The baskets never changed owners. What got traded was Kai's WORK — and Kai gave it, so Kai sold it."},
-    {t:"Nobody — earning isn't a trade", ok:false, fb:"It IS a trade: work went one way, money came the other. Kai sold work; the trader bought help. Module 8, meet Module 9."}]},
-  "q93b":{type:"mc", transfer:true, prompt:"Shell days: Rana once got 5 shells for stacking firewood. Was Rana EARNING?", concept:"earn", opts:[
-    {t:"Yes — work for money, even shell money", ok:true, fb:"Exactly. Shells were money, work is work — Rana earned. The word is new; the trade is as old as the island."},
-    {t:"No — earning needs dollars", ok:false, fb:"Remember: shells WERE money (everyone agreed). Work traded for money = earning, in any money."},
-    {t:"No — stacking firewood isn't real work", ok:false, fb:"It was effort someone WANTED — that's exactly what work is. Rana earned those 5 shells fair and square."}]},
-  "q93c":{type:"mc", prompt:"Coconut climbing pays $3 a basket. Scooping beach sand pays nothing. Why the difference?", concept:"work", opts:[
-    {t:"Climbing is scarier, and scary always pays", ok:false, fb:"Close — but scary alone isn't it. The real reasons: people WANT coconuts, and FEW can climb for them. Wanted + hard to get = worth more. Rana's firewood, all over again."},
-    {t:"Few can climb, and everyone wants coconuts", ok:true, fb:"That's the pattern! Wanted + rare = worth more. It was true for firewood after the storm, and it's true for work. Remember this one — it comes back in a big way later."},
-    {t:"Sand is heavier than coconuts", ok:false, fb:"Weight isn't worth! Nobody pays for sand-scooping because anyone can do it and nobody needs it. Coconut climbing is wanted AND rare."}]}
+  "q91a":{type:"mc", prompt:"What does it mean to earn money?", concept:"earn", opts:[
+    {t:"Find money on the beach", ok:false, fb:"Lucky! But that is finding, not earning. When you earn, someone pays you for work."},
+    {t:"Get money for work someone wants", ok:true, fb:"Yes! Your work goes out. Money comes in."},
+    {t:"Ask until someone gives you money", ok:false, fb:"That is a gift. When you earn, you give work back."}]},
+  "q91b":{type:"mc", prompt:"Kai carries baskets all morning. The trader gives Kai $2. Why did she pay?", concept:"work", opts:[
+    {t:"She felt sorry for Kai", ok:false, fb:"No, it was a trade! Her morning went better with Kai’s help."},
+    {t:"Kai’s help was worth $2 to her", ok:true, fb:"Right! She wanted the help more than she wanted the $2."},
+    {t:"A rule says all helpers must get paid", ok:false, fb:"No rule needed. She paid because she wanted the help."}]},
+  "q92a":{type:"mc", prompt:"Two kids carry baskets. One helps all morning. One helps for 10 minutes. Who earns more?", concept:"earn", opts:[
+    {t:"The all-morning helper", ok:true, fb:"Yes! More work, more money."},
+    {t:"The 10-minute helper", ok:false, fb:"Ten minutes of help is worth less than a whole morning."},
+    {t:"They both earn the same amount", ok:false, fb:"A whole morning of help is worth more to the trader."}]},
+  "q92b":{type:"tf", prompt:"True or false: any work earns money, even work nobody asked for.", answer:false, concept:"work",
+    good:"Right! Work earns money only when someone wants it.",
+    bad:"It’s false. Remember the bucket of sand? Nobody wants it. Work nobody wants earns nothing."},
+  "q93a":{type:"mc", prompt:"Kai earns $2 for carrying baskets. Who is selling?", concept:"earn", opts:[
+    {t:"Kai is selling his work", ok:true, fb:"Yes! Earning is selling. Kai gave work and got money."},
+    {t:"The trader is selling baskets", ok:false, fb:"The baskets stayed hers. Kai gave his work, so Kai sold."},
+    {t:"Nobody, because it is not a trade", ok:false, fb:"It is a trade! Work went one way. Money came the other way."}]},
+  "q93b":{type:"mc", transfer:true, prompt:"Long ago, Rana got 5 shells for stacking firewood. Was Rana earning?", concept:"earn", opts:[
+    {t:"Yes, shells were money", ok:true, fb:"Yes! Shells were money. Work for money is earning."},
+    {t:"No, you can only earn dollars", ok:false, fb:"Shells were money too! Work for money is earning."},
+    {t:"No, stacking wood is not work", ok:false, fb:"Someone wanted it done. That is work! Rana earned 5 shells."}]},
+  "q93c":{type:"mc", prompt:"Climbing for coconuts pays $3. Scooping sand pays nothing. Why?", concept:"work", opts:[
+    {t:"Climbing is scary, and scary always pays", ok:false, fb:"Not quite. People want coconuts, and few can climb for them."},
+    {t:"Few can climb, and people want coconuts", ok:true, fb:"Yes! Wanted and hard to get means worth more. Remember this one!"},
+    {t:"Sand is heavier than coconuts", ok:false, fb:"Weight is not worth! Anyone can scoop sand, and nobody needs it."}]}
 };
 
 /* =====================================================================
@@ -307,23 +307,25 @@ function renderTF(qid,onDone){
 }
 
 /* =====================================================================
-   LESSON 1 — Money In
+   LESSON 1 — Money In  (short screens for young readers)
 ===================================================================== */
 const L1=[
   ()=>show('<div class="kicker">Lesson 1 · Money in</div>'+
-    '<div class="recap"><strong>Kai\'s story so far:</strong> Feast, drum, kite… Kai has been paying money OUT for weeks. The pocket is getting light.</div>'+
-    '<div class="scene">👖💨<div class="cap">Kai turns the pocket inside out. One lonely dime falls out.</div></div>'+
-    '<button onclick="next()">This is a problem</button>'),
-  ()=>show('<div class="kicker">Lesson 1</div>'+
-    '<div class="card"><p>At the morning market, the fruit trader is drowning — baskets everywhere, customers waiting.</p>'+
-    '<p>"Kai! Help me carry these all morning and I\'ll pay you <strong>$2</strong>."</p>'+
-    '<p>Kai carries. And carries. By noon, the trader presses two dollar coins into Kai\'s hand.</p>'+
-    '<p>Money just flowed <strong>IN</strong> — for the first time in this whole story. Getting money by doing work someone wants is called <strong>earning</strong>.</p></div>'+
+    '<div class="scene">👖💨<div class="cap">Kai’s pocket is almost empty. One dime falls out.</div></div>'+
+    '<p>Feast, drum, kite… Kai keeps paying money out. Now he needs money to come in.</p>'+
+    '<button onclick="next()">Uh-oh</button>'),
+  ()=>show('<div class="kicker">Lesson 1 · The fruit trader</div>'+
+    '<div class="scene">🧺🧺🧺<div class="cap">The fruit trader has too many baskets.</div></div>'+
+    '<div class="card"><p>“Kai! Carry these all morning, and I’ll pay you <strong>$2</strong>.”</p>'+
+    '<p>Kai carries and carries. At noon, she gives Kai $2.</p></div>'+
+    '<button onclick="next()">Money in!</button>'),
+  ()=>show('<div class="kicker">Lesson 1 · A new word</div>'+
+    '<div class="card"><p>Money came <strong>in</strong>!</p>'+
+    '<p>Getting money for doing work someone wants is called <strong>earning</strong>.</p></div>'+
     '<button onclick="earnWord(\'earn\');next()">New word: earn</button>'),
   ()=>show('<div class="kicker">Lesson 1 · Why did she pay?</div>'+
-    '<div class="card"><p>Nobody made the trader pay. So why did she?</p>'+
-    '<p>Because Kai\'s help was <strong>worth</strong> $2 to her. With Kai carrying, she served every customer and lost none. Her morning went better WITH the help than without it.</p>'+
-    '<p>The effort you give — carrying, watching, building, fixing — is called <strong>work</strong>. And worth works on work exactly like it works on firewood: it lives in the wanting.</p></div>'+
+    '<div class="card"><p>Nobody made her pay. Kai’s help was <strong>worth</strong> $2 to her.</p><p>Her morning went better with his help. So she was happy to pay.</p>'+
+    '<p>Carrying, building, fixing… helping like this is called <strong>work</strong>.</p></div>'+
     '<button onclick="earnWord(\'work\');next()">New word: work</button>'),
   ()=>renderMC("q91a", next),
   ()=>renderMC("q91b", next),
@@ -334,8 +336,8 @@ const L1=[
 ===================================================================== */
 const L2=[
   ()=>show('<div class="kicker">Lesson 2 · The morning market</div>'+
-    '<div class="recap"><strong>So far:</strong> Earning = work someone wants → money in.</div>'+
-    '<div class="card"><p>Three puzzles from the market. Each one hides a rule about how earning really works.</p></div>'+
+    '<div class="scene">🧺🥥🏖️<div class="cap">Three puzzles from the market.</div></div>'+
+    '<p>Some work earns more. Some work earns nothing. Can you find out why?</p>'+
     '<button onclick="next()">Puzzle one</button>'),
   ()=>renderMC("q92a", next),
   ()=>renderMC("q93c", next),
@@ -347,16 +349,15 @@ const L2=[
 ===================================================================== */
 const L3=[
   ()=>show('<div class="kicker">Lesson 3 · Earning is selling</div>'+
-    '<div class="recap"><strong>So far:</strong> Kai earned $2, and knows why different work earns different amounts.</div>'+
-    '<div class="scene">💪↔️💵<div class="cap">Wait a second. Work goes one way… money comes the other… where have we seen this?</div></div>'+
+    '<div class="scene">💪➡️ 💵⬅️<div class="cap">Work goes one way. Money comes the other way.</div></div>'+
+    '<p>Have you seen this before?</p>'+
     '<button onclick="next()">It looks familiar…</button>'),
   ()=>show('<div class="kicker">Lesson 3</div>'+
-    '<div class="card"><p>It\'s Module 8! Earning is a <strong>trade</strong> — and you already know both sides:</p>'+
-    '<p><strong>Kai is the seller.</strong> The thing Kai sells isn\'t a mango — it\'s a morning of work.</p>'+
-    '<p><strong>The trader is the buyer.</strong> She pays the price ($2) and gets the help.</p>'+
-    '<p>Every rule you know applies: the work must be <em>wanted</em> (worth!), the pay is its <em>price</em>, and both sides walk away better off — or the trade wouldn\'t happen.</p>'+
-    '<p class="muted">So Kai has been on the selling side all along and never noticed. Sneaky, island.</p></div>'+
-    '<button onclick="next()">Practice</button>'),
+    '<div class="card"><p>Yes! It is buying and selling.</p>'+
+    '<p><strong>Kai sells</strong> his work.</p>'+
+    '<p><strong>The trader buys</strong> it. She pays $2.</p><p>Kai was a seller all along, and he never knew it!</p></div>'+
+    '<div class="feedback">Earning is selling your work!</div>'+
+    '<button style="margin-top:12px" onclick="next()">Practice</button>'),
   ()=>renderMC("q93a", next),
 ];
 
@@ -369,8 +370,8 @@ const L4=[
     const pool=["q91a","q91b","q92a","q92b","q93a","q93c"].sort(()=>Math.random()-.5).slice(0,4);
     mastery={qs:[...pool,"q93b"].sort(()=>Math.random()-.5), idx:0, score:0};
     show('<div class="kicker">Lesson 4 · Show what you know</div>'+
-      '<div class="recap"><strong>Module 9 quest:</strong> You learned how money flows IN — and why earning is really selling.</div>'+
-      '<h1 class="display">Five questions.</h1>'+
+      '<div class="recap"><strong>Module 9 quest:</strong> how money comes in, and why earning is selling.</div>'+
+      '<h1 class="display">Five quick questions</h1>'+
       '<p>Get 4 of 5 right and Module 9 is yours.</p>'+
       '<button onclick="next()">Start</button>');
   },
@@ -440,7 +441,7 @@ function finishMastery(pass){
   } else {
     show('<div class="kicker">Almost there</div>'+
       '<h1 class="display">One more try</h1>'+
-      '<p>You got '+mastery.score+' of 5. The keys: earning = wanted work → money in, and earning is really SELLING your work.</p>'+
+      '<p>You got '+mastery.score+' of 5. Remember: wanted work brings money in. Earning is selling your work.</p>'+
       '<button onclick="S.step=0;render()">Try again</button>'+
       '<button class="btn-ghost" style="margin-top:10px" onclick="toggleTutor(true)">Talk with the tutor</button>'+
       '<button class="btn-ghost" style="margin-top:10px" onclick="goHome()">Back home</button>');

@@ -174,32 +174,29 @@ const VOCAB = {
 
 const QUESTIONS = {
   "q41a":{type:"mc", prompt:"Which is more: 75¢ or $0.80?", concept:"compare", opts:[
-    {t:"75¢", ok:false, fb:"$0.80 means 80 cents. Compare cents to cents: 80 is more than 75."},
-    {t:"$0.80", ok:true, fb:"Right. $0.80 = 80 cents. 80 beats 75. Turning everything into cents makes comparing easy."},
-    {t:"They're equal", ok:false, fb:"Close numbers, but not the same: 75 cents vs 80 cents. 80 is more."}]},
+    {t:"75¢", ok:false, fb:"$0.80 means 80 cents. 80 is more than 75."},
+    {t:"$0.80", ok:true, fb:"Right! $0.80 is 80 cents. 80 beats 75."},
+    {t:"They’re equal", ok:false, fb:"Close, but not the same. 80 cents is more than 75 cents."}]},
   "q41b":{type:"mc", prompt:"Kai has 4 quarters. Rana has $1. Who has more?", concept:"equal", opts:[
-    {t:"Kai", ok:false, fb:"Count Kai's quarters: 25+25+25+25 = 100 cents. And $1 = 100 cents too. Look again…"},
-    {t:"Rana", ok:false, fb:"$1 is 100 cents. But 4 quarters is 25×4 = 100 cents too. What does that make them?"},
-    {t:"They're equal", ok:true, fb:"Exactly. Different shapes, same amount: both are 100 cents. That's what equal means."}]},
+    {t:"Kai, because he has more coins", ok:false, fb:"Count Kai’s cents: 25+25+25+25 = 100¢. And $1 is 100¢ too!"},
+    {t:"Rana, because a bill beats coins", ok:false, fb:"$1 is 100 cents. 4 quarters is 100 cents too!"},
+    {t:"They’re equal", ok:true, fb:"Yes! Both are 100 cents. That’s equal."}]},
   "q42a":{type:"mc", prompt:"Kai has $2.35. Rana has $2.53. Who has more?", concept:"compare", opts:[
-    {t:"Kai", ok:false, fb:"Careful — the digits are sneaky. Dollars match (2 = 2), so compare the cents: 35 vs 53. Which is bigger?"},
-    {t:"Rana", ok:true, fb:"Right. Same dollars, so compare cents: 53 beats 35. Reading carefully wins."},
-    {t:"They're equal", ok:false, fb:"The same digits appear, but in a different order — 35 cents is not 53 cents."}]},
-  "q42b":{type:"tf", prompt:"True or false: someone holding FEWER coins can still have MORE money.", answer:true, concept:"compare",
-    good:"Right — remember from Module 3: 3 quarters (75¢) beats 6 dimes (60¢). Count the cents, not the coins.",
-    bad:"It’s true! Think back to Module 3: 3 quarters = 75¢, but 6 dimes = only 60¢. Fewer coins can be worth more. Count cents, not coins."},
-  "q43a":{type:"mc", transfer:true, prompt:"Two islands trade different things — one uses shells, one uses red stones. A trader wants to compare a pile of 40 shells with a pile of 40 stones. Can she just count them?", concept:"compare", opts:[
-    {t:"Yes — 40 equals 40, so the piles are equal", ok:false, fb:"Counting pieces isn't enough. Remember: worth isn't about how many things you hold. One stone might be worth ten shells!"},
-    {t:"No — first she must know what each is worth", ok:true, fb:"You've got it. Comparing amounts only works when you compare the same unit — like turning coins into cents first."},
-    {t:"No — shells and stones can never be compared", ok:false, fb:"They CAN be compared — but only after finding what each is worth. Just counting pieces isn't comparing worth."}]},
+    {t:"Kai", ok:false, fb:"Careful! Both have 2 dollars. Now check the cents: 35 or 53?"},
+    {t:"Rana", ok:true, fb:"Right! Both have 2 dollars. 53 cents beats 35 cents."},
+    {t:"They’re equal", ok:false, fb:"Same numbers, different order. 35 cents is not 53 cents."}]},
+  "q42b":{type:"tf", prompt:"True or false: you can have FEWER coins but MORE money.", answer:true, concept:"compare",
+    good:"Right! 3 quarters (75¢) beats 6 dimes (60¢). Count the cents, not the coins.",
+    bad:"It’s true! 3 quarters is 75¢. 6 dimes is only 60¢. Count the cents, not the coins."},
+  "q43a":{type:"mc", transfer:true, prompt:"A trader has a pile of 40 shells and a pile of 40 red stones. Can she just count to see which pile is worth more?", concept:"compare", opts:[
+    {t:"Yes. 40 is 40, so the piles are equal", ok:false, fb:"Counting pieces isn’t enough. One stone might be worth ten shells!"},
+    {t:"No. First she must know what each is worth", ok:true, fb:"Yes! Like coins, you first find what each one is worth. Then compare."},
+    {t:"No. Shells and stones can never be compared", ok:false, fb:"They CAN be compared. First find what each one is worth."}]},
   "q43b":{type:"mc", prompt:"Which of these is EQUAL to $1.50?", concept:"equal", opts:[
-    {t:"6 quarters", ok:true, fb:"Perfect: 6 × 25 = 150 cents = $1.50. Equal means exactly the same amount."},
-    {t:"5 quarters", ok:false, fb:"5 × 25 = 125 cents = $1.25. Not quite $1.50. One more quarter…"},
-    {t:"14 dimes and 1 nickel", ok:false, fb:"14 × 10 = 140, plus a nickel = 145 cents = $1.45. Just 5 cents short of $1.50."}]}
+    {t:"6 quarters", ok:true, fb:"Yes! 6 quarters is 150 cents. That’s $1.50."},
+    {t:"5 quarters", ok:false, fb:"5 quarters is 125 cents, or $1.25. One more quarter!"},
+    {t:"14 dimes and a nickel", ok:false, fb:"That’s 140 + 5 = 145 cents, or $1.45. Just 5 cents short!"}]}
 };
-
-/* fix q43b: avoid the ambiguity — replace 15 dimes with 12 dimes */
-QUESTIONS["q43b"].opts[2] = {t:"12 dimes", ok:false, fb:"12 × 10 = 120 cents = $1.20. Not $1.50. Try counting the quarters."};
 
 /* =====================================================================
    STATE + PERSISTENCE
@@ -318,21 +315,19 @@ function renderTF(qid,onDone){
 ===================================================================== */
 const L1=[
   ()=>show('<div class="kicker">Lesson 1 · The two offers</div>'+
-    '<div class="recap"><strong>Kai\'s story so far:</strong> The mainland\'s dollars and cents arrived on the island, and Kai knows the four coins.</div>'+
-    '<div class="scene">🐟🤝🤝<div class="cap">Two traders both want Kai\'s biggest fish.</div></div>'+
-    '<button onclick="next()">What do they offer?</button>'),
-  ()=>show('<div class="kicker">Lesson 1</div>'+
-    '<div class="card"><p>The first trader holds out <strong>3 quarters</strong>.</p>'+
-    '<p>The second trader holds out <strong>8 dimes</strong>.</p>'+
-    '<p>Kai freezes. Eight coins looks like more than three coins… but is it?</p></div>'+
-    '<button onclick="next()">Help Kai figure it out</button>'),
+    '<div class="recap"><strong>So far:</strong> Kai knows dollars, cents, and the four coins.</div>'+
+    '<div class="scene">🐟🤝🤝<div class="cap">Two traders want Kai’s big fish.</div></div>'+
+    '<div class="card"><p>One offers <strong>3 quarters</strong>.</p>'+
+    '<p>One offers <strong>8 dimes</strong>.</p></div>'+
+    '<h2 class="display">Which offer is more? Make a guess!</h2>'+
+    '<div class="btn-row"><button class="opt" data-bot="1" onclick="next()">🏅 3 quarters</button><button class="opt" onclick="next()">🪙 8 dimes</button></div>'),
   ()=>show('<div class="kicker">Lesson 1 · Count the cents</div>'+
     '<div class="scene" style="font-size:26px">🏅🏅🏅 = 75¢<br>🪙🪙🪙🪙🪙🪙🪙🪙 = 80¢<div class="cap">3 quarters = 75 cents. 8 dimes = 80 cents.</div></div>'+
-    '<div class="card"><p>The trick: <strong>don\'t count the coins. Count the cents.</strong></p>'+
-    '<p>3 quarters → 25 + 25 + 25 = <strong>75¢</strong></p>'+
-    '<p>8 dimes → 10×8 = <strong>80¢</strong></p>'+
-    '<p>80 is more than 75. The dimes win — by one nickel\'s worth.</p>'+
-    '<p>Putting two amounts side by side to see which is bigger is called <strong>comparing</strong>.</p></div>'+
+    '<div class="card"><p><strong>Count the cents, not the coins.</strong></p>'+
+    '<p>3 quarters: 25 + 25 + 25 = 75¢</p>'+
+    '<p>8 dimes: 10 × 8 = 80¢</p>'+
+    '<p>80 is more than 75. The dimes win!</p>'+
+    '<p>Looking at two amounts to see which is more is called <strong>comparing</strong>.</p></div>'+
     '<button onclick="earnWord(\'compare\');next()">New word: compare</button>'),
   ()=>renderMC("q41a", next),
 ];
@@ -342,15 +337,15 @@ const L1=[
 ===================================================================== */
 const L2=[
   ()=>show('<div class="kicker">Lesson 2 · More, less, or equal?</div>'+
-    '<div class="recap"><strong>So far:</strong> To compare, turn everything into cents first.</div>'+
-    '<div class="card"><p>Time to train your comparing eye. You\'ll see two amounts. Tap <strong>MORE</strong> if the left is more, <strong>LESS</strong> if the left is less, or <strong>EQUAL</strong> if they match.</p></div>'+
+    '<div class="recap"><strong>Tip:</strong> turn everything into cents first.</div>'+
+    '<div class="card"><p>Look at two amounts. Is the LEFT one <strong>MORE</strong>, <strong>LESS</strong>, or <strong>EQUAL</strong>?</p></div>'+
     '<button onclick="next()">Start the game</button>'),
   ()=>{
     const rounds=[
       {l:"2 quarters", lv:50, r:"6 dimes", rv:60, hint:"2×25 vs 6×10"},
       {l:"$1.00", lv:100, r:"4 quarters", rv:100, hint:"Both in cents: 100 vs 100"},
       {l:"$0.45", lv:45, r:"9 nickels", rv:45, hint:"9×5 = ?"},
-      {l:"$2.15", lv:215, r:"$2.51", rv:251, hint:"Dollars match — compare the cents"},
+      {l:"$2.15", lv:215, r:"$2.51", rv:251, hint:"Same dollars. Check the cents."},
       {l:"5 dimes + 1 nickel", lv:55, r:"2 quarters", rv:50, hint:"50+5 vs 25+25"}
     ];
     let round=0, correct=0;
@@ -362,7 +357,7 @@ const L2=[
           '<div class="vs-mid">vs</div>'+
           '<div class="vs-side"><div class="amt">'+r.r+'</div><div class="sub">right</div></div>'+
         '</div>'+
-        '<p class="muted" style="text-align:center">Is the LEFT amount more, less, or equal?</p>'+
+        '<p class="muted" style="text-align:center">Is the LEFT one more, less, or equal?</p>'+
         '<div class="pick-row">'+
           '<button onclick="window._p(\'more\')">MORE</button>'+
           '<button onclick="window._p(\'equal\')">EQUAL</button>'+
@@ -390,14 +385,11 @@ const L2=[
 ===================================================================== */
 const L3=[
   ()=>show('<div class="kicker">Lesson 3 · Exactly equal</div>'+
-    '<div class="recap"><strong>So far:</strong> Kai can compare any two amounts by counting cents.</div>'+
-    '<div class="scene" style="font-size:32px">🏅🏅🏅🏅 = 💵<div class="cap">4 quarters. 1 dollar bill. Same thing?</div></div>'+
-    '<button onclick="next()">Are they the same?</button>'),
-  ()=>show('<div class="kicker">Lesson 3</div>'+
-    '<div class="card"><p>They look completely different — four metal circles vs one paper rectangle.</p>'+
-    '<p>But count the cents: 4 quarters = 100¢. One dollar = 100¢.</p>'+
-    '<p>When two amounts are exactly the same, they are <strong>equal</strong>. Shape doesn\'t matter. Color doesn\'t matter. Only the amount matters.</p>'+
-    '<p>That\'s why a trader will happily swap you 4 quarters for a dollar bill — nobody wins, nobody loses. It\'s an equal trade.</p></div>'+
+    '<div class="scene" style="font-size:32px">🏅🏅🏅🏅 = 💵<div class="cap">4 quarters. 1 dollar bill. Same?</div></div>'+
+    '<div class="recap"><strong>So far:</strong> Kai compares amounts by counting cents.</div>'+
+    '<div class="card"><p>One is 4 metal coins. One is 1 paper bill. They look different. But count the cents.</p>'+
+    '<p>4 quarters = 100¢. 1 dollar = 100¢.</p>'+
+    '<p>The very same amount is called <strong>equal</strong>. Swapping them is a fair trade.</p></div>'+
     '<button onclick="earnWord(\'equal\');next()">New word: equal</button>'),
   ()=>renderMC("q41b", next),
   ()=>renderMC("q43b", next),
@@ -412,9 +404,9 @@ const L4=[
     const pool=["q41a","q41b","q42a","q42b","q43b"].sort(()=>Math.random()-.5).slice(0,4);
     mastery={qs:[...pool,"q43a"].sort(()=>Math.random()-.5), idx:0, score:0};
     show('<div class="kicker">Lesson 4 · Show what you know</div>'+
-      '<div class="recap"><strong>Module 4 quest:</strong> You learned to compare amounts and spot equal trades.</div>'+
+      '<div class="recap"><strong>Module 4 quest:</strong> compare amounts and spot equal ones.</div>'+
       '<h1 class="display">Five questions.</h1>'+
-      '<p>Get 4 of 5 right and Module 4 is yours.</p>'+
+      '<p>Get 4 right and Module 4 is done!</p>'+
       '<button onclick="next()">Start</button>');
   },
   ()=>{ masteryQ(); },
@@ -473,9 +465,9 @@ function finishMastery(pass){
     show('<div class="night"><div class="lantern">🏮</div>'+
       '<h1 class="display" style="color:#fff">Module 4 complete</h1>'+
       '<p style="color:#cfe0ee">Quiz: '+mastery.score+'/5 ✓</p></div>'+
-      '<div class="card"><p><strong>You now know:</strong> how to compare any two amounts, and what makes trades equal.</p>'+
-      '<p>Next question on the island: the trading post is putting little tags on everything. Numbers on tags. <em>What are those numbers, and who decides them?</em></p>'+
-      '<p class="muted">That\'s Module 5.</p></div>'+
+      '<div class="card"><p><strong>You now know:</strong> how to compare amounts, and what equal means.</p>'+
+      '<p>Next: the trading post puts tags with numbers on everything. <em>What do those numbers mean?</em></p>'+
+      '<p class="muted">Find out in Module 5.</p></div>'+
       '<button style="margin-bottom:10px" onclick="window.location.href=\'module-5-price-and-cost.html\'">Continue to Module 5</button>'+
       '<button class="btn-ghost" style="margin-bottom:10px" onclick="window.location.href=\'index.html\'">🗺️ Back to all modules</button>'+
       '<button class="btn-ghost" onclick="goHome()">Stay in Module 4</button>');
@@ -483,7 +475,7 @@ function finishMastery(pass){
   } else {
     show('<div class="kicker">Almost there</div>'+
       '<h1 class="display">One more try</h1>'+
-      '<p>You got '+mastery.score+' of 5. The key: turn everything into cents, THEN compare. And equal means exactly the same amount.</p>'+
+      '<p>You got '+mastery.score+' of 5. Remember: turn everything into cents, THEN compare. Equal means the very same amount.</p>'+
       '<button onclick="S.step=0;render()">Try again</button>'+
       '<button class="btn-ghost" style="margin-top:10px" onclick="toggleTutor(true)">Talk with the tutor</button>'+
       '<button class="btn-ghost" style="margin-top:10px" onclick="goHome()">Back home</button>');
@@ -541,7 +533,7 @@ async function sendTutor(){
     "They know from earlier modules: money, worth, agree, barter, trade, matching problem, dollar, cent, the four US coins (penny 1¢, nickel 5¢, dime 10¢, quarter 25¢), 100 cents = 1 dollar, reading $X.YY. From this module: compare (look at two amounts side by side), equal (exactly the same amount), and the rule 'count the cents, not the coins.' "+
     "STRICT RULES: never use these words (later modules): price, cost, buy, sell, earn, spend, save, bank, pay, interest, credit, invest, add, subtract, plus, minus, decimal, fraction, percent. Instead of add say 'count up' or 'put together'. Use 'trades for' or 'worth' instead of price/cost. "+
     "Story context: Kai's island now uses dollars and cents from the mainland; two traders made different coin offers for Kai's fish. "+
-    "Never repeat a failed explanation — switch analogies (stacks of blocks, game tokens, sticker piles). Keep answers under 80 words, warm, honest, never mark wrong ideas right. If asked 'Quiz me', ask ONE simple comparison question and wait.";
+    "The learners are young (about 7-11): use short sentences and simple words. Never repeat a failed explanation — switch analogies (stacks of blocks, game tokens, sticker piles). Keep answers under 80 words, warm, honest, never mark wrong ideas right. If asked 'Quiz me', ask ONE simple comparison question and wait.";
   try{
     const controller=new AbortController(); const timeout=setTimeout(()=>controller.abort(),8000);
     const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},

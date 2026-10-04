@@ -160,38 +160,38 @@ const MODULE_N = 11;
    budget (M52), multiply/times (M12).
 ===================================================================== */
 const VOCAB = {
-  save:{term:"save", def:"To keep money instead of spending it now, so it can wait for later. Saved money isn't lost — it's yours, waiting."},
-  goal:{term:"goal", def:"The thing you're saving toward. Naming your goal makes the waiting easier — and tells you exactly how far you are."}
+  save:{term:"save", def:"To keep money now, so you can use it later. Saved money is still yours. It’s waiting."},
+  goal:{term:"goal", def:"The thing you are saving for. A goal helps you see how far you have to go."}
 };
 
 const QUESTIONS = {
   "q111a":{type:"mc", prompt:"What does it mean to SAVE money?", concept:"save", opts:[
-    {t:"Keep it now to use later", ok:true, fb:"Right. Saving is spending's patient twin: the money waits, and while it waits, it can grow with each week's earning."},
-    {t:"Hide it so well you forget where", ok:false, fb:"Ha — that's just losing it slowly! Saved money should be safe AND findable."},
-    {t:"Give it back to whoever paid you", ok:false, fb:"You earned it — it's yours! Saving means keeping it, on purpose, for later."}]},
-  "q111b":{type:"mc", prompt:"Kai kept $3 from last week and earned $2 more this week. How much waits in the tin now?", concept:"save", opts:[
-    {t:"$5", ok:true, fb:"Right — $3 + $2 = $5. Last week's leftover finally met this week's earning. That meeting is the whole magic of saving."},
-    {t:"$2", ok:false, fb:"Don't forget last week's $3 — it waited! $3 + $2 = $5."},
-    {t:"$6", ok:false, fb:"Close: 3 + 2 = 5. Count up from 3: four, five."}]},
-  "q112a":{type:"mc", prompt:"Rana's goal is a $10 fishing net. She has $6 saved. What's the gap?", concept:"goal", opts:[
-    {t:"$4", ok:true, fb:"Right — count up from 6 to 10: that's 4. The goal plus the gap tells you exactly where you stand."},
-    {t:"$6", ok:false, fb:"$6 is what she HAS. The gap is what's missing: count up from 6 to 10."},
-    {t:"$16", ok:false, fb:"That's adding them! The gap is the difference: 10 − 6 = 4."}]},
+    {t:"Keep it now to use later", ok:true, fb:"Yes! The money waits. It can grow each time you add more."},
+    {t:"Hide it so well you forget where it is", ok:false, fb:"Ha! That’s just losing it. Saved money should be safe and easy to find."},
+    {t:"Give it back to the person who paid you", ok:false, fb:"You earned it. It’s yours! Saving means keeping it for later."}]},
+  "q111b":{type:"mc", prompt:"Kai saved $3 last week. He earns $2 more. How much is in the tin now?", concept:"save", opts:[
+    {t:"$5", ok:true, fb:"Yes! $3 + $2 = $5."},
+    {t:"$2", ok:false, fb:"Don’t forget last week’s $3! $3 + $2 = $5."},
+    {t:"$32", ok:false, fb:"Add them: $3 + $2 = $5."}]},
+  "q112a":{type:"mc", prompt:"Rana wants a $10 fishing net. She has $6. How much more does she need?", concept:"goal", opts:[
+    {t:"$4", ok:true, fb:"Yes! Count up from 6 to 10. That’s 4."},
+    {t:"$6", ok:false, fb:"$6 is what she has. Count up from 6 to 10."},
+    {t:"$16", ok:false, fb:"That’s adding. Find the gap: 10 − 6 = 4."}]},
   "q112b":{type:"tf", prompt:"True or false: when you save money, it is still yours.", answer:true, concept:"save",
-    good:"Right — saved money is still 100% yours. It didn't leave; it's waiting. The only thing you 'gave up' is spending it TODAY.",
-    bad:"It’s true! Look in Kai's tin: the $3 is right there, still Kai's, ready whenever. Saving isn't losing — it's money waiting on purpose."},
-  "q112c":{type:"mc", prompt:"Rana has saved $7. The drum she wants costs $7. Can she buy it now?", concept:"goal", opts:[
-    {t:"Yes — her $7 EQUALS the price", ok:true, fb:"Goal reached! When what you have equals (or passes) the price, the wait is over. Equal from Module 4, doing victory laps."},
-    {t:"No — she needs more than $7", ok:false, fb:"Equal is enough! $7 saved, $7 price — an exact, equal trade. The drum is hers."},
-    {t:"No — saved money can't be spent", ok:false, fb:"Saved money is REGULAR money that waited! Reaching the goal is exactly when you spend it — that was the whole plan."}]},
-  "q113c":{type:"mc", prompt:"Kai earns $2 every market morning. The gap to the goal is $4. How many mornings until the goal?", concept:"goal", opts:[
-    {t:"2 mornings", ok:true, fb:"Right — $2, then $2 more: two mornings closes a $4 gap. (Psst: counting equal groups fast has a secret trick. It's coming very soon.)"},
-    {t:"4 mornings", ok:false, fb:"Each morning brings $2, not $1. Count: morning one → $2, morning two → $4. Done in 2!"},
-    {t:"1 morning", ok:false, fb:"One morning brings only $2 — half the gap. One more does it: 2 mornings."}]},
-  "q113b":{type:"mc", transfer:true, prompt:"Shell days: Rana kept 3 shells in a pouch, untouched, for a rainy-day blanket. Was that saving?", concept:"save", opts:[
-    {t:"Yes — keeping money for later is saving", ok:true, fb:"Exactly. Saving is older than dollars, older than tins — it's the choice to let money wait. Rana was saving before the word arrived."},
-    {t:"No — saving needs a tin with a lid", ok:false, fb:"The container doesn't matter — pouch, tin, jar, sock. The CHOICE to keep money for later is what saving is."},
-    {t:"No — shells crack and go bad if kept in a pouch too long", ok:false, fb:"Good instinct from Module 1 — but shells DON'T rot (that's why they made good money!). Rana's pouch was true saving."}]}
+    good:"Right! Saved money is still yours. It’s just waiting.",
+    bad:"It’s true! Kai’s $3 is right there in the tin. It’s still his."},
+  "q112c":{type:"mc", prompt:"Rana has saved $7. The drum costs $7. Can she buy it now?", concept:"goal", opts:[
+    {t:"Yes. $7 equals the price.", ok:true, fb:"Yes! When you have enough, the wait is over."},
+    {t:"No. She needs more than $7.", ok:false, fb:"Equal is enough! $7 pays for a $7 drum."},
+    {t:"No. Saved money can’t be spent.", ok:false, fb:"It can! Reaching the goal is when you spend it."}]},
+  "q113c":{type:"mc", prompt:"Kai earns $2 each market morning. He needs $4 more. How many mornings?", concept:"goal", opts:[
+    {t:"2 mornings", ok:true, fb:"Yes! $2, then $2 more. That’s $4."},
+    {t:"4 mornings", ok:false, fb:"Each morning brings $2, not $1. Two mornings make $4."},
+    {t:"Just 1 morning", ok:false, fb:"One morning brings only $2. He needs one more."}]},
+  "q113b":{type:"mc", transfer:true, prompt:"Long ago, Rana kept 3 shells in a pouch for a blanket later. Was that saving?", concept:"save", opts:[
+    {t:"Yes. She kept money for later.", ok:true, fb:"Yes! Saving is older than dollars. It’s choosing to let money wait."},
+    {t:"No. Saving needs a tin with a lid.", ok:false, fb:"A pouch, a tin, a jar: any of them works. Keeping money for later is saving."},
+    {t:"No. Shells go bad in a pouch.", ok:false, fb:"Shells don’t go bad. That’s why they made good money!"}]}
 };
 
 /* =====================================================================
@@ -311,22 +311,27 @@ function renderTF(qid,onDone){
 ===================================================================== */
 const L1=[
   ()=>show('<div class="kicker">Lesson 1 · The wait</div>'+
-    '<div class="recap"><strong>Kai\'s story so far:</strong> Dinner is covered. $3 sits in Kai\'s hand. The drum-song book costs $4. One dollar short — today.</div>'+
-    '<div class="scene">🫙💵<div class="cap">Kai finds an old tin with a lid — and makes a decision.</div></div>'+
-    '<button onclick="next()">What decision?</button>'),
-  ()=>show('<div class="kicker">Lesson 1</div>'+
-    '<div class="card"><p>Kai does something new: <strong>nothing</strong>.</p>'+
-    '<p>No candy. No little treats. The $3 goes into the tin, the lid goes on, and the tin goes on the high shelf.</p>'+
-    '<p>Keeping money instead of spending it now — so it can wait for later — is called <strong>saving</strong>.</p>'+
-    '<p>The money isn\'t gone. It isn\'t lost. It\'s <em>waiting</em>.</p></div>'+
+    '<div class="recap"><strong>So far:</strong> Kai has $3. The song book is $4. He is $1 short.</div>'+
+    '<div class="scene">🫙💵<div class="cap">Kai finds an old tin with a lid.</div></div>'+
+    '<button onclick="next()">What will he do?</button>'),
+  ()=>show('<div class="kicker">Lesson 1 · A new word</div>'+
+    '<div class="card"><p>Kai puts his $3 in the tin. He puts the tin up high.</p>'+
+    '<p>Keeping money now to use later is called <strong>saving</strong>.</p>'+
+    '<p>The money is not gone. It’s <em>waiting</em>.</p></div>'+
     '<button onclick="earnWord(\'save\');next()">New word: save</button>'),
-  ()=>show('<div class="kicker">Lesson 1 · Market morning</div>'+
-    '<div class="jar"><div class="lvl">🫙 $3 → 🫙 $5</div><div class="amt">Saturday: Kai earns $2. Into the tin it goes.</div></div>'+
-    '<div class="card"><p>$3 + $2 = <strong>$5</strong>. And the book costs $4.</p>'+
-    '<p>Compare: $5 is MORE than $4. The wait is over.</p>'+
-    '<p>Kai walks to the post, pays $4, gets the book — <em>and $1 change stays in the tin</em>. Last week this was impossible. This week it\'s done, with money left over.</p>'+
-    '<p>That\'s what saving does: it lets small amounts <strong>meet</strong> and become enough.</p></div>'+
-    '<button onclick="next()">Practice</button>'),
+  ()=>{
+    let added=false;
+    function draw(){
+      show('<div class="kicker">Lesson 1 · Market morning</div>'+
+        '<p>Kai earns $2 at the market.</p>'+
+        '<div class="jar"><div class="lvl">🫙 '+(added?'$5':'$3')+'</div><div class="amt">'+(added?'$3 + $2 = $5':'In the tin: $3')+'</div></div>'+
+        '<div id="cont">'+(added?
+          '<div class="feedback good">$5 is more than $4. Kai buys the book! $1 is left in the tin. 🎉</div><button onclick="next()">Practice</button>':
+          '<button data-bot="1" onclick="window._add()">Put $2 in the tin</button>')+'</div>');
+      window._add=()=>{ added=true; addXP(3); draw(); revealFB(); };
+    }
+    draw();
+  },
   ()=>renderMC("q111a", next),
   ()=>renderMC("q111b", next),
 ];
@@ -335,11 +340,11 @@ const L1=[
    LESSON 2 — Goals and Gaps
 ===================================================================== */
 const L2=[
-  ()=>show('<div class="kicker">Lesson 2 · Goals and gaps</div>'+
-    '<div class="recap"><strong>So far:</strong> Saving = money waiting on purpose.</div>'+
-    '<div class="card"><p>Kai saved for a book without knowing the trick\'s name. The thing you save TOWARD is your <strong>goal</strong>.</p>'+
-    '<p>A named goal is powerful: it makes waiting easier (you know what it\'s FOR), and with Module 7\'s gap-measuring, it tells you <em>exactly</em> how far you are.</p>'+
-    '<p>Goal, gap, and how much each week brings — that\'s the whole saving toolkit. Let\'s use it.</p></div>'+
+  ()=>show('<div class="kicker">Lesson 2 · A new word</div>'+
+    '<div class="card"><p>The thing you save for is your <strong>goal</strong>.</p>'+
+    '<p>Kai’s goal was the $4 book. He had $3. The gap was $1.</p>'+
+    '<p>Know your goal. Find the gap. Then you know how far you have to go.</p></div>'+
+    '<p class="muted">Now try it with Rana. She lives on the island too.</p>'+
     '<button onclick="earnWord(\'goal\');next()">New word: goal</button>'),
   ()=>renderMC("q112a", next),
   ()=>renderMC("q112c", next),
@@ -350,16 +355,15 @@ const L2=[
    LESSON 3 — Why Waiting Is Hard (and how to win)
 ===================================================================== */
 const L3=[
-  ()=>show('<div class="kicker">Lesson 3 · Why waiting is hard</div>'+
-    '<div class="recap"><strong>So far:</strong> Kai has the toolkit: goal, gap, weekly amount.</div>'+
-    '<div class="scene">🍬🗣️<div class="cap">But every day, the candy stall calls Kai\'s name…</div></div>'+
-    '<button onclick="next()">Be honest — it\'s hard</button>'),
-  ()=>show('<div class="kicker">Lesson 3</div>'+
-    '<div class="card"><p>Saving is simple, but it isn\'t easy — because wants shout <strong>"NOW!"</strong> and goals whisper <em>"later."</em></p>'+
-    '<p>Island tricks that make the whisper win:</p>'+
-    '<p><strong>Name the goal.</strong> "Saving" is foggy; "saving for the fishing net" is a picture in your head.</p>'+
-    '<p><strong>Watch the gap shrink.</strong> $4 to go… $2 to go… each week the number falls. Falling numbers feel like winning — because they are.</p>'+
-    '<p><strong>Keep it out of your pocket.</strong> Money in the tin on the high shelf doesn\'t whisper back when the candy stall calls. Safe AND quiet.</p></div>'+
+  ()=>show('<div class="kicker">Lesson 3 · Waiting is hard</div>'+
+    '<div class="scene">🍬🗣️<div class="cap">Every day, the candy stall calls Kai’s name…</div></div>'+
+    '<p>Wants shout <strong>“NOW!”</strong> Goals say <em>“later.”</em></p>'+
+    '<button onclick="next()">How can Kai wait?</button>'),
+  ()=>show('<div class="kicker">Lesson 3 · Three tricks</div>'+
+    '<div class="card"><p>🎯 <strong>Name your goal.</strong> Picture the thing you want.</p>'+
+    '<p>📉 <strong>Watch the gap get small.</strong> $4 to go… then $2…</p>'+
+    '<p>🫙 <strong>Keep it out of your pocket.</strong> Money up high is harder to spend.</p></div>'+
+    '<p>Saving is simple. But it is not always easy. These tricks help.</p>'+
     '<button onclick="next()">Practice</button>'),
   ()=>renderTF("q112b", next),
 ];
@@ -444,7 +448,7 @@ function finishMastery(pass){
   } else {
     show('<div class="kicker">Almost there</div>'+
       '<h1 class="display">One more try</h1>'+
-      '<p>You got '+mastery.score+' of 5. The keys: saved money isn\'t lost — it waits. And goal + gap tells you exactly how far you are.</p>'+
+      '<p>You got '+mastery.score+' of 5. Remember: saved money is still yours. It waits. Your goal and the gap show how far you have to go.</p>'+
       '<button onclick="S.step=0;render()">Try again</button>'+
       '<button class="btn-ghost" style="margin-top:10px" onclick="toggleTutor(true)">Talk with the tutor</button>'+
       '<button class="btn-ghost" style="margin-top:10px" onclick="goHome()">Back home</button>');
@@ -501,7 +505,7 @@ async function sendTutor(){
   const sys="You are the tutor inside Module 11 (Saving Money) of a financial-literacy app. The learner may be a child or an adult. "+
     "They know from earlier modules: money, worth, agree, barter, trade, dollar, cent, coins, reading $X.YY, compare, equal, price, cost, add, total, subtract, change, buy, sell, pay, earn, work, spend, need, want. From this module: save (keep money now so it can wait for later — not losing it), goal (the thing you save toward), gap to goal (goal minus saved — Module 7's subtraction), and the tricks: name the goal, watch the gap shrink, keep saved money out of your pocket in a safe spot like a tin. "+
     "STRICT RULES: never use these words (later modules): bank, deposit, withdraw, account, interest, grow on its own, invest, budget, multiply, times, divide, tax, income, wage, borrow, lend, credit. If asked where LOTS of money should be kept safe, or whether money can grow by itself, warmly say those are big questions coming in later modules — do not explain them. "+
-    "Story context: Kai saved $3 in a tin on a high shelf, added $2 on market morning, and bought the $4 drum-song book with $1 left over. Rana once saved 3 shells in a pouch. "+
+    "Story context: Kai saved $3 in a tin on a high shelf, added $2 on market morning, and bought the $4 song book with $1 left over. Rana once saved 3 shells in a pouch. "+
     "Never repeat a failed explanation — switch analogies (piggy jars, sticker charts toward a big prize, water filling a bucket drop by drop). Keep answers under 80 words, warm, honest, never mark wrong ideas right. If asked 'Quiz me', ask ONE simple goal-and-gap question with small numbers and wait.";
   try{
     const controller=new AbortController(); const timeout=setTimeout(()=>controller.abort(),8000);

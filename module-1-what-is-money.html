@@ -238,39 +238,39 @@ const VOCAB = {
 };
 
 const QUESTIONS = {
-  "q11b":{type:"tf", prompt:"True or false: money has to be something you can eat or use, or it doesn't count.", answer:false, concept:"money",
-    good:"Right — shells aren't useful by themselves. Money works because everyone takes it, not because it's useful.",
-    bad:"Think about the shells. Can you eat a shell? No — but everyone on the island takes them. That's what makes them money."},
-  "q11c":{type:"mc", prompt:"What made shells become money on the island?", concept:"money", opts:[
-    {t:"Shells are the prettiest things on the island", ok:false, fb:"Being pretty helps, but pretty things aren't automatically money. What did the islanders decide?"},
-    {t:"Everyone agreed to take them", ok:true, fb:"Exactly. The deal the islanders made is the whole trick. Remember this — it comes back soon."},
-    {t:"Shells are good tools", ok:false, fb:"Shells aren't really tools. They became money for a different reason — what did everyone decide together?"}]},
-  "q12a":{type:"mc", prompt:"A storm soaks all the firewood except Rana's dry pile. The next morning, what happens to what dry firewood is worth?", concept:"worth", opts:[
-    {t:"It's worth more shells than before", ok:true, fb:"Yes. Everyone wants dry firewood now, and only Rana has it. More people wanting something that's hard to get = worth more."},
-    {t:"It's worth the same as before", ok:false, fb:"Worth isn't stuck to a thing forever. It changes when how much people want it changes. Who wants dry firewood after a storm? Everyone."},
-    {t:"It's worth less than before", ok:false, fb:"Flip it around: there's LESS dry firewood and MORE people who want it. Would Rana take fewer shells for it, or more?"}]},
+  "q11b":{type:"tf", prompt:"True or false: money has to be something you can eat or use.", answer:false, concept:"money",
+    good:"Right! You can’t eat a shell. But everyone takes shells, so they are money.",
+    bad:"It’s false. You can’t eat a shell. But everyone takes shells, so they are money."},
+  "q11c":{type:"mc", prompt:"What made shells money on the island?", concept:"money", opts:[
+    {t:"Shells are the prettiest things on the island", ok:false, fb:"Pretty things aren’t always money. What did everyone decide?"},
+    {t:"Everyone agreed to take them", ok:true, fb:"Yes! The islanders made a deal to take shells."},
+    {t:"Shells are good tools", ok:false, fb:"Shells aren’t really tools. What did everyone decide together?"}]},
+  "q12a":{type:"mc", prompt:"A storm soaks all the firewood. Only Rana’s pile stays dry. What is dry firewood worth now?", concept:"worth", opts:[
+    {t:"More shells than before", ok:true, fb:"Yes! Everyone wants dry wood, and only Rana has it. So it’s worth more."},
+    {t:"The same number of shells as before", ok:false, fb:"Worth can change. Now everyone wants dry firewood!"},
+    {t:"Fewer shells than before", ok:false, fb:"There is LESS dry wood, and MORE people want it. So would it get fewer shells, or more?"}]},
   "q12c":{type:"mc", prompt:"Where does worth come from?", concept:"worth", opts:[
-    {t:"How big something is", ok:false, fb:"A boulder is huge and worth nothing. A tiny pearl can be worth a lot. Size isn't it."},
-    {t:"How much people want it", ok:true, fb:"That's it. Worth lives in people's wanting, not inside the thing itself."},
-    {t:"Every thing is born with a fixed worth", ok:false, fb:"Remember the firewood after the storm — same firewood, different worth. Worth changes when wanting changes."}]},
-  "q13a":{type:"mc", prompt:"In Market Day, why did shells stop working as money?", concept:"agree", opts:[
-    {t:"The shells cracked and faded in the hot sun", ok:false, fb:"The shells were fine! Look at what the traders stopped doing, not at the shells."},
-    {t:"People stopped agreeing to take them", ok:true, fb:"Exactly. Same shells, no agreement, no money."},
-    {t:"Kai ran out of shells", ok:false, fb:"Kai still had shells — the problem was nobody would take them anymore. What disappeared wasn't shells, it was the agreement."}]},
-  "q13b":{type:"tf", prompt:"True or false: a paper bill is valuable mostly because everyone agrees to take it.", answer:true, concept:"agree",
-    good:"Right. The paper itself is nearly worthless. The agreement behind it is what you're really holding.",
-    bad:"It’s true! Tear a corner off a notebook — same kind of paper, worth nothing. The bill is different only because everyone agrees to take it."},
-  "q13c":{type:"mc", transfer:true, prompt:"Long ago, people used big stones, salt, and even dried tea as money. What did ALL of these have to have, to work as money?", concept:"agree", opts:[
-    {t:"They had to taste good", ok:false, fb:"Stones don't taste like anything. Being useful or tasty isn't what makes money work."},
-    {t:"Everyone had to agree to take them", ok:true, fb:"You've got the deep idea: anything can be money — stones, salt, shells, paper — as long as everyone agrees."},
-    {t:"They had to be shiny and rare, like pearls", ok:false, fb:"Salt isn't shiny. Tea isn't shiny. Something else made them all work — a thing people did together."}]}
+    {t:"How big something is", ok:false, fb:"A big rock is worth nothing. A tiny pearl can be worth a lot."},
+    {t:"How much people want it", ok:true, fb:"Yes! Worth comes from how much people want something."},
+    {t:"Every thing is born with the same worth forever", ok:false, fb:"Think of the firewood after the storm. Same wood, new worth."}]},
+  "q13a":{type:"mc", prompt:"On Market Day, why did shells stop working as money?", concept:"agree", opts:[
+    {t:"The shells cracked and faded in the hot sun", ok:false, fb:"The shells were fine! Look at what the people did."},
+    {t:"People stopped agreeing to take them", ok:true, fb:"Yes! Same shells, but no deal. So no money."},
+    {t:"Kai ran out of shells", ok:false, fb:"Kai still had his shells. Nobody would take them."}]},
+  "q13b":{type:"tf", prompt:"True or false: a paper bill works mostly because everyone agrees to take it.", answer:true, concept:"agree",
+    good:"Right! The paper alone is worth almost nothing. The deal is what counts.",
+    bad:"It’s true! Notebook paper gets you nothing. A bill works because everyone agrees to take it."},
+  "q13c":{type:"mc", transfer:true, prompt:"Long ago, people used big stones, salt, and even tea as money. What did they ALL need, to work as money?", concept:"agree", opts:[
+    {t:"They had to taste good", ok:false, fb:"Stones don’t taste like anything. That’s not it."},
+    {t:"Everyone had to agree to take them", ok:true, fb:"Yes! Anything can be money if everyone agrees to take it."},
+    {t:"They had to be shiny and rare, like pearls", ok:false, fb:"Salt and tea aren’t shiny. It’s something people did together."}]}
 };
 
 const SORT_ITEMS = [
-  {t:"A warm blanket in winter", zone:"more", fb:"It's freezing and everyone wants one. That pushes worth up."},
-  {t:"One fish in a fishing village", zone:"less", fb:"Everyone here catches fish every day. Easy to get = worth less."},
-  {t:"Fresh water when the well runs low", zone:"more", fb:"When something everyone needs gets hard to find, its worth goes up."},
-  {t:"A bucket of sand on the beach", zone:"less", fb:"Anyone can scoop their own sand. Nobody gives up shells for it."}
+  {t:"A warm blanket in winter", zone:"more", fb:"It’s cold and everyone wants one. Worth goes up."},
+  {t:"One fish in a fishing village", zone:"less", fb:"Everyone here catches fish. Easy to get means worth less."},
+  {t:"Fresh water when the well runs low", zone:"more", fb:"Everyone needs water. Hard to find means worth more."},
+  {t:"A bucket of sand on the beach", zone:"less", fb:"Anyone can scoop their own sand. It’s worth very little."}
 ];
 
 /* =====================================================================
@@ -393,48 +393,38 @@ function renderTF(qid,onDone){
    LESSON 1 — The Island Game
 ===================================================================== */
 const L1=[
-  ()=>show('<div class="kicker">Lesson 1 · The Island Game</div>'+
-    '<div class="scene">🏝️🐟<div class="cap">A small island. No coins. No paper money.</div></div>'+
-    '<div class="card"><p><strong>You have extra fish.</strong></p><p><strong>You really want a warm blanket.</strong></p></div>'+
-    '<button onclick="next()">What do you do?</button>'),
-  ()=>show('<div class="kicker">Lesson 1 · Your choice</div>'+
-    '<h2 class="display">You have extra fish. You really want a warm blanket.</h2>'+
-    '<p>What do you do?</p>'+
-    '<button class="opt" onclick="next()">Find the blanket maker and offer fish</button>'+
-    '<button class="opt" onclick="next()">Hope someone gives you a blanket</button>'+
-    '<button class="opt" onclick="next()">I\'m not sure</button>'),
   ()=>{
     const beats=[
-      ["🧑🏽‍🦱🐟","Kai has extra fish. Kai wants a blanket."],
-      ["🧶🙅🏾‍♀️","The blanket maker doesn't want fish today. She wants firewood."],
-      ["🪵🙅🏻‍♂️","The firewood collector doesn't want fish either. He wants a cooking pot."],
-      ["😩⛓️","Kai is stuck. Getting ONE blanket has turned into a whole day of asking around."]
+      ["🏝️🐟","Kai lives on an island with no money. He has fish."],
+      ["🧑🏽‍🦱🧣","Kai wants a warm blanket."],
+      ["🧶🙅🏾‍♀️","The blanket maker wants firewood, not fish."],
+      ["🪵🙅🏻‍♂️","The firewood man wants a pot, not fish."],
+      ["😩","Still no blanket!"]
     ];
     let b=0;
     function draw(){
-      show('<div class="kicker">Lesson 1 · Kai\'s problem</div>'+
+      show('<div class="kicker">Lesson 1 · Kai’s problem</div>'+
         '<div class="scene">'+beats[b][0]+'<div class="cap">'+beats[b][1]+'</div></div>'+
-        '<p class="muted">Tap to continue ('+(b+1)+'/'+beats.length+')</p>'+
-        '<button onclick="window._b()">'+(b<beats.length-1?"Next":"So what happened?")+'</button>');
+        '<p class="muted">'+(b+1)+' of '+beats.length+'</p>'+
+        '<button onclick="window._b()">'+(b<beats.length-1?"Next":"What can fix this?")+'</button>');
       window._b=()=>{ b++; if(b<beats.length) draw(); else next(); };
     }
     draw();
   },
   ()=>show('<div class="kicker">Lesson 1 · The deal</div>'+
-    '<div class="scene">🐚<div class="cap">One day the islanders make a deal.</div></div>'+
-    '<div class="card"><p>From now on, <strong>everyone will take shells.</strong></p>'+
-    '<p>You don\'t have to want shells. You just have to know that everyone else takes them.</p>'+
-    '<p>Now Kai trades fish for shells, and shells for a blanket. Done before lunch.</p></div>'+
-    '<div class="feedback"><strong>Money</strong> is a thing almost everyone will take in exchange for other things.</div>'+
+    '<div class="scene">🐚<div class="cap">One day, the islanders make a deal.</div></div>'+
+    '<div class="card"><p><strong>Everyone will take shells.</strong></p>'+
+    '<p>🐟 ➡️ 🐚 ➡️ 🧣 Kai gets his blanket!</p></div>'+
+    '<div class="feedback"><strong>Money</strong> is a thing almost everyone will take.</div>'+
     '<button onclick="earnWord(\'money\');next()">New word: money</button>'),
   ()=>{
     const opts=[
-      {e:"🐚",t:"Small shells",ok:true,fb:"Right. Shells are easy to carry, they don't rot, and there are enough for everyone — but not so many that they're everywhere."},
-      {e:"🐟",t:"Fresh fish",ok:false,fb:"Fish are useful — but they rot in two days. Your money would go bad before you could use it!"},
-      {e:"⏳",t:"A handful of sand",ok:false,fb:"Sand is everywhere. If money is everywhere, nobody will give you anything for it — they can just grab their own."},
-      {e:"🪨",t:"A giant boulder",ok:false,fb:"Try carrying that to the blanket maker. Money has to be easy to move around."}
+      {e:"🐚",t:"Small shells",ok:true,fb:"Yes! Easy to carry. They never go bad."},
+      {e:"🐟",t:"Fresh fish",ok:false,fb:"Fish rot in two days!"},
+      {e:"⏳",t:"A handful of sand",ok:false,fb:"Sand is everywhere. Anyone can grab some."},
+      {e:"🪨",t:"A giant boulder",ok:false,fb:"Too heavy to carry!"}
     ];
-    let html='<div class="kicker">Your turn</div><h2 class="display">The islanders are choosing their money. Which would work best?</h2><div>';
+    let html='<div class="kicker">Your turn</div><h2 class="display">Which would make the best money?</h2><div>';
     opts.forEach((o,i)=>html+='<button class="opt" data-i="'+i+'"><span class="em">'+o.e+'</span>'+o.t+'</button>');
     html+='</div><div id="fb"></div><div id="cont"></div>';
     show(html);
@@ -462,19 +452,15 @@ const L1=[
 ===================================================================== */
 const L2=[
   ()=>show('<div class="kicker">Lesson 2 · What is it worth?</div>'+
-    '<div class="scene">🧶=🐚×10&nbsp;&nbsp;🐟=🐚×1<div class="cap">A blanket trades for 10 shells. A fish trades for 1.</div></div>'+
-    '<h1 class="display">Why isn\'t everything the same number of shells?</h1>'+
-    '<button onclick="next()">Tell me</button>'),
-  ()=>show('<div class="kicker">Lesson 2</div>'+
-    '<div class="card"><p>A blanket takes <strong>days to make</strong>, and everyone wants one when it gets cold.</p>'+
-    '<p>Fish are caught <strong>every morning by lots of people</strong>.</p>'+
-    '<p>When many people want something, and it is hard to get, it is worth more.</p></div>'+
-    '<div class="feedback"><strong>Worth</strong> means how much people want something.</div>'+
+    '<div class="scene">🧶=🐚×10&nbsp;&nbsp;🐟=🐚×1<div class="cap">A blanket gets 10 shells. A fish gets 1. Why?</div></div>'+
+    '<div class="card"><p>🧶 A blanket takes <strong>days</strong> to make.</p>'+
+    '<p>🐟 Fish are <strong>easy</strong> to catch.</p></div>'+
+    '<div class="feedback"><strong>Worth</strong> is how much people want something. Hard to get? Worth more!</div>'+
     '<button onclick="earnWord(\'worth\');next()">New word: worth</button>'),
   ()=>renderMC("q12a", next),
   ()=>{ /* sort task — tap item then tap shelf */
     let sel=null, placed=0, placedItems=new Set();
-    let html='<div class="kicker">Sort them</div><h2 class="display">Tap a card, then tap the shelf it belongs on.</h2>'+
+    let html='<div class="kicker">Sort them</div><h2 class="display">Tap a card. Then tap its shelf.</h2>'+
       '<div class="zones"><div class="zone" id="zmore"><h4>Worth MORE</h4></div><div class="zone" id="zless"><h4>Worth LESS</h4></div></div>'+
       '<div id="tray">';
     SORT_ITEMS.forEach((it,i)=>html+='<button class="sort-item" data-i="'+i+'">'+it.t+'</button>');
@@ -482,10 +468,10 @@ const L2=[
     show(html);
     function wire(){
       document.querySelectorAll("#tray .sort-item:not(.done)").forEach(b=>{
-        b.onclick=()=>{ 
-          document.querySelectorAll(".sort-item").forEach(x=>x.classList.remove("sel")); 
-          b.classList.add("sel"); 
-          sel=+b.dataset.i; 
+        b.onclick=()=>{
+          document.querySelectorAll(".sort-item").forEach(x=>x.classList.remove("sel"));
+          b.classList.add("sel");
+          sel=+b.dataset.i;
         };
       });
     }
@@ -508,7 +494,7 @@ const L2=[
           revealFB();
           if(placed===SORT_ITEMS.length){
             addXP(2);
-            document.getElementById("fb").innerHTML='<div class="feedback good">All sorted. You just did what markets do every day.</div>';
+            document.getElementById("fb").innerHTML='<div class="feedback good">All sorted. Great job!</div>';
             revealFB();
             document.getElementById("cont").innerHTML='<button onclick="next()">Continue</button>';
             revealFB();
@@ -527,35 +513,34 @@ const L2=[
    LESSON 3 — The Great Shell Panic (Market Day)
 ===================================================================== */
 const TRADERS=[
-  {id:0,face:"🧶",nm:"Blanket maker",item:"Blanket",cost:2,refuse:"I'll take fish. Not shells. Not any more."},
-  {id:1,face:"🍲",nm:"Pot maker",item:"Cooking pot",cost:2,refuse:"Everyone's trying to hand me shells today. No thanks."},
-  {id:2,face:"🪵",nm:"Firewood collector",item:"Firewood",cost:1,refuse:"Shells? I can pick up fifty on the shore this morning. Got anything real?"}
+  {id:0,face:"🧶",nm:"Blanket maker",item:"Blanket",cost:2,refuse:"Shells? No thanks. Fish only."},
+  {id:1,face:"🍲",nm:"Pot maker",item:"Cooking pot",cost:2,refuse:"Everyone has shells now!"},
+  {id:2,face:"🪵",nm:"Firewood collector",item:"Firewood",cost:1,refuse:"The beach is full of shells!"}
 ];
 const L3=[
   ()=>show('<div class="kicker">Lesson 3 · The Great Shell Panic</div>'+
     '<div class="scene">💵❓<div class="cap">A paper bill is just paper.</div></div>'+
-    '<h1 class="display">It can\'t be eaten, worn, or built with. So why will almost anyone hand you real things for it?</h1>'+
-    '<p class="muted">Let\'s find out by breaking the island\'s money.</p>'+
+    '<h1 class="display">Why does paper get you real things?</h1>'+
     '<button onclick="next()">Play Market Day</button>'),
   ()=>{ /* phase 1 */
     let shells=5, gotItems=0;
     function draw(){
       let html='<div class="kicker">Market Day · Round 1</div>'+
         '<div class="hud"><span>🐚 '+shells+' shells</span><span id="items"></span></div>'+
-        '<p>You\'re Kai. Get a blanket, a pot, and firewood.</p><div class="traders" id="tr"></div><div id="cont"></div>';
+        '<p>You’re Kai. Get all three things.</p><div class="traders" id="tr"></div><div id="cont"></div>';
       show(html);
       const tr=document.getElementById("tr");
       TRADERS.forEach(t=>{
         const d=document.createElement("div"); d.className="trader";
         d.innerHTML='<div class="face">'+t.face+'</div><div class="nm">'+t.nm+'</div><div class="pr">'+t.item+' — '+t.cost+' 🐚</div>';
-        const b=document.createElement("button"); b.textContent="Trade";
+        const b=document.createElement("button"); b.textContent="Give 🐚";
         if(t.bought){ b.disabled=true; b.textContent="Done ✓"; }
         b.onclick=()=>{ if(shells>=t.cost && !t.bought){ shells-=t.cost; t.bought=true; gotItems++; draw(); } };
         d.appendChild(b); tr.appendChild(d);
       });
       document.getElementById("items").textContent = "Items: "+gotItems+"/3";
       if(gotItems===3){
-        document.getElementById("cont").innerHTML='<div class="feedback good">Easy, right? Everyone takes shells — so everything flows.</div><button onclick="next()">That night, a rumor spreads…</button>';
+        document.getElementById("cont").innerHTML='<div class="feedback good">Easy! Everyone takes shells.</div><button onclick="next()">That night, news spreads…</button>';
         revealFB();
       }
     }
@@ -566,33 +551,31 @@ const L3=[
     let tried=0;
     function draw(msg){
       let html='<div class="kicker">Market Day · Round 2</div>'+
-        '<div class="card" style="background:#f0ebe1; border-left:4px solid var(--shell)"><p style="font-size:14px; margin:0"><strong>Kai\'s quest:</strong> still needs a blanket with 5 shells</p></div>'+
-        '<div class="rumor">RUMOR: a giant wave washed up a whole beach of shells. Shells are EVERYWHERE now.</div>'+
-        '<div class="hud"><span>🐚 5 shells</span><span>Tap each trader</span></div>'+
+        '<div class="rumor">NEWS: A big wave left shells all over the beach!</div>'+
+        '<div class="hud"><span>🐚 5 shells</span><span>Tap each one</span></div>'+
         (msg?'<div class="bubble">'+msg+'</div>':'')+
         '<div class="traders" id="tr"></div><div id="cont"></div>';
       show(html);
-      const scene=document.querySelector("main");
       const tr=document.getElementById("tr");
       TRADERS.forEach((t,i)=>{
         const d=document.createElement("div"); d.className="trader"+(t.tried?" gray":"");
         d.innerHTML='<div class="face">'+t.face+'</div><div class="nm">'+t.nm+'</div><div class="pr">'+t.item+'</div>';
-        const b=document.createElement("button"); b.textContent=t.tried?"Refused":"Trade";
+        const b=document.createElement("button"); b.textContent=t.tried?"Said no":"Give 🐚";
         b.disabled=!!t.tried;
-        b.onclick=()=>{ t.tried=true; tried++; draw('"'+t.refuse+'"'); };
+        b.onclick=()=>{ t.tried=true; tried++; draw('“'+t.refuse+'”'); };
         d.appendChild(b); tr.appendChild(d);
       });
       if(tried===TRADERS.length){
         document.getElementById("cont").innerHTML=
-          '<div class="feedback bad">Your shells didn\'t change at all. But nobody will take them.</div>'+
-          '<h2 class="display">So what changed?</h2>'+
+          '<div class="feedback bad">Nobody takes your shells now!</div>'+
+          '<h2 class="display">What changed?</h2>'+
           '<button class="opt" onclick="window._w(false,this)">The shells got weaker</button>'+
           '<button class="opt" onclick="window._w(true,this)">People stopped agreeing to take them</button>'+
           '<button class="opt" onclick="window._w(false,this)">Kai ran out of shells</button><div id="fb2"></div><div id="c2"></div>';
         window._w=(ok,el)=>{
           el.classList.add(ok?"right":"wrong");
           document.getElementById("fb2").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+
-            (ok?"Exactly. Same shells — the agreement is what broke.":"Look again: the shells are fine, and Kai still has all five. Something between the PEOPLE broke.")+'</div>';
+            (ok?"Yes! Same shells. The deal broke.":"Look again. The shells are fine. The PEOPLE changed.")+'</div>';
           if(ok){ addXP(2); document.getElementById("c2").innerHTML='<button onclick="next()">The village meets to fix it</button>'; }
         };
       }
@@ -602,29 +585,28 @@ const L3=[
   },
   ()=>{ /* phase 3 — vote */
     function vote(disabledC){
-      show('<div class="kicker">Market Day · The village vote</div>'+
-        '<h2 class="display">How should the islanders fix their money?</h2>'+
-        '<button class="opt" onclick="window._v(1)"><span class="em">🐚</span>Everyone promises to keep taking shells anyway</button>'+
-        '<button class="opt" onclick="window._v(2)"><span class="em">🔴</span>Pick a new money everyone agrees on — rare red stones</button>'+
-        '<button class="opt" '+(disabledC?'disabled':'')+' onclick="window._v(3)"><span class="em">🔁</span>No money — everyone just swaps things directly</button>');
+      show('<div class="kicker">Market Day · The vote</div>'+
+        '<h2 class="display">How can the island fix its money?</h2>'+
+        '<button class="opt" onclick="window._v(1)"><span class="em">🐚</span>Everyone promises to take shells again</button>'+
+        '<button class="opt" onclick="window._v(2)"><span class="em">🔴</span>Pick new money: rare red stones</button>'+
+        '<button class="opt" '+(disabledC?'disabled':'')+' onclick="window._v(3)"><span class="em">🔁</span>No money. Just swap things.</button>');
       window._v=(k)=>{
         if(k===3){
-          const beats=["You offer fish for a blanket… she wants firewood.","The firewood man wants a pot.","The pot maker wants rope.","The rope maker wants… fish! But she\'s on the other side of the island.","The sun is setting. You still have no blanket."];
+          const beats=["She wants firewood, not fish.","He wants a pot, not fish.","The sun sets. Still no blanket!"];
           let i=0;
           function chain(){
             show('<div class="kicker">No-money island</div><div class="card">'+
               beats.slice(0,i+1).map(x=>'<div class="chain-beat">'+x+'</div>').join('')+'</div>'+
-              '<button onclick="window._n()">'+(i<beats.length-1?"Keep trying…":"Okay, okay — back to the vote")+'</button>');
+              '<button onclick="window._n()">'+(i<beats.length-1?"Keep trying":"Back to the vote")+'</button>');
             window._n=()=>{ i++; if(i<beats.length) chain(); else vote(true); };
           }
           chain();
         } else {
           addXP(5);
-          show('<div class="kicker">Market restored</div>'+
-            '<div class="scene">'+(k===1?'🐚':'🔴')+'🎉<div class="cap">The market comes back to life — because the agreement is back.</div></div>'+
-            '<div class="card"><p>The shells never changed. <strong>The agreement did.</strong></p>'+
-            '<p>Money is a promise everyone keeps together: <em>"I\'ll take this, because I know everyone else will take it from me."</em></p>'+
-            '<p>Paper money works the exact same way. The paper is nearly worthless — the agreement is worth everything.</p></div>'+
+          show('<div class="kicker">The market is back!</div>'+
+            '<div class="scene">'+(k===1?'🐚':'🔴')+'🎉<div class="cap">Everyone takes the money again.</div></div>'+
+            '<div class="card"><p>The shells never changed. <strong>The deal</strong> came back.</p>'+
+            '<p>Money works when everyone <strong>agrees</strong> to take it. Paper money too!</p></div>'+
             '<button onclick="earnWord(\'agree\');next()">New word: agree</button>');
         }
       };
@@ -645,9 +627,9 @@ const L4=[
     const pool=["q11b","q11c","q12a","q12c","q13a","q13b"].sort(()=>Math.random()-.5).slice(0,4);
     mastery={qs:[...pool,"q13c"].sort(()=>Math.random()-.5), idx:0, score:0};
     show('<div class="kicker">Lesson 4 · Show what you know</div>'+
-      '<div class="card" style="background:#f0ebe1; border-left:4px solid var(--shell)"><p style="font-size:14px; margin:0"><strong>Kai\'s island adventure:</strong> You just learned why money works. Time to prove it.</p></div>'+
-      '<h1 class="display">Five questions, then one fun challenge.</h1>'+
-      '<p>Get 4 of 5 right and explain the big idea in your own words, and Module 1 is yours.</p>'+
+      '<div class="card" style="background:#f0ebe1; border-left:4px solid var(--shell)"><p style="font-size:14px; margin:0"><strong>Kai’s island:</strong> show what you learned about money.</p></div>'+
+      '<h1 class="display">Five questions, then one fun one.</h1>'+
+      '<p>Get 4 right. Then explain the big idea in your own words.</p>'+
       '<button onclick="next()">Start</button>');
   },
   ()=>{ masteryQ(); },
@@ -710,7 +692,7 @@ function renderTFM(qid,onDone){
 function explainBack(followup){
   const prompt = followup
     ? "One more thought: what would happen if shops stopped taking that paper?"
-    : "A younger kid asks you: \"Why will the shop give you real food for a piece of paper?\" Explain it to them in your own words.";
+    : "A little kid asks: \"Why does a shop give you real food for paper?\" Tell them in your own words.";
   show('<div class="kicker">Mastery · the fun one</div>'+
     '<div class="scene">🧒❓💵<div class="cap"></div></div>'+
     '<h2 class="display">'+prompt+'</h2>'+
@@ -809,17 +791,17 @@ function finishMastery(explainPass){
       '<h1 class="display" style="color:#fff">Module 1 complete</h1>'+
       '<p style="color:#cfe0ee">Quiz: '+mastery.score+'/5 · Explained in your own words ✓</p></div>'+
       '<div class="card"><p><strong>You now own:</strong> money, worth, agree.</p>'+
-      '<p>So money works because everyone agrees. But wait — <em>why do we need money at all? Couldn\'t people just swap things with each other?</em></p>'+
-      '<p class="muted">That\'s Module 2. (Continuing the story.)</p></div>'+
+      '<p>Money works because everyone agrees. But <em>why do we need money at all?</em></p>'+
+      '<p class="muted">Find out in Module 2.</p></div>'+
       '<button style="margin-bottom:10px" onclick="window.location.href=\'module-2-why-do-we-need-money.html\'">Continue to Module 2</button>'+
       '<button class="btn-ghost" style="margin-bottom:10px" onclick="window.location.href=\'index.html\'">🗺️ Back to all modules</button>'+
       '<button class="btn-ghost" onclick="goHome()">Stay in Module 1</button>');
     S.done[3]=true; saveState();
   } else {
     show('<div class="kicker">Almost there</div>'+
-      '<h1 class="display">Let\'s look at one piece again.</h1>'+
-      '<p>You got '+mastery.score+' of 5'+(explainPass?'':' and the explanation needs one more try')+'. That\'s how learning works — no lost XP, no problem.</p>'+
-      '<div class="card"><p><strong>The one idea to hold:</strong> money isn\'t valuable because of what it\'s made of. It\'s valuable because everyone <strong>agrees</strong> to take it. Break the agreement (remember the shells?) and it stops being money.</p></div>'+
+      '<h1 class="display">Let’s try again.</h1>'+
+      '<p>You got '+mastery.score+' of 5'+(explainPass?'':', and the big idea needs one more try')+'. That’s okay!</p>'+
+      '<div class="card"><p><strong>The big idea:</strong> money works because everyone <strong>agrees</strong> to take it. Remember the shells? When people stopped taking them, they stopped being money.</p></div>'+
       '<button onclick="S.step=0;render()">Try the mastery check again</button>'+
       '<button class="btn-ghost" style="margin-top:10px" onclick="toggleTutor(true)">Talk it through with the tutor</button>'+
       '<button class="btn-ghost" style="margin-top:10px" onclick="goHome()">Back to the island</button>');
@@ -873,7 +855,7 @@ async function sendTutor(){
   const think=document.createElement("div"); think.className="msg a"; think.innerHTML='<span class="spin" style="border-color:var(--ink);border-top-color:transparent"></span>';
   document.getElementById("tlog").appendChild(think);
   const sys="You are the tutor inside Module 1 (What Is Money?) of a financial-literacy app. The learner may be a child or an adult. "+
-    "They have learned ONLY: money (a thing almost everyone will take in exchange for other things), worth (how much people want something), agree (money works because everyone agrees to take it) — plus the island story: Kai, shells, the trader chain, the storm and Rana's firewood, the Great Shell Panic. "+
+    "They have learned ONLY: money (a thing almost everyone will take in exchange for other things), worth (how much people want something), agree (money works because everyone agrees to take it) — plus the island story: Kai, shells, the trader chain, the storm and Rana's firewood, the Great Shell Panic (a big wave leaves shells everywhere, traders stop taking them, the village votes to fix the deal). The learners are young (about 7-11): use short sentences and simple words. "+
     "STRICT RULES: never use or explain these words: price, cost, buy, sell, earn, spend, save, bank, pay, currency, barter, economy, interest, credit, invest, purchase, afford. If a question needs a future concept, say warmly that it's coming in a later module and answer what you can within bounds. "+
     "Never repeat an explanation that failed — switch to a new analogy from the learner's world (stickers, game tokens, trading cards). Keep answers under 80 words, warm, honest, never marking a wrong idea as right. If asked to 'Quiz me', ask ONE simple question about money/worth/agree and wait.";
   try{

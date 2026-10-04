@@ -173,32 +173,32 @@ const VOCAB = {
 
 const QUESTIONS = {
   "q51a":{type:"mc", prompt:"What is a price?", concept:"price", opts:[
-    {t:"How much something weighs", ok:false, fb:"Weight is about heaviness. A price is about what the trader asks for."},
-    {t:"The amount a trader asks for", ok:true, fb:"That's it. The tag tells you the amount before you decide. No guessing, no asking."},
-    {t:"How much something is secretly worth", ok:false, fb:"Close — worth and price are related, but the price is the number the trader actually ASKS for. Sometimes it matches worth, sometimes not!"}]},
+    {t:"How heavy something is", ok:false, fb:"That's weight. A price is what the trader asks for."},
+    {t:"The amount a trader asks for", ok:true, fb:"Yes! The tag tells you before you choose."},
+    {t:"A secret number that only the trader knows", ok:false, fb:"Not secret! The price is right on the tag for everyone to see."}]},
   "q51b":{type:"mc", prompt:"A kite's tag says $4. What does that mean?", concept:"price", opts:[
-    {t:"Give $4 and the kite is yours", ok:true, fb:"Exactly. The price tells you the trade before you make it: $4 in, kite out."},
+    {t:"Give $4 and the kite is yours", ok:true, fb:"Yes! The price tells you the trade: $4 for the kite."},
     {t:"The kite is 4 days old", ok:false, fb:"Tags show prices, not ages. $4 is the amount to give."},
-    {t:"Only 4 kites are left on the trader’s mat", ok:false, fb:"That would be a count, not a price. The $ sign tells you: this is the amount to give."}]},
-  "q52a":{type:"mc", prompt:"Two drums. One tag says $3.25, the other says $3.52. Which asks for more?", concept:"price", opts:[
-    {t:"The $3.25 drum", ok:false, fb:"Use your Module 4 eye: dollars match (3=3), so compare cents — 25 vs 52. Which is bigger?"},
-    {t:"The $3.52 drum", ok:true, fb:"Right. Same dollars, so the cents decide: 52 beats 25. Comparing prices is just comparing amounts."},
-    {t:"They ask for the same", ok:false, fb:"Same digits, different order — 25 cents is not 52 cents. Look at the cents side."}]},
+    {t:"Only 4 kites are left on the trader’s mat", ok:false, fb:"The $ sign tells you it's a price, not a count."}]},
+  "q52a":{type:"mc", prompt:"One drum is $3.25. One is $3.52. Which asks for more?", concept:"price", opts:[
+    {t:"The $3.25 drum", ok:false, fb:"The dollars match. Now compare the cents: 25 or 52?"},
+    {t:"The $3.52 drum", ok:true, fb:"Yes! Same dollars, so the cents decide. 52 is more than 25."},
+    {t:"They ask for the same", ok:false, fb:"Look at the cents: 25 is not 52."}]},
   "q52b":{type:"tf", prompt:"True or false: a bigger thing always has a bigger price.", answer:false, concept:"price",
-    good:"Right — remember Module 1: a boulder is huge and worth nothing, a tiny pearl can be worth a lot. Price follows worth, and worth follows wanting — not size.",
-    bad:"Think about a tiny pearl vs a giant boulder. Which asks for more? Price follows how much people WANT something — not how big it is."},
-  "q53a":{type:"mc", prompt:"The kite's price is $5. You hand the trader exactly $5. Is that trade equal?", concept:"cost", opts:[
-    {t:"Yes — you gave exactly what was asked", ok:true, fb:"Perfect. Price met exactly = equal trade. Both sides agreed, nobody owes anything."},
-    {t:"No — the trader always wins", ok:false, fb:"When you give exactly the price, the trade is equal — you wanted the kite MORE than the $5, the trader wanted the $5 more than the kite. Both walk away happy."},
-    {t:"No — you should have given less", ok:false, fb:"You gave exactly what was asked — that's an equal trade. (Asking for a lower price is a real thing, but that's a story for another module!)"}]},
-  "q53b":{type:"mc", transfer:true, prompt:"Back before dollars came, a blanket on the island asked for 10 shells. Was that a price?", concept:"price", opts:[
-    {t:"No — prices need dollar signs", ok:false, fb:"The $ sign is just mainland clothing. A price is any amount a trader asks for — in dollars, shells, or stones."},
-    {t:"Yes — a price is any amount asked for", ok:true, fb:"You've got the deep idea. Prices existed before dollars. 10 shells, 3 stones, $2.50 — all prices. The asking is what makes it a price."},
-    {t:"No — shells can't have prices, only things do", ok:false, fb:"Flip it: the BLANKET had the price, and the price was counted in shells. Any money can carry a price."}]},
-  "q53c":{type:"mc", prompt:"You have $2 saved in your pocket. The toy boat's price is $2. What does getting the boat COST you?", concept:"cost", opts:[
-    {t:"Nothing — the $2 was already saved, so it's free", ok:false, fb:"You gave $2 — that's not nothing! Cost is what leaves your hands: your whole $2."},
-    {t:"Your $2, which can't become anything else now", ok:true, fb:"That's the big idea of cost. The $2 is gone into the boat — it can't also become a snack or a kite later. Every choice closes other doors."},
-    {t:"$4, because trades double the amount", ok:false, fb:"No doubling! You give exactly the price: $2. That $2 is the cost."}]}
+    good:"Right! A tiny pearl can ask for more than a big rock. Price follows worth, not size.",
+    bad:"It's false. A tiny pearl can ask for more than a big rock. Price follows worth, not size."},
+  "q53a":{type:"mc", prompt:"The kite's price is $5. You give exactly $5. Is that an equal trade?", concept:"cost", opts:[
+    {t:"Yes, you gave what was asked", ok:true, fb:"Yes! You gave the price. Nobody owes anything."},
+    {t:"No, the trader always gets the better side", ok:false, fb:"You gave just what was asked, so it's equal. You both got what you wanted."},
+    {t:"No, you should have given less", ok:false, fb:"You gave just what was asked, so it's an equal trade."}]},
+  "q53b":{type:"mc", transfer:true, prompt:"Before dollars, a blanket on the island asked for 10 shells. Was that a price?", concept:"price", opts:[
+    {t:"No, a price needs a $ sign", ok:false, fb:"A price is any amount a trader asks for. It can be in shells too."},
+    {t:"Yes, a price is any amount asked for", ok:true, fb:"Yes! 10 shells or $2.50, both are prices."},
+    {t:"No, because shells are money and only things can have a price", ok:false, fb:"The blanket had the price. The price was counted in shells."}]},
+  "q53c":{type:"mc", prompt:"You have $2. The toy boat's price is $2. What does the boat COST you?", concept:"cost", opts:[
+    {t:"Nothing, the $2 was saved, so it's free", ok:false, fb:"You gave $2. That's not nothing!"},
+    {t:"Your $2, which can't get anything else now", ok:true, fb:"Yes! The $2 can't also be a snack or a kite now."},
+    {t:"$4, because a trade doubles the amount", ok:false, fb:"No doubling! You give the price: $2."}]}
 };
 
 /* =====================================================================
@@ -314,23 +314,22 @@ function renderTF(qid,onDone){
 }
 
 /* =====================================================================
-   LESSON 1 — The Tags Appear
+   LESSON 1 — The Tags Appear  (short screens for young readers)
 ===================================================================== */
 const L1=[
   ()=>show('<div class="kicker">Lesson 1 · The tags appear</div>'+
-    '<div class="recap"><strong>Kai\'s story so far:</strong> The island trades in dollars and cents now, and Kai can compare any two amounts.</div>'+
-    '<div class="scene">🏪🏷️<div class="cap">One morning, every item at the trading post has a little tag on it.</div></div>'+
+    '<div class="recap"><strong>So far:</strong> Kai can compare dollars and cents.</div>'+
+    '<div class="scene">🏪🏷️<div class="cap">One morning, every item has a little tag.</div></div>'+
     '<button onclick="next()">What are the tags?</button>'),
-  ()=>show('<div class="kicker">Lesson 1</div>'+
-    '<div class="card"><p>Before the tags, getting anything meant asking: <em>"What do you want for this drum?"</em> Every single time. And the answer could change by the hour.</p>'+
-    '<p>Now each tag shows a number: the amount the trader asks for.</p>'+
-    '<p>That number has a name: the <strong>price</strong>.</p>'+
-    '<p>Drum: $3.50. Kite: $4. Mango: 75¢. The whole trading post, readable at a glance.</p></div>'+
+  ()=>show('<div class="kicker">Lesson 1 · A new word</div>'+
+    '<div class="card"><p>Each tag shows the amount the trader asks for.</p>'+
+    '<p>Drum: $3.50. Kite: $4. Mango: 75¢.</p>'+
+    '<p>That number is called the <strong>price</strong>.</p></div>'+
     '<button onclick="earnWord(\'price\');next()">New word: price</button>'),
-  ()=>show('<div class="kicker">Lesson 1 · Who picks the number?</div>'+
-    '<div class="card"><p>Kai asks the drum maker: <em>"Who decided $3.50?"</em></p>'+
-    '<p>"I did," she says. "But not out of thin air. If I ask too much, nobody trades with me. If I ask too little, my drums vanish by noon and I could have gotten more."</p>'+
-    '<p>So a price follows <strong>worth</strong> — how much people want the thing and how hard it is to get. Sound familiar? It\'s Rana\'s firewood after the storm, wearing a tag.</p></div>'+
+  ()=>show('<div class="kicker">Lesson 1 · Who picks the price?</div>'+
+    '<div class="card"><p>Kai asks the drum maker, “Who picked $3.50?”</p>'+
+    '<p>“I did,” she says. “Ask too much, and nobody trades. Ask too little, and my drums go fast.”</p></div>'+
+    '<p>So a price follows <strong>worth</strong>: how much people want it.</p>'+
     '<button onclick="next()">Got it</button>'),
   ()=>renderMC("q51a", next),
   ()=>renderMC("q51b", next),
@@ -346,13 +345,9 @@ const SHOP=[
   {face:"🪘", nm:"Drum", tag:"$2.05", v:205}
 ];
 const L2=[
-  ()=>show('<div class="kicker">Lesson 2 · Tag reader</div>'+
-    '<div class="recap"><strong>So far:</strong> The price is the amount a trader asks for — and it follows worth.</div>'+
-    '<div class="card"><p>Time to read some tags. Three quick rounds at the trading post.</p></div>'+
-    '<button onclick="next()">Open the shop</button>'),
   ()=>{ /* round 1: highest price */
     let done=false;
-    let html='<div class="kicker">Tag reader · Round 1 of 3</div><h2 class="display">Which item asks for the MOST?</h2><div class="shop" id="shop"></div><div id="fb"></div><div id="cont"></div>';
+    let html='<div class="kicker">Tag reader · Round 1 of 3</div><h2 class="display">Which one asks for the MOST?</h2><div class="shop" id="shop"></div><div id="fb"></div><div id="cont"></div>';
     show(html);
     const shopEl=document.getElementById("shop");
     SHOP.forEach((it,i)=>{
@@ -363,15 +358,16 @@ const L2=[
         const ok = it.v===Math.max(...SHOP.map(x=>x.v));
         d.classList.add(ok?"right":"wrong");
         document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+
-          (ok?'Right — the drum asks for $2.05, more than anything else here.':'Compare in cents: mango 75, coconut 95, kite 125, drum 205. Which number is biggest?')+'</div>';
+          (ok?'Yes! The drum asks for $2.05. That is the most.':'Think in cents: 75, 95, 125, 205. Which is biggest?')+'</div>';
         if(ok){ done=true; addXP(2); document.getElementById("cont").innerHTML='<button onclick="next()">Round 2</button>'; }
+        revealFB();
       };
       shopEl.appendChild(d);
     });
   },
   ()=>{ /* round 2: lowest price */
     let done=false;
-    show('<div class="kicker">Tag reader · Round 2 of 3</div><h2 class="display">Which item asks for the LEAST?</h2><div class="shop" id="shop"></div><div id="fb"></div><div id="cont"></div>');
+    show('<div class="kicker">Tag reader · Round 2 of 3</div><h2 class="display">Which one asks for the LEAST?</h2><div class="shop" id="shop"></div><div id="fb"></div><div id="cont"></div>');
     const shopEl=document.getElementById("shop");
     SHOP.forEach((it,i)=>{
       const d=document.createElement("div"); d.className="item";
@@ -381,8 +377,9 @@ const L2=[
         const ok = it.v===Math.min(...SHOP.map(x=>x.v));
         d.classList.add(ok?"right":"wrong");
         document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+
-          (ok?'Right — 75¢ for the mango is the smallest ask at the post.':'Compare in cents: 75, 95, 125, 205. Which is smallest?')+'</div>';
+          (ok?'Yes! The mango is 75¢. That is the least.':'Think in cents: 75, 95, 125, 205. Which is smallest?')+'</div>';
         if(ok){ done=true; addXP(2); document.getElementById("cont").innerHTML='<button onclick="next()">Round 3</button>'; }
+        revealFB();
       };
       shopEl.appendChild(d);
     });
@@ -390,8 +387,8 @@ const L2=[
   ()=>{ /* round 3: what can you get with $1? multi-select */
     const CAN=SHOP.filter(x=>x.v<=100).map(x=>x.nm);
     let picked=new Set(), done=false;
-    show('<div class="kicker">Tag reader · Round 3 of 3</div><h2 class="display">You\'re holding exactly $1. Tap EVERY item whose price you could meet.</h2>'+
-      '<p class="muted">$1 = 100 cents. Pick all that fit, then check.</p>'+
+    show('<div class="kicker">Tag reader · Round 3 of 3</div><h2 class="display">You have $1. Tap EVERY one you could get.</h2>'+
+      '<p class="muted">$1 = 100 cents.</p>'+
       '<div class="shop" id="shop"></div><button id="check" style="margin-bottom:10px">Check my picks</button><div id="fb"></div><div id="cont"></div>');
     const shopEl=document.getElementById("shop");
     SHOP.forEach((it)=>{
@@ -414,8 +411,8 @@ const L2=[
         if(did && !should) d.classList.add("wrong");
       });
       document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+
-        (ok?'Perfect. Mango (75¢) and coconut (95¢) both fit inside your 100 cents. The kite (125¢) and drum (205¢) ask for more than you\'re holding.'
-           :'The rule: your $1 is 100 cents. Mango 75 ✓, coconut 95 ✓ — both fit. Kite 125 ✗ and drum 205 ✗ ask for more than 100.')+'</div>';
+        (ok?'Yes! Mango (75¢) and coconut (95¢) both fit in 100 cents.'
+           :'Only the mango (75¢) and coconut (95¢) fit in 100 cents.')+'</div>';
       done=true; if(ok) addXP(4); else addXP(1);
       document.getElementById("cont").innerHTML='<button onclick="next()">Continue</button>';
       revealFB();
@@ -429,20 +426,18 @@ const L2=[
 ===================================================================== */
 const L3=[
   ()=>show('<div class="kicker">Lesson 3 · What it costs you</div>'+
-    '<div class="recap"><strong>So far:</strong> Kai can read any tag at the post.</div>'+
-    '<div class="scene">🤔💵<div class="cap">Kai holds $2 — and stands very still, thinking.</div></div>'+
-    '<button onclick="next()">What\'s the problem?</button>'),
-  ()=>show('<div class="kicker">Lesson 3</div>'+
-    '<div class="card"><p>The toy boat\'s price is $2. Kai has exactly $2.</p>'+
-    '<p>Easy trade… but Kai hesitates. Because that same $2 could ALSO become a mango and a coconut. Or stay in the pocket for tomorrow.</p>'+
-    '<p>Whatever Kai picks, the $2 turns into that ONE thing — and stops being able to become anything else.</p>'+
-    '<p>That\'s what something really <strong>costs</strong> you: what you give up to get it.</p></div>'+
+    '<div class="scene">🤔💵<div class="cap">Kai has $2. He stops to think.</div></div>'+
+    '<p>The toy boat’s price is $2. But $2 could also get a mango and a coconut.</p>'+
+    '<button onclick="next()">Which one?</button>'),
+  ()=>show('<div class="kicker">Lesson 3 · A new word</div>'+
+    '<div class="card"><p>If Kai gets the boat, his $2 is gone.</p>'+
+    '<p>No mango. No coconut. He gave them up.</p>'+
+    '<p>What you give up to get something is its <strong>cost</strong>.</p></div>'+
     '<button onclick="earnWord(\'cost\');next()">New word: cost</button>'),
-  ()=>show('<div class="kicker">Lesson 3 · Price vs cost</div>'+
-    '<div class="card"><p>They sound like twins, but hold them apart:</p>'+
-    '<p><strong>Price</strong> = the number on the tag. The trader\'s ask.</p>'+
-    '<p><strong>Cost</strong> = what leaves YOUR hands — and everything else that money could have become.</p>'+
-    '<p>The price of the boat is $2. The cost of the boat is your $2… including the mango-and-coconut it will now never be.</p></div>'+
+  ()=>show('<div class="kicker">Lesson 3 · Price or cost?</div>'+
+    '<div class="card"><p><strong>Price</strong> = the number on the tag.</p>'+
+    '<p><strong>Cost</strong> = what you give up.</p></div>'+
+    '<p>So the boat costs Kai his $2, <em>and</em> the mango and coconut.</p>'+
     '<button onclick="next()">Got it</button>'),
   ()=>renderMC("q53c", next),
   ()=>renderTF("q52b", next),
@@ -457,9 +452,9 @@ const L4=[
     const pool=["q51a","q51b","q52a","q52b","q53a","q53c"].sort(()=>Math.random()-.5).slice(0,4);
     mastery={qs:[...pool,"q53b"].sort(()=>Math.random()-.5), idx:0, score:0};
     show('<div class="kicker">Lesson 4 · Show what you know</div>'+
-      '<div class="recap"><strong>Module 5 quest:</strong> You learned what prices are, who sets them, and what things really cost.</div>'+
-      '<h1 class="display">Five questions.</h1>'+
-      '<p>Get 4 of 5 right and Module 5 is yours.</p>'+
+      '<div class="recap"><strong>Module 5 quest:</strong> what a price is, and what things really cost.</div>'+
+      '<h1 class="display">Five quick questions</h1>'+
+      '<p>Get 4 right and Module 5 is done!</p>'+
       '<button onclick="next()">Start</button>');
   },
   ()=>{ masteryQ(); },

@@ -170,32 +170,32 @@ const VOCAB = {
 
 const QUESTIONS = {
   "q61a":{type:"mc", prompt:"What does adding two amounts tell you?", concept:"add", opts:[
-    {t:"Which amount is bigger, and by how much", ok:false, fb:"That's comparing — your Module 4 skill. Adding answers a different question: how much do they make TOGETHER?"},
-    {t:"How much they make together", ok:true, fb:"Exactly. Adding squishes two amounts into one: the total."},
-    {t:"Which amount came first", ok:false, fb:"Order doesn't matter in adding! 25¢ + 10¢ makes the same total as 10¢ + 25¢."}]},
+    {t:"Which amount is bigger, and by how much", ok:false, fb:"That's comparing. Adding tells you how much they make together."},
+    {t:"How much they make together", ok:true, fb:"Yes! Adding puts two amounts into one: the total."},
+    {t:"Which amount came first", ok:false, fb:"Order doesn't matter! 25¢ + 10¢ is the same as 10¢ + 25¢."}]},
   "q61b":{type:"mc", prompt:"25¢ + 25¢ = ?", concept:"add", opts:[
-    {t:"$0.40", ok:false, fb:"Count up from 25: another 25 lands on 50. Two quarters make half a dollar."},
-    {t:"50¢", ok:true, fb:"Right. Two quarters = 50¢. You've been doing this since the coin game — now it has a name."},
-    {t:"55¢", ok:false, fb:"Close! 25 + 25 = 50. Try counting: 25… 35… 45… 50."}]},
-  "q62a":{type:"mc", prompt:"The mango is 75¢ and the coconut is 95¢. What do they ask for together?", concept:"total", opts:[
-    {t:"$1.60", ok:false, fb:"Almost: 75 + 95… take 5 from the 75 to make the 95 into 100, then 70 more = 170¢ = $1.70."},
-    {t:"$1.70", ok:true, fb:"Perfect. 75 + 95 = 170 cents, and 170 cents = 1 dollar and 70 cents. Kai finally knows."},
-    {t:"$17.00", ok:false, fb:"Right number of cents — 170 — but the wrong dollars. 100 cents = 1 dollar, so 170 cents = 1 dollar and 70 cents = $1.70."}]},
-  "q62b":{type:"tf", prompt:"True or false: to add $1 and 50¢, you can just write 1 + 50 = 51.", answer:false, concept:"add",
-    good:"Right — same-unit rule! Turn everything into cents first: $1 = 100¢, so 100 + 50 = 150¢ = $1.50. Just like comparing.",
-    bad:"Careful — $1 and 50¢ are different units. Turn dollars into cents first: $1 = 100¢. Then 100 + 50 = 150¢ = $1.50."},
+    {t:"$0.40", ok:false, fb:"Count up from 25: 25 more lands on 50."},
+    {t:"50¢", ok:true, fb:"Yes! Two quarters make 50¢."},
+    {t:"55¢", ok:false, fb:"Close! Count: 25, 35, 45, 50."}]},
+  "q62a":{type:"mc", prompt:"The mango is 75¢. The coconut is 95¢. What is the total?", concept:"total", opts:[
+    {t:"$1.60", ok:false, fb:"Move 5 to the 95 to make 100. Then 100 + 70 = 170¢ = $1.70."},
+    {t:"$1.70", ok:true, fb:"Yes! 75 + 95 = 170 cents. That is $1.70."},
+    {t:"$17.00", ok:false, fb:"170 cents is right, but 100 cents is 1 dollar. So it's $1.70."}]},
+  "q62b":{type:"tf", prompt:"True or false: $1 + 50¢ is 51¢.", answer:false, concept:"add",
+    good:"Right! Make it all cents first: $1 = 100¢. 100 + 50 = 150¢ = $1.50.",
+    bad:"It's false. Make it all cents first: $1 = 100¢. 100 + 50 = 150¢ = $1.50."},
   "q63a":{type:"mc", prompt:"80¢ + 40¢ = ?", concept:"total", opts:[
-    {t:"120¢, which is $1.20", ok:true, fb:"Yes! The cents crossed 100 — and 100 of them became a dollar. 120¢ = $1.20."},
-    {t:"120¢, which is $12.00", ok:false, fb:"Careful with the conversion: 100 cents = 1 dollar, so 120 cents = 1 dollar and 20 cents = $1.20."},
-    {t:"It can't be added — too many cents", ok:false, fb:"Cents can grow past 100! When they do, every 100 of them becomes a dollar: 120¢ = $1.20."}]},
-  "q63c":{type:"mc", prompt:"Kai has $1.10 and finds a quarter on the beach. What's the total now?", concept:"total", opts:[
-    {t:"$1.35", ok:true, fb:"Right: $1.10 = 110¢, plus 25¢ = 135¢ = $1.35. Beach luck, properly counted."},
-    {t:"$1.25", ok:false, fb:"That would be adding 15¢. A quarter is 25¢: 110 + 25 = 135¢ = $1.35."},
-    {t:"$3.60", ok:false, fb:"Whoa — that added $2.50! A quarter is 25¢. 110 + 25 = 135¢ = $1.35."}]},
-  "q63b":{type:"mc", transfer:true, prompt:"Back in shell days: Kai's pouch had 30 shells, and a trade brought in 45 more. Does adding work the same way for shells?", concept:"add", opts:[
-    {t:"No — adding was invented for dollars", ok:false, fb:"Adding is older than any money! It works on amounts of anything: shells, stones, dollars, mangoes."},
-    {t:"Yes — 30 + 45 = 75 shells, same rules", ok:true, fb:"Exactly. Adding belongs to amounts, not to dollars. Any money, any island, same math."},
-    {t:"Only if the shells are the same size", ok:false, fb:"Counting shells doesn't care about size — remember, worth and count are different things. 30 + 45 = 75 shells either way."}]}
+    {t:"120¢, which is $1.20", ok:true, fb:"Yes! 100 of the cents make a dollar. 120¢ = $1.20."},
+    {t:"120¢, which is $12.00", ok:false, fb:"100 cents is 1 dollar. So 120 cents is $1.20."},
+    {t:"You can't add them, too many cents", ok:false, fb:"You can! Every 100 cents is a dollar. 120¢ = $1.20."}]},
+  "q63c":{type:"mc", prompt:"Kai has $1.10. He finds a quarter on the beach. What's the total?", concept:"total", opts:[
+    {t:"$1.35", ok:true, fb:"Yes! 110¢ + 25¢ = 135¢ = $1.35."},
+    {t:"$1.25", ok:false, fb:"A quarter is 25¢, not 15¢. 110 + 25 = 135¢ = $1.35."},
+    {t:"$3.60", ok:false, fb:"A quarter is 25¢. 110 + 25 = 135¢ = $1.35."}]},
+  "q63b":{type:"mc", transfer:true, prompt:"In the shell days, Kai had 30 shells. A trade gave him 45 more. Does adding work for shells too?", concept:"add", opts:[
+    {t:"No, adding is only for dollars", ok:false, fb:"Adding works on any amount: shells, stones, dollars, mangoes."},
+    {t:"Yes, 30 + 45 = 75 shells", ok:true, fb:"Yes! Adding works the same for any money."},
+    {t:"Only if every shell is the same size", ok:false, fb:"Size doesn't matter when you count. 30 + 45 = 75 shells."}]}
 };
 
 /* =====================================================================
@@ -315,26 +315,24 @@ function renderTF(qid,onDone){
 ===================================================================== */
 const L1=[
   ()=>show('<div class="kicker">Lesson 1 · Putting together</div>'+
-    '<div class="recap"><strong>Kai\'s story so far:</strong> The tags are up. Kai holds $1.25 — and wants BOTH the 75¢ mango and the 95¢ coconut.</div>'+
-    '<div class="scene">🥭➕🥥<div class="cap">What do they ask for together? Kai has no idea how to find out.</div></div>'+
-    '<button onclick="next()">Teach Kai the trick</button>'),
-  ()=>show('<div class="kicker">Lesson 1</div>'+
-    '<div class="card"><p>Putting amounts together to find what they make all at once is called <strong>adding</strong>.</p>'+
-    '<p>You\'ve secretly done it before — every time you counted coins in Module 3, you were adding. Now it gets its real name and its symbol: <strong>+</strong></p>'+
-    '<p>75¢ + 95¢ means: "put 75 and 95 together."</p></div>'+
+    '<div class="recap"><strong>So far:</strong> Kai has $1.25. He wants the 75¢ mango AND the 95¢ coconut.</div>'+
+    '<div class="scene">🥭➕🥥<div class="cap">How much do they ask for together?</div></div>'+
+    '<button onclick="next()">Let’s find out</button>'),
+  ()=>show('<div class="kicker">Lesson 1 · A new word</div>'+
+    '<div class="card"><p>Putting amounts together is called <strong>adding</strong>.</p>'+
+    '<p>The sign for it is <strong>+</strong></p>'+
+    '<p>75¢ + 95¢ means 75 and 95 put together.</p></div>'+
     '<button onclick="earnWord(\'add\');next()">New word: add</button>'),
-  ()=>show('<div class="kicker">Lesson 1 · The friendly-hundred trick</div>'+
-    '<div class="card"><p>Here\'s how islanders add 75 + 95 in their heads:</p>'+
-    '<p>The 95 is SO close to 100. It just needs 5 more.</p>'+
-    '<p>So take 5 from the 75 → the 95 becomes <strong>100</strong>, and the 75 becomes <strong>70</strong>.</p>'+
-    '<p>100 + 70 = <strong>170 cents</strong>. And you know from Module 3 what 170 cents is: <strong>$1.70</strong>.</p>'+
-    '<p>The answer to "how much together" has a name too: the <strong>total</strong>.</p></div>'+
+  ()=>show('<div class="kicker">Lesson 1 · The hundred trick</div>'+
+    '<div class="card"><p>95 is close to 100. It needs 5 more.</p>'+
+    '<p>Move 5 from the 75. Now it is <strong>100 + 70</strong>.</p>'+
+    '<p>That is 170 cents, or <strong>$1.70</strong>.</p>'+
+    '<p>The answer is called the <strong>total</strong>.</p></div>'+
     '<button onclick="earnWord(\'total\');next()">New word: total</button>'),
-  ()=>show('<div class="kicker">Lesson 1 · The sad news</div>'+
-    '<div class="card"><p>The total for mango + coconut: <strong>$1.70</strong>.</p>'+
-    '<p>Kai\'s pocket: <strong>$1.25</strong>.</p>'+
-    '<p>Use your comparing eye: $1.25 vs $1.70 → 125 cents vs 170 cents. Kai\'s money is LESS than the total.</p>'+
-    '<p>No mango-and-coconut feast today. But now Kai can figure that out BEFORE reaching the front of the line — that\'s the power of adding.</p></div>'+
+  ()=>show('<div class="kicker">Lesson 1 · Uh-oh</div>'+
+    '<div class="card"><p>Total: <strong>$1.70</strong>. Kai has: <strong>$1.25</strong>.</p>'+
+    '<p>125 cents is less than 170 cents. Not enough today.</p>'+
+    '<p>But adding told Kai <strong>before</strong> he got to the front of the line.</p></div>'+
     '<button onclick="next()">Practice time</button>'),
   ()=>renderMC("q61a", next),
   ()=>renderMC("q61b", next),
@@ -352,8 +350,8 @@ const TILL_ROUNDS=[
 function centsLabel(v){ return v>=100 ? "$"+(Math.floor(v/100))+"."+String(v%100).padStart(2,"0") : v+"¢"; }
 const L2=[
   ()=>show('<div class="kicker">Lesson 2 · The till game</div>'+
-    '<div class="recap"><strong>So far:</strong> Adding = putting together. The answer is the total. Cents past 100 become dollars.</div>'+
-    '<div class="card"><p>You\'re working the till at the trading post. Two items come across — find the total. Four customers, harder each time.</p></div>'+
+    '<div class="scene">🏪🧾<div class="cap">You work the till at the trading post.</div></div>'+
+    '<p>Find the total for each customer.</p>'+
     '<button onclick="next()">First customer</button>'),
   ()=>{
     let round=0;
@@ -399,15 +397,12 @@ const L2=[
 ===================================================================== */
 const L3=[
   ()=>show('<div class="kicker">Lesson 3 · Crossing the dollar</div>'+
-    '<div class="recap"><strong>So far:</strong> Kai can total up any two tags.</div>'+
-    '<div class="scene" style="font-size:32px">60¢ + 60¢ = 🤯<div class="cap">Rana adds two 60¢ mangoes and gets… 120 cents?!</div></div>'+
-    '<button onclick="next()">Is 120 cents allowed?</button>'),
+    '<div class="scene" style="font-size:32px">60¢ + 60¢ = 🤯<div class="cap">Rana adds two 60¢ mangoes. She gets 120 cents!</div></div>'+
+    '<button onclick="next()">Is that OK?</button>'),
   ()=>show('<div class="kicker">Lesson 3</div>'+
-    '<div class="card"><p>Totally allowed — cents can pile up as high as they want.</p>'+
-    '<p>But remember the exchange rule from Module 3: <strong>every 100 cents IS a dollar.</strong></p>'+
-    '<p>So when a total crosses 100, dress it up properly:</p>'+
+    '<div class="card"><p>Yes! But every 100 cents is a dollar.</p>'+
     '<p style="text-align:center; font-size:22px"><strong>120¢ → $1.20</strong></p>'+
-    '<p>100 of the cents became the dollar; the leftover 20 stay as cents. Nothing was lost — same amount, better outfit.</p></div>'+
+    '<p>100 cents make the dollar. 20 cents are left. Same amount!</p></div>'+
     '<button onclick="next()">Got it</button>'),
   ()=>renderMC("q63a", next),
   ()=>renderMC("q63c", next),
@@ -422,9 +417,9 @@ const L4=[
     const pool=["q61a","q61b","q62a","q62b","q63a","q63c"].sort(()=>Math.random()-.5).slice(0,4);
     mastery={qs:[...pool,"q63b"].sort(()=>Math.random()-.5), idx:0, score:0};
     show('<div class="kicker">Lesson 4 · Show what you know</div>'+
-      '<div class="recap"><strong>Module 6 quest:</strong> You learned to add amounts, find totals, and cross the dollar line.</div>'+
-      '<h1 class="display">Five questions.</h1>'+
-      '<p>Get 4 of 5 right and Module 6 is yours.</p>'+
+      '<div class="recap"><strong>Module 6 quest:</strong> add amounts and find the total.</div>'+
+      '<h1 class="display">Five quick questions</h1>'+
+      '<p>Get 4 right and Module 6 is done!</p>'+
       '<button onclick="next()">Start</button>');
   },
   ()=>{ masteryQ(); },

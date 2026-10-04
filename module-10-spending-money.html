@@ -162,38 +162,38 @@ const MODULE_N = 10;
    borrow/lend (M25), budget (M52).
 ===================================================================== */
 const VOCAB = {
-  spend:{term:"spend", def:"To use your money to buy things. Money out — by your own choice. Spending is what money is FOR… the trick is choosing well."},
-  need:{term:"need", def:"Something you must have to be okay — food, water, a warm place, clothes that fit the weather. Needs come first."}
+  spend:{term:"spend", def:"To use your money to buy things. You choose to do it."},
+  need:{term:"need", def:"Something you must have to be okay, like food, water, or a warm place. Needs come first."}
 };
 
 const QUESTIONS = {
   "q101a":{type:"mc", prompt:"What does it mean to SPEND money?", concept:"spend", opts:[
-    {t:"Trade money for things", ok:true, fb:"Right. Spending is choosing to trade money for things — it's what money is FOR. The skill is choosing well."},
-    {t:"Lose your money by accident", ok:false, fb:"Dropping a dime in the lagoon isn't spending! Spending is on purpose — you choose the trade."},
-    {t:"Give money away for nothing", ok:false, fb:"That's a gift. Spending means you GET something back — the thing you bought."}]},
+    {t:"Use money to buy things", ok:true, fb:"Yes! You give money and get something back. You choose to do it."},
+    {t:"Lose money by accident", ok:false, fb:"Dropping a dime is not spending. Spending is on purpose."},
+    {t:"Give money away for nothing back", ok:false, fb:"That is a gift. When you spend, you get the thing you bought."}]},
   "q101b":{type:"mc", prompt:"Which of these is a NEED?", concept:"need", opts:[
-    {t:"Food for tonight's dinner", ok:true, fb:"Right. You must eat to be okay. Food, water, a warm place — needs keep you going."},
-    {t:"A second kite", ok:false, fb:"The first kite was fun, and a second would be MORE fun — but you'd be perfectly okay without it. That's a want."},
-    {t:"Mango candy", ok:false, fb:"Delicious — and totally optional. Candy is a want: fun to have, fine to skip."}]},
+    {t:"Food for dinner", ok:true, fb:"Yes! You must eat to be okay."},
+    {t:"A second new kite", ok:false, fb:"A second kite is fun, but you’d be okay without it. That’s a want."},
+    {t:"A bag of mango candy", ok:false, fb:"Yummy, but you can skip it. Candy is a want."}]},
   "q102a":{type:"mc", prompt:"Which of these is a WANT?", concept:"need", opts:[
-    {t:"A warm blanket when winter is coming and yours is torn", ok:false, fb:"Cold nights are no joke — a working blanket in winter is a NEED."},
-    {t:"A drum-song book because the songs are fun", ok:true, fb:"Right — fun, wonderful, and optional. Kai would be okay without it. That's exactly what a want is."},
-    {t:"Water when the well runs low", ok:false, fb:"Water is the deepest need there is! Wants are the fun extras."}]},
-  "q102b":{type:"tf", prompt:"True or false: the SAME thing can be a need in one situation and a want in another.", answer:true, concept:"need",
-    good:"Right — a blanket in freezing winter with a torn one at home? Need. A third blanket because the pattern is pretty? Want. The situation decides, not the thing.",
-    bad:"Think about blankets: one warm blanket before winter = need. A THIRD blanket because it's pretty = want. Same item, different situation — the situation decides."},
-  "q103a":{type:"mc", prompt:"Kai has $6. Dinner food costs $3 (a need). The drum-song book costs $4 (a want). What's the smart order?", concept:"spend", opts:[
-    {t:"Buy the book first — wants are more fun, and dinner can wait", ok:false, fb:"Fun now, hungry tonight: after the $4 book, only $2 is left — not enough for $3 dinner. Needs first protects you."},
-    {t:"Dinner first, then wants with what's left", ok:true, fb:"That's the rule: needs first, wants with what remains. $6 − $3 = $3 left. (Notice… $3 isn't enough for the $4 book. Hold that thought.)"},
-    {t:"Buy neither and keep everything", ok:false, fb:"Skipping DINNER to hold money? Needs aren't optional — that's what makes them needs. Cover the need, then choose."}]},
-  "q103c":{type:"mc", prompt:"Kai spends $3 on dinner from a $6 pocket. How much is left for wants?", concept:"spend", opts:[
-    {t:"$3", ok:true, fb:"Right — $6 − $3 = $3. Module 7 doing its job at the trading post."},
-    {t:"$2", ok:false, fb:"Count up from 3 to 6: that's 3. So $3 remains."},
-    {t:"$6", ok:false, fb:"The dinner money is spent — it left the pocket. 6 − 3 = 3 left."}]},
-  "q103b":{type:"mc", transfer:true, prompt:"Shell days: a cold night was coming. Kai had 10 shells and stood between a warm blanket (10 shells) and a pretty necklace (10 shells). Was that a needs-vs-wants choice?", concept:"need", opts:[
-    {t:"Yes — blanket was the need, necklace the want", ok:true, fb:"Exactly. Needs vs wants is older than dollars, older than tags — it's about being okay first. The blanket wins the cold night."},
-    {t:"No — needs and wants only matter once there are dollars", ok:false, fb:"Needs and wants are older than dollars! Shells were money, and the choice between staying-warm and looking-fancy is the oldest spending choice there is."},
-    {t:"No — pretty things are always needs", ok:false, fb:"Pretty is a want wearing a nice outfit. On a cold night, WARM is the need."}]}
+    {t:"A warm blanket when yours is torn", ok:false, fb:"Cold nights are no fun. A warm blanket in winter is a need."},
+    {t:"A song book, just for fun", ok:true, fb:"Yes! It’s fun, but Kai would be okay without it."},
+    {t:"Water when the well is low", ok:false, fb:"You must have water. That’s a need."}]},
+  "q102b":{type:"tf", prompt:"True or false: the same thing can be a need one time and a want another time.", answer:true, concept:"need",
+    good:"Right! One blanket in winter is a need. A third pretty blanket is a want.",
+    bad:"It’s true! One blanket in winter is a need. A third pretty blanket is a want."},
+  "q103a":{type:"mc", prompt:"Kai has $6. Dinner is $3 (a need). The book is $4 (a want). What should he do?", concept:"spend", opts:[
+    {t:"Buy the book first, then dinner", ok:false, fb:"After the $4 book, only $2 is left. That’s not enough for dinner!"},
+    {t:"Buy dinner first", ok:true, fb:"Yes! Needs first. $6 − $3 = $3 left for wants."},
+    {t:"Buy nothing and skip dinner", ok:false, fb:"Dinner is a need. Buy the need first, then choose."}]},
+  "q103c":{type:"mc", prompt:"Kai has $6. He spends $3 on dinner. How much is left?", concept:"spend", opts:[
+    {t:"$3", ok:true, fb:"Yes! $6 − $3 = $3."},
+    {t:"$2", ok:false, fb:"Count up from 3 to 6. That’s 3. So $3 is left."},
+    {t:"$9", ok:false, fb:"Spending takes money out. $6 − $3 = $3."}]},
+  "q103b":{type:"mc", transfer:true, prompt:"Long ago, Kai had 10 shells. A cold night was coming. A warm blanket cost 10 shells. A pretty necklace cost 10 shells. Is this a need-or-want choice?", concept:"need", opts:[
+    {t:"Yes. The blanket is the need.", ok:true, fb:"Yes! Needs and wants are older than dollars. Stay warm first."},
+    {t:"No. That only works with dollars.", ok:false, fb:"Shells were money too. People always had to choose needs first."},
+    {t:"No. Pretty things are needs.", ok:false, fb:"Pretty is a want. On a cold night, warm is the need."}]}
 };
 
 /* =====================================================================
@@ -312,15 +312,14 @@ function renderTF(qid,onDone){
    LESSON 1 — The Full Pocket Problem
 ===================================================================== */
 const L1=[
-  ()=>show('<div class="kicker">Lesson 1 · The full pocket problem</div>'+
-    '<div class="recap"><strong>Kai\'s story so far:</strong> Every market morning, Kai earns with the fruit trader. This week: $6 in the pocket.</div>'+
-    '<div class="scene">💵🤩🏪<div class="cap">Six whole dollars. And a trading post FULL of wonderful things.</div></div>'+
-    '<button onclick="next()">A nice problem to have</button>'),
-  ()=>show('<div class="kicker">Lesson 1</div>'+
-    '<div class="card"><p>Using your money to buy things is called <strong>spending</strong>.</p>'+
-    '<p>Spending isn\'t bad — it\'s what money is FOR. Every mango Kai has ever eaten came from spending.</p>'+
-    '<p>But here\'s the thing you already know from Module 5: every dollar spent on one thing <em>stops being able to become anything else</em>. Spending is choosing.</p>'+
-    '<p>And $6 does not stretch across a whole trading post. So… how do you choose?</p></div>'+
+  ()=>show('<div class="kicker">Lesson 1 · A full pocket</div>'+
+    '<div class="recap"><strong>So far:</strong> Kai helps the fruit trader. This week he earned $6.</div>'+
+    '<div class="scene">💵🤩🏪<div class="cap">$6, and a trading post full of fun things!</div></div>'+
+    '<button onclick="next()">What will Kai buy?</button>'),
+  ()=>show('<div class="kicker">Lesson 1 · A new word</div>'+
+    '<div class="card"><p>Using money to buy things is called <strong>spending</strong>.</p>'+
+    '<p>Spending is not bad. It’s what money is for!</p>'+
+    '<p>But $6 can’t buy everything. Kai has to <strong>choose</strong>.</p></div>'+
     '<button onclick="earnWord(\'spend\');next()">New word: spend</button>'),
   ()=>renderMC("q101a", next),
 ];
@@ -329,28 +328,27 @@ const L1=[
    LESSON 2 — Need or Want? (game)
 ===================================================================== */
 const NW_ROUNDS=[
-  {big:"🍲", txt:"Food for tonight's dinner", ans:"need",
-   fb:{need:"Right — you must eat to be okay. That's the very center of what a need is.",
-       want:"Skip dinner and see how tonight goes! Food is a need — you must have it to be okay."}},
-  {big:"🪁🪁", txt:"A SECOND kite (the first one still flies great)", ans:"want",
-   fb:{need:"The first kite still flies! A second is extra fun — and extra fun is exactly what a want is.",
-       want:"Right — fun to have, fine to live without. Classic want."}},
-  {big:"🧶❄️", txt:"A warm blanket — winter is coming and yours is torn", ans:"need",
-   fb:{need:"Right — staying warm through winter is being-okay territory. This blanket is a need.",
-       want:"Check the situation: winter + torn blanket = cold nights ahead. THIS blanket is a need."}},
-  {big:"🍬", txt:"Mango candy from the sweet stall", ans:"want",
-   fb:{need:"Tasty — but you'd be perfectly okay without it. Candy is the poster child of wants.",
-       want:"Right — delicious and completely optional. Want."}},
-  {big:"🧶🌸", txt:"A THIRD blanket, because the flower pattern is so pretty", ans:"want",
-   fb:{need:"Wait — you already have two warm blankets! Pretty isn't warm-er. Blanket #3 is a want. (Same thing, different situation!)",
-       want:"Sharp eye! Two blankets already keep you warm — #3 is about PRETTY, not about being okay. The situation flipped it into a want."}}
+  {big:"🍲", txt:"Food for dinner", ans:"need",
+   fb:{need:"Yes! You must eat to be okay.",
+       want:"You must eat to be okay. Food is a need."}},
+  {big:"🪁🪁", txt:"A second kite (the first one still flies)", ans:"want",
+   fb:{need:"The first kite still flies! A second one is a want.",
+       want:"Yes! Fun to have, fine to skip."}},
+  {big:"🧶❄️", txt:"A warm blanket. Winter is coming, and yours is torn.", ans:"need",
+   fb:{need:"Yes! You need to stay warm in winter.",
+       want:"Winter is coming and his blanket is torn. This is a need."}},
+  {big:"🍬", txt:"Mango candy", ans:"want",
+   fb:{need:"Yummy, but you’d be okay without it. Want.",
+       want:"Yes! Yummy, but you can skip it."}},
+  {big:"🧶🌸", txt:"A third blanket, because it’s pretty", ans:"want",
+   fb:{need:"Kai already has two warm blankets! The third one is a want.",
+       want:"Good eye! Two blankets keep him warm. The third is just pretty."}}
 ];
 const L2=[
-  ()=>show('<div class="kicker">Lesson 2 · Need or want?</div>'+
-    '<div class="recap"><strong>So far:</strong> Spending is choosing.</div>'+
-    '<div class="card"><p>The first sorting tool: some things you <strong>must</strong> have to be okay — food, water, a warm place, clothes that fit the weather. Those are <strong>needs</strong>.</p>'+
-    '<p>Everything else — the fun, the pretty, the delicious — those are <strong>wants</strong>. Great to have. Fine to skip.</p>'+
-    '<p>Five things from the post. Sort each one. Watch out: one of them will try to trick you.</p></div>'+
+  ()=>show('<div class="kicker">Lesson 2 · A new word</div>'+
+    '<div class="card"><p>A <strong>need</strong> is something you must have to be okay. Food, water, a warm place.</p>'+
+    '<p>A <strong>want</strong> is a fun extra. Nice to have. Fine to skip.</p></div>'+
+    '<p class="muted">Sort 5 things. One is a trick!</p>'+
     '<button onclick="earnWord(\'need\');next()">New word: need</button>'),
   ()=>{
     let round=0;
@@ -385,15 +383,14 @@ const L2=[
 ===================================================================== */
 const L3=[
   ()=>show('<div class="kicker">Lesson 3 · Needs first</div>'+
-    '<div class="recap"><strong>So far:</strong> Kai can sort needs from wants — even the tricky ones.</div>'+
-    '<div class="scene">🍲$3 &nbsp; 📖$4<div class="cap">Tonight\'s dinner: $3. The drum-song book Kai has wanted for WEEKS: $4. Pocket: $6.</div></div>'+
-    '<button onclick="next()">Both? Please?</button>'),
-  ()=>show('<div class="kicker">Lesson 3</div>'+
-    '<div class="card"><p>Add it up (Module 6): $3 + $4 = $7. Pocket: $6. Compare (Module 4): not enough. Both is impossible.</p>'+
-    '<p>So which comes first? The island rule is simple: <strong>needs first, wants with what\'s left.</strong></p>'+
-    '<p>Cover dinner: $6 − $3 = <strong>$3 left</strong> (Module 7!).</p>'+
-    '<p>And the book costs $4. Kai is exactly <strong>$1 short</strong>. Again! First the feast, now this…</p></div>'+
-    '<button onclick="next()">This keeps happening</button>'),
+    '<div class="scene">🍲 $3 &nbsp; 📖 $4<div class="cap">Dinner is $3. The song book is $4. Kai has $6.</div></div>'+
+    '<p>$3 + $4 = $7. That’s more than $6. He can’t buy both.</p>'+
+    '<button onclick="next()">What comes first?</button>'),
+  ()=>show('<div class="kicker">Lesson 3 · The island rule</div>'+
+    '<div class="card"><p><strong>Needs first. Wants get what’s left.</strong></p>'+
+    '<p>Dinner first: $6 − $3 = <strong>$3 left</strong>.</p>'+
+    '<p>But the book is $4. Kai is <strong>$1 short</strong>. Oh no!</p></div>'+
+    '<button onclick="next()">Not again!</button>'),
   ()=>renderMC("q103a", next),
   ()=>renderMC("q103c", next),
 ];
@@ -469,8 +466,8 @@ function finishMastery(pass){
       '<h1 class="display" style="color:#fff">Module 10 complete</h1>'+
       '<p style="color:#cfe0ee">Quiz: '+mastery.score+'/5 ✓</p></div>'+
       '<div class="card"><p><strong>You now own:</strong> spend and need — the choosing tools.</p>'+
-      '<p>Kai sits with $3 left and stares at the $4 book. One dollar short — TODAY. But market morning comes again next week…</p>'+
-      '<p><em>What if money could wait? What if today\'s leftover could meet next week\'s?</em></p>'+
+      '<p>Kai has $3. The book is $4. He is $1 short today. But next week, he will earn more…</p>'+
+      '<p><em>What if his $3 could wait for next week?</em></p>'+
       '<p class="muted">That\'s Module 11: Saving Money.</p></div>'+
       '<button style="margin-bottom:10px" onclick="window.location.href=\'module-11-saving-money.html\'">Continue to Module 11</button>'+
       '<button class="btn-ghost" style="margin-bottom:10px" onclick="window.location.href=\'index.html\'">🗺️ Back to all modules</button>'+
@@ -479,7 +476,7 @@ function finishMastery(pass){
   } else {
     show('<div class="kicker">Almost there</div>'+
       '<h1 class="display">One more try</h1>'+
-      '<p>You got '+mastery.score+' of 5. The keys: spending is choosing, and needs come first — wants get what\'s left.</p>'+
+      '<p>You got '+mastery.score+' of 5. Remember: needs first, wants get what\'s left.</p>'+
       '<button onclick="S.step=0;render()">Try again</button>'+
       '<button class="btn-ghost" style="margin-top:10px" onclick="toggleTutor(true)">Talk with the tutor</button>'+
       '<button class="btn-ghost" style="margin-top:10px" onclick="goHome()">Back home</button>');
@@ -536,7 +533,7 @@ async function sendTutor(){
   const sys="You are the tutor inside Module 10 (Spending Money) of a financial-literacy app. The learner may be a child or an adult. "+
     "They know from earlier modules: money, worth, agree, barter, trade, dollar, cent, coins, reading $X.YY, compare, equal, price, cost, add, total, subtract, change, buy, sell, pay, earn, work. From this module: spend (use money to buy things — on purpose), need (must-have to be okay: food, water, warm place, weather-right clothes), want (fun extras, fine to skip), the situation decides (same item can be need or want), and the rule: needs first, wants with what's left. "+
     "STRICT RULES: never use these words (later modules): save, saving, savings, set aside, put away for later, bank, deposit, borrow, lend, credit, invest, budget, multiply, divide, tax, income, wage. IMPORTANT: if the learner asks about keeping money for later or not spending it, warmly say that is EXACTLY the next module's big idea and they're thinking ahead — do not explain or name it. "+
-    "Story context: Kai earned $6 this week; dinner ($3, need) came before the drum-song book ($4, want); after dinner Kai has $3 and is $1 short of the book — a cliffhanger. "+
+    "Story context: Kai earned $6 this week; dinner ($3, need) came before the song book ($4, want); after dinner Kai has $3 and is $1 short of the book — a cliffhanger. "+
     "Never repeat a failed explanation — switch analogies (school lunch vs toy aisle, rainy-day boots vs sticker packs). Keep answers under 80 words, warm, honest, never mark wrong ideas right. If asked 'Quiz me', ask ONE simple need-or-want question and wait.";
   try{
     const controller=new AbortController(); const timeout=setTimeout(()=>controller.abort(),8000);

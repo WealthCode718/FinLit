@@ -169,32 +169,32 @@ const VOCAB = {
 
 const QUESTIONS = {
   "q71a":{type:"mc", prompt:"What does subtracting tell you?", concept:"subtract", opts:[
-    {t:"How much two amounts make when put together", ok:false, fb:"That's adding — Module 6! Subtracting goes the other way: it finds what's LEFT, or the gap between two amounts."},
-    {t:"What's left after taking some away", ok:true, fb:"Exactly. Adding builds the pile up; subtracting answers what remains — or how far apart two amounts are."},
-    {t:"Which amount is prettier", ok:false, fb:"Ha — no beauty contests in math. Subtracting finds what's left, or the gap between amounts."}]},
-  "q71b":{type:"mc", prompt:"Kai's pocket holds $5. The drum asks for $2. After the trade, what's left?", concept:"subtract", opts:[
-    {t:"$3", ok:true, fb:"Right. $5 − $2 = $3. The pocket doesn't go empty — it just gets lighter by exactly the price."},
-    {t:"$2", ok:false, fb:"That's what LEFT the pocket. What STAYED? Count up from 2 to 5."},
-    {t:"$7", ok:false, fb:"That's adding! Trades take money OUT of the pocket: 5 − 2 = 3."}]},
-  "q72a":{type:"mc", prompt:"The mango is 70¢. You hand the trader a $1 bill. How much change comes back?", concept:"change", opts:[
-    {t:"20¢", ok:false, fb:"Count UP from the price: 70 → 80 → 90 → 100. How many tens was that?"},
-    {t:"30¢", ok:true, fb:"Right. Count up from 70: 80, 90, 100 — three dimes. 30¢ change."},
-    {t:"70¢", ok:false, fb:"70¢ is the price — that part stays with the trader. The change is the gap between 70 and 100."}]},
-  "q72b":{type:"tf", prompt:"True or false: if you hand the trader EXACTLY the price, no change comes back.", answer:true, concept:"change",
-    good:"Right — exact amount means an equal trade, nothing owed either way. Change only exists when you hand over MORE than the price.",
-    bad:"It’s true! Think about it: hand exactly 70¢ for a 70¢ mango — that's an equal trade (Module 4!). Nothing extra went over, so nothing comes back."},
-  "q73a":{type:"mc", prompt:"Remember Kai's problem: the feast totals $1.70, and Kai has $1.25. How much MORE does Kai need?", concept:"subtract", opts:[
-    {t:"45¢", ok:true, fb:"Yes! Count up from 125: +5 → 130, +40 → 170. That's 45¢. The gap finally has a number."},
-    {t:"55¢", ok:false, fb:"Count up from 125 to 170: 125 → 130 is 5, then 130 → 170 is 40. Put those together…"},
-    {t:"$2.95", ok:false, fb:"That's adding the two amounts! The GAP is the difference: 170 − 125 = 45¢."}]},
+    {t:"How much two amounts make when put together", ok:false, fb:"That's adding! Subtracting finds what's left."},
+    {t:"What's left after taking some away", ok:true, fb:"Yes! Subtracting finds what's left, or the gap between two amounts."},
+    {t:"Which coin is the shiniest one", ok:false, fb:"Not that! Subtracting finds what's left after taking some away."}]},
+  "q71b":{type:"mc", prompt:"Kai has $5. The drum asks for $2. After the trade, what's left?", concept:"subtract", opts:[
+    {t:"$3", ok:true, fb:"Yes! $5 − $2 = $3."},
+    {t:"$2", ok:false, fb:"$2 went to the trader. What stayed? Count up from 2 to 5."},
+    {t:"$7", ok:false, fb:"That's adding! The trade takes money out: 5 − 2 = 3."}]},
+  "q72a":{type:"mc", prompt:"The mango is 70¢. You give $1. How much change do you get?", concept:"change", opts:[
+    {t:"20¢", ok:false, fb:"Count up from 70: 80, 90, 100. How many tens is that?"},
+    {t:"30¢", ok:true, fb:"Yes! 80, 90, 100. That's 30¢ change."},
+    {t:"70¢", ok:false, fb:"70¢ is the price. The change is the gap from 70 to 100."}]},
+  "q72b":{type:"tf", prompt:"True or false: if you give EXACTLY the price, you get no change.", answer:true, concept:"change",
+    good:"Right! It's an equal trade. You only get change when you give more than the price.",
+    bad:"It's true! 70¢ for a 70¢ mango is an equal trade. Nothing extra, so nothing comes back."},
+  "q73a":{type:"mc", prompt:"The feast is $1.70. Kai has $1.25. How much MORE does he need?", concept:"subtract", opts:[
+    {t:"45¢", ok:true, fb:"Yes! 125 → 130 is 5. 130 → 170 is 40. 5 + 40 = 45¢."},
+    {t:"55¢", ok:false, fb:"Count up from 125: +5 gets to 130, then +40 gets to 170."},
+    {t:"$2.95", ok:false, fb:"That's adding them. The gap is 170 − 125 = 45¢."}]},
   "q73c":{type:"mc", prompt:"90¢ − 40¢ = ?", concept:"subtract", opts:[
-    {t:"50¢", ok:true, fb:"Right. Take 40 away from 90 and 50 stays behind."},
-    {t:"40¢", ok:false, fb:"40 is what was taken away. What's LEFT? Count up from 40 to 90."},
-    {t:"130¢", ok:false, fb:"That's the two added together. The − sign means take away: 90 − 40 = 50."}]},
-  "q73b":{type:"mc", transfer:true, prompt:"Back in shell days: Kai's pouch held 75 shells, and a blanket asked for 50. Does subtracting work on shells too?", concept:"subtract", opts:[
-    {t:"Yes — 75 − 50 = 25 shells left", ok:true, fb:"Exactly. Like adding, subtracting belongs to amounts — shells, stones, dollars, mangoes. Same math on every island."},
-    {t:"No — subtracting only works on dollars and cents", ok:false, fb:"Subtracting works on any amount — shells, stones, dollars. 75 shells − 50 shells = 25 shells left."},
-    {t:"Only if the shells agree to leave", ok:false, fb:"Ha — the agreement makes shells MONEY, but the math works on any pile: 75 − 50 = 25."}]}
+    {t:"50¢", ok:true, fb:"Yes! Take 40 from 90 and 50 is left."},
+    {t:"40¢", ok:false, fb:"40 is what was taken away. What's left?"},
+    {t:"130¢", ok:false, fb:"That's adding. The − sign means take away: 90 − 40 = 50."}]},
+  "q73b":{type:"mc", transfer:true, prompt:"In the shell days, Kai had 75 shells. A blanket asked for 50. Does subtracting work on shells too?", concept:"subtract", opts:[
+    {t:"Yes, 75 − 50 = 25 shells left", ok:true, fb:"Yes! Subtracting works on any amount: shells, stones, or dollars."},
+    {t:"No, it only works on dollars and cents", ok:false, fb:"It works on any amount. 75 − 50 = 25 shells left."},
+    {t:"Only if the shells are all the same", ok:false, fb:"Counting works on any pile: 75 − 50 = 25."}]}
 };
 
 /* =====================================================================
@@ -313,15 +313,16 @@ function renderTF(qid,onDone){
    LESSON 1 — What's Left
 ===================================================================== */
 const L1=[
-  ()=>show('<div class="kicker">Lesson 1 · What\'s left</div>'+
-    '<div class="recap"><strong>Kai\'s story so far:</strong> Kai can add any two tags into a total. But adding only makes piles GROW…</div>'+
-    '<div class="scene">💵🪘❓<div class="cap">Kai holds $5. The drum asks for $2. If Kai trades… what stays in the pocket?</div></div>'+
+  ()=>show('<div class="kicker">Lesson 1 · What’s left</div>'+
+    '<div class="recap"><strong>So far:</strong> Kai can add. Adding makes amounts grow.</div>'+
+    '<div class="scene">💵🪘❓<div class="cap">Kai has $5. The drum asks for $2.</div></div>'+
+    '<p>If Kai gets the drum, what is left in his pocket?</p>'+
     '<button onclick="next()">Find out</button>'),
-  ()=>show('<div class="kicker">Lesson 1</div>'+
-    '<div class="card"><p>Taking an amount away to find what remains is called <strong>subtracting</strong>. Its symbol is <strong>−</strong>.</p>'+
-    '<p>$5 − $2 means: start with 5, take 2 away.</p>'+
-    '<p>Count what\'s left: <strong>$3</strong>.</p>'+
-    '<p>Adding and subtracting are opposites — one builds the pile, one shrinks it. Together they track every pocket on the island.</p></div>'+
+  ()=>show('<div class="kicker">Lesson 1 · A new word</div>'+
+    '<div class="card"><p>Taking an amount away is called <strong>subtracting</strong>. The sign is <strong>−</strong></p>'+
+    '<p>$5 − $2 means start with 5, take 2 away.</p>'+
+    '<p>What’s left? <strong>$3</strong>.</p></div>'+
+    '<p>Adding makes amounts bigger. Subtracting makes them smaller.</p>'+
     '<button onclick="earnWord(\'subtract\');next()">New word: subtract</button>'),
   ()=>renderMC("q71a", next),
   ()=>renderMC("q71b", next),
@@ -339,10 +340,9 @@ const CHANGE_ROUNDS=[
 function cLabel(v){ return v>=100 ? "$"+(Math.floor(v/100))+"."+String(v%100).padStart(2,"0") : v+"¢"; }
 const L2=[
   ()=>show('<div class="kicker">Lesson 2 · The change machine</div>'+
-    '<div class="recap"><strong>So far:</strong> Subtracting finds what\'s left.</div>'+
-    '<div class="card"><p>At the trading post, people rarely hand the EXACT price. They hand a bill and get money back.</p>'+
-    '<p>The money handed back is called <strong>change</strong> — and it\'s subtraction wearing an apron: what-you-handed − the-price = your change.</p>'+
-    '<p>Traders find it by <strong>counting UP</strong> from the price: mango is 70¢, you hand $1 → "70… 80, 90, 100 — here\'s 30¢."</p></div>'+
+    '<div class="card"><p>Kai gives $1 for a 70¢ mango. That is more than the price.</p>'+
+    '<p>So the trader gives some money back. That money is called <strong>change</strong>.</p></div>'+
+    '<p>To find it, count UP from the price: 70… 80, 90, 100. That’s <strong>30¢</strong>.</p>'+
     '<button onclick="earnWord(\'change\');next()">New word: change</button>'),
   ()=>{
     let round=0;
@@ -366,7 +366,7 @@ const L2=[
           if(answered && !ok) return;
           btn.classList.add(ok?"right":"wrong");
           document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+
-            (ok?'Right — '+cLabel(truth)+' back. ('+r.cu+')':'Count up from the price: '+r.cu+'. Try again.')+'</div>';
+            (ok?'Yes! '+cLabel(truth)+' back. ('+r.cu+')':'Count up from the price: '+r.cu+'. Try again.')+'</div>';
           if(ok){
             answered=true; addXP(2);
             document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
@@ -388,18 +388,18 @@ const L2=[
 ===================================================================== */
 const L3=[
   ()=>show('<div class="kicker">Lesson 3 · The gap</div>'+
-    '<div class="recap"><strong>Unfinished business:</strong> In Module 6, Kai\'s $1.25 wasn\'t enough for the $1.70 feast. But HOW short was Kai? Nobody knew…</div>'+
-    '<div class="scene">🥭🥥😤<div class="cap">Time to put a number on the gap.</div></div>'+
-    '<button onclick="next()">Measure the gap</button>'),
+    '<div class="recap"><strong>Remember:</strong> Kai had $1.25. The mango and coconut total $1.70. Not enough!</div>'+
+    '<div class="scene">🥭🥥😤<div class="cap">How much more does Kai need?</div></div>'+
+    '<button onclick="next()">Find the gap</button>'),
   ()=>show('<div class="kicker">Lesson 3</div>'+
-    '<div class="card"><p>Subtracting has a second superpower: it measures the <strong>gap between two amounts</strong>.</p>'+
-    '<p>Feast total: 170¢. Kai\'s pocket: 125¢.</p>'+
-    '<p>Count up from 125: <strong>+5</strong> lands on 130, then <strong>+40</strong> lands on 170.</p>'+
-    '<p>5 + 40 = <strong>45¢</strong>. That\'s the gap. Kai needs exactly 45¢ more — not "some more," not "a lot more." Exactly a quarter and two dimes.</p></div>'+
-    '<button onclick="next()">And then…?</button>'),
+    '<div class="card"><p>Subtracting can find the <strong>gap</strong> between two amounts.</p>'+
+    '<p>Count up from 125 to 170.</p>'+
+    '<p><strong>+5</strong> gets to 130. <strong>+40</strong> gets to 170.</p>'+
+    '<p>5 + 40 = <strong>45¢</strong>. Kai needs 45¢ more.</p></div>'+
+    '<button onclick="next()">And then?</button>'),
   ()=>show('<div class="kicker">Lesson 3 · The feast</div>'+
-    '<div class="scene">🥭🥥🎉<div class="cap">The next morning, Kai returns with $1.70 exactly. The mango AND the coconut. Best breakfast on the island.</div></div>'+
-    '<div class="card"><p>That\'s the whole journey: read the tags (M5), add the total (M6), measure the gap (M7), close it. Numbers turned a disappointment into a plan.</p></div>'+
+    '<div class="scene">🥭🥥🎉<div class="cap">The next day, Kai comes back with $1.70. He gets both!</div></div>'+
+    '<p>Read the tags. Add the total. Find the gap. Now Kai has a plan.</p>'+
     '<button onclick="next()">Practice the gap</button>'),
   ()=>renderMC("q73a", next),
   ()=>renderMC("q73c", next),
@@ -414,9 +414,9 @@ const L4=[
     const pool=["q71a","q71b","q72a","q72b","q73a","q73c"].sort(()=>Math.random()-.5).slice(0,4);
     mastery={qs:[...pool,"q73b"].sort(()=>Math.random()-.5), idx:0, score:0};
     show('<div class="kicker">Lesson 4 · Show what you know</div>'+
-      '<div class="recap"><strong>Module 7 quest:</strong> You learned what\'s left, how change works, and how to measure gaps.</div>'+
-      '<h1 class="display">Five questions.</h1>'+
-      '<p>Get 4 of 5 right and Module 7 is yours.</p>'+
+      '<div class="recap"><strong>Module 7 quest:</strong> what’s left, change, and the gap.</div>'+
+      '<h1 class="display">Five quick questions</h1>'+
+      '<p>Get 4 right and Module 7 is done!</p>'+
       '<button onclick="next()">Start</button>');
   },
   ()=>{ masteryQ(); },
