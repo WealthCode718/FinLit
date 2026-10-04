@@ -85,6 +85,11 @@
   .mod-dot{width:7px; height:7px; border-radius:50%; background:#dde9e5}
   .mod-dot.on{background:var(--shell)}
 
+  /* early access feedback banner */
+  .feedback-bar{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+    background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:12px 16px; margin-bottom:10px; font-size:14px; color:var(--ink-soft)}
+  .feedback-bar strong{color:var(--ink)}
+  .feedback-bar a{background:var(--shell); color:#fff; text-decoration:none; font-weight:700; border-radius:999px; padding:10px 16px; min-height:44px; display:inline-flex; align-items:center; white-space:nowrap}
   /* coming soon banner */
   .coming{
     background:var(--sand); border-radius:var(--radius); padding:16px 18px;
@@ -741,6 +746,9 @@ async function render(){
   });
 
   let html = "";
+  const FEEDBACK_URL = "https://forms.gle/odfvAUXvkzT9qxp77";   // early-access feedback form (PlayFinLit@gmail.com)
+  html += '<div class="feedback-bar"><span><strong>Early access:</strong> free while we test. Grown-ups, tell us how it went!</span>'+
+          '<a href="'+FEEDBACK_URL+'" target="_blank" rel="noopener">💬 Send feedback</a></div>';
 
   html += '<div class="words-wrap"><div class="words-label">Words you own</div><div class="words-row">';
   if(allWords.length===0){
