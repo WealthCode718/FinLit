@@ -35,6 +35,8 @@
   .logo{font-size:13px; letter-spacing:.18em; text-transform:uppercase; opacity:.7; margin-bottom:6px}
   .hero h1{font-size:32px; line-height:1.1; color:#fff}
   .hero p{font-size:15px; opacity:.75; margin-top:6px}
+  .banner{display:block; margin:0 0 14px; border-radius:0 0 var(--radius) var(--radius); overflow:hidden; box-shadow:var(--shadow); aspect-ratio:3/2; background:var(--sand)}
+  .banner img{display:block; width:100%; height:100%; object-fit:cover}
   .xp-badge{
     background:var(--gold); color:var(--night); font-weight:800; font-size:14px;
     border-radius:999px; padding:6px 14px; white-space:nowrap; flex-shrink:0;
@@ -128,6 +130,11 @@
       <div class="xp-badge" id="xpBadge">0 XP</div>
     </div>
   </div>
+
+  <picture class="banner">
+    <source srcset="banner.webp" type="image/webp">
+    <img src="banner.jpg" width="1200" height="800" alt="Kai waving on the FinLit island, with tiles for What is Money, Saving, How Banks Work and Spending Wisely">
+  </picture>
 
   <div class="prog-wrap">
     <div class="prog-label">

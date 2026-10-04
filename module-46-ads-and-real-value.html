@@ -415,7 +415,7 @@ const TRICKS=[
 ];
 function poster(found){
   const tk=id=>{ const x=TRICKS.find(t=>t.id===id); return '<button class="tk'+(found.has(id)?' found':'')+'" data-bot="1" data-id="'+id+'">'+x.t+'</button>'; };
-  return '<div class="poster"><div class="big">✨ SPARKLE SNACK ✨</div>'+
+  return '<div class="poster"><div class="big">SPARKLE SNACK</div>'+
     '<div>'+tk("t1")+tk("t2")+'</div><div class="big" style="font-size:34px">ONLY $1*</div>'+
     '<div>'+tk("t3")+'</div><div>🏄 '+tk("t4")+'</div><div class="tiny">'+tk("t5")+'</div></div>';
 }
