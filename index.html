@@ -87,6 +87,20 @@
   .mod-dot{width:7px; height:7px; border-radius:50%; background:#dde9e5}
   .mod-dot.on{background:var(--shell)}
 
+  /* starting-point picker */
+  .start-card{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:16px; margin-bottom:10px}
+  .start-card h2{font-size:18px; margin-bottom:4px; color:var(--ink)}
+  .start-card p{font-size:14px; color:var(--ink-soft); margin-bottom:12px}
+  .start-opts{display:grid; gap:8px}
+  .start-opt{font:inherit; text-align:left; background:var(--lagoon); color:var(--ink); border:2px solid transparent; border-radius:12px;
+    padding:12px 14px; min-height:44px; cursor:pointer; display:flex; gap:12px; align-items:center}
+  .start-opt:hover,.start-opt:focus-visible{border-color:var(--shell); outline:none}
+  .start-opt .so-emoji{font-size:24px; flex-shrink:0}
+  .start-opt strong{display:block; font-size:15px}
+  .start-opt span.so-sub{font-size:13px; color:var(--ink-soft)}
+  .start-line{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; font-size:14px; color:var(--ink-soft);
+    background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:10px 16px; margin-bottom:10px}
+  .start-line button{font:inherit; font-weight:700; color:var(--shell); background:none; border:0; cursor:pointer; min-height:44px; padding:0 4px}
   /* early access feedback banner */
   .feedback-bar{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
     background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:12px 16px; margin-bottom:10px; font-size:14px; color:var(--ink-soft)}
@@ -705,6 +719,23 @@ const VOCAB = {
 
 const JOURNEY_MODULES = FL.PLANNED_TOTAL; // full planned course; progress counts built modules only
 
+
+/* =====================================================================
+   STARTING POINT — lets a kid who already knows the basics skip ahead.
+   Modules before the chosen start open up, and their words count as owned.
+===================================================================== */
+const START_KEY = "finlit-start";
+const START_POINTS = [
+  {mod:1,  emoji:"🐚", title:"New to money",            sub:"Start at the very beginning · ages 5–8"},
+  {mod:12, emoji:"➗", title:"Knows coins, adding and saving", sub:"Jump to Money Math (Module 12) · ages 8–10"},
+  {mod:17, emoji:"🏦", title:"Ready for banks",          sub:"Jump to Banking (Module 17) · ages 10–12"},
+  {mod:25, emoji:"💳", title:"Ready for credit, jobs and investing", sub:"Jump to Credit (Module 25) · ages 13+"}
+];
+const MODULE_WORDS = {"1": ["money", "worth", "agree"], "2": ["barter", "matching", "trade"], "3": ["dollar", "cent"], "4": ["compare", "equal"], "5": ["price", "cost"], "6": ["add", "total"], "7": ["subtract", "change"], "8": ["buy", "sell", "pay"], "9": ["earn", "work"], "10": ["spend", "need"], "11": ["save", "goal"], "12": ["multiply", "double"], "13": ["divide", "split"], "14": ["fraction", "half"], "15": ["decimal", "hundredth"], "16": ["percent", "discount"], "17": ["bank", "deposit"], "18": ["withdraw", "balance"], "19": ["checking", "savings"], "20": ["transaction", "notification"], "21": ["interest", "grow"], "22": ["fee", "overdraft"], "23": ["pin", "scam"], "24": ["budget", "cushion"], "25": ["borrow", "loan"], "26": ["owe", "debt"], "27": ["debitcard", "creditcard"], "28": ["creditscore", "duedate"], "29": ["lender", "minpay"], "30": ["employer", "wage"], "31": ["paycheck", "income"], "32": ["tax", "takehome"], "33": ["salestax", "receipt"], "34": ["taxreturn", "refund"], "35": ["risk", "loss"], "36": ["emergency", "efund"], "37": ["insurance", "premium"], "38": ["claim", "deductible"], "39": ["policy", "coverage"], "40": ["inflation", "buyingpower"], "41": ["invest", "return"], "42": ["stock", "profit"], "43": ["diversify", "invfund"], "44": ["compound", "longterm"], "45": ["risktol", "invplan"], "46": ["advertising", "value"], "47": ["contract", "rights"], "48": ["donate", "charity"], "49": ["fineprint", "compshop"], "50": ["retirement", "retacct"], "51": ["networth", "finplan"], "52": ["wellbeing", "habit"]};
+function getStart(){ try{ const v = parseInt(localStorage.getItem(START_KEY),10); return v>0 ? v : 0; }catch(e){ return 0; } }
+function setStart(n){ try{ if(n) localStorage.setItem(START_KEY, String(n)); else localStorage.removeItem(START_KEY); }catch(e){} }
+let pickingStart = false;
+
 function esc(s){
   return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 }
@@ -738,6 +769,11 @@ async function render(){
     if(p.mastered) totalMastered++;
     (p.shelf || []).forEach(w=>{ if(!allWords.includes(w)) allWords.push(w); });
   });
+  const startAt = getStart();
+  const anyProgress = MODULES.some(m=>{ const p = progress[m.id]; return p && (p.mastered || p.started || p.lessonsDown > 0); });
+  for(let i = 1; i < startAt; i++){
+    (MODULE_WORDS[i] || []).forEach(w=>{ if(!allWords.includes(w)) allWords.push(w); });
+  }
 
   setText("xpBadge", totalXP + " XP");
   // Progress is measured against the modules that exist; the rest of the roadmap is shown separately.
@@ -756,6 +792,21 @@ async function render(){
   const FEEDBACK_URL = "https://forms.gle/odfvAUXvkzT9qxp77";   // early-access feedback form (PlayFinLit@gmail.com)
   html += '<div class="feedback-bar"><span><strong>Early access:</strong> free while we test. Grown-ups, tell us how it went!</span>'+
           '<a href="'+FEEDBACK_URL+'" target="_blank" rel="noopener">💬 Send feedback</a></div>';
+
+  if(pickingStart || (!startAt && !anyProgress)){
+    html += '<div class="start-card" id="startCard"><h2>Where should we start?</h2>'+
+      '<p>Grown-ups: if your child already knows the basics, skip ahead. Skipped modules stay open to visit any time.</p><div class="start-opts">';
+    START_POINTS.forEach(sp=>{
+      html += '<button type="button" class="start-opt" data-start="'+sp.mod+'"><span class="so-emoji" aria-hidden="true">'+sp.emoji+'</span>'+
+        '<span><strong>'+esc(sp.title)+'</strong><span class="so-sub">'+esc(sp.sub)+'</span></span></button>';
+    });
+    html += '</div></div>';
+  } else {
+    html += '<div class="start-line"><span>'+(startAt > 1
+        ? 'Starting at <strong>Module '+startAt+'</strong>. Earlier words are already yours.'
+        : 'Already know the basics?')+'</span>'+
+      '<button type="button" id="changeStart">'+(startAt > 1 ? 'Change' : 'Skip ahead')+'</button></div>';
+  }
 
   html += '<div class="words-wrap"><div class="words-label">Words you own</div><div class="words-row">';
   if(allWords.length===0){
@@ -777,9 +828,10 @@ async function render(){
       const started = !!(p && (p.lessonsDown > 0 || p.started));
       const prev = progress[mod.id - 1];
       const prevMastered = mod.id === 1 || !!(prev && prev.mastered);
-      const locked = !!(mod.comingSoon || (mod.id > 1 && !mastered && !prevMastered && !started));
-      const isActive = !mastered && !locked;
-      const statusIcon = mastered ? "✅ Done" : locked ? "🔒 Locked" : started ? "▶ Continue" : "▶ Start";
+      const skipped = mod.id < startAt && !mastered;
+      const locked = !!(mod.comingSoon || (mod.id > 1 && mod.id > startAt && !mastered && !prevMastered && !started));
+      const isActive = !mastered && !locked && !(skipped && !started);
+      const statusIcon = mastered ? "✅ Done" : locked ? "🔒 Locked" : started ? "▶ Continue" : skipped ? "Open" : "▶ Start";
       const cardClass = mastered ? "done" : locked ? "locked" : isActive ? "active" : "";
       const title = "Module " + mod.id + " · " + mod.title;
 
@@ -812,6 +864,18 @@ async function render(){
     : '<div class="coming"><strong>More modules coming soon</strong>Module '+(MODULES.length+1)+' is next. Check back soon!</div>';
 
   mainEl.innerHTML = html;
+  mainEl.querySelectorAll(".start-opt").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const n = parseInt(btn.getAttribute("data-start"),10) || 1;
+      setStart(n); pickingStart = false;
+      render().then(()=>{
+        const target = document.querySelector('a.mod-card[href="'+(MODULES.find(m=>m.id===n)||MODULES[0]).file+'"]');
+        if(target){ target.scrollIntoView({behavior:"smooth", block:"center"}); target.focus({preventScroll:true}); }
+      });
+    });
+  });
+  const changeBtn = document.getElementById("changeStart");
+  if(changeBtn) changeBtn.addEventListener("click", ()=>{ pickingStart = true; render(); });
   const defEl = document.getElementById("wordDef");
   mainEl.querySelectorAll(".word-chip").forEach(btn=>{
     btn.addEventListener("click", ()=>{
