@@ -232,23 +232,23 @@ const VOCAB = {
 const QUESTIONS = {
   "q371a":{type:"mc", prompt:"What is insurance?", concept:"insurance", opts:[
     {t:"Paying a small amount so a big loss gets paid for if it happens", ok:true, fb:"Right. You trade a small, certain cost for protection from a big, uncertain one."},
-    {t:"A savings account that pays interest", ok:false, fb:"Savings grows your own money. Insurance pools money from many people to pay for big losses."},
+    {t:"A savings account that pays interest, so you have money if something goes wrong", ok:false, fb:"Savings grows your own money. Insurance pools money from many people to pay for big losses."},
     {t:"A loan for when things go wrong", ok:false, fb:"Nothing borrowed. If a covered loss happens, insurance pays — you do not pay it back."}]},
   "q371b":{type:"mc", prompt:"Why can twenty fishers each paying $5 cover a $60 repair?", concept:"insurance", opts:[
-    {t:"Lots of small payments add up, and usually only a few people have a big loss", ok:true, fb:"Right. Twenty times $5 fills the pot. Most seasons, only one or two boats need it."},
+    {t:"Small payments add up, and only a few boats need it each season", ok:true, fb:"Right. Twenty times $5 fills the pot. Most seasons, only one or two boats need it."},
     {t:"Because the repair is actually free", ok:false, fb:"The repair costs real money. It is paid from the pot everyone filled."},
-    {t:"Because the bank pays for it", ok:false, fb:"The bank is not involved. The pot of premiums pays."}]},
+    {t:"Because the bank adds money to the pot whenever a repair is needed", ok:false, fb:"The bank is not involved. The pot of premiums pays."}]},
   "q371c":{type:"tf", prompt:"True or false: insurance is one way to SHARE a risk.", answer:true, concept:"insurance",
     good:"Right. It is the fourth way from Module 35: avoid, reduce, keep — or share.",
     bad:"It is exactly that — the fourth way from Module 35. Many people share the cost of big losses."},
   "q372a":{type:"mc", prompt:"What is a premium?", concept:"premium", opts:[
-    {t:"The amount you pay regularly for insurance", ok:true, fb:"Right. Kai’s is $5 a season, paid whether or not a storm hits."},
+    {t:"What you pay regularly for insurance", ok:true, fb:"Right. Kai’s is $5 a season, paid whether or not a storm hits."},
     {t:"The money insurance pays you after a loss", ok:false, fb:"That is the other direction. The premium is what YOU pay in."},
     {t:"A fee your bank charges", ok:false, fb:"A bank fee is different. A premium is what you pay to be insured."}]},
   "q372b":{type:"mc", prompt:"Kai paid his $5 premium, and no storm hit his boat all season. Did he waste his $5?", concept:"premium", opts:[
     {t:"No — he bought protection. If the storm HAD hit, he was covered", ok:true, fb:"Right. You buy insurance hoping you never use it. The protection was real every single day."},
     {t:"Yes — he got nothing back", ok:false, fb:"He got something every day: protection. Like a seatbelt on a trip with no crash — still worth wearing."},
-    {t:"Yes — he should ask for it back", ok:false, fb:"Premiums pay for protection, not for losses. The pot covered whoever needed it — and would have covered him."}]},
+    {t:"Yes — he should ask for it back, since his boat never needed the pot", ok:false, fb:"Premiums pay for protection, not for losses. The pot covered whoever needed it — and would have covered him."}]},
   "q372c":{type:"tf", prompt:"True or false: you pay your premium only in the seasons when something bad happens.", answer:false, concept:"premium",
     good:"Right. Nobody knows ahead of time. Everyone pays every season — that is what fills the pot.",
     bad:"Everyone pays every season, because nobody knows ahead of time whose boat the storm will hit."},

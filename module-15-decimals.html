@@ -166,14 +166,14 @@ const VOCAB = {
 const QUESTIONS = {
   "q151a":{type:"mc", prompt:"What does the decimal point (the dot) do?", concept:"decimal", opts:[
     {t:"Separates whole dollars from parts of a dollar", ok:true, fb:"Right. Left of the dot: wholes. Right of the dot: fraction country. $3.50 = 3 whole dollars + a half."},
-    {t:"Shows where the number ends", ok:false, fb:"Numbers keep going after the dot! It's a WALL between wholes and parts, not an ending."},
+    {t:"Shows where the number ends, like a period in a sentence", ok:false, fb:"Numbers keep going after the dot! It's a WALL between wholes and parts, not an ending."},
     {t:"Makes the number look fancy", ok:false, fb:"It works hard for its living: everything left of it is wholes, everything right is parts of a whole."}]},
   "q151b":{type:"mc", prompt:"A dime is what part of a dollar?", concept:"decimal", opts:[
-    {t:"One tenth — 10 dimes make a whole dollar", ok:true, fb:"Right! 10 × 10¢ = $1. Written as a decimal: one dime = $0.10 — the first spot after the dot is TENTHS."},
+    {t:"One tenth — 10 dimes make $1", ok:true, fb:"Right! 10 × 10¢ = $1. Written as a decimal: one dime = $0.10 — the first spot after the dot is TENTHS."},
     {t:"One half — 2 dimes make a dollar", ok:false, fb:"2 dimes = 20¢, nowhere near a dollar. It takes TEN dimes: a dime is one tenth."},
     {t:"One hundredth — 100 dimes make a dollar", ok:false, fb:"100 dimes would be $10! Ten dimes make a dollar — so a dime is one TENTH."}]},
   "q152a":{type:"mc", prompt:"A penny is what part of a dollar?", concept:"hundredth", opts:[
-    {t:"One hundredth — 100 pennies make a whole", ok:true, fb:"Right — and THAT is the answer to Module 3's old mystery: cents get exactly TWO digits after the dot because cents ARE hundredths. $0.07 = 7 hundredths = 7 pennies."},
+    {t:"One hundredth", ok:true, fb:"Right — and THAT is the answer to Module 3's old mystery: cents get exactly TWO digits after the dot because cents ARE hundredths. $0.07 = 7 hundredths = 7 pennies."},
     {t:"One tenth — 10 pennies make a whole", ok:false, fb:"10 pennies is only a dime's worth. It takes ONE HUNDRED pennies: a penny is one hundredth."},
     {t:"One quarter", ok:false, fb:"The quarter is the 25¢ coin. A penny is far smaller: one of ONE HUNDRED equal parts."}]},
   "q152b":{type:"tf", prompt:"True or false: $0.5 and $0.50 are the same amount.", answer:true, concept:"decimal",
@@ -188,7 +188,7 @@ const QUESTIONS = {
     {t:"7 hundredths", ok:false, fb:"That would be $0.07 — seven pennies. $0.75 is seventy-five hundredths."},
     {t:"750 hundredths", ok:false, fb:"750 hundredths would be $7.50! The two digits after the dot read straight: 75 hundredths."}]},
   "q153b":{type:"mc", transfer:true, prompt:"A visitor's money from far away ALSO splits into 100 small parts. Will the decimal dot work the same on it?", concept:"decimal", opts:[
-    {t:"Yes — decimals are about parts of a whole, not about dollars", ok:true, fb:"Exactly. The dot doesn't care whose money it is. Wholes on the left, hundredths on the right — same trick on every shore."},
+    {t:"Yes — the dot works on any whole", ok:true, fb:"Exactly. The dot doesn't care whose money it is. Wholes on the left, hundredths on the right — same trick on every shore."},
     {t:"No — the dot only understands dollars", ok:false, fb:"The dot never learned the word dollar! It splits ANY whole into tenths and hundredths — money, meters, mangoes."},
     {t:"Only if the visitor asks politely", ok:false, fb:"Math skips the small talk. Any money built on 100 parts reads with the same dot: wholes.parts."}]}
 };

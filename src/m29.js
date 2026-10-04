@@ -50,19 +50,19 @@ const QUESTIONS = {
     {t:"The whole bill, paid in full", ok:false, fb:"That is paying in full — the best choice. The minimum is the smallest amount allowed."},
     {t:"A fee for having a card", ok:false, fb:"It is not a fee. It is the smallest payment the bill lets you make on time."}]},
   "q292b":{type:"mc", prompt:"Why is paying ONLY the minimum a trap?", concept:"minpay", opts:[
-    {t:"The rest becomes debt that keeps growing, so you pay much more and for much longer", ok:true, fb:"Right. It feels like handling the bill, but the debt hangs around and grows, month after month."},
-    {t:"Because you get a late fee", ok:false, fb:"Paying the minimum on time actually avoids the late fee. The trap is the debt left over, which keeps growing."},
+    {t:"The rest becomes debt that keeps growing", ok:true, fb:"Right. It feels like handling the bill, but the debt hangs around and grows, month after month."},
+    {t:"Because the lender adds a late fee even when you pay the minimum on time", ok:false, fb:"Paying the minimum on time actually avoids the late fee. The trap is the debt left over, which keeps growing."},
     {t:"It isn’t — the minimum is all you ever owe", ok:false, fb:"You owe the whole bill. The minimum only keeps you out of late-fee trouble. The rest keeps growing."}]},
   "q292c":{type:"tf", prompt:"True or false: paying the minimum on time avoids a late fee, but the rest of the bill still grows with interest.", answer:true, concept:"minpay",
     good:"Right. No late fee — but the leftover is debt, and debt grows. That is exactly why it is a trap.",
     bad:"It is true. The minimum avoids the late fee, but what you did not pay stays as debt and keeps growing."},
   "q293a":{type:"mc", prompt:"What is the golden rule for using a credit card?", concept:"minpay", opts:[
-    {t:"Only tap it for things you could pay for in full when the bill comes", ok:true, fb:"Right. If you can pay the whole bill by the due date, the card works for you. If not, it works against you."},
-    {t:"Tap it whenever checking is low", ok:false, fb:"That is the fastest way into debt. If checking is low, you probably cannot pay the whole bill later either."},
+    {t:"Only tap for things you could pay in full when the bill comes", ok:true, fb:"Right. If you can pay the whole bill by the due date, the card works for you. If not, it works against you."},
+    {t:"Tap it whenever checking is low, so your balance never goes below zero", ok:false, fb:"That is the fastest way into debt. If checking is low, you probably cannot pay the whole bill later either."},
     {t:"Always pay the minimum", ok:false, fb:"The minimum is the trap! Pay the whole bill."}]},
   "q293b":{type:"mc", transfer:true, prompt:"A shop sign says: “Take this phone home TODAY — just $2 a week!” What should you ask before saying yes?", concept:"minpay", opts:[
-    {t:"How much will I pay in total, for how long — and could I just save up instead?", ok:true, fb:"Exactly. “Just $2 a week” is the minimum-payment shape: a small number that hides a big total. Look at the whole thing."},
-    {t:"Nothing — $2 is tiny, so it must be a good deal", ok:false, fb:"A small weekly number can hide a big total over a long time. That is exactly how the minimum-payment trap works."},
+    {t:"What is the total, for how long — and could I save up instead?", ok:true, fb:"Exactly. “Just $2 a week” is the minimum-payment shape: a small number that hides a big total. Look at the whole thing."},
+    {t:"Nothing — $2 a week is tiny, so the phone must be a really good deal", ok:false, fb:"A small weekly number can hide a big total over a long time. That is exactly how the minimum-payment trap works."},
     {t:"What color phones do they have?", ok:false, fb:"Fun question, but first: what is the total, how long will it take, and could you save up instead?"}]}
 };
 

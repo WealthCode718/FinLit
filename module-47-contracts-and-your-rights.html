@@ -232,7 +232,7 @@ const VOCAB = {
 const QUESTIONS = {
   "q471a":{type:"mc", prompt:"What is a contract?", concept:"contract", opts:[
     {t:"An agreement both sides must follow, often written and signed", ok:true, fb:"Right. Signing means you agree to all of it."},
-    {t:"A suggestion you can ignore later", ok:false, fb:"A contract isn't a suggestion. Once you agree, both sides are expected to follow it."},
+    {t:"A suggestion you can ignore later if you change your mind about the deal", ok:false, fb:"A contract isn't a suggestion. Once you agree, both sides are expected to follow it."},
     {t:"An ad for a product", ok:false, fb:"An ad tries to make you want something. A contract is the agreement you're held to."}]},
   "q471b":{type:"mc", prompt:"Before signing the blender paper, which question matters MOST for Nalu to ask?", concept:"contract", opts:[
     {t:"“How much will I pay in total, and what does it cost to stop?”", ok:true, fb:"Right. $8 a month for 3 years, plus $100 to cancel. The total and the way out are where the catches hide."},
@@ -242,17 +242,17 @@ const QUESTIONS = {
     good:"Right. That's why you read it all, especially the small print, before you sign.",
     bad:"Look again. Your signature says you agree to the WHOLE thing. Not reading a part doesn't get you out of it."},
   "q472a":{type:"mc", prompt:"What are consumer rights?", concept:"rights", opts:[
-    {t:"Protections for buyers, like getting what you paid for and a fix or refund when it's broken", ok:true, fb:"Right. The exact rules differ from place to place, but the idea is the same: buyers are protected."},
-    {t:"Rules that say a store must give anything back for any reason", ok:false, fb:"Not quite. If you just change your mind, it depends on the store's rules. Broken or not as promised is different."},
+    {t:"Protections for buyers, like a fix or refund when something's broken", ok:true, fb:"Right. The exact rules differ from place to place, but the idea is the same: buyers are protected."},
+    {t:"Rules that say a store must take anything back for any reason, even if you just changed your mind", ok:false, fb:"Not quite. If you just change your mind, it depends on the store's rules. Broken or not as promised is different."},
     {t:"Special deals only for loyal customers", ok:false, fb:"Those are deals. Consumer rights are protections every buyer has."}]},
   "q472b":{type:"mc", prompt:"Kai's new $6 flashlight doesn't work, right out of the box. He has the receipt. What should he do?", concept:"rights", opts:[
-    {t:"Go back calmly with the receipt and ask for a repair, a new one, or his money back", ok:true, fb:"Right. It's broken and he has proof he bought it. That's exactly what consumer rights are for."},
-    {t:"Nothing. He already paid", ok:false, fb:"He paid for a flashlight that works. Broken out of the box means he can ask the store to make it right."},
+    {t:"Go back calmly with the receipt and ask the store to make it right", ok:true, fb:"Right. It's broken and he has proof he bought it. That's exactly what consumer rights are for."},
+    {t:"Nothing. Once you pay and leave the store, it's yours, broken or not", ok:false, fb:"He paid for a flashlight that works. Broken out of the box means he can ask the store to make it right."},
     {t:"Shout at the seller until they give him two", ok:false, fb:"Calm, clear, with the receipt works better, and he's only owed what he paid for."}]},
   "q473a":{type:"mc", prompt:"Kai's game offers: “7 days FREE! Then $5 every month until you cancel.” What's the smart move if he tries it?", concept:"contract", opts:[
-    {t:"Know it's an agreement to pay, and set a reminder to cancel before day 7 if he doesn't want it", ok:true, fb:"Right. A free trial is a contract. If he forgets, $5 leaves every month."},
+    {t:"Know it's an agreement to pay, and set a reminder to cancel in time", ok:true, fb:"Right. A free trial is a contract. If he forgets, $5 leaves every month."},
     {t:"Tap yes. Free is free", ok:false, fb:"Only the first 7 days are free. After that it's $5 a month until he cancels."},
-    {t:"It can't charge him, because he's young", ok:false, fb:"If a payment card is linked, it can. Ask a parent, and set a reminder."}]},
+    {t:"It can't charge him anything, because kids can't agree to pay for things", ok:false, fb:"If a payment card is linked, it can. Ask a parent, and set a reminder."}]},
   "q473b":{type:"mc", transfer:true, prompt:"Lena's brother sees “FREE PHONE TODAY!” The small print says: “With a 24-month plan at $30 a month. $200 fee to cancel early.” What's true?", concept:"contract", opts:[
     {t:"The phone isn't really free. It's a 2-year contract with a big fee to leave early, so he should read it all first", ok:true, fb:"Exactly. Different paper, same catches as Nalu's blender: a long time, monthly payments, and a cost to get out."},
     {t:"The phone is free, so there's nothing to think about", ok:false, fb:"The small print says $30 a month for 24 months, and $200 to quit early. That's a big contract."},

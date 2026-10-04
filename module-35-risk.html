@@ -230,19 +230,19 @@ const VOCAB = {
 
 const QUESTIONS = {
   "q351a":{type:"mc", prompt:"What is a risk?", concept:"risk", opts:[
-    {t:"The chance that something bad could happen that costs you money", ok:true, fb:"Right. Not a sure thing — a chance. The storm MIGHT tear the sail."},
-    {t:"Something bad that has already happened", ok:false, fb:"Once it has happened, it is a loss. A risk is the chance of it happening."},
+    {t:"The chance that something bad might happen and cost you money", ok:true, fb:"Right. Not a sure thing — a chance. The storm MIGHT tear the sail."},
+    {t:"Something bad that has already happened and already cost you money", ok:false, fb:"Once it has happened, it is a loss. A risk is the chance of it happening."},
     {t:"A kind of fee from the bank", ok:false, fb:"A fee is a certain charge. A risk is a chance that something bad might happen."}]},
   "q351b":{type:"mc", prompt:"The storm tears Kai’s sail. The sail cost $60. What is the $60?", concept:"loss", opts:[
-    {t:"A loss — money Kai loses because something bad happened", ok:true, fb:"Right. The risk was the chance of a tear. The loss is what the tear actually cost."},
+    {t:"A loss — money gone because something bad happened", ok:true, fb:"Right. The risk was the chance of a tear. The loss is what the tear actually cost."},
     {t:"Income", ok:false, fb:"Income comes IN. A torn sail sends money out — it is a loss."},
-    {t:"A refund", ok:false, fb:"A refund gives money back. Here money is lost."}]},
+    {t:"A refund — the $60 he paid for the sail coming back to him", ok:false, fb:"A refund gives money back. Here money is lost."}]},
   "q351c":{type:"tf", prompt:"True or false: every choice has zero risk if you are careful enough.", answer:false, concept:"risk",
     good:"Right. Care can make risk smaller, but some chance of something bad almost always stays.",
     bad:"Careful people still face risk. Care can shrink it, but almost nothing is zero risk."},
   "q352a":{type:"mc", prompt:"What are the two questions to ask about any risk?", concept:"risk", opts:[
     {t:"How likely is it? How big would the loss be?", ok:true, fb:"Right. A likely small loss and an unlikely huge loss need very different plans."},
-    {t:"Who is to blame? When will it happen?", ok:false, fb:"Blame does not help plan. Ask: how likely is it, and how big would the loss be?"},
+    {t:"Who is to blame for it? And exactly when will it happen?", ok:false, fb:"Blame does not help plan. Ask: how likely is it, and how big would the loss be?"},
     {t:"Is it a need or a want?", ok:false, fb:"That is a budgeting question. For risk, ask how likely and how big."}]},
   "q352b":{type:"mc", prompt:"Which risk deserves the MOST planning?", concept:"loss", opts:[
     {t:"A likely risk with a big loss — like storm season and a new sail", ok:true, fb:"Right. It will probably happen, and it would hurt a lot. That is where planning pays off most."},
@@ -250,12 +250,12 @@ const QUESTIONS = {
     {t:"Losing a $1 fish hook", ok:false, fb:"That happens, but it is small. Kai can just pay for a new one. The big, likely risks need more planning."}]},
   "q353a":{type:"mc", prompt:"Kai checks the sky and stays in the harbor when a storm is coming. Which way of handling risk is that?", concept:"risk", opts:[
     {t:"Avoid it — not doing the risky thing at all", ok:true, fb:"Right. No sailing in the storm, no storm damage from sailing."},
-    {t:"Keep it — paying for any loss himself", ok:false, fb:"Keeping it would mean sailing anyway and paying if the sail tears. Staying in is avoiding."},
+    {t:"Keep it — sailing anyway and paying for any loss himself", ok:false, fb:"Keeping it would mean sailing anyway and paying if the sail tears. Kai stayed in, so he avoided it."},
     {t:"Share it with others", ok:false, fb:"Sharing spreads the cost of a loss across many people. Staying in port avoids the risk entirely."}]},
   "q353c":{type:"mc", prompt:"Kai loses a $1 fish hook most weeks. What is the sensible way to handle that risk?", concept:"loss", opts:[
     {t:"Keep it — just pay for a new hook when it happens", ok:true, fb:"Right. Small, expected losses are simply part of the budget. No big plan needed."},
     {t:"Stop fishing forever", ok:false, fb:"Avoiding fishing would cost him his job! For a tiny loss, just keep the risk and buy a new hook."},
-    {t:"Borrow money for hooks", ok:false, fb:"Borrowing makes things cost more. A $1 loss fits right in his budget."}]},
+    {t:"Borrow money for a big box of hooks, so he never runs out", ok:false, fb:"Borrowing makes things cost more. A $1 loss fits right in his budget."}]},
   "q353b":{type:"mc", transfer:true, prompt:"Mika wears a helmet every time she rides her bike. Which way of handling risk is that?", concept:"risk", opts:[
     {t:"Reduce it — she still rides, but a fall would hurt far less", ok:true, fb:"Exactly. Same as Kai tying down the sail before a storm: the risk is still there, just smaller."},
     {t:"Avoid it — she never rides", ok:false, fb:"She does ride! Avoiding would mean never riding. The helmet makes the risk smaller."},

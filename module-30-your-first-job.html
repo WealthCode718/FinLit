@@ -242,20 +242,20 @@ const QUESTIONS = {
     {t:"It goes up", ok:true, fb:"Right. Same wage, more hours, more money. Every hour adds another $4."},
     {t:"It stays the same", ok:false, fb:"A wage is paid for EACH hour. More hours means more of them get paid."},
     {t:"It goes down", ok:false, fb:"Working more hours never lowers the pay at the same wage. It goes up."}]},
-  "q302c":{type:"tf", prompt:"True or false: two people with the same wage always earn the same amount.", answer:false, concept:"wage",
+  "q302c":{type:"tf", prompt:"True or false: two people with the same wage can earn different amounts.", answer:true, concept:"wage",
     good:"Right. The wage is only half of it. The other half is how many hours each person works.",
-    bad:"Not always. Same wage, but if one works more hours, that person earns more. Hours matter too."},
+    bad:"They can! Same wage, but if one works more hours, that person earns more. Hours matter too."},
   "q303a":{type:"mc", prompt:"Tavo pays $4 an hour for 5 hours. The bakery pays $5 an hour for 2 hours. Why does Tavo’s job bring in MORE money?", concept:"wage", opts:[
-    {t:"More hours — a higher wage is not more money if the hours are much fewer", ok:true, fb:"Right. $20 on the boat vs $10 at the bakery. The wage is higher at the bakery, but the hours make the difference."},
+    {t:"He works more hours there, and that beats the higher wage", ok:true, fb:"Right. $20 on the boat vs $10 at the bakery. The wage is higher at the bakery, but the hours make the difference."},
     {t:"Because the boat is more fun", ok:false, fb:"Fun is nice, but it is not why the pay is bigger. It is the hours: 5 hours vs 2."},
-    {t:"It doesn’t — a higher wage always means more money", ok:false, fb:"Look at the totals: $20 on the boat, $10 at the bakery. Hours matter as much as the wage."}]},
+    {t:"It doesn’t — the bakery’s higher wage always means more money in the end", ok:false, fb:"Look at the totals: $20 on the boat, $10 at the bakery. Hours matter as much as the wage."}]},
   "q303c":{type:"mc", prompt:"Besides the money, what else should Kai think about when choosing a job?", concept:"employer", opts:[
-    {t:"Whether it is safe, fits around school, and leaves time for rest", ok:true, fb:"Right. A job is part of your whole week. The best offer is not only the one with the biggest number."},
-    {t:"Nothing — only the money matters", ok:false, fb:"Money matters a lot, but so do safety, school, and rest. A job that breaks your week is not a good deal."},
+    {t:"Is it safe, does it fit school, and is there time to rest?", ok:true, fb:"Right. A job is part of your whole week. The best offer is not only the one with the biggest number."},
+    {t:"Nothing — only the money matters, since that is the reason to have a job", ok:false, fb:"Money matters a lot, but so do safety, school, and rest. A job that breaks your week is not a good deal."},
     {t:"Which employer has the nicest hat", ok:false, fb:"Ha! Think bigger: is it safe, does it fit around school, and does it leave time to rest?"}]},
   "q303b":{type:"mc", transfer:true, prompt:"Mika gets $3 for every basket of bread she delivers for the bakery. How is this like a wage?", concept:"wage", opts:[
-    {t:"She is paid the same amount for each piece of work — more baskets, more money", ok:true, fb:"Exactly. Kai is paid per hour, Mika per basket. Same shape: a set amount for each unit of work."},
-    {t:"It isn’t — she is borrowing from the bakery", ok:false, fb:"Nothing is borrowed — she earns it. And like a wage, each basket adds the same amount."},
+    {t:"Each basket pays the same amount — more baskets, more money", ok:true, fb:"Exactly. Kai is paid per hour, Mika per basket. Same shape: a set amount for each unit of work."},
+    {t:"It isn’t — a wage is only paid by the hour, so baskets do not count", ok:false, fb:"A wage is often paid by the hour, but baskets work the same way: a set amount for each piece of work."},
     {t:"It is a gift for being nice", ok:false, fb:"It is earned, not a gift. Each basket delivered adds $3, just like each hour adds to Kai’s pay."}]}
 };
 

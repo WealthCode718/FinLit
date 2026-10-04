@@ -235,11 +235,11 @@ const VOCAB = {
 const QUESTIONS = {
   "q381a":{type:"mc", prompt:"What is an insurance claim?", concept:"claim", opts:[
     {t:"Asking your insurance to pay for a loss, with proof", ok:true, fb:"Right. You tell them what happened, show proof, and ask them to pay their part."},
-    {t:"The regular payment you make for insurance", ok:false, fb:"That is the premium. A claim is when you ask the insurance to pay YOU for a loss."},
+    {t:"The regular payment you make to the insurance pot each season", ok:false, fb:"That is the premium. A claim is when you ask the insurance to pay YOU for a loss."},
     {t:"A prize you win", ok:false, fb:"Scam messages say “claim your prize” — but an insurance claim is asking to be paid for a real loss."}]},
   "q381b":{type:"mc", prompt:"What proof helps Kai’s claim for his torn sail?", concept:"claim", opts:[
     {t:"Photos of the tear and the receipt for the repair", ok:true, fb:"Right. Show what happened and what it cost. Receipts from Module 33 are proof."},
-    {t:"Nothing — they just take his word", ok:false, fb:"Insurance needs proof, to be fair to everyone paying into the pot. Photos and receipts."},
+    {t:"Nothing — they just take his word, since he paid his premium", ok:false, fb:"Insurance needs proof, to be fair to everyone paying into the pot. Photos and receipts."},
     {t:"His PIN", ok:false, fb:"Never! A PIN stays secret, always. Proof means photos and receipts."}]},
   "q381c":{type:"tf", prompt:"True or false: it is fine to say the sail repair cost more than it did, since the pot has lots of money.", answer:false, concept:"claim",
     good:"Right. Exaggerating a claim is against the rules — and it drains the pot everyone shares, so premiums go up for everyone.",
@@ -249,16 +249,16 @@ const QUESTIONS = {
     {t:"The whole cost of the loss", ok:false, fb:"If you paid the whole cost, insurance would not help at all. The deductible is just the first part."},
     {t:"Money insurance pays you back later", ok:false, fb:"The deductible is YOUR part, not theirs. You pay it; insurance pays the rest."}]},
   "q382b":{type:"mc", prompt:"Kai chooses a HIGHER deductible. What usually happens to his premium?", concept:"deductible", opts:[
-    {t:"It usually goes down — he agreed to pay more of any loss himself", ok:true, fb:"Right. It is a seesaw: take on more of the risk yourself, and the premium usually drops."},
+    {t:"It usually goes down — he will pay more of any loss himself", ok:true, fb:"Right. It is a seesaw: take on more of the risk yourself, and the premium usually drops."},
     {t:"It goes up", ok:false, fb:"The other way around. When you agree to pay more of a loss yourself, the premium usually goes down."},
-    {t:"It has nothing to do with the premium", ok:false, fb:"They are connected like a seesaw. Higher deductible, usually lower premium."}]},
+    {t:"It stays the same — the deductible and the premium are not connected", ok:false, fb:"They are connected like a seesaw. Higher deductible, usually lower premium."}]},
   "q382c":{type:"mc", prompt:"Kai’s deductible is $10. Where should that $10 come from when he needs it?", concept:"deductible", opts:[
     {t:"His emergency fund", ok:true, fb:"Right. That is exactly what the fund is for. It and insurance work as a team."},
     {t:"A loan", ok:false, fb:"Borrowing makes it cost more. His emergency fund is ready for exactly this."},
     {t:"His sail goal savings", ok:false, fb:"Goal money has its own job. The emergency fund is for surprises like this."}]},
   "q383a":{type:"mc", prompt:"Which loss is best to insure?", concept:"claim", opts:[
     {t:"A big loss you could not handle yourself — like the whole boat", ok:true, fb:"Right. Insurance earns its premium on the losses that would sink you."},
-    {t:"Losing a $1 fish hook", ok:false, fb:"Tiny and common. Just keep that risk and buy a new hook."},
+    {t:"Losing a $1 fish hook, because it happens to him almost every week", ok:false, fb:"Tiny and common. Just keep that risk and buy a new hook."},
     {t:"A $3 cup cracking", ok:false, fb:"Small enough to handle yourself. Insurance is for the big ones."}]},
   "q383b":{type:"mc", transfer:true, prompt:"On a school trip, the school replaces anything a student loses — but the student pays the first $2 of it. What is the $2 most like?", concept:"deductible", opts:[
     {t:"A deductible — the part you pay yourself before the rest is covered", ok:true, fb:"Exactly. You pay the first part, the school covers the rest. Same shape as Kai’s $10."},

@@ -170,17 +170,17 @@ const VOCAB = {
 
 const QUESTIONS = {
   "q61a":{type:"mc", prompt:"What does adding two amounts tell you?", concept:"add", opts:[
-    {t:"Which amount is bigger", ok:false, fb:"That's comparing — your Module 4 skill. Adding answers a different question: how much do they make TOGETHER?"},
+    {t:"Which amount is bigger, and by how much", ok:false, fb:"That's comparing — your Module 4 skill. Adding answers a different question: how much do they make TOGETHER?"},
     {t:"How much they make together", ok:true, fb:"Exactly. Adding squishes two amounts into one: the total."},
     {t:"Which amount came first", ok:false, fb:"Order doesn't matter in adding! 25¢ + 10¢ makes the same total as 10¢ + 25¢."}]},
   "q61b":{type:"mc", prompt:"25¢ + 25¢ = ?", concept:"add", opts:[
-    {t:"40¢", ok:false, fb:"Count up from 25: another 25 lands on 50. Two quarters make half a dollar."},
+    {t:"$0.40", ok:false, fb:"Count up from 25: another 25 lands on 50. Two quarters make half a dollar."},
     {t:"50¢", ok:true, fb:"Right. Two quarters = 50¢. You've been doing this since the coin game — now it has a name."},
     {t:"55¢", ok:false, fb:"Close! 25 + 25 = 50. Try counting: 25… 35… 45… 50."}]},
   "q62a":{type:"mc", prompt:"The mango is 75¢ and the coconut is 95¢. What do they ask for together?", concept:"total", opts:[
     {t:"$1.60", ok:false, fb:"Almost: 75 + 95… take 5 from the 75 to make the 95 into 100, then 70 more = 170¢ = $1.70."},
     {t:"$1.70", ok:true, fb:"Perfect. 75 + 95 = 170 cents, and 170 cents = 1 dollar and 70 cents. Kai finally knows."},
-    {t:"$1.80", ok:false, fb:"A little too far. 75 + 95 = 170, not 180. Try: 75 + 95 = 75 + 100 − 5… whoops, no minus yet! Try: 95 + 5 = 100, then + 70 = 170."}]},
+    {t:"$17.00", ok:false, fb:"Right number of cents — 170 — but the wrong dollars. 100 cents = 1 dollar, so 170 cents = 1 dollar and 70 cents = $1.70."}]},
   "q62b":{type:"tf", prompt:"True or false: to add $1 and 50¢, you can just write 1 + 50 = 51.", answer:false, concept:"add",
     good:"Right — same-unit rule! Turn everything into cents first: $1 = 100¢, so 100 + 50 = 150¢ = $1.50. Just like comparing.",
     bad:"Careful — $1 and 50¢ are different units. Turn dollars into cents first: $1 = 100¢. Then 100 + 50 = 150¢ = $1.50."},

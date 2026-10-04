@@ -35,7 +35,7 @@ const VOCAB = {
 const QUESTIONS = {
   "q361a":{type:"mc", prompt:"What is an emergency?", concept:"emergency", opts:[
     {t:"A surprise that needs money right away and cannot wait", ok:true, fb:"Right. Surprise + can’t wait. Tavo’s smashed boat was both."},
-    {t:"Anything you really, really want", ok:false, fb:"Wanting something badly does not make it an emergency. An emergency is a surprise that cannot wait."},
+    {t:"Anything you really want, like a kite you have been dreaming about", ok:false, fb:"Wanting something badly does not make it an emergency. An emergency is a surprise that cannot wait."},
     {t:"A bill you knew was coming", ok:false, fb:"If you knew it was coming, it belongs in your budget. Emergencies are surprises."}]},
   "q361b":{type:"mc", prompt:"How is an emergency fund different from Kai’s sail savings?", concept:"efund", opts:[
     {t:"It is ONLY for emergencies — goal money has its own planned job", ok:true, fb:"Right. Two jobs, two separate piles. Mixing them means an emergency eats the goal, or the goal eats the safety net."},
@@ -54,10 +54,10 @@ const QUESTIONS = {
   "q363a":{type:"mc", prompt:"Tavo and Nilo both get a $40 surprise repair. Tavo has an emergency fund. Nilo does not. What happens?", concept:"efund", opts:[
     {t:"Tavo pays and moves on. Nilo has to borrow — and his debt grows", ok:true, fb:"Right. Same surprise, very different month. The fund turned Tavo’s emergency into an inconvenience."},
     {t:"They both end up exactly the same", ok:false, fb:"Not at all. Without a fund, Nilo has to borrow — and borrowing costs extra."},
-    {t:"Nilo is better off because he kept his money free", ok:false, fb:"Nilo had nothing set aside, so he had to borrow. Borrowing costs more than the repair."}]},
+    {t:"Nilo is better off, because his money was free to spend on other things", ok:false, fb:"Nilo had nothing set aside, so he had to borrow. Borrowing costs more than the repair."}]},
   "q363c":{type:"mc", prompt:"Where is the best place to keep an emergency fund?", concept:"efund", opts:[
-    {t:"In savings — safe, a little interest, and not mixed with spending money", ok:true, fb:"Right. Easy to reach in a real emergency, but not sitting in checking tempting you."},
-    {t:"In a tin under the floorboard", ok:false, fb:"Kai learned in Module 17 why the tin is risky! Savings is safer — and it can grow."},
+    {t:"In savings — safe, apart from spending money, and it can grow", ok:true, fb:"Right. Easy to reach in a real emergency, but not sitting in checking tempting you."},
+    {t:"In a tin under the floorboard at home, so it is close by when needed", ok:false, fb:"Kai learned in Module 17 why the tin is risky! Savings is safer — and it can grow."},
     {t:"Spent on something nice, just in case", ok:false, fb:"If it is spent, it cannot help in an emergency. It has to sit and wait."}]},
   "q363b":{type:"mc", transfer:true, prompt:"Every ship on the island carries a spare sail and a first-aid kit. They are only used when something goes wrong. What is this most like?", concept:"efund", opts:[
     {t:"An emergency fund — set aside only for surprises, so trouble does not become disaster", ok:true, fb:"Exactly. Nobody uses the spare sail for fun. It waits — and when it is needed, it saves the trip."},

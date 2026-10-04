@@ -166,11 +166,11 @@ const VOCAB = {
 const QUESTIONS = {
   "q131a":{type:"mc", prompt:"What does dividing tell you?", concept:"divide", opts:[
     {t:"The size of each equal share when you split", ok:true, fb:"Right — and it has a second face too: how many equal groups fit inside an amount. Splitting and fitting, one sign: ÷."},
-    {t:"The total of equal groups", ok:false, fb:"That's multiplying — last module! Dividing goes the OTHER way: it un-groups. $6 into 3 shares → $2 each."},
+    {t:"The total you get when you put equal groups together", ok:false, fb:"That's multiplying — last module! Dividing goes the OTHER way: it un-groups. $6 into 3 shares → $2 each."},
     {t:"Which share is luckiest", ok:false, fb:"No luck involved — that's the whole point! A fair split makes every share exactly equal."}]},
   "q131b":{type:"mc", prompt:"Kai, Rana, and Tavo earned $6 together. Split fairly: $6 ÷ 3 = ?", concept:"divide", opts:[
     {t:"$2 each", ok:true, fb:"Right. Three equal shares of $6 → $2 apiece. Check it with multiplying: 3 × 2 = 6. They undo each other!"},
-    {t:"$3 each", ok:false, fb:"3 × 3 = 9 — that's more money than they have! Deal it out: one to each, one to each… $2 apiece."},
+    {t:"$3 each, because there are 3 friends", ok:false, fb:"3 × 3 = 9 — that's more money than they have! Deal it out: one to each, one to each… $2 apiece."},
     {t:"$6 each", ok:false, fb:"That would need $18! There's one $6 to SHARE: 6 ÷ 3 = 2."}]},
   "q132a":{type:"mc", prompt:"Kai has $10 saved. Kites cost $2 each. How many kites could that money become?", concept:"divide", opts:[
     {t:"5 kites", ok:true, fb:"Right — that's dividing's second face: how many $2 groups fit in $10? Count them: 2, 4, 6, 8, 10 — five kites!"},
@@ -188,8 +188,8 @@ const QUESTIONS = {
     {t:"Whoever grabs it first keeps it", ok:false, fb:"Fast hands aren't fair shares! There's a real trick: remember what one dollar is MADE of…"},
     {t:"Leftover money must be thrown in the sea", ok:false, fb:"The sea has enough treasure! Think: $1 = 100 cents, and 100 splits into 2 very nicely."}]},
   "q133b":{type:"mc", transfer:true, prompt:"Shell days: 12 shells shared among 4 friends. Does dividing work on shells?", concept:"divide", opts:[
-    {t:"Yes — 12 ÷ 4 = 3 shells each, same rules", ok:true, fb:"Exactly. Like adding, subtracting, and multiplying before it — dividing belongs to AMOUNTS. Shells, coins, mangoes: same math, every island."},
-    {t:"No — shells refuse to be divided", ok:false, fb:"Shells have no opinions! Deal them out: 3 each, 4 friends, 12 gone. Dividing works on any amount."},
+    {t:"Yes — 12 ÷ 4 = 3 each, same rules", ok:true, fb:"Exactly. Like adding, subtracting, and multiplying before it — dividing belongs to AMOUNTS. Shells, coins, mangoes: same math, every island."},
+    {t:"No — dividing only works on coins and dollars", ok:false, fb:"Dividing works on any amount! Deal the shells out: 3 each, 4 friends, 12 gone. Shells, coins, mangoes — same math."},
     {t:"Only if the friends are the same height", ok:false, fb:"Ha — height doesn't touch fairness! Equal SHARES is what matters: 12 ÷ 4 = 3 each."}]}
 };
 

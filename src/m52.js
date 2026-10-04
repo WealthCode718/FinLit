@@ -37,8 +37,8 @@ const VOCAB = {
 
 const QUESTIONS = {
   "q521a":{type:"mc", prompt:"What is financial well-being?", concept:"wellbeing", opts:[
-    {t:"Feeling secure about money today and ready for tomorrow, with needs covered and choices ahead", ok:true, fb:"Right. It's security plus choices, built from habits and plans."},
-    {t:"Being the richest person on the island", ok:false, fb:"Rich people can still be stressed and in debt. Well-being is about security and choices, not just size."},
+    {t:"Feeling secure about money now and ready for later, with choices ahead", ok:true, fb:"Right. It's security plus choices, built from habits and plans."},
+    {t:"Having the biggest income on the island, so you never have to think about money", ok:false, fb:"A big income can still come with stress and debt. Well-being is about security and choices, not just size."},
     {t:"Never spending any money", ok:false, fb:"Spending on needs and some fun is part of a good life. Well-being means it's all inside a plan."}]},
   "q521b":{type:"mc", prompt:"Who has better financial well-being?", concept:"wellbeing", opts:[
     {t:"Nalu: a modest income, an emergency fund, no costly debt, and a plan", ok:true, fb:"Right. Security and a plan beat a big paycheck with no cushion."},
@@ -52,16 +52,16 @@ const QUESTIONS = {
     {t:"Sell everything before it drops further", ok:false, fb:"That locks in the loss and stops the compound growth. His plan says wait."},
     {t:"Borrow money to buy more", ok:false, fb:"Borrowing to invest adds big risk. Stick to the plan."}]},
   "q522b":{type:"mc", prompt:"At 23, a storm wrecks Kai's boat, but he's okay. What protected him?", concept:"wellbeing", opts:[
-    {t:"Insurance paid for most of it, and his emergency fund covered the deductible", ok:true, fb:"Right. Risk & Insurance (Modules 35–39) in real life."},
+    {t:"Insurance, plus his emergency fund for the deductible", ok:true, fb:"Right. Risk & Insurance (Modules 35–39) in real life."},
     {t:"Luck. Nothing could have helped", ok:false, fb:"He planned for this: insurance for big losses, an emergency fund for the deductible."},
-    {t:"A loan from a stranger at the dock", ok:false, fb:"No debt needed. His insurance and emergency fund did the job."}]},
+    {t:"A quick loan from a stranger at the dock, paid back over a few months", ok:false, fb:"No debt needed. His insurance and emergency fund did the job."}]},
   "q523a":{type:"mc", prompt:"Which one is a GOOD money habit?", concept:"habit", opts:[
     {t:"Saving a little from every paycheck, before spending the rest", ok:true, fb:"Right. Small, automatic, and it adds up for life."},
     {t:"Buying whatever a countdown ad shows you", ok:false, fb:"That's a habit, just not a good one. Pause on countdowns (Module 46)."},
     {t:"Paying only the minimum on a credit card every month", ok:false, fb:"That keeps costly debt around for a long time (Module 29)."}]},
   "q523b":{type:"mc", transfer:true, prompt:"Lena, 18, gets her first full-time job. Which first steps fit everything in this course?", concept:"wellbeing", opts:[
-    {t:"Make a budget, start an emergency fund, avoid costly debt, and put a little toward the long term", ok:true, fb:"Exactly. That's the whole course on one line. Lena is ready."},
-    {t:"Buy a fancy car on a loan to celebrate", ok:false, fb:"A big loan on day one shrinks her choices for years. Budget and cushion first."},
+    {t:"A budget, an emergency fund, no costly debt, and a little for the long term", ok:true, fb:"Exactly. That's the whole course on one line. Lena is ready."},
+    {t:"Buy a fancy car on a loan to celebrate, since a full-time job means she can easily pay it", ok:false, fb:"A big loan on day one shrinks her choices for years. Budget and cushion first."},
     {t:"Wait ten years before thinking about money", ok:false, fb:"The earliest years matter most, for habits and for compound growth."}]}
 };
 

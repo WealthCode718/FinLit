@@ -47,20 +47,20 @@ const QUESTIONS = {
     {t:"What the policy will pay for", ok:true, fb:"Right. If it is covered, a claim can be paid. If not, it is on you."},
     {t:"The cover on the front of the policy paper", ok:false, fb:"Ha — not quite! Coverage is what the policy will actually pay for."},
     {t:"Every possible loss, always", ok:false, fb:"No policy covers everything. That is why you read what is and is not covered."}]},
-  "q391c":{type:"tf", prompt:"True or false: if you have insurance, every loss you have will be paid for.", answer:false, concept:"coverage",
+  "q391c":{type:"tf", prompt:"True or false: insurance only pays for losses that are in your coverage.", answer:true, concept:"coverage",
     good:"Right. Only what is in the coverage gets paid. Everything else is yours — read the policy before you need it.",
-    bad:"Only losses in your coverage are paid. Things like a rope wearing out with age usually are not."},
+    bad:"It is true. Only losses in your coverage are paid. Things like a rope wearing out with age usually are not."},
   "q392a":{type:"mc", prompt:"Kai’s policy covers storm damage but NOT things wearing out with age. His five-year-old rope frays. Will a claim be paid?", concept:"coverage", opts:[
     {t:"No — wearing out with age is not in his coverage", ok:true, fb:"Right. Old things wearing out are expected. That belongs in the budget, not an insurance claim."},
-    {t:"Yes — insurance pays for everything on a boat", ok:false, fb:"Only what the policy covers. Wear and tear is listed as NOT covered."},
+    {t:"Yes — the policy is for his boat, so it pays for everything on it", ok:false, fb:"Only what the policy covers. Wear and tear is listed as NOT covered."},
     {t:"Yes, if he says a storm did it", ok:false, fb:"That would be a dishonest claim — against the rules, and unfair to everyone in the pot."}]},
   "q392b":{type:"mc", prompt:"A man at the dock says: “Buy my Super Storm Insurance now — cash only, today only, no paperwork!” What is the biggest warning sign?", concept:"policy", opts:[
     {t:"No written policy — plus he is rushing you", ok:true, fb:"Right. Real insurance comes with a written policy. No paper plus “today only” are scam signs from Module 23."},
     {t:"He is selling insurance at all", ok:false, fb:"Real insurance does get sold. The problem is no written policy and a rush."},
-    {t:"Nothing — it sounds like a good deal", ok:false, fb:"No written policy means nothing to show when you need to claim. And the rush is a classic scam sign."}]},
+    {t:"Nothing — cash today is fine, since a good deal will not last long", ok:false, fb:"No written policy means nothing to show when you need to claim. And the rush is a classic scam sign."}]},
   "q393a":{type:"mc", prompt:"Which tool from this block should be big enough to pay your deductible?", concept:"policy", opts:[
     {t:"Your emergency fund", ok:true, fb:"Right. The fund pays your part; insurance pays the rest. They work as a team."},
-    {t:"Your cushion", ok:false, fb:"The cushion is just a few dollars in checking to prevent overdrafts. The emergency fund is for surprises like this."},
+    {t:"Your cushion — the few dollars you keep in checking", ok:false, fb:"The cushion is just a few dollars in checking to prevent overdrafts. The emergency fund is for surprises like this."},
     {t:"A credit card", ok:false, fb:"That turns a surprise into debt. The emergency fund is built for exactly this."}]},
   "q393b":{type:"mc", transfer:true, prompt:"Mika buys a phone that comes with a paper saying: “We repair it free for one year if it stops working. Dropping it is not included.” She drops it. Is the repair free?", concept:"coverage", opts:[
     {t:"No — drops are not in the coverage, even though she has the paper", ok:true, fb:"Exactly. Different paper, same shape as Kai’s policy: what is covered, and what is not. Reading it first saves surprises."},

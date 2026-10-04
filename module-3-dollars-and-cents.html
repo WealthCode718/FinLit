@@ -231,14 +231,14 @@ const QUESTIONS = {
     bad:"Think of it this way: you'd need one hundred cents piled up to match a single dollar."},
   "q32a":{type:"mc", prompt:"Which coin is worth the MOST?", concept:"cent", opts:[
     {t:"A penny (1 cent)", ok:false, fb:"The penny is the smallest — just 1 cent."},
-    {t:"A dime (10 cents)", ok:false, fb:"A dime beats a penny and a nickel — but one coin is worth even more."},
+    {t:"A dime (10 cents), worth ten pennies", ok:false, fb:"A dime beats a penny and a nickel — but one coin is worth even more."},
     {t:"A quarter (25 cents)", ok:true, fb:"Yes. Quarter = 25 cents, the biggest of the everyday coins."}]},
   "q32b":{type:"mc", prompt:"A dime is smaller than a nickel — you can see that with your eyes. But which is worth more?", concept:"cent", opts:[
-    {t:"The nickel, because it's bigger", ok:false, fb:"Size fools everyone at first! Remember Module 1: worth isn't about how big something is. The little dime is worth 10 cents; the bigger nickel only 5."},
+    {t:"The nickel, because bigger coins hold more", ok:false, fb:"Size fools everyone at first! Remember Module 1: worth isn't about how big something is. The little dime is worth 10 cents; the bigger nickel only 5."},
     {t:"The dime, even though it's smaller", ok:true, fb:"You've got it. Worth doesn't live in the size — the small dime (10¢) beats the big nickel (5¢). Just like the tiny pearl beat the boulder."},
     {t:"They're worth the same", ok:false, fb:"Close sizes, different worth: dime = 10 cents, nickel = 5 cents."}]},
   "q33a":{type:"mc", prompt:"What does $2.35 mean?", concept:"dollar", opts:[
-    {t:"2 dollars and 35 cents", ok:true, fb:"Exactly. The number before the dot is dollars; the number after is cents."},
+    {t:"2 dollars, 35 cents", ok:true, fb:"Exactly. The number before the dot is dollars; the number after is cents."},
     {t:"235 dollars", ok:false, fb:"The dot splits it: dollars before, cents after. $2.35 is 2 dollars and 35 cents."},
     {t:"2 dollars and 3 cents", ok:false, fb:"Read both digits after the dot together: 35 cents, not 3."}]},
   "q33b":{type:"mc", prompt:"Which is MORE money: $1.75 or $1.09?", concept:"dollar", opts:[

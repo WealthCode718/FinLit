@@ -235,13 +235,13 @@ const VOCAB = {
 
 const QUESTIONS = {
   "q481a":{type:"mc", prompt:"What does it mean to donate?", concept:"donate", opts:[
-    {t:"To give money, things, or time to help others, without expecting anything back", ok:true, fb:"Right. A donation is a gift. How much is your choice."},
-    {t:"To lend money that people must pay back", ok:false, fb:"That's a loan (Module 25). A donation is given freely, with nothing owed back."},
+    {t:"To give money, things, or time to help others, as a gift", ok:true, fb:"Right. A donation is a gift. How much is your choice."},
+    {t:"To lend money to people in need, who pay it back when they can", ok:false, fb:"That's a loan (Module 25). A donation is given freely, with nothing owed back."},
     {t:"To buy something that helps you", ok:false, fb:"Buying gets you something. Donating is giving, to help others."}]},
   "q481b":{type:"mc", prompt:"Kai has no spare money this week. How can he still help the flooded village?", concept:"donate", opts:[
     {t:"Give time or things: help mend nets, or donate gear he doesn't use", ok:true, fb:"Right. Time and things are donations too. Mending nets might help more than a few dollars."},
     {t:"He can't. Only money counts", ok:false, fb:"Time, skills, and useful things are all ways to give. Money is just one."},
-    {t:"Borrow money so he can donate", ok:false, fb:"Going into debt to give isn't wise. He can give time or things instead."}]},
+    {t:"Borrow a few dollars from a friend so he can donate, and pay it back later", ok:false, fb:"Going into debt to give isn't wise. He can give time or things instead."}]},
   "q481c":{type:"tf", prompt:"True or false: giving only counts if you give a lot of money.", answer:false, concept:"donate",
     good:"Right. Small gifts, time, and useful things all count. Giving is about helping, not the size.",
     bad:"Look again. A $2 gift, an afternoon of help, or a spare net all count. Giving isn't measured by size."},
@@ -252,10 +252,10 @@ const QUESTIONS = {
   "q482b":{type:"mc", prompt:"Which donation request is the most SUSPICIOUS?", concept:"charity", opts:[
     {t:"A stranger: “Cash only, right now! I can't tell you exactly where it goes.”", ok:true, fb:"Right. Cash only, a rush, and no clear answers are the same scam signs from Module 23."},
     {t:"The village elders list exactly what they need and give receipts", ok:false, fb:"That's open and clear: a good sign. The stranger asking for cash only, right now, is the suspicious one."},
-    {t:"The school asks families to drop off spare blankets at the office", ok:false, fb:"A known place, a clear need, no rush: a good sign. The pushy stranger is the suspicious one."}]},
+    {t:"The school asks families to drop off spare blankets at the front office this week", ok:false, fb:"A known place, a clear need, no rush: a good sign. The pushy stranger is the suspicious one."}]},
   "q483a":{type:"mc", prompt:"The flooded village says it needs nets, rope, and food. Kai has some old toys. What's the most helpful?", concept:"donate", opts:[
-    {t:"Give what they asked for, like rope or food, or ask if the toys are wanted", ok:true, fb:"Right. The best gift is one that fits the real need. Asking first makes it count."},
-    {t:"Send the toys, because any gift is the same", ok:false, fb:"Toys they didn't ask for may just take up space. Give what they need, or ask first."},
+    {t:"Give what they asked for, or ask first if toys are wanted", ok:true, fb:"Right. The best gift is one that fits the real need. Asking first makes it count."},
+    {t:"Send the toys anyway, because any gift helps and kids there will be bored", ok:false, fb:"Toys they didn't ask for may just take up space. Give what they need, or ask first."},
     {t:"Send nothing, because toys aren't money", ok:false, fb:"He can still help, with rope, food, or his time. Give what fits the need."}]},
   "q483b":{type:"mc", transfer:true, prompt:"Lena's school runs a winter coat drive. Lena has no spare money, but she has a warm coat she's outgrown. What can she do?", concept:"donate", opts:[
     {t:"Donate the coat she's outgrown. It's exactly what's needed", ok:true, fb:"Exactly. Different place, same idea: a useful thing, given freely, to a known group with a clear need."},

@@ -229,12 +229,12 @@ const VOCAB = {
 
 const QUESTIONS = {
   "q281a":{type:"mc", prompt:"What is a credit score?", concept:"creditscore", opts:[
-    {t:"A number that shows banks how well you have paid back money before", ok:true, fb:"Right. It is a bank’s quick way of asking: when this person borrowed before, did they pay it back?"},
-    {t:"How much money you have in savings", ok:false, fb:"Savings does not set the score. It is about your record of borrowing and paying back."},
+    {t:"A number showing how well you have paid back before", ok:true, fb:"Right. It is a bank’s quick way of asking: when this person borrowed before, did they pay it back?"},
+    {t:"A number that shows how much money you have saved in the bank", ok:false, fb:"Savings does not set the score. It is about your record of borrowing and paying back."},
     {t:"The number of cards you own", ok:false, fb:"Owning cards is not the score. The score shows how well you have paid back what you borrowed."}]},
   "q281b":{type:"mc", prompt:"Why did the bank say yes to Tavo and no to Nilo?", concept:"creditscore", opts:[
-    {t:"Tavo has a record of paying back on time; Nilo has missed payments", ok:true, fb:"Right. The bank looked at their past. Tavo’s record says he pays back. Nilo’s record says he sometimes does not."},
-    {t:"Tavo has more money than Nilo", ok:false, fb:"It was not about who has more money. It was about who has paid back on time before."},
+    {t:"Tavo has paid back on time; Nilo has missed payments", ok:true, fb:"Right. The bank looked at their past. Tavo’s record says he pays back. Nilo’s record says he sometimes does not."},
+    {t:"Tavo has more money in savings, so the bank knows he can pay", ok:false, fb:"It was not about who has more money. It was about who has paid back on time before."},
     {t:"The bank just likes Tavo more", ok:false, fb:"It is not about liking. The bank looked at each person’s record of paying back."}]},
   "q281c":{type:"tf", prompt:"True or false: having lots of money in savings automatically gives you a high credit score.", answer:false, concept:"creditscore",
     good:"Right. Savings is great, but the credit score is about your record of borrowing and paying back on time.",
@@ -251,17 +251,17 @@ const QUESTIONS = {
     good:"Right. A missed due date goes on your record — and it usually brings a late fee too.",
     bad:"It really can. A missed due date goes on your record, and banks see it."},
   "q283a":{type:"mc", prompt:"Why does a good credit score matter?", concept:"creditscore", opts:[
-    {t:"When you really need to borrow, it is easier to get a yes — and often you pay less extra", ok:true, fb:"Right. Tavo got his net loan fast. A good record opens doors when you need them."},
+    {t:"Borrowing gets easier, and often costs less extra", ok:true, fb:"Right. Tavo got his net loan fast. A good record opens doors when you need them."},
     {t:"It lets you skip paying bills", ok:false, fb:"Nobody gets to skip bills! A good score just makes banks more willing to trust you."},
-    {t:"It adds money to your savings", ok:false, fb:"A score does not add money. It helps when you need to borrow — easier yes, often less extra to pay."}]},
+    {t:"The bank adds a little extra to your savings when your score is high", ok:false, fb:"A score does not add money. It helps when you need to borrow — easier yes, often less extra to pay."}]},
   "q283c":{type:"mc", prompt:"Nilo’s score is low. What can he do?", concept:"creditscore", opts:[
-    {t:"Pay every bill on time from now on — the score rises slowly", ok:true, fb:"Right. Scores are not stuck. A new record of on-time payments slowly builds trust back."},
+    {t:"Pay on time from now on; it rises slowly", ok:true, fb:"Right. Scores are not stuck. A new record of on-time payments slowly builds trust back."},
     {t:"Nothing — a low score is forever", ok:false, fb:"Not forever! Paying on time, again and again, slowly rebuilds it."},
-    {t:"Borrow a lot more to show he can", ok:false, fb:"Borrowing lots at once can lower it further. The fix is on-time payments, one after another."}]},
+    {t:"Borrow a lot more right away, to show the bank he can handle it", ok:false, fb:"Borrowing lots at once can lower it further. The fix is on-time payments, one after another."}]},
   "q283b":{type:"mc", transfer:true, prompt:"Mika always gives back what she borrows, on time. Jojo usually forgets. Who will friends be happy to lend to next time?", concept:"creditscore", opts:[
     {t:"Mika — her record shows she gives things back", ok:true, fb:"Exactly. Nobody wrote down a number, but everyone keeps a kind of score. A credit score is the same idea, written down."},
     {t:"Jojo — he needs things more", ok:false, fb:"Needing something does not make people trust you. Friends look at who has given things back before."},
-    {t:"Both the same — the past does not matter", ok:false, fb:"The past matters a lot. People lend more easily to someone with a record of giving things back."}]}
+    {t:"Both the same — friends should share with everyone equally, no matter what", ok:false, fb:"The past matters a lot. People lend more easily to someone with a record of giving things back."}]}
 };
 
 const CFG = {

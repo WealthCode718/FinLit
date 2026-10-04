@@ -28,12 +28,12 @@ const VOCAB = {
 
 const QUESTIONS = {
   "q221a":{type:"mc", prompt:"What is a fee?", concept:"fee", opts:[
-    {t:"Money a bank takes out of your account for a service or for breaking a rule", ok:true, fb:"Right. A fee is a charge. It makes your balance smaller, even though you did not buy anything."},
+    {t:"Money the bank takes out, for a service or a broken rule", ok:true, fb:"Right. A fee is a charge. It makes your balance smaller, even though you did not buy anything."},
     {t:"A little extra the bank adds for keeping your money there", ok:false, fb:"That is interest — the opposite! Interest adds money. A fee takes money away."},
     {t:"Money you earn by working", ok:false, fb:"Earning brings money in. A fee sends money out — to the bank."}]},
   "q221b":{type:"mc", prompt:"Kai is charged $1 every month for a paper statement in the mail. What is the best way to stop that fee?", concept:"fee", opts:[
-    {t:"Read his transactions on his phone instead, and turn off the paper statement", ok:true, fb:"Exactly. He already reads everything on his phone. Same information, no fee. Knowing the rule is what saved him."},
-    {t:"Close his savings account", ok:false, fb:"That would not touch the paper fee at all — and he would lose his interest. Fix the rule that causes the fee instead."},
+    {t:"Turn off paper statements and read it all on his phone", ok:true, fb:"Exactly. He already reads everything on his phone. Same information, no fee. Knowing the rule is what saved him."},
+    {t:"Close his savings account, so the bank has fewer accounts to charge him for", ok:false, fb:"That would not touch the paper fee at all — and he would lose his interest. Fix the rule that causes the fee instead."},
     {t:"Nothing — fees can never be avoided", ok:false, fb:"Many fees CAN be avoided once you know why they happen. This one ends the day Kai switches to reading on his phone."}]},
   "q221c":{type:"tf", prompt:"True or false: interest and fees both add money to your account.", answer:false, concept:"fee",
     good:"Right — they point in opposite directions. Interest adds a little. A fee takes some away.",
@@ -43,9 +43,9 @@ const QUESTIONS = {
     {t:"Having a lot of money in savings", ok:false, fb:"That is a great thing to have, but it is not an overdraft. An overdraft means your balance went below zero."},
     {t:"Any deposit bigger than $10", ok:false, fb:"Deposits make your balance bigger. An overdraft is when it goes the other way — all the way below zero."}]},
   "q222b":{type:"mc", prompt:"Why does an overdraft cost more than just the price of what you bought?", concept:"overdraft", opts:[
-    {t:"The bank adds a fee on top — and your next deposit has to fill the gap first", ok:true, fb:"Right. You pay the price, then a fee, and then part of your next money is already used up before you even see it."},
+    {t:"A fee lands on top, and your next deposit must fill the gap first", ok:true, fb:"Right. You pay the price, then a fee, and then part of your next money is already used up before you even see it."},
     {t:"It doesn't — you only ever pay the price", ok:false, fb:"Look back at Kai's net. The price was $9, but going below zero added a $5 fee on top. The overdraft itself costs money."},
-    {t:"Because the shop charges extra", ok:false, fb:"The shop charged the normal price. The extra came from the BANK, as an overdraft fee."}]},
+    {t:"Because the shop charges a higher price when your balance is below zero", ok:false, fb:"The shop charged the normal price. The extra came from the BANK, as an overdraft fee."}]},
   "q222c":{type:"tf", prompt:"True or false: if the bank lets a payment go through, that means you had enough money.", answer:false, concept:"overdraft",
     good:"Right — that is the trap. Some banks let a payment go through anyway, then charge a fee because you did NOT have enough.",
     bad:"That is the trap Kai fell into. Some banks let a payment go through even when the balance is too small — and then charge a fee for it."},
@@ -58,9 +58,9 @@ const QUESTIONS = {
     {t:"Pay now and hope the bank lets it through", ok:false, fb:"Even if the bank lets it through, the balance goes below zero and a fee lands on top. Waiting is free."},
     {t:"Pay now — it is only $2 more than he has", ok:false, fb:"Being a little short is still being short. Below zero is below zero, and the fee does not care how small the gap was."}]},
   "q223b":{type:"mc", transfer:true, prompt:"The island library lets you take a book home for one week. If you bring it back late, you pay $1. What is that $1?", concept:"fee", opts:[
-    {t:"A fee — a charge for breaking a rule, and you can avoid it by returning the book on time", ok:true, fb:"Exactly. Same shape as a bank fee: a rule, a charge for breaking it, and an easy way to never pay it."},
+    {t:"A fee — a charge for a broken rule, and returning on time avoids it", ok:true, fb:"Exactly. Same shape as a bank fee: a rule, a charge for breaking it, and an easy way to never pay it."},
     {t:"Interest — the library is thanking you", ok:false, fb:"Interest adds money to YOU. This $1 goes from you to the library. That makes it a fee."},
-    {t:"The price of the book", ok:false, fb:"You are not buying the book — you bring it back. The $1 is only charged for being late. That is a fee."}]}
+    {t:"The price of the book — you pay a little at a time to keep reading it", ok:false, fb:"You are not buying the book — you bring it back. The $1 is only charged for being late. That is a fee."}]}
 };
 
 const CFG = {

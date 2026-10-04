@@ -228,8 +228,8 @@ const VOCAB = {
 
 const QUESTIONS = {
   "q251a":{type:"mc", prompt:"What does it mean to borrow money?", concept:"borrow", opts:[
-    {t:"Use someone else’s money now and give it back later", ok:true, fb:"Right. The money is yours to use — for a while. The giving-back part is not optional."},
-    {t:"Get money as a gift that you keep forever", ok:false, fb:"A gift stays with you. Borrowed money has to go back to whoever it came from."},
+    {t:"Use someone’s money now, and give it back later", ok:true, fb:"Right. The money is yours to use — for a while. The giving-back part is not optional."},
+    {t:"Get money from a friend or family as a gift that you keep forever", ok:false, fb:"A gift stays with you. Borrowed money has to go back to whoever it came from."},
     {t:"Earn money by working", ok:false, fb:"Earning is money you keep because you worked for it. Borrowed money has to be paid back."}]},
   "q251b":{type:"mc", prompt:"Where does a bank get the money it lends out as loans?", concept:"loan", opts:[
     {t:"Partly from the money savers like Kai leave in the bank", ok:true, fb:"Right! This is what Module 21 meant by the bank “putting your money to work.” Kai’s savings helps make someone else’s loan possible."},
@@ -246,21 +246,21 @@ const QUESTIONS = {
     good:"Right. You usually pay back more than $10. The extra is interest — the price of using someone else’s money.",
     bad:"Usually you pay back MORE than you borrowed. The extra is interest — this time going from you to whoever lent it."},
   "q252c":{type:"mc", prompt:"Why does borrowing usually make something cost more?", concept:"borrow", opts:[
-    {t:"You pay the price, plus interest for using someone else’s money", ok:true, fb:"Right. A $10 net paid for with a loan ends up costing more than $10 by the time it is all paid back."},
-    {t:"Shops charge more if you borrowed", ok:false, fb:"The shop charges the normal price. The extra comes from the LOAN — the interest you pay the bank."},
+    {t:"The price, plus interest for using the money", ok:true, fb:"Right. A $10 net paid for with a loan ends up costing more than $10 by the time it is all paid back."},
+    {t:"Shops charge a higher price when they know the money is borrowed", ok:false, fb:"The shop charges the normal price. The extra comes from the LOAN — the interest you pay the bank."},
     {t:"It doesn’t — borrowing is free", ok:false, fb:"Borrowing money is almost never free. The interest you pay back is what makes it cost more."}]},
   "q253a":{type:"mc", prompt:"What should Kai ask himself BEFORE borrowing?", concept:"borrow", opts:[
-    {t:"“Can I pay it back on time — and is this worth paying extra for?”", ok:true, fb:"Right. Two questions: can I really pay it back, and is having it NOW worth paying more than the price?"},
+    {t:"“Can I pay it back on time, and is it worth the extra?”", ok:true, fb:"Right. Two questions: can I really pay it back, and is having it NOW worth paying more than the price?"},
     {t:"“Will they let me?”", ok:false, fb:"Being allowed to borrow is not the same as it being a good idea. Ask: can I pay it back, and is it worth the extra?"},
-    {t:"“How fast can I spend it?”", ok:false, fb:"That is the question that gets people in trouble. Ask first whether you can pay it back and whether it is worth the extra."}]},
+    {t:"“How much can I get — and how fast can I spend it on what I want?”", ok:false, fb:"That is the question that gets people in trouble. Ask first whether you can pay it back and whether it is worth the extra."}]},
   "q253c":{type:"mc", prompt:"Kai wants a new sail. He could borrow now, or save for a few more weeks. Why is saving usually the better choice for something like this?", concept:"borrow", opts:[
-    {t:"Saving costs nothing extra — and his savings even grows with interest while he waits", ok:true, fb:"Right. Waiting a few weeks is free. Borrowing would mean paying interest instead of earning it."},
-    {t:"Saving is faster than borrowing", ok:false, fb:"Borrowing is actually faster! That is its one advantage. But it costs extra — saving does not."},
+    {t:"Saving costs nothing extra, and his savings even earns interest", ok:true, fb:"Right. Waiting a few weeks is free. Borrowing would mean paying interest instead of earning it."},
+    {t:"Saving is faster, because a loan takes weeks of meetings at the bank before you get it", ok:false, fb:"Borrowing is actually faster! That is its one advantage. But it costs extra — saving does not."},
     {t:"Banks never lend money for sails", ok:false, fb:"They might! The reason to wait is cost: borrowing means paying interest, saving means earning it."}]},
   "q253b":{type:"mc", transfer:true, prompt:"Mika lets Kai use her fishing rod for a week. When he gives it back, he adds a fish as thanks. Who borrowed, and what is the fish like?", concept:"borrow", opts:[
-    {t:"Kai borrowed the rod — and the fish is like the interest a borrower pays", ok:true, fb:"Exactly. Kai used something that was not his, gave it back, and added a little extra for the use of it. That is the whole shape of a loan."},
+    {t:"Kai borrowed the rod, and the fish is like interest", ok:true, fb:"Exactly. Kai used something that was not his, gave it back, and added a little extra for the use of it. That is the whole shape of a loan."},
     {t:"Mika borrowed — the fish was hers", ok:false, fb:"Mika owns the rod. Kai is the one who used it and gave it back, so Kai borrowed."},
-    {t:"Nobody borrowed — it was a trade", ok:false, fb:"In a trade, things swap for good. Here the rod went BACK to Mika. Using something and returning it is borrowing."}]}
+    {t:"Nobody borrowed — it was a trade: a week with the rod for one fish", ok:false, fb:"In a trade, things swap for good. Here the rod went BACK to Mika. Using something and returning it is borrowing."}]}
 };
 
 const CFG = {

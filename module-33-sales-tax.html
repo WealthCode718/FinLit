@@ -240,27 +240,27 @@ const QUESTIONS = {
     {t:"A fee your bank charges when you shop", ok:false, fb:"Not the bank. Sales tax is collected by the shop, for the government."}]},
   "q331b":{type:"mc", prompt:"Who does the shop pass the sales tax to?", concept:"salestax", opts:[
     {t:"The government — it helps pay for shared things", ok:true, fb:"Right. Same idea as the tax on Kai’s paycheck: shared things like the harbor and the school."},
-    {t:"The shopkeeper keeps it for herself", ok:false, fb:"The shop only collects it. It gets passed along to the government."},
+    {t:"The shopkeeper keeps it, as extra pay for running the shop all day", ok:false, fb:"The shop only collects it. It gets passed along to the government."},
     {t:"The bank", ok:false, fb:"The bank has nothing to do with it. Sales tax goes to the government."}]},
   "q331c":{type:"tf", prompt:"True or false: a more expensive item usually has more sales tax added than a cheap one.", answer:true, concept:"salestax",
     good:"Right. The bigger the price, the bigger the little extra on top.",
     bad:"It usually does. Sales tax grows with the price — a bigger price means a bigger extra."},
   "q332a":{type:"mc", prompt:"Kai has exactly $5. The tag on a rope says $5.00. In a place with sales tax, what will happen at the register?", concept:"salestax", opts:[
     {t:"He will be a little short — the total is more than the tag", ok:true, fb:"Right. Exactly the tag is never quite enough when tax is added on top. Leave a little room."},
-    {t:"He will have exactly enough", ok:false, fb:"Only if there were no sales tax. With it, the total is a little more than $5."},
+    {t:"He will have exactly enough, because the tag always shows the full price", ok:false, fb:"The tag does not include sales tax. It gets added at the register, so the total is a little more than $5."},
     {t:"He will get change back", ok:false, fb:"Change back would mean the total was LESS than $5. With sales tax it is a little more."}]},
   "q332b":{type:"mc", prompt:"What is the best habit when shopping in a place with sales tax?", concept:"salestax", opts:[
     {t:"Plan for a little more than the tag", ok:true, fb:"Right. A little room keeps you from being short at the register — and from an overdraft on your debit card."},
     {t:"Only look at the tag", ok:false, fb:"The tag is not the whole story when tax is added at the register. Plan for a little more."},
-    {t:"Always bring exactly the tag price", ok:false, fb:"Exactly the tag is the one amount that is guaranteed to be short. Bring a little more."}]},
+    {t:"Always bring exactly the tag price, so you do not carry extra money around", ok:false, fb:"Exactly the tag is the one amount that is guaranteed to be short. Bring a little more."}]},
   "q333a":{type:"mc", prompt:"What is a receipt?", concept:"receipt", opts:[
     {t:"A record of what you bought and what you paid", ok:true, fb:"Right. Each price, the tax, and the total, all in one place."},
     {t:"A coupon for your next visit", ok:false, fb:"Some shops print coupons, but a receipt is the record of what you just bought and paid."},
-    {t:"A bill you still have to pay", ok:false, fb:"A bill asks you to pay. A receipt shows you already did."}]},
+    {t:"A bill the shop gives you for things you still have to pay for", ok:false, fb:"A bill asks you to pay. A receipt shows you already did."}]},
   "q333c":{type:"mc", prompt:"Kai’s receipt shows “Bread $3.00” twice, but he only bought one loaf. What should he do?", concept:"receipt", opts:[
-    {t:"Show the receipt to the shopkeeper and ask for the mistake to be fixed", ok:true, fb:"Right. The receipt is his proof. Checking it is the same habit as reading his feed: you can only catch a mistake if you look."},
+    {t:"Show the receipt to the shopkeeper and ask to fix it", ok:true, fb:"Right. The receipt is his proof. Checking it is the same habit as reading his feed: you can only catch a mistake if you look."},
     {t:"Throw it away — it’s only $3", ok:false, fb:"$3 is $3! And without the receipt, he has no proof. Keep it and ask."},
-    {t:"Nothing — receipts are always right", ok:false, fb:"Mistakes happen, even at honest shops. That is exactly why you check."}]},
+    {t:"Nothing — receipts are printed by a machine, so they are always right", ok:false, fb:"Mistakes happen, even at honest shops. That is exactly why you check."}]},
   "q333b":{type:"mc", transfer:true, prompt:"The ferry sign says “Ticket $4 + port tax.” At the window Kai pays a little more than $4, and the extra goes to the island to keep the dock repaired. What is this most like?", concept:"salestax", opts:[
     {t:"Sales tax — a tax added on top of the posted price, for something everyone shares", ok:true, fb:"Exactly. Different name, same shape: the sign shows the price, a tax is added on top, and it pays for something shared."},
     {t:"A discount on the ticket", ok:false, fb:"A discount would make it LESS than $4. This adds a little on top."},

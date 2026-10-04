@@ -216,18 +216,18 @@ const VOCAB = {
 
 const QUESTIONS = {
   "q211a":{type:"mc", prompt:"What is interest?", concept:"interest", opts:[
-    {t:"A little extra money the bank adds just for keeping your money there", ok:true, fb:"Right. No deposit needed — the bank adds a bit more, on its own, as a thank-you for leaving the money with them."},
-    {t:"Money you have to pay the bank", ok:false, fb:"The other way around here! This kind of interest is money the bank pays YOU, not money you owe."},
-    {t:"A fee for having an account", ok:false, fb:"Not a fee at all — a fee takes money away. Interest ADDS a little, for free."}]},
+    {t:"Extra money the bank adds for keeping your money there", ok:true, fb:"Right. No deposit needed — the bank adds a bit more, on its own, as a thank-you for leaving the money with them."},
+    {t:"Money you have to pay the bank each month for holding your savings", ok:false, fb:"The other way around here! This kind of interest is money the bank pays YOU, not money you owe."},
+    {t:"A charge for having an account", ok:false, fb:"Not at all — a charge would take money away. Interest ADDS a little, for free."}]},
   "q211b":{type:"mc", prompt:"Why does a bank pay you interest at all?", concept:"interest", opts:[
-    {t:"Because the bank uses the money you leave with them, so they share a little back", ok:true, fb:"Right. The bank does not just let it sit in a vault — it puts the money to work, and pays you a small thank-you for the use of it."},
-    {t:"Because the bank feels generous", ok:false, fb:"It is not a gift out of kindness — it is a genuine thank-you for the bank being able to use your money while it sits there."},
+    {t:"The bank uses your money, so it shares a little back", ok:true, fb:"Right. The bank does not just let it sit in a vault — it puts the money to work, and pays you a small thank-you for the use of it."},
+    {t:"Because the bank is being kind and likes giving gifts to savers", ok:false, fb:"It is not a gift out of kindness — it is a genuine thank-you for the bank being able to use your money while it sits there."},
     {t:"Because you asked for it", ok:false, fb:"Nobody has to ask. Interest happens automatically, as part of what a savings account does."}]},
   "q212a":{type:"mc", prompt:"Kai checks his savings and it is a little bigger than last month, even though he deposited nothing. What happened?", concept:"grow", opts:[
     {t:"Interest — the money grew on its own", ok:true, fb:"Right — exactly what Rana meant. No deposit, no withdrawal, and the number still went up."},
-    {t:"The bank made a mistake", ok:false, fb:"No mistake at all! This is interest doing exactly what it is supposed to do."},
+    {t:"The bank made a mistake and added too much", ok:false, fb:"No mistake at all! This is interest doing exactly what it is supposed to do."},
     {t:"Someone else added money for him", ok:false, fb:"Nobody added anything. The account itself grew a little, which is exactly what interest does."}]},
-  "q212b":{type:"tf", prompt:"True or false: a tin under a floorboard can earn interest.", answer:false, concept:"interest",
+  "q212b":{type:"tf", prompt:"True or false: money in a tin under a floorboard never earns interest.", answer:true, concept:"interest",
     good:"Right — a tin just sits there. Interest is something a BANK pays, for money it can actually use. A tin never grows on its own.",
     bad:"Think about who is paying the interest. A bank pays it because it can use your money. A tin cannot use anything — it just sits. No bank, no interest."},
   "q213a":{type:"mc", prompt:"Which grows more over a year: $10 sitting in savings with interest, or $10 sitting in a tin?", concept:"grow", opts:[
@@ -235,13 +235,13 @@ const QUESTIONS = {
     {t:"They grow the same", ok:false, fb:"Not the same at all — the tin stays flat, always. Savings with interest has a real chance to grow."},
     {t:"The tin — money is safer outside a bank", ok:false, fb:"Interest has nothing to do with safety and everything to do with growth. Only the savings account has any chance of growing on its own."}]},
   "q213c":{type:"mc", prompt:"Does interest work faster on more money, or the same amount, or slower?", concept:"grow", opts:[
-    {t:"Faster — more money sitting there generally means more interest added", ok:true, fb:"Right. The idea scales with the amount. Keep more in savings, and there is more for the bank to use, and more interest comes back."},
+    {t:"Faster — more money usually means more interest", ok:true, fb:"Right. The idea scales with the amount. Keep more in savings, and there is more for the bank to use, and more interest comes back."},
     {t:"Exactly the same no matter how much is in the account", ok:false, fb:"Not quite — a bigger balance generally earns more interest, since it scales with how much is sitting there."},
     {t:"Slower — small amounts grow best", ok:false, fb:"Backwards! More money sitting in savings generally means more interest, not less."}]},
   "q213b":{type:"mc", transfer:true, prompt:"Tavo lets Rana use his boat for a season, and she gives him a little extra fish as thanks each week. Is that a similar idea to interest?", concept:"interest", opts:[
-    {t:"Yes — letting someone use something of yours, and getting a little something back for it", ok:true, fb:"Exactly. Tavo is not doing anything, just like Kai isn\'t. He let someone use something valuable, and a little extra came back as thanks. That is the whole shape of interest."},
+    {t:"Yes — someone used something of his and gave a little back", ok:true, fb:"Exactly. Tavo is not doing anything, just like Kai isn\'t. He let someone use something valuable, and a little extra came back as thanks. That is the whole shape of interest."},
     {t:"No — boats and money are completely different", ok:false, fb:"The object changed, not the idea. Something valuable got used by someone else, and a little extra came back. Same shape as interest."},
-    {t:"No — Tavo should get his boat back, not fish", ok:false, fb:"He gets the boat back too! The fish is the EXTRA, on top of getting his own boat back — same as Kai keeping his $10 AND getting a bit more."}]}
+    {t:"No — Tavo should just get his boat back, and the fish is only a gift", ok:false, fb:"He gets the boat back too! The fish is the EXTRA, on top of getting his own boat back — same as Kai keeping his $10 AND getting a bit more."}]}
 };
 
 /* =====================================================================

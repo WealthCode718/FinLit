@@ -169,7 +169,7 @@ const QUESTIONS = {
     {t:"A type of coin", ok:false, fb:"Not a coin — a WAY of writing hundredths. 50% is just another way to say 50 out of 100."}]},
   "q161b":{type:"mc", prompt:"50% of $1 is how much?", concept:"percent", opts:[
     {t:"50¢", ok:true, fb:"Right — 50 out of 100 pennies. 50% = 50 hundredths = $0.50 = half. Three costumes, one idea."},
-    {t:"$50", ok:false, fb:"Way too much! 50% means 50 out of 100 — of a DOLLAR, that's 50 cents, not 50 dollars."},
+    {t:"$50, because it says 50", ok:false, fb:"Way too much! 50% means 50 out of 100 — of a DOLLAR, that's 50 cents, not 50 dollars."},
     {t:"5¢", ok:false, fb:"That would be 5%. Count carefully: 50% is fifty out of a hundred — 50¢."}]},
   "q162a":{type:"mc", prompt:"Is 50% the SAME amount as one half and 0.50?", concept:"percent", opts:[
     {t:"Yes — three costumes, one idea", ok:true, fb:"Exactly! ½ = 0.50 = 50% — fraction, decimal, and percent are just three ways to WRITE the exact same amount."},
@@ -183,8 +183,8 @@ const QUESTIONS = {
     {t:"$4.50", ok:false, fb:"That's MORE than before — a discount should cost LESS! 50% off means half price: $4 → $2."},
     {t:"$0.50", ok:false, fb:"That's 50 CENTS off, not 50 percent off. 50% off a $4 kite cuts the whole price in half: $2."}]},
   "q163c":{type:"mc", prompt:"A $1 candy is 25% off. What do you pay?", concept:"discount", opts:[
-    {t:"75¢ — because 25% is the coin you already know", ok:true, fb:"Right! 25% off means the QUARTER coin's fraction gets subtracted: $1.00 − $0.25 = $0.75. The quarter's secret from Module 14, back in action."},
-    {t:"25¢", ok:false, fb:"That's the DISCOUNT amount, not what you pay! Subtract it from the price: $1.00 − $0.25 = $0.75."},
+    {t:"75¢ — a quarter less", ok:true, fb:"Right! 25% off means the QUARTER coin's fraction gets subtracted: $1.00 − $0.25 = $0.75. The quarter's secret from Module 14, back in action."},
+    {t:"25¢, because the sign says 25%", ok:false, fb:"That's the DISCOUNT amount, not what you pay! Subtract it from the price: $1.00 − $0.25 = $0.75."},
     {t:"90¢", ok:false, fb:"Careful: 25% of $1 is 25¢ off, not 10¢ off. $1.00 − $0.25 = $0.75."}]},
   "q163b":{type:"mc", transfer:true, prompt:"Kai once traded 10 shells and gave a friend '10% back' — one shell. Does percent work on shells too?", concept:"percent", opts:[
     {t:"Yes — percent just means out of 100, of ANY amount", ok:true, fb:"Exactly. 10% of 10 shells is 1 shell (10 out of 100, scaled down). Percent doesn't care if it's shells, dollars, or mangoes — it's a way of describing PARTS, everywhere."},

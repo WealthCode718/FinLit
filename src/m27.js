@@ -48,8 +48,8 @@ const QUESTIONS = {
     {t:"Money leaves his checking account right away", ok:false, fb:"That is a debit card. With a credit card, his checking does not change — the bank pays, and he owes the bank."},
     {t:"Nothing — the card is free money", ok:false, fb:"Nothing is free here. Every tap is a loan that shows up on a bill later."}]},
   "q272b":{type:"mc", prompt:"Why can a credit card make it easy to spend too much?", concept:"creditcard", opts:[
-    {t:"Your checking does not go down when you tap, so it does not FEEL like spending", ok:true, fb:"Right. That was exactly Nilo’s trap. No number dropped, so it felt free — until the bill came."},
-    {t:"Things cost more when you use a card", ok:false, fb:"The price is the same. The danger is that the spending is hidden until the bill arrives."},
+    {t:"Checking does not drop when you tap, so it feels free", ok:true, fb:"Right. That was exactly Nilo’s trap. No number dropped, so it felt free — until the bill came."},
+    {t:"Shops add a little extra to the price every time you pay with a card", ok:false, fb:"The price is the same. The danger is that the spending is hidden until the bill arrives."},
     {t:"It can’t — credit cards stop you from spending", ok:false, fb:"They make spending feel easier, not harder. That is why they need extra care."}]},
   "q272c":{type:"tf", prompt:"True or false: paying with a credit card is a kind of borrowing.", answer:true, concept:"creditcard",
     good:"Right. Every tap is a small loan from the bank. Module 25’s questions apply: can I pay it back, and is it worth it?",
@@ -64,7 +64,7 @@ const QUESTIONS = {
     {t:"Both of them", ok:false, fb:"Only one does. Debit uses your checking. Credit borrows from the bank."}]},
   "q273b":{type:"mc", transfer:true, prompt:"The bread shop lets Kai take bread now and write his name in a book. At the end of the month, he pays for everything in the book. What is this most like?", concept:"creditcard", opts:[
     {t:"A credit card — buy now, and a bill comes later", ok:true, fb:"Exactly. No plastic, but the same shape: the shop trusts him now, and the book is his bill. It is still borrowing."},
-    {t:"A debit card — the money leaves right away", ok:false, fb:"Nothing leaves Kai’s money right away here. He takes the bread now and pays later. That is the credit shape."},
+    {t:"A debit card — the money leaves Kai’s account each time he takes bread", ok:false, fb:"Nothing leaves Kai’s money right away here. He takes the bread now and pays later. That is the credit shape."},
     {t:"Savings — Kai is keeping his money", ok:false, fb:"He is not saving it — he already owes it. At the end of the month the whole book has to be paid."}]}
 };
 

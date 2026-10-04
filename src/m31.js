@@ -32,16 +32,16 @@ const VOCAB = {
 
 const QUESTIONS = {
   "q311a":{type:"mc", prompt:"What is a paycheck?", concept:"paycheck", opts:[
-    {t:"The payment an employer gives you for your work, with a slip showing the details", ok:true, fb:"Right. The slip shows hours, wage, anything taken out — and what you actually get."},
+    {t:"Payment from an employer for your work, with a slip of details", ok:true, fb:"Right. The slip shows hours, wage, anything taken out — and what you actually get."},
     {t:"A bill you have to pay", ok:false, fb:"The other direction! A paycheck is money coming TO you for your work."},
-    {t:"A loan from your employer", ok:false, fb:"Nothing to pay back — you earned it. A paycheck is payment for work you already did."}]},
+    {t:"Money your employer lends you now and takes back from your next week of work", ok:false, fb:"Nothing to pay back — you earned it. A paycheck is payment for work you already did."}]},
   "q311b":{type:"tf", prompt:"True or false: the amount Kai actually gets on his paycheck can be less than his hours times his wage.", answer:true, concept:"paycheck",
     good:"Right. Ten hours at $4 is $40 — but something was taken out, so $36 landed in his account. (Module 32 explains what.)",
     bad:"It can! Kai earned $40 for 10 hours, but his slip showed a line taken out, so only $36 arrived. Module 32 explains that line."},
   "q312a":{type:"mc", prompt:"What is income?", concept:"income", opts:[
     {t:"Money that comes in to you, like a paycheck, sales, or interest", ok:true, fb:"Right. Any money that comes in and is truly yours to keep."},
     {t:"Only money from an employer", ok:false, fb:"A paycheck is income, but so is money from selling fish you caught — and even interest from savings."},
-    {t:"Any money in your hand, even if you have to pay it back", ok:false, fb:"Borrowed money is not income — it has to go back. Income is money that is truly yours."}]},
+    {t:"Any money that lands in your account, even if you have to pay it back later", ok:false, fb:"Borrowed money is not income — it has to go back. Income is money that is truly yours."}]},
   "q312b":{type:"mc", prompt:"Tavo gets a $20 loan from the bank. Is that income?", concept:"income", opts:[
     {t:"No — he has to pay it back, so it is not really his", ok:true, fb:"Right. It feels like money coming in, but it is borrowed. Income is money that stays yours."},
     {t:"Yes — any money that arrives is income", ok:false, fb:"A loan arrives, but it has to go back — with interest. That makes it borrowing, not income."},
@@ -55,11 +55,11 @@ const QUESTIONS = {
     {t:"It does not matter", ok:false, fb:"It matters a lot! Plan with $40 and he will be $4 short. Plan with what actually arrives: $36."}]},
   "q313c":{type:"mc", prompt:"Kai is paid every two weeks. Why can’t he spend his whole paycheck in the first few days?", concept:"paycheck", opts:[
     {t:"It has to last until the next paycheck", ok:true, fb:"Right. Two weeks of needs, one paycheck. The budget spreads it out so there is still food on day 13."},
-    {t:"The bank will not let him", ok:false, fb:"The bank would let him — that is the danger! It is the budget that makes it last."},
+    {t:"The bank will not let him spend more than half of a paycheck at once", ok:false, fb:"The bank would let him — that is the danger! It is the budget that makes it last."},
     {t:"Paychecks disappear after three days", ok:false, fb:"The money stays until he spends it. The reason to spread it out is that it has to last two whole weeks."}]},
   "q313b":{type:"mc", transfer:true, prompt:"A restaurant pays Tavo for his fish once a month. What does this mean for Tavo?", concept:"income", opts:[
-    {t:"It is income on a schedule — he has to make it last the whole month", ok:true, fb:"Exactly. Same shape as Kai’s paycheck, just a longer wait. The longer the gap, the more the budget matters."},
-    {t:"It is a loan, because it comes later", ok:false, fb:"Coming later does not make it borrowed. It is payment for his fish — income that is his to keep."},
+    {t:"Income on a schedule — it has to last the whole month", ok:true, fb:"Exactly. Same shape as Kai’s paycheck, just a longer wait. The longer the gap, the more the budget matters."},
+    {t:"It is a loan, because the restaurant gets the fish now and pays him later", ok:false, fb:"Coming later does not make it borrowed. It is payment for his fish — income that is his to keep."},
     {t:"He can spend it all in the first week", ok:false, fb:"Then weeks 2, 3, and 4 would have nothing. It has to last until the next payment."}]}
 };
 

@@ -201,18 +201,18 @@ const QUESTIONS = {
     {t:"Money you never touch again", ok:false, fb:"The opposite! Checking is the easy-to-reach account — it is meant to be used."}]},
   "q191b":{type:"mc", prompt:"What is a savings account for?", concept:"savings", opts:[
     {t:"Money you are keeping for a goal", ok:true, fb:"Right — Module 11's goal money, now with its own home so it stays safe from everyday spending."},
-    {t:"Money for today's lunch", ok:false, fb:"Lunch money is spend-soon money — that belongs in checking. Savings is for goals."},
+    {t:"Money for lunch and snacks you will buy today", ok:false, fb:"Lunch money is spend-soon money — that belongs in checking. Savings is for goals."},
     {t:"Money that belongs to the bank", ok:false, fb:"Never! Both accounts hold YOUR money. Savings just keeps goal money separate."}]},
   "q192a":{type:"mc", prompt:"Kai is saving for a sail he will buy in a few months. Which account?", concept:"savings", opts:[
     {t:"Savings", ok:true, fb:"Right — it is goal money, and months away. Savings keeps it out of reach of everyday spending."},
     {t:"Checking", ok:false, fb:"Careful. Checking is easy to reach, which is exactly the danger for goal money — it gets spent bit by bit."},
     {t:"Neither — keep it in the tin", ok:false, fb:"Module 17 settled the tin! Goal money goes in savings, where it is safe and separate."}]},
-  "q192b":{type:"tf", prompt:"True or false: you should keep ALL your money in savings so you never spend any of it.", answer:false, concept:"checking",
+  "q192b":{type:"tf", prompt:"True or false: you still need some money in checking, even while you are saving for a goal.", answer:true, concept:"checking",
     good:"Right — you still need money for food and everyday things. The point is not to stop spending; it is to keep goal money separate from spending money.",
     bad:"Think about eating this week! You need spendable money in checking. Savings is only for the money you are holding toward a goal."},
   "q193a":{type:"mc", prompt:"Why keep goal money in a separate savings account?", concept:"savings", opts:[
-    {t:"So it does not get spent by accident, a little at a time", ok:true, fb:"Right. Money that is easy to reach gets reached for. Separating it protects the goal — exactly what went wrong for Kai in Module 10."},
-    {t:"Because the bank requires two accounts", ok:false, fb:"No rule forces it. You do it because separated money is far less likely to be spent by accident."},
+    {t:"So it is not spent by accident, bit by bit", ok:true, fb:"Right. Money that is easy to reach gets reached for. Separating it protects the goal — exactly what went wrong for Kai in Module 10."},
+    {t:"Because the bank will not let you open just one account", ok:false, fb:"No rule forces it. You do it because separated money is far less likely to be spent by accident."},
     {t:"So the bank cannot see it", ok:false, fb:"The bank records both accounts. The separation is to protect the money from YOU on a weak moment — not to hide it."}]},
   "q193c":{type:"mc", prompt:"Kai has $25. He needs $10 for this week and is saving $15 toward a sail. How should he split it?", concept:"checking", opts:[
     {t:"$10 in checking, $15 in savings", ok:true, fb:"Right — spend-soon money goes where it is easy to reach; goal money goes where it is protected."},
@@ -221,7 +221,7 @@ const QUESTIONS = {
   "q193b":{type:"mc", transfer:true, prompt:"Rana keeps stall money in one jar and house-repair money in a different jar. Is that the same idea?", concept:"savings", opts:[
     {t:"Yes — money separated by the job it has to do", ok:true, fb:"Exactly. Two jars, two accounts, same thinking: money with different jobs is kept apart so neither gets eaten by the other. You do not need a bank to use the idea."},
     {t:"No — jars are nothing like accounts", ok:false, fb:"The container changed, not the idea. Rana is doing exactly what checking and savings do: keeping money separated by purpose."},
-    {t:"No — money should always be in one place", ok:false, fb:"One pile is how goal money disappears. Rana keeps repair money apart on purpose, and that is the same reason savings exists."}]}
+    {t:"No — keeping all your money in one place is always safer", ok:false, fb:"One pile is how goal money disappears. Rana keeps repair money apart on purpose, and that is the same reason savings exists."}]}
 };
 
 /* =====================================================================

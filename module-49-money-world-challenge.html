@@ -240,7 +240,7 @@ const QUESTIONS = {
   "q491a":{type:"mc", prompt:"What is fine print?", concept:"fineprint", opts:[
     {t:"The small words on an offer or contract where the important details hide", ok:true, fb:"Right. The real price, how long, extra fees, how to cancel: it's usually in the fine print."},
     {t:"A fancy font that makes ads look nice", ok:false, fb:"It's not about looks. Fine print is the small words that hold the real details."},
-    {t:"Words that don't matter, so you can skip them", ok:false, fb:"The opposite. Fine print is where the details that matter most often hide."}]},
+    {t:"Extra words the law makes sellers add, which don't change the deal at all", ok:false, fb:"The opposite. Fine print is where the details that matter most often hide."}]},
   "q491b":{type:"mc", prompt:"An ad says “WIN A FREE BOAT TRIP!*” The fine print: “*Winners must pay $40 for meals and $20 for fuel.” What's the real deal?", concept:"fineprint", opts:[
     {t:"The trip isn't free. A “winner” still pays $60", ok:true, fb:"Right. The big words said free; the fine print said $60. Always read the small words."},
     {t:"It's a free trip, exactly as the big words say", ok:false, fb:"The fine print says winners pay $40 + $20 = $60. Not free."},
@@ -249,16 +249,16 @@ const QUESTIONS = {
     good:"Right. The big words are there to make you want it. The fine print tells you what it really costs.",
     bad:"Look again. The big words sell; the fine print tells. Always read both."},
   "q492a":{type:"mc", prompt:"What is comparison shopping?", concept:"compshop", opts:[
-    {t:"Checking several sellers for price, quality, and promises before you buy", ok:true, fb:"Right. It's how you find real value, not just the loudest ad."},
+    {t:"Checking several sellers for price and quality before you buy", ok:true, fb:"Right. It's how you find real value, not just the loudest ad."},
     {t:"Buying from whichever seller has the biggest sign", ok:false, fb:"A big sign is advertising, not value. Comparison shopping means checking several sellers first."},
-    {t:"Always buying the cheapest thing you see", ok:false, fb:"Price is one thing to compare. Quality and promises matter too, like the net that tears in a week."}]},
+    {t:"Always buying the cheapest thing you see, since a low price is the best value", ok:false, fb:"Price is one thing to compare. Quality and promises matter too, like the net that tears in a week."}]},
   "q492b":{type:"mc", prompt:"Besides price, what's MOST worth comparing between sellers?", concept:"compshop", opts:[
-    {t:"How well it's made, any written promises like free repairs, and what other buyers say", ok:true, fb:"Right. That's how Kai picked the $9 net over the $7 one that tears."},
-    {t:"Which seller has the brightest colors", ok:false, fb:"Colors are advertising. Compare quality, promises, and what other buyers say."},
+    {t:"How well it's made, written promises, and what other buyers say", ok:true, fb:"Right. That's how Kai picked the $9 net over the $7 one that tears."},
+    {t:"Which seller has the brightest colors and the biggest, loudest sign", ok:false, fb:"Colors are advertising. Compare quality, promises, and what other buyers say."},
     {t:"Which seller talks the fastest", ok:false, fb:"Fast talk is pressure, not value. Compare quality, promises, and buyer reviews."}]},
   "q493a":{type:"mc", prompt:"Two months after buying, Kai's $9 net rips. His receipt shows a written 3-month free repair promise. What should he do?", concept:"compshop", opts:[
     {t:"Go back calmly with the receipt and ask for the free repair", ok:true, fb:"Right. The written promise is part of what he paid for. Consumer rights plus a receipt."},
-    {t:"Buy a new net, because it's his problem now", ok:false, fb:"The seller promised free repairs for 3 months, in writing. He should use it."},
+    {t:"Buy a new net, because once two months pass, a rip is his own problem", ok:false, fb:"The seller promised free repairs for 3 months, in writing. He should use it."},
     {t:"Post angry messages about the seller before asking", ok:false, fb:"Ask calmly first, with the receipt. Most sellers keep written promises."}]},
   "q493b":{type:"mc", transfer:true, prompt:"Lena needs a bike helmet. Shop A: $15, “COOLEST HELMET EVER!”, no safety label. Shop B: $20, safety-tested label, 1-year promise in writing. Shop C: $35, same as B but a famous rider's name on it. What's the smart pick?", concept:"compshop", opts:[
     {t:"Shop B. Safety-tested, a written promise, and a fair price", ok:true, fb:"Exactly. Different item, same skills: ignore the hype, read the details, compare value."},

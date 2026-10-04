@@ -166,18 +166,18 @@ const QUESTIONS = {
   "q141a":{type:"mc", prompt:"What is a fraction?", concept:"fraction", opts:[
     {t:"A name for equal parts of one whole", ok:true, fb:"Right. When one thing gets cut into equal parts, each part gets a fraction name: half, third, quarter."},
     {t:"A very small coin", ok:false, fb:"Fractions aren't coins — they're NAMES for parts. Though one coin is secretly named after a fraction… you'll see."},
-    {t:"A broken piece of anything", ok:false, fb:"Close, but the parts must be EQUAL. A random shard isn't a fraction — a fair cut is."}]},
+    {t:"Any piece broken off a thing, big or small", ok:false, fb:"Close, but the parts must be EQUAL. A random shard isn't a fraction — a fair cut is."}]},
   "q141b":{type:"mc", prompt:"One mango, cut into 2 equal parts. What is each part called?", concept:"half", opts:[
     {t:"One half", ok:true, fb:"Right. Two equal parts → each is one half. Two halves snap back into one whole mango."},
     {t:"One whole", ok:false, fb:"The WHOLE is the uncut mango. After the cut, each equal part is one half."},
     {t:"One double", ok:false, fb:"Double goes UP (×2). Cutting goes down — each of 2 equal parts is one half."}]},
   "q142a":{type:"mc", prompt:"Rana cuts a mango into 4 equal parts. What is each part?", concept:"fraction", opts:[
-    {t:"One quarter (also called one fourth)", ok:true, fb:"Right — 4 equal parts, each is a quarter. Hold that word tight; it's about to unlock a secret from Module 3."},
-    {t:"One half", ok:false, fb:"Halves come from cutting into 2. FOUR equal parts make quarters."},
+    {t:"One quarter (one fourth)", ok:true, fb:"Right — 4 equal parts, each is a quarter. Hold that word tight; it's about to unlock a secret from Module 3."},
+    {t:"One half, because each cut makes halves", ok:false, fb:"Halves come from cutting into 2. FOUR equal parts make quarters."},
     {t:"One third", ok:false, fb:"Thirds come from cutting into 3. Four equal parts → quarters (fourths)."}]},
-  "q142b":{type:"tf", prompt:"True or false: cut a mango into one BIG piece and one small piece — each piece is one half.", answer:false, concept:"half",
+  "q142b":{type:"tf", prompt:"True or false: to be halves, the two pieces must be exactly the same size.", answer:true, concept:"half",
     good:"Right — halves must be EQUAL (Module 4's word, back again). A big piece and a small piece are just… two pieces. No fraction names for unfair cuts.",
-    bad:"Would you trade your small piece for the big one? Then they're not halves! Fractions demand EQUAL parts — that's the whole deal."},
+    bad:"Would you trade a small piece for a big one? Then they're not halves! Fractions demand EQUAL parts — that's the whole deal."},
   "q143a":{type:"mc", prompt:"The 25¢ coin is called a QUARTER. Why?", concept:"fraction", opts:[
     {t:"Because it's one quarter of a dollar — 4 of them make a whole", ok:true, fb:"The secret's out! 4 × 25¢ = 100¢ = $1. The coin's NAME was a fraction all along, hiding in your pocket since Module 3."},
     {t:"Because it's shaped like a quarter moon", ok:false, fb:"It's a full circle! The name is about the DOLLAR: 4 quarters = 1 whole dollar. It's a fraction wearing metal."},
@@ -187,9 +187,9 @@ const QUESTIONS = {
     {t:"25¢", ok:false, fb:"25¢ is a QUARTER of a dollar (4 parts). HALF means 2 parts: 100 ÷ 2 = 50¢."},
     {t:"100¢", ok:false, fb:"100¢ is the WHOLE dollar. Half is one of 2 equal parts: 50¢."}]},
   "q143b":{type:"mc", transfer:true, prompt:"Half a mango, half a dollar, half an hour of work. Does 'half' work the same everywhere?", concept:"half", opts:[
-    {t:"Yes — half means 1 of 2 equal parts, whatever the whole is", ok:true, fb:"Exactly. Fractions don't care WHAT they cut — fruit, money, time. One of two equal parts, always. That's why they're everywhere."},
+    {t:"Yes — 1 of 2 equal parts, whatever the whole", ok:true, fb:"Exactly. Fractions don't care WHAT they cut — fruit, money, time. One of two equal parts, always. That's why they're everywhere."},
     {t:"No — half only works on food", ok:false, fb:"Half of $2 is $1, half an hour is 30 minutes — fractions cut anything. The rule never changes: 2 equal parts."},
-    {t:"No — money can't have fractions", ok:false, fb:"Money is FULL of fractions — you learned one coin is literally named 'quarter'! Half of $1 = 50¢."}]}
+    {t:"No — money comes in coins, so it can't be cut into halves", ok:false, fb:"Money is FULL of fractions — you learned one coin is literally named 'quarter'! Half of $1 = 50¢."}]}
 };
 
 /* =====================================================================

@@ -40,28 +40,28 @@ const VOCAB = {
 
 const QUESTIONS = {
   "q451a":{type:"mc", prompt:"What is risk tolerance?", concept:"risktol", opts:[
-    {t:"How much up-and-down you can handle without panicking or needing the money", ok:true, fb:"Right. It depends on when you need the money and how you feel when it drops."},
-    {t:"How much money you are allowed to lose by law", ok:false, fb:"No law sets that. Risk tolerance is about you: when you need the money, and how you handle drops."},
+    {t:"How much up-and-down you can handle without panicking", ok:true, fb:"Right. It depends on when you need the money and how you feel when it drops."},
+    {t:"How much money the law allows you to lose before the bank steps in", ok:false, fb:"No law sets that. Risk tolerance is about you: when you need the money, and how you handle drops."},
     {t:"How risky a business is", ok:false, fb:"That's the business's risk. Risk tolerance is about the person: how much up-and-down they can handle."}]},
   "q451b":{type:"mc", prompt:"Mika needs her money in one year to buy a bike. What kind of plan fits her?", concept:"risktol", opts:[
     {t:"Mostly savings, because one year is too short to ride out a bad year", ok:true, fb:"Right. If the fund drops right before she needs the money, there's no time to wait for it to recover."},
-    {t:"Mostly the investment fund, so it grows faster", ok:false, fb:"It might grow, or it might be down right when she needs the bike money. One year isn't long-term."},
+    {t:"Mostly the investment fund, so it grows faster and she can buy a nicer bike", ok:false, fb:"It might grow, or it might be down right when she needs the bike money. One year isn't long-term."},
     {t:"All in one business she likes", ok:false, fb:"That's the riskiest choice of all, for money she needs in a year. Mostly savings fits."}]},
-  "q451c":{type:"tf", prompt:"True or false: the best plan is always the one with the biggest possible return.", answer:false, concept:"risktol",
-    good:"Right. The best plan is one that fits when you need the money, and one you can actually stick with when it drops.",
-    bad:"Look again. A plan that makes you panic and sell in a bad year can end up worse. The best plan fits your time and your nerves."},
+  "q451c":{type:"tf", prompt:"True or false: a plan that fits your time and your nerves can be better than the one with the biggest possible return.", answer:true, concept:"risktol",
+    good:"Right. A plan that fits when you need the money, and one you can stick with when it drops, beats one that makes you panic and sell.",
+    bad:"Look again. The biggest possible return doesn't help if the plan makes you panic and sell in a bad year. The best plan fits your time and your nerves."},
   "q452a":{type:"mc", prompt:"Which list is the best order for Kai's investment plan?", concept:"invplan", opts:[
     {t:"Fill the emergency fund, pay off costly debt, then invest long-term money", ok:true, fb:"Right. Safety first, then the sure win of clearing debt, then let long-term money go to work."},
     {t:"Invest everything first, then build an emergency fund later", ok:false, fb:"Without an emergency fund, one bad day could force him to sell in a down year or borrow. Emergency fund first."},
     {t:"Invest first, pay the card's minimum forever", ok:false, fb:"The card's interest compounds against him for sure. Pay it off before investing."}]},
   "q452b":{type:"mc", prompt:"Why should an investment plan be written down?", concept:"invplan", opts:[
-    {t:"So you can follow your calm thinking when a scary year or a shiny offer comes", ok:true, fb:"Right. You make the plan on a calm day, then follow it on the hard days."},
-    {t:"Because a written plan guarantees a profit", ok:false, fb:"Nothing guarantees a profit. A written plan just keeps you from panicking or chasing scams."},
+    {t:"So your calm thinking guides you in a scary year", ok:true, fb:"Right. You make the plan on a calm day, then follow it on the hard days."},
+    {t:"Because a written plan guarantees a profit, even in a crash year", ok:false, fb:"Nothing guarantees a profit. A written plan just keeps you from panicking or chasing scams."},
     {t:"So the bank can use it", ok:false, fb:"It's for you. It helps you stick to your own rules when things get bumpy."}]},
   "q453a":{type:"mc", prompt:"In a crash year, Kai's island fund drops from $130 to $100. His plan says this money is for 15 years from now. What does the plan tell him to do?", concept:"invplan", opts:[
     {t:"Stick to the plan. It's long-term money, and he expected bad years", ok:true, fb:"Right. He wrote this plan on a calm day for exactly this kind of year."},
     {t:"Sell everything so it can't drop more", ok:false, fb:"That locks in the drop and stops compound growth. His plan says this money can wait 15 years."},
-    {t:"Move his emergency fund into the fund to buy more", ok:false, fb:"The emergency fund stays in savings, always. That's rule number one of the plan."}]},
+    {t:"Move his emergency fund into the island fund to buy more while prices are low", ok:false, fb:"The emergency fund stays in savings, always. That's rule number one of the plan."}]},
   "q453b":{type:"mc", transfer:true, prompt:"Lena's family has two goals: a trip next summer, and helping Lena with school costs in 15 years. Their emergency fund is full and they have no debt. Which plan fits?", concept:"invplan", opts:[
     {t:"Trip money in savings; school money in a spread-out investment fund for the long term", ok:true, fb:"Exactly. Short-term goal: keep it safe. Long-term goal: let it grow, spread out, through the ups and downs."},
     {t:"Both in the investment fund, to grow faster", ok:false, fb:"The trip is next summer. That's not long-term, and the fund could be down right when they need it."},

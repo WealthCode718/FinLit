@@ -168,7 +168,7 @@ const VOCAB = {
 
 const QUESTIONS = {
   "q101a":{type:"mc", prompt:"What does it mean to SPEND money?", concept:"spend", opts:[
-    {t:"Use your money to buy things", ok:true, fb:"Right. Spending is choosing to trade money for things — it's what money is FOR. The skill is choosing well."},
+    {t:"Trade money for things", ok:true, fb:"Right. Spending is choosing to trade money for things — it's what money is FOR. The skill is choosing well."},
     {t:"Lose your money by accident", ok:false, fb:"Dropping a dime in the lagoon isn't spending! Spending is on purpose — you choose the trade."},
     {t:"Give money away for nothing", ok:false, fb:"That's a gift. Spending means you GET something back — the thing you bought."}]},
   "q101b":{type:"mc", prompt:"Which of these is a NEED?", concept:"need", opts:[
@@ -183,8 +183,8 @@ const QUESTIONS = {
     good:"Right — a blanket in freezing winter with a torn one at home? Need. A third blanket because the pattern is pretty? Want. The situation decides, not the thing.",
     bad:"Think about blankets: one warm blanket before winter = need. A THIRD blanket because it's pretty = want. Same item, different situation — the situation decides."},
   "q103a":{type:"mc", prompt:"Kai has $6. Dinner food costs $3 (a need). The drum-song book costs $4 (a want). What's the smart order?", concept:"spend", opts:[
-    {t:"Buy the book first — wants are more fun", ok:false, fb:"Fun now, hungry tonight: after the $4 book, only $2 is left — not enough for $3 dinner. Needs first protects you."},
-    {t:"Dinner first, then see what's left for wants", ok:true, fb:"That's the rule: needs first, wants with what remains. $6 − $3 = $3 left. (Notice… $3 isn't enough for the $4 book. Hold that thought.)"},
+    {t:"Buy the book first — wants are more fun, and dinner can wait", ok:false, fb:"Fun now, hungry tonight: after the $4 book, only $2 is left — not enough for $3 dinner. Needs first protects you."},
+    {t:"Dinner first, then wants with what's left", ok:true, fb:"That's the rule: needs first, wants with what remains. $6 − $3 = $3 left. (Notice… $3 isn't enough for the $4 book. Hold that thought.)"},
     {t:"Buy neither and keep everything", ok:false, fb:"Skipping DINNER to hold money? Needs aren't optional — that's what makes them needs. Cover the need, then choose."}]},
   "q103c":{type:"mc", prompt:"Kai spends $3 on dinner from a $6 pocket. How much is left for wants?", concept:"spend", opts:[
     {t:"$3", ok:true, fb:"Right — $6 − $3 = $3. Module 7 doing its job at the trading post."},
@@ -192,7 +192,7 @@ const QUESTIONS = {
     {t:"$6", ok:false, fb:"The dinner money is spent — it left the pocket. 6 − 3 = 3 left."}]},
   "q103b":{type:"mc", transfer:true, prompt:"Shell days: a cold night was coming. Kai had 10 shells and stood between a warm blanket (10 shells) and a pretty necklace (10 shells). Was that a needs-vs-wants choice?", concept:"need", opts:[
     {t:"Yes — blanket was the need, necklace the want", ok:true, fb:"Exactly. Needs vs wants is older than dollars, older than tags — it's about being okay first. The blanket wins the cold night."},
-    {t:"No — shells can't buy needs", ok:false, fb:"Shells were money, and the blanket was very buyable! The choice between staying-warm and looking-fancy is the oldest spending choice there is."},
+    {t:"No — needs and wants only matter once there are dollars", ok:false, fb:"Needs and wants are older than dollars! Shells were money, and the choice between staying-warm and looking-fancy is the oldest spending choice there is."},
     {t:"No — pretty things are always needs", ok:false, fb:"Pretty is a want wearing a nice outfit. On a cold night, WARM is the need."}]}
 };
 

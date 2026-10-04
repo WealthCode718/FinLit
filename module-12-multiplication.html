@@ -167,14 +167,14 @@ const QUESTIONS = {
   "q121a":{type:"mc", prompt:"What does multiplying tell you?", concept:"multiply", opts:[
     {t:"The total of equal groups — fast", ok:true, fb:"Right. Instead of 5+5+5+5+5+5, you say 6 × 5 = 30. Same answer, one step."},
     {t:"Which group is biggest", ok:false, fb:"That's comparing. Multiplying counts equal groups all at once: 6 groups of 5 → 6 × 5."},
-    {t:"What's left after taking away", ok:false, fb:"That's subtracting. Multiplying goes the other direction — it builds totals from equal groups, fast."}]},
+    {t:"How much is left after you take some away", ok:false, fb:"That's subtracting. Multiplying goes the other direction — it builds totals from equal groups, fast."}]},
   "q121b":{type:"mc", prompt:"4 dimes. In cents: 4 × 10 = ?", concept:"multiply", opts:[
     {t:"40¢", ok:true, fb:"Right — four groups of ten: 10, 20, 30, 40. The × sign just skips the counting."},
-    {t:"14¢", ok:false, fb:"That's 4 + 10 — adding the numbers themselves. × means GROUPS: four tens = 40."},
+    {t:"14¢ (4 + 10)", ok:false, fb:"That's 4 + 10 — adding the numbers themselves. × means GROUPS: four tens = 40."},
     {t:"44¢", ok:false, fb:"Count by tens four times: 10, 20, 30, 40."}]},
   "q122a":{type:"mc", prompt:"Kai's tin has 6 nickels. How much is that?", concept:"multiply", opts:[
     {t:"30¢", ok:true, fb:"Right: 6 × 5 = 30¢. What took six counts now takes one multiply."},
-    {t:"6¢", ok:false, fb:"Six PENNIES would be 6¢. These are nickels — 5¢ each. Six groups of 5: 6 × 5."},
+    {t:"6¢ — one cent for each nickel", ok:false, fb:"Six PENNIES would be 6¢. These are nickels — 5¢ each. Six groups of 5: 6 × 5."},
     {t:"35¢", ok:false, fb:"Close! 6 × 5 = 30. Count by fives: 5, 10, 15, 20, 25, 30."}]},
   "q122b":{type:"tf", prompt:"True or false: 3 × 25¢ is exactly the same as 25 + 25 + 25.", answer:true, concept:"multiply",
     good:"Right — multiplying IS repeated adding, wearing a faster outfit. Both roads lead to 75¢.",
@@ -185,7 +185,7 @@ const QUESTIONS = {
     {t:"$44", ok:false, fb:"That's gluing digits together! Double $4 = 2 × 4 = $8."}]},
   "q123c":{type:"mc", prompt:"Kai earns $2 every market morning. After 5 mornings, how much has Kai earned?", concept:"multiply", opts:[
     {t:"$10", ok:true, fb:"Right: 5 × $2 = $10. Five mornings, one multiply. This is how you plan a whole month of saving in your head."},
-    {t:"$7", ok:false, fb:"That's 5 + 2. But it's five GROUPS of 2: count by twos — 2, 4, 6, 8, 10."},
+    {t:"$7, because 5 + 2 = 7", ok:false, fb:"That's 5 + 2. But it's five GROUPS of 2: count by twos — 2, 4, 6, 8, 10."},
     {t:"$25", ok:false, fb:"That would be $5 per morning. It's $2 each: 5 × 2 = $10."}]},
   "q123b":{type:"mc", transfer:true, prompt:"Shell days: Rana kept 5 pouches with 3 shells in each. How many shells — and does multiplying work on shells?", concept:"multiply", opts:[
     {t:"15 shells — multiplying works on any equal groups", ok:true, fb:"Exactly. 5 × 3 = 15, whether it's shells, coins, mangoes, or mornings. Multiplying belongs to GROUPS, not to dollars."},

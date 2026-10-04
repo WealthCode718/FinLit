@@ -186,25 +186,25 @@ const QUESTIONS = {
   "q181a":{type:"mc", prompt:"What does it mean to withdraw money?", concept:"withdraw", opts:[
     {t:"Taking money OUT of your account", ok:true, fb:"Right — and you already did it in Module 17 when Kai asked for $4 back. Now it has a name: withdraw."},
     {t:"Putting money into your account", ok:false, fb:"That's a deposit — money IN. Withdraw is the other direction: money OUT."},
-    {t:"Closing your account forever", ok:false, fb:"Not at all. You can withdraw some money and leave the rest. The account stays open."}]},
+    {t:"Closing your account and taking all of it home", ok:false, fb:"Not at all. You can withdraw some money and leave the rest. The account stays open."}]},
   "q181b":{type:"mc", prompt:"What is your balance?", concept:"balance", opts:[
-    {t:"How much money is in your account right now", ok:true, fb:"Right. Not what you earned, not what you spent — what's THERE, this moment."},
+    {t:"How much is in your account right now", ok:true, fb:"Right. Not what you earned, not what you spent — what's THERE, this moment."},
     {t:"The total of everything you ever deposited", ok:false, fb:"That would ignore every withdrawal! Balance is what's left right now, after money in AND money out."},
     {t:"The amount the bank owes you in extra money", ok:false, fb:"Banks don't add extra money here — balance is simply what's in the account right now."}]},
   "q182a":{type:"mc", prompt:"Kai's balance is $30. He withdraws $6. What's the new balance?", concept:"withdraw", opts:[
     {t:"$24", ok:true, fb:"Right — $30 − $6 = $24. Withdrawals subtract, exactly like Module 7."},
     {t:"$36", ok:false, fb:"That's adding! A withdrawal takes money OUT: $30 − $6 = $24."},
-    {t:"$6", ok:false, fb:"The $6 is what he took out, not what's left. $30 − $6 = $24 stays in the account."}]},
+    {t:"$6, the amount he took out", ok:false, fb:"The $6 is what he took out, not what's left. $30 − $6 = $24 stays in the account."}]},
   "q182b":{type:"tf", prompt:"True or false: a withdrawal makes your balance go up.", answer:false, concept:"withdraw",
     good:"Right — withdrawals pull the balance DOWN. Only deposits push it up.",
     bad:"Picture the money leaving your account and landing in your hand. The account has less now, so the balance goes DOWN."},
   "q183a":{type:"mc", prompt:"Balance is $12. Kai deposits $8, then withdraws $5. What's the balance?", concept:"balance", opts:[
     {t:"$15", ok:true, fb:"Right — $12 + $8 = $20, then $20 − $5 = $15. Work through them in order, one at a time."},
-    {t:"$25", ok:false, fb:"Careful — the $5 was a WITHDRAWAL, so it subtracts: $12 + $8 = $20, then $20 − $5 = $15."},
+    {t:"$25 (adding all three)", ok:false, fb:"Careful — the $5 was a WITHDRAWAL, so it subtracts: $12 + $8 = $20, then $20 − $5 = $15."},
     {t:"$9", ok:false, fb:"Check the directions: the $8 goes IN (+) and the $5 goes OUT (−). $12 + $8 − $5 = $15."}]},
   "q183c":{type:"mc", prompt:"Why check your balance before you buy something?", concept:"balance", opts:[
     {t:"To know whether you actually have enough", ok:true, fb:"Right. The balance is the honest answer to 'can I afford this?' — Module 10's question, now with a number attached."},
-    {t:"Because the bank makes you check", ok:false, fb:"Nobody forces you. You check because it tells you whether you can afford the thing — that's genuinely useful."},
+    {t:"Because the bank will not let you buy anything until you do", ok:false, fb:"Nobody forces you. You check because it tells you whether you can afford the thing — that's genuinely useful."},
     {t:"There's no reason to check", ok:false, fb:"There's a big one: if you don't know your balance, you don't know what you can afford. Kai learned that the hard way in Module 10."}]},
   "q183b":{type:"mc", transfer:true, prompt:"Rana tracks money in and money out at her fruit stall all day. Does the balance idea work there too?", concept:"balance", opts:[
     {t:"Yes — anything with money going in and out has a running balance", ok:true, fb:"Exactly. A bank account, a fruit stall, a tin, a pocket — money in adds, money out subtracts, and what's left is the balance. Same idea everywhere."},

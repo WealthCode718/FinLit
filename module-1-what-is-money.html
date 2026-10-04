@@ -242,7 +242,7 @@ const QUESTIONS = {
     good:"Right — shells aren't useful by themselves. Money works because everyone takes it, not because it's useful.",
     bad:"Think about the shells. Can you eat a shell? No — but everyone on the island takes them. That's what makes them money."},
   "q11c":{type:"mc", prompt:"What made shells become money on the island?", concept:"money", opts:[
-    {t:"Shells are pretty", ok:false, fb:"Being pretty helps, but pretty things aren't automatically money. What did the islanders decide?"},
+    {t:"Shells are the prettiest things on the island", ok:false, fb:"Being pretty helps, but pretty things aren't automatically money. What did the islanders decide?"},
     {t:"Everyone agreed to take them", ok:true, fb:"Exactly. The deal the islanders made is the whole trick. Remember this — it comes back soon."},
     {t:"Shells are good tools", ok:false, fb:"Shells aren't really tools. They became money for a different reason — what did everyone decide together?"}]},
   "q12a":{type:"mc", prompt:"A storm soaks all the firewood except Rana's dry pile. The next morning, what happens to what dry firewood is worth?", concept:"worth", opts:[
@@ -254,16 +254,16 @@ const QUESTIONS = {
     {t:"How much people want it", ok:true, fb:"That's it. Worth lives in people's wanting, not inside the thing itself."},
     {t:"Every thing is born with a fixed worth", ok:false, fb:"Remember the firewood after the storm — same firewood, different worth. Worth changes when wanting changes."}]},
   "q13a":{type:"mc", prompt:"In Market Day, why did shells stop working as money?", concept:"agree", opts:[
-    {t:"The shells broke", ok:false, fb:"The shells were fine! Look at what the traders stopped doing, not at the shells."},
+    {t:"The shells cracked and faded in the hot sun", ok:false, fb:"The shells were fine! Look at what the traders stopped doing, not at the shells."},
     {t:"People stopped agreeing to take them", ok:true, fb:"Exactly. Same shells, no agreement, no money."},
     {t:"Kai ran out of shells", ok:false, fb:"Kai still had shells — the problem was nobody would take them anymore. What disappeared wasn't shells, it was the agreement."}]},
-  "q13b":{type:"tf", prompt:"True or false: a paper bill is valuable mostly because of what the paper is made of.", answer:false, concept:"agree",
+  "q13b":{type:"tf", prompt:"True or false: a paper bill is valuable mostly because everyone agrees to take it.", answer:true, concept:"agree",
     good:"Right. The paper itself is nearly worthless. The agreement behind it is what you're really holding.",
-    bad:"Tear a corner off a notebook — same kind of paper, worth nothing. The bill is different only because everyone agrees to take it."},
+    bad:"It’s true! Tear a corner off a notebook — same kind of paper, worth nothing. The bill is different only because everyone agrees to take it."},
   "q13c":{type:"mc", transfer:true, prompt:"Long ago, people used big stones, salt, and even dried tea as money. What did ALL of these have to have, to work as money?", concept:"agree", opts:[
     {t:"They had to taste good", ok:false, fb:"Stones don't taste like anything. Being useful or tasty isn't what makes money work."},
-    {t:"Everyone around had to agree to take them", ok:true, fb:"You've got the deep idea: anything can be money — stones, salt, shells, paper — as long as everyone agrees."},
-    {t:"They had to be shiny", ok:false, fb:"Salt isn't shiny. Tea isn't shiny. Something else made them all work — a thing people did together."}]}
+    {t:"Everyone had to agree to take them", ok:true, fb:"You've got the deep idea: anything can be money — stones, salt, shells, paper — as long as everyone agrees."},
+    {t:"They had to be shiny and rare, like pearls", ok:false, fb:"Salt isn't shiny. Tea isn't shiny. Something else made them all work — a thing people did together."}]}
 };
 
 const SORT_ITEMS = [

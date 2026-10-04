@@ -226,8 +226,8 @@ const VOCAB = {
 
 const QUESTIONS = {
   "q231a":{type:"mc", prompt:"What is a PIN?", concept:"pin", opts:[
-    {t:"A secret number only you know, that proves to the bank it is really you", ok:true, fb:"Right. It works like a key. Anyone who has it can get into your account — which is exactly why it stays secret."},
-    {t:"The number printed on the front of the bank building", ok:false, fb:"Nope — anyone can see that. A PIN is the opposite: a number ONLY you know."},
+    {t:"A secret number that proves to the bank it is really you", ok:true, fb:"Right. It works like a key. Anyone who has it can get into your account — which is exactly why it stays secret."},
+    {t:"The number on the front of the bank building, so you can find the right one", ok:false, fb:"Nope — anyone can see that. A PIN is the opposite: a number ONLY you know."},
     {t:"Your balance, written in code", ok:false, fb:"Your balance is how much money you have. A PIN is a secret number that proves you are you."}]},
   "q231b":{type:"mc", prompt:"Which of these is the best PIN for Kai?", concept:"pin", opts:[
     {t:"8315", ok:true, fb:"Right. No pattern, not his birthday, not a number anyone could guess by knowing him."},
@@ -238,9 +238,9 @@ const QUESTIONS = {
     good:"Right. A PIN is for you only. Even a great friend could lose it, say it out loud, or have their phone taken.",
     bad:"Even a friend you trust should not have it. The moment a second person knows your PIN, it is no longer a secret you control."},
   "q232a":{type:"mc", prompt:"What is a scam?", concept:"scam", opts:[
-    {t:"A trick where someone pretends to be someone they are not, to get your money or secrets", ok:true, fb:"Right. The pretending is the heart of it — a fake bank, a fake prize, even a fake friend."},
+    {t:"A trick where someone pretends, to get your money or secrets", ok:true, fb:"Right. The pretending is the heart of it — a fake bank, a fake prize, even a fake friend."},
     {t:"A fee the bank charges each month", ok:false, fb:"A fee is a real charge from your real bank. A scam is a trick from someone pretending."},
-    {t:"Any message that arrives on your phone", ok:false, fb:"Most messages are fine — like Kai’s real bank notifications. A scam is one that is pretending, to trick you."}]},
+    {t:"Any message from a number you do not know, even if it only says hello", ok:false, fb:"A message from a new number can be fine. A scam is one that is pretending, to trick you out of money or secrets."}]},
   "q232b":{type:"mc", prompt:"Which of these is a warning sign of a scam?", concept:"scam", opts:[
     {t:"It rushes you: “Reply in the next 10 minutes or lose everything!”", ok:true, fb:"Right. Tricksters rush you so you do not stop to think or ask someone. Real banks give you time."},
     {t:"It tells you a transaction that you really made", ok:false, fb:"That is a normal notification — just telling you what already happened. It is not asking you for anything."},
@@ -253,13 +253,13 @@ const QUESTIONS = {
     {t:"Wait a month and see if it happens again", ok:false, fb:"Waiting lets a problem grow. Speaking up fast is the whole trick — the bank can usually help more when you report quickly."},
     {t:"Nothing — it is only $7", ok:false, fb:"A strange transaction is a signal that someone else may be using your account. Small or not, tell someone right away."}]},
   "q233c":{type:"mc", prompt:"How should Kai contact his bank about a problem?", concept:"scam", opts:[
-    {t:"Through the bank app he already has, or the number he already knows", ok:true, fb:"Right. Start from something YOU already trust. That way you know you are really talking to your bank."},
+    {t:"Through his bank app, or the number he already knows", ok:true, fb:"Right. Start from something YOU already trust. That way you know you are really talking to your bank."},
     {t:"By tapping the link in the surprise message", ok:false, fb:"That link could lead straight to the trickster. Always go to your bank the way you already know."},
-    {t:"By replying to the message that said his account was locked", ok:false, fb:"That message was the scam! Replying talks to the trickster, not the bank."}]},
+    {t:"By replying to the message that said his account was locked — it has the details", ok:false, fb:"That message was the scam! Replying talks to the trickster, not the bank."}]},
   "q233b":{type:"mc", transfer:true, prompt:"A stranger at the harbor says, “I am from the island council. Give me the key to your family’s boat shed so I can check it — quickly!” What should Kai do?", concept:"scam", opts:[
     {t:"Keep the key and check with a trusted adult first", ok:true, fb:"Exactly. Same shape as a scam message: pretending to be someone official, asking for the key, and rushing. Different place, same trick."},
     {t:"Hand it over — the council is important", ok:false, fb:"Anyone can SAY they are from the council. Asking for a key and rushing you are the same warning signs as a scam message."},
-    {t:"Hand it over, but only if they say please", ok:false, fb:"Being polite does not make someone real. The warning signs are still there: a stranger, a key, and a rush."}]}
+    {t:"Hand it over, but only after they show a paper with the council’s name on it", ok:false, fb:"Anyone can make a paper with a name on it. The warning signs are still there: a stranger, a key, and a rush."}]}
 };
 
 const CFG = {

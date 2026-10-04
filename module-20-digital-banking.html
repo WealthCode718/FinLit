@@ -207,12 +207,12 @@ const VOCAB = {
 
 const QUESTIONS = {
   "q201a":{type:"mc", prompt:"What is a transaction?", concept:"transaction", opts:[
-    {t:"Any time money moves in or out of your account", ok:true, fb:"Right — and you have been making them since Module 17. Deposits and withdrawals are both transactions."},
-    {t:"Only money going out", ok:false, fb:"Both directions count. A deposit is a transaction too — anything that moves money."},
-    {t:"A fee the bank charges you", ok:false, fb:"No charge involved. A transaction is simply a movement of money, in or out."}]},
+    {t:"Any time money moves in or out", ok:true, fb:"Right — and you have been making them since Module 17. Deposits and withdrawals are both transactions."},
+    {t:"Only money going out, like when you buy something", ok:false, fb:"Both directions count. A deposit is a transaction too — anything that moves money."},
+    {t:"Money the bank charges you", ok:false, fb:"No charge involved. A transaction is simply a movement of money, in or out."}]},
   "q201b":{type:"mc", prompt:"What can Kai do from the island that he could not do before?", concept:"transaction", opts:[
-    {t:"See his balance and every transaction, without crossing the water", ok:true, fb:"Right. The record used to be a half-day row away. Now it is in his pocket, updated the moment anything moves."},
-    {t:"Make money appear in his account", ok:false, fb:"A phone shows you the money — it does not create any. Kai still has to earn every dollar."},
+    {t:"See his balance and history without crossing the water", ok:true, fb:"Right. The record used to be a half-day row away. Now it is in his pocket, updated the moment anything moves."},
+    {t:"Add money to his account just by tapping a button on the phone", ok:false, fb:"A phone shows you the money — it does not create any. Kai still has to earn every dollar."},
     {t:"Stop the bank from keeping records", ok:false, fb:"The opposite! Digital banking means the record is MORE available, not less. He can see it any time."}]},
   "q202a":{type:"mc", prompt:"In Kai's history the rope cost $4 and the sweet cake cost $2. Which was the bigger transaction?", concept:"transaction", opts:[
     {t:"The rope, at $4", ok:true, fb:"Right. Reading a history means comparing amounts — Module 4's skill, working on a phone screen."},
@@ -222,11 +222,11 @@ const QUESTIONS = {
     good:"Right — it shows both directions. Deposits and withdrawals all land in the same list, which is what makes the balance make sense.",
     bad:"Look again at a history: money coming in is listed too. If it only showed money going out, the balance could never add up."},
   "q203a":{type:"mc", prompt:"What is a notification?", concept:"notification", opts:[
-    {t:"A message from the bank telling you a transaction just happened", ok:true, fb:"Right. Instead of you going to check, the bank taps you on the shoulder the moment money moves."},
+    {t:"A message saying a transaction just happened", ok:true, fb:"Right. Instead of you going to check, the bank taps you on the shoulder the moment money moves."},
     {t:"A bill you have to pay", ok:false, fb:"Nothing to pay. A notification is just information — money moved, here is what and when."},
     {t:"A message from a shop asking you to buy something", ok:false, fb:"That is an advertisement. A notification comes from your bank, about your own money."}]},
   "q203c":{type:"mc", prompt:"Why is it a good habit to check your account regularly?", concept:"notification", opts:[
-    {t:"Because you can only notice something is wrong if you look", ok:true, fb:"Right. Checking often means you know where you stand — and you find out quickly if something does not look right."},
+    {t:"So you notice quickly if something is wrong", ok:true, fb:"Right. Checking often means you know where you stand — and you find out quickly if something does not look right."},
     {t:"Because the bank charges you if you do not", ok:false, fb:"Nobody charges you for looking. You check because it is YOUR money, and looking is how you stay in control of it."},
     {t:"There is no reason — checking once a year is fine", ok:false, fb:"A year is a long time to be wrong about your own money. Checking often is how you catch problems while they are small."}]},
   "q203b":{type:"mc", transfer:true, prompt:"Rana writes every stall sale in a notebook and reads it back each evening. Is that the same idea?", concept:"notification", opts:[

@@ -235,8 +235,8 @@ const QUESTIONS = {
     {t:"A fee the bank charges for your account", ok:false, fb:"That is a bank fee. A tax goes to the government, to pay for shared things."},
     {t:"Money you choose to give if you feel like it", ok:false, fb:"A gift is a choice. Taxes are required — everyone pays their part."}]},
   "q321b":{type:"mc", prompt:"Why do people pay for a lighthouse with taxes instead of one person buying it?", concept:"tax", opts:[
-    {t:"It costs far too much for one person, and everyone uses it", ok:true, fb:"Right. Everyone chips in a little, and everyone’s boat gets home safely."},
-    {t:"Because the lighthouse keeper asked nicely", ok:false, fb:"Asking nicely would not build a lighthouse! It is too big for one person, and everyone shares it."},
+    {t:"It costs too much for one person, and everyone uses it", ok:true, fb:"Right. Everyone chips in a little, and everyone’s boat gets home safely."},
+    {t:"Because the lighthouse keeper asked everyone nicely, so they all agreed to help", ok:false, fb:"Asking nicely would not build a lighthouse! It is too big for one person, and everyone shares it."},
     {t:"Because lighthouses are free", ok:false, fb:"Nothing that big is free. Taxes are how everyone shares the cost."}]},
   "q321c":{type:"tf", prompt:"True or false: paying taxes is optional — you can skip it if you would rather keep the money.", answer:false, concept:"tax",
     good:"Right. Taxes are required. That is what lets everyone count on the lighthouse being lit.",
@@ -249,12 +249,12 @@ const QUESTIONS = {
     good:"Right. The lighthouse shines for every boat. That is the point of sharing the cost.",
     bad:"They are shared. The lighthouse shines for every boat, no matter who paid what."},
   "q323a":{type:"mc", prompt:"What is take-home pay?", concept:"takehome", opts:[
-    {t:"The part of your pay you actually get, after taxes are taken out", ok:true, fb:"Right. For Kai: earned $40, taxes $4, take-home pay $36."},
-    {t:"All the money you earned, before anything is taken out", ok:false, fb:"That is the earned amount ($40 for Kai). Take-home pay is what is left after taxes ($36)."},
+    {t:"The part of your pay you keep after taxes are taken out", ok:true, fb:"Right. For Kai: earned $40, taxes $4, take-home pay $36."},
+    {t:"All the money you earned for your work, before anything is taken out", ok:false, fb:"That is the earned amount ($40 for Kai). Take-home pay is what is left after taxes ($36)."},
     {t:"Money you carry home in your pocket", ok:false, fb:"It is not about pockets — even pay that goes straight into checking is take-home pay. It is what is left after taxes."}]},
   "q323c":{type:"mc", prompt:"Why does Tavo take the tax out of Kai’s pay before paying him?", concept:"tax", opts:[
     {t:"So the tax gets sent to the government for Kai, a little at a time", ok:true, fb:"Right. The employer passes it along, so Kai does not have to find the money later all at once."},
-    {t:"So Tavo can keep it", ok:false, fb:"Tavo does not keep it. He sends it on to the government, for Kai."},
+    {t:"So Tavo can keep a little extra for his boat, since he is the one paying Kai", ok:false, fb:"Tavo does not keep it. He sends it on to the government, for Kai."},
     {t:"Because Kai made a mistake", ok:false, fb:"No mistake at all. It happens to everyone’s paycheck — the employer passes the tax along."}]},
   "q323b":{type:"mc", transfer:true, prompt:"Every family on the island drops a few fish into a shared barrel. The fish feed whoever is fixing the harbor wall that week. What is this most like?", concept:"tax", opts:[
     {t:"Taxes — everyone chips in a little to pay for something everyone shares", ok:true, fb:"Exactly. No money involved, but the same shape: small parts from everyone, one shared thing that helps everyone."},

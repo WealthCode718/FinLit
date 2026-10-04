@@ -57,7 +57,7 @@ const QUESTIONS = {
     good:"Right. Skipping does not pause anything. Interest keeps adding, and a late fee often lands on top.",
     bad:"That is the trap Nilo fell into. While you skip, interest keeps adding and a late fee often lands on top. The debt gets bigger."},
   "q262c":{type:"mc", prompt:"Why did Nilo end up owing MORE than the $20 he borrowed?", concept:"debt", opts:[
-    {t:"He skipped payments, so interest and late fees piled on", ok:true, fb:"Right. Every skipped week added a little. Little by little, the debt grew bigger than the jacket was ever worth."},
+    {t:"Skipped payments let interest and late fees pile on", ok:true, fb:"Right. Every skipped week added a little. Little by little, the debt grew bigger than the jacket was ever worth."},
     {t:"The jacket shop raised the price", ok:false, fb:"The shop was paid long ago. The growing came from the debt — interest and late fees on the money he still owed."},
     {t:"He did not — you always owe exactly what you borrowed", ok:false, fb:"Look back at the tracker: skipping made the number go UP. Debt can grow past what you first borrowed."}]},
   "q263a":{type:"mc", prompt:"Nilo wants to get out of debt. What is the FIRST thing he should do?", concept:"debt", opts:[
@@ -67,11 +67,11 @@ const QUESTIONS = {
   "q263c":{type:"mc", prompt:"Nilo knows he cannot pay this week. What is the best move?", concept:"owe", opts:[
     {t:"Tell the bank early and ask a trusted adult for help", ok:true, fb:"Right. Speaking up BEFORE you miss a payment gives everyone more choices. Hiding gives everyone fewer."},
     {t:"Hide from the bank until he can pay", ok:false, fb:"Hiding lets fees pile up and makes the bank trust you less. Talking early is almost always better."},
-    {t:"Nothing — one missed week does not matter", ok:false, fb:"Every missed week can add a late fee and more interest. Speaking up early helps keep it small."}]},
+    {t:"Nothing — one missed week does not matter if he pays the next week", ok:false, fb:"Every missed week can add a late fee and more interest. Speaking up early helps keep it small."}]},
   "q263b":{type:"mc", transfer:true, prompt:"Kai promised to do 2 chores for Mika. He puts it off, and each week Mika adds 1 more chore for the wait. What is this most like?", concept:"debt", opts:[
     {t:"Debt — putting off paying back makes what you owe grow", ok:true, fb:"Exactly. No money involved, but the same shape: something owed, left alone, gets bigger. The way out is the same too — start paying it back."},
     {t:"Savings — Kai’s chores are growing", ok:false, fb:"Savings grow FOR you. These chores are growing against Kai — he owes more and more. That is debt’s shape."},
-    {t:"A trade — they are swapping chores", ok:false, fb:"In a trade both sides get something now. Here Kai owes something and is not paying it back — and it grows. That is debt."}]}
+    {t:"A trade — Kai and Mika are swapping chores back and forth each week", ok:false, fb:"In a trade both sides get something now. Here Kai owes something and is not paying it back — and it grows. That is debt."}]}
 };
 
 const CFG = {

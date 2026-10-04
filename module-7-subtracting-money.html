@@ -169,8 +169,8 @@ const VOCAB = {
 
 const QUESTIONS = {
   "q71a":{type:"mc", prompt:"What does subtracting tell you?", concept:"subtract", opts:[
-    {t:"How much two amounts make together", ok:false, fb:"That's adding — Module 6! Subtracting goes the other way: it finds what's LEFT, or the gap between two amounts."},
-    {t:"What's left after taking an amount away", ok:true, fb:"Exactly. Adding builds the pile up; subtracting answers what remains — or how far apart two amounts are."},
+    {t:"How much two amounts make when put together", ok:false, fb:"That's adding — Module 6! Subtracting goes the other way: it finds what's LEFT, or the gap between two amounts."},
+    {t:"What's left after taking some away", ok:true, fb:"Exactly. Adding builds the pile up; subtracting answers what remains — or how far apart two amounts are."},
     {t:"Which amount is prettier", ok:false, fb:"Ha — no beauty contests in math. Subtracting finds what's left, or the gap between amounts."}]},
   "q71b":{type:"mc", prompt:"Kai's pocket holds $5. The drum asks for $2. After the trade, what's left?", concept:"subtract", opts:[
     {t:"$3", ok:true, fb:"Right. $5 − $2 = $3. The pocket doesn't go empty — it just gets lighter by exactly the price."},
@@ -180,9 +180,9 @@ const QUESTIONS = {
     {t:"20¢", ok:false, fb:"Count UP from the price: 70 → 80 → 90 → 100. How many tens was that?"},
     {t:"30¢", ok:true, fb:"Right. Count up from 70: 80, 90, 100 — three dimes. 30¢ change."},
     {t:"70¢", ok:false, fb:"70¢ is the price — that part stays with the trader. The change is the gap between 70 and 100."}]},
-  "q72b":{type:"tf", prompt:"True or false: if you hand the trader EXACTLY the price, you get change back.", answer:false, concept:"change",
+  "q72b":{type:"tf", prompt:"True or false: if you hand the trader EXACTLY the price, no change comes back.", answer:true, concept:"change",
     good:"Right — exact amount means an equal trade, nothing owed either way. Change only exists when you hand over MORE than the price.",
-    bad:"Think about it: hand exactly 70¢ for a 70¢ mango — that's an equal trade (Module 4!). Nothing extra went over, so nothing comes back."},
+    bad:"It’s true! Think about it: hand exactly 70¢ for a 70¢ mango — that's an equal trade (Module 4!). Nothing extra went over, so nothing comes back."},
   "q73a":{type:"mc", prompt:"Remember Kai's problem: the feast totals $1.70, and Kai has $1.25. How much MORE does Kai need?", concept:"subtract", opts:[
     {t:"45¢", ok:true, fb:"Yes! Count up from 125: +5 → 130, +40 → 170. That's 45¢. The gap finally has a number."},
     {t:"55¢", ok:false, fb:"Count up from 125 to 170: 125 → 130 is 5, then 130 → 170 is 40. Put those together…"},
@@ -192,8 +192,8 @@ const QUESTIONS = {
     {t:"40¢", ok:false, fb:"40 is what was taken away. What's LEFT? Count up from 40 to 90."},
     {t:"130¢", ok:false, fb:"That's the two added together. The − sign means take away: 90 − 40 = 50."}]},
   "q73b":{type:"mc", transfer:true, prompt:"Back in shell days: Kai's pouch held 75 shells, and a blanket asked for 50. Does subtracting work on shells too?", concept:"subtract", opts:[
-    {t:"Yes — 75 − 50 = 25 shells left, same rules", ok:true, fb:"Exactly. Like adding, subtracting belongs to amounts — shells, stones, dollars, mangoes. Same math on every island."},
-    {t:"No — shells can only be added", ok:false, fb:"Any amount that can grow can also shrink! 75 shells − 50 shells = 25 shells left."},
+    {t:"Yes — 75 − 50 = 25 shells left", ok:true, fb:"Exactly. Like adding, subtracting belongs to amounts — shells, stones, dollars, mangoes. Same math on every island."},
+    {t:"No — subtracting only works on dollars and cents", ok:false, fb:"Subtracting works on any amount — shells, stones, dollars. 75 shells − 50 shells = 25 shells left."},
     {t:"Only if the shells agree to leave", ok:false, fb:"Ha — the agreement makes shells MONEY, but the math works on any pile: 75 − 50 = 25."}]}
 };
 

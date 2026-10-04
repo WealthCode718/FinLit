@@ -44,7 +44,7 @@ const VOCAB = {
 const QUESTIONS = {
   "q431a":{type:"mc", prompt:"What does it mean to diversify?", concept:"diversify", opts:[
     {t:"Spread your money across many different kinds of investments", ok:true, fb:"Right. Different kinds, so one bad event can't hit everything at once."},
-    {t:"Put all your money into the one investment you like best", ok:false, fb:"That's the opposite: everything in one place. To diversify is to spread it across many different kinds."},
+    {t:"Put all your money into the one investment you trust and like the best", ok:false, fb:"That's the opposite: everything in one place. To diversify is to spread it across many different kinds."},
     {t:"Keep switching your money around every week", ok:false, fb:"Moving money around a lot isn't diversifying. Diversifying means owning many different kinds at the same time."}]},
   "q431b":{type:"mc", prompt:"Which of these baskets is the MOST diversified?", concept:"diversify", opts:[
     {t:"A piece each of a juice stand, an umbrella shop, a fishing boat, and a bakery", ok:true, fb:"Right. Four different kinds of business. Rain, storms, or a rival won't hit them all the same way."},
@@ -62,8 +62,8 @@ const QUESTIONS = {
     {t:"Funds always get their money back when a business closes", ok:false, fb:"Nobody gives the money back. The fund just owned lots of other businesses, so one closing was a small part of it."},
     {t:"The fund knew the kite shop would close", ok:false, fb:"Nobody knew. The fund was simply spread across 20 businesses, so one closing hurt only a little."}]},
   "q433a":{type:"mc", prompt:"Kai says: \"My emergency fund and an investment fund are the same, so I'll move my emergency fund into the investment fund.\" What's wrong?", concept:"invfund", opts:[
-    {t:"They're different. The emergency fund stays in savings, ready for bad days. An investment fund can go down", ok:true, fb:"Right. Same word, different jobs. The emergency fund must be there on a bad day, so it stays safe in savings."},
-    {t:"Nothing. A bigger, spread-out fund is safer", ok:false, fb:"An investment fund can be down right when the emergency comes. The emergency fund's job is to be ready, so it stays in savings."},
+    {t:"They have different jobs: emergency money must stay safe in savings", ok:true, fb:"Right. Same word, different jobs. The emergency fund must be there on a bad day, so it stays safe in savings."},
+    {t:"Nothing. A bigger, spread-out fund is safer than one savings account, and it grows", ok:false, fb:"An investment fund can be down right when the emergency comes. The emergency fund's job is to be ready, so it stays in savings."},
     {t:"Nothing, as long as he moves only half", ok:false, fb:"Even half could be down on the day he needs it. The emergency fund stays in savings."}]},
   "q433b":{type:"mc", transfer:true, prompt:"Lena's uncle is a farmer. One year he plants only strawberries. A frost kills them all, and he has nothing to sell. What could help next year?", concept:"diversify", opts:[
     {t:"Plant several different crops, so one frost can't wipe out everything", ok:true, fb:"Exactly. Farming, not stock, but the same idea: diversify, so one bad event can't take it all."},

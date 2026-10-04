@@ -177,27 +177,27 @@ const VOCAB = {
 
 const QUESTIONS = {
   "q171a":{type:"mc", prompt:"What is a bank?", concept:"bank", opts:[
-    {t:"A safe place that holds your money and keeps a record of it", ok:true, fb:"Right. A bank looks after your money — and writes down exactly how much is yours."},
-    {t:"A place that gives away free money", ok:false, fb:"Nobody gives money away for free! A bank HOLDS the money you already have, and keeps it safe."},
+    {t:"A safe place that holds and records your money", ok:true, fb:"Right. A bank looks after your money — and writes down exactly how much is yours."},
+    {t:"A place that hands out extra money to anyone who walks in", ok:false, fb:"Nobody gives money away for free! A bank HOLDS the money you already have, and keeps it safe."},
     {t:"A shop that sells things", ok:false, fb:"That's the trading post. A bank doesn't sell you anything — it keeps your money safe for you."}]},
   "q171b":{type:"mc", prompt:"Why is a bank safer than a tin under a loose floorboard?", concept:"bank", opts:[
-    {t:"Storms, fire, and sticky fingers can't reach it — and there's a written record", ok:true, fb:"Right. A tin can be soaked, lost, or taken, and nobody would know how much was inside. A bank protects the money AND the record of it."},
-    {t:"Because tins are too small", ok:false, fb:"Size isn't the problem — safety is. A storm or a thief can empty a tin, and there'd be no record of what was lost."},
+    {t:"Storms and thieves can't reach it, and it keeps a record", ok:true, fb:"Right. A tin can be soaked, lost, or taken, and nobody would know how much was inside. A bank protects the money AND the record of it."},
+    {t:"Because a tin is too small to hold much money, and coins fall out", ok:false, fb:"Size isn't the problem — safety is. A storm or a thief can empty a tin, and there'd be no record of what was lost."},
     {t:"It isn't safer — a tin is better", ok:false, fb:"Ask Kai during the storm! A tin has no lock, no roof, and no record. The bank has all three."}]},
   "q172a":{type:"mc", prompt:"What does it mean to make a deposit?", concept:"deposit", opts:[
     {t:"Putting money INTO your account", ok:true, fb:"Right. Deposit $5, and your balance climbs by $5. Money in."},
     {t:"Taking money out of your account", ok:false, fb:"That's the opposite direction! A deposit puts money IN — your balance goes up."},
     {t:"Spending money at a shop", ok:false, fb:"Spending happens at the trading post. A deposit is money going INTO your account."}]},
-  "q172b":{type:"tf", prompt:"True or false: once you deposit money at a bank, it stops being yours.", answer:false, concept:"deposit",
+  "q172b":{type:"tf", prompt:"True or false: money you deposit at a bank is still yours.", answer:true, concept:"deposit",
     good:"Right — it's still 100% yours. The bank is just holding it, like a friend minding your bag. You can ask for it back.",
     bad:"It never stops being yours! The bank holds it and writes down that the money belongs to YOU. Ask for it and you get it back."},
   "q173a":{type:"mc", prompt:"Kai's balance is $23. He deposits $5 more. What is the balance now?", concept:"deposit", opts:[
     {t:"$28", ok:true, fb:"Right — $23 + $5 = $28. Deposits add on, exactly like Module 6's adding."},
-    {t:"$18", ok:false, fb:"That's subtracting! A DEPOSIT goes in, so it adds: $23 + $5 = $28."},
+    {t:"$18 — $5 less than before", ok:false, fb:"That's subtracting! A DEPOSIT goes in, so it adds: $23 + $5 = $28."},
     {t:"$5", ok:false, fb:"The $23 didn't vanish — it's still his. Add the new money on top: $23 + $5 = $28."}]},
   "q173c":{type:"mc", prompt:"Why does a bank keep a list of every deposit?", concept:"bank", opts:[
     {t:"So there's always proof of exactly how much is yours", ok:true, fb:"Right. The list is the record. If anyone ever disagrees, the written history settles it — something a tin could never do."},
-    {t:"So the bank can keep some of it", ok:false, fb:"The record exists to protect YOU. It proves the full amount is yours — none of it belongs to the bank."},
+    {t:"So the bank can take a small piece of each deposit for itself", ok:false, fb:"The record exists to protect YOU. It proves the full amount is yours — none of it belongs to the bank."},
     {t:"To make the paperwork look busy", ok:false, fb:"It has a real job: the list is PROOF. It shows exactly how much is yours, so nothing can be forgotten or argued about."}]},
   "q173b":{type:"mc", transfer:true, prompt:"Rana keeps money at a bank on the mainland and doesn't visit for a whole year. Is the money still hers?", concept:"bank", opts:[
     {t:"Yes — it's hers until she asks for it back, however long that takes", ok:true, fb:"Exactly. Time doesn't change who money belongs to. The record says it's Rana's, so it stays Rana's — a year or ten years later."},

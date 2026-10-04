@@ -38,11 +38,11 @@ const VOCAB = {
 const QUESTIONS = {
   "q421a":{type:"mc", prompt:"Nalu splits her juice stand into 10 equal pieces. Kai buys 1 piece. What does Kai have?", concept:"stock", opts:[
     {t:"Stock: he owns 1/10 of the juice stand", ok:true, fb:"Right. A stock is a small piece of owning the business. His piece is 1 of 10."},
-    {t:"A loan: Nalu owes him $10 back", ok:false, fb:"With a loan, the borrower must pay you back. Kai didn't lend Nalu money. He bought a piece of the stand, so he is part owner."},
+    {t:"A loan: Nalu must pay him back his $10 later, plus a little extra", ok:false, fb:"With a loan, the borrower must pay you back. Kai didn't lend Nalu money. He bought a piece of the stand, so he is part owner."},
     {t:"A coupon for 10 free juices", ok:false, fb:"He didn't buy juice. He bought a piece of the stand itself. That is stock."}]},
   "q421b":{type:"mc", prompt:"Why did Nalu sell pieces of her stand at all?", concept:"stock", opts:[
-    {t:"To get money to grow the business, a second stand, without borrowing", ok:true, fb:"Right. Selling pieces brought in $60. In return, she now shares the stand with its new owners."},
-    {t:"Because the stand was about to close", ok:false, fb:"The stand was doing well. Nalu wanted money to open a second one."},
+    {t:"To raise money for a second stand without borrowing", ok:true, fb:"Right. Selling pieces brought in $60. In return, she now shares the stand with its new owners."},
+    {t:"Because the stand was losing money and about to close for good", ok:false, fb:"The stand was doing well. Nalu wanted money to open a second one."},
     {t:"Because the bank told her to", ok:false, fb:"It was Nalu's choice. She wanted money for a second stand without taking a loan."}]},
   "q421c":{type:"tf", prompt:"True or false: if you own stock in a business, you own a small piece of that business.", answer:true, concept:"stock",
     good:"Right. That is exactly what stock is: a piece of owning.",
@@ -53,11 +53,11 @@ const QUESTIONS = {
     {t:"$100 — sales plus costs", ok:false, fb:"Costs are taken away, not added. $60 − $40 = $20 profit."}]},
   "q422b":{type:"mc", prompt:"It rains all month. The stand sells less than its costs. What does Kai's piece earn from profit this month?", concept:"profit", opts:[
     {t:"Nothing. No profit means nothing to share", ok:true, fb:"Right. Owners share the profit, and in a rainy month there isn't any. That's part of owning."},
-    {t:"$2, the same as every month", ok:false, fb:"Kai only gets a part of the profit when there IS one. This month there was none."},
+    {t:"$2, the same as every month, because he owns 1 of the 10 pieces", ok:false, fb:"Kai only gets a part of the profit when there IS one. This month there was none."},
     {t:"Nalu has to pay him back his $10", ok:false, fb:"Kai is an owner, not a lender. Owners share the good months and the bad ones."}]},
   "q423a":{type:"mc", prompt:"Kai wants to put ALL the money he's ready to invest into Nalu's stand. What's the risk?", concept:"stock", opts:[
-    {t:"If that one stand has big trouble, he could lose all of it at once", ok:true, fb:"Right. Everything in one place means one bad event hits all of it. Next module is about what to do instead."},
-    {t:"There's no risk, because the stand is popular", ok:false, fb:"Popular stands still have rainy months, broken blenders, or a new stand next door. Everything in one place is a big risk."},
+    {t:"One bad event at the stand could hit all of his money at once", ok:true, fb:"Right. Everything in one place means one bad event hits all of it. Next module is about what to do instead."},
+    {t:"There's no real risk, because the stand is popular and made a profit last month", ok:false, fb:"Popular stands still have rainy months, broken blenders, or a new stand next door. Everything in one place is a big risk."},
     {t:"The only risk is that Nalu won't let him", ok:false, fb:"The bigger risk: if that one stand struggles, ALL his invested money struggles with it."}]},
   "q423b":{type:"mc", transfer:true, prompt:"A bakery in Lena's town is split into 20 equal pieces. Lena's mom buys 2. The bakery has a great year and some profit is shared with the owners. What is true?", concept:"profit", opts:[
     {t:"She owns 2/20 of the bakery, so she gets a part of the shared profit", ok:true, fb:"Exactly. Different business, same idea: she owns stock, so she shares in the profit when there is some."},

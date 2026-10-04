@@ -177,9 +177,9 @@ const QUESTIONS = {
     {t:"The amount a trader asks for", ok:true, fb:"That's it. The tag tells you the amount before you decide. No guessing, no asking."},
     {t:"How much something is secretly worth", ok:false, fb:"Close — worth and price are related, but the price is the number the trader actually ASKS for. Sometimes it matches worth, sometimes not!"}]},
   "q51b":{type:"mc", prompt:"A kite's tag says $4. What does that mean?", concept:"price", opts:[
-    {t:"Give the trader $4 and the kite is yours", ok:true, fb:"Exactly. The price tells you the trade before you make it: $4 in, kite out."},
+    {t:"Give $4 and the kite is yours", ok:true, fb:"Exactly. The price tells you the trade before you make it: $4 in, kite out."},
     {t:"The kite is 4 days old", ok:false, fb:"Tags show prices, not ages. $4 is the amount to give."},
-    {t:"Only 4 kites are left", ok:false, fb:"That would be a count, not a price. The $ sign tells you: this is the amount to give."}]},
+    {t:"Only 4 kites are left on the trader’s mat", ok:false, fb:"That would be a count, not a price. The $ sign tells you: this is the amount to give."}]},
   "q52a":{type:"mc", prompt:"Two drums. One tag says $3.25, the other says $3.52. Which asks for more?", concept:"price", opts:[
     {t:"The $3.25 drum", ok:false, fb:"Use your Module 4 eye: dollars match (3=3), so compare cents — 25 vs 52. Which is bigger?"},
     {t:"The $3.52 drum", ok:true, fb:"Right. Same dollars, so the cents decide: 52 beats 25. Comparing prices is just comparing amounts."},
@@ -193,11 +193,11 @@ const QUESTIONS = {
     {t:"No — you should have given less", ok:false, fb:"You gave exactly what was asked — that's an equal trade. (Asking for a lower price is a real thing, but that's a story for another module!)"}]},
   "q53b":{type:"mc", transfer:true, prompt:"Back before dollars came, a blanket on the island asked for 10 shells. Was that a price?", concept:"price", opts:[
     {t:"No — prices need dollar signs", ok:false, fb:"The $ sign is just mainland clothing. A price is any amount a trader asks for — in dollars, shells, or stones."},
-    {t:"Yes — a price is whatever amount is asked for", ok:true, fb:"You've got the deep idea. Prices existed before dollars. 10 shells, 3 stones, $2.50 — all prices. The asking is what makes it a price."},
+    {t:"Yes — a price is any amount asked for", ok:true, fb:"You've got the deep idea. Prices existed before dollars. 10 shells, 3 stones, $2.50 — all prices. The asking is what makes it a price."},
     {t:"No — shells can't have prices, only things do", ok:false, fb:"Flip it: the BLANKET had the price, and the price was counted in shells. Any money can carry a price."}]},
   "q53c":{type:"mc", prompt:"You have $2 saved in your pocket. The toy boat's price is $2. What does getting the boat COST you?", concept:"cost", opts:[
-    {t:"Nothing — the boat is a gift", ok:false, fb:"You gave $2 — that's not nothing! Cost is what leaves your hands: your whole $2."},
-    {t:"Your $2 — which can now never become anything else", ok:true, fb:"That's the big idea of cost. The $2 is gone into the boat — it can't also become a snack or a kite later. Every choice closes other doors."},
+    {t:"Nothing — the $2 was already saved, so it's free", ok:false, fb:"You gave $2 — that's not nothing! Cost is what leaves your hands: your whole $2."},
+    {t:"Your $2, which can't become anything else now", ok:true, fb:"That's the big idea of cost. The $2 is gone into the boat — it can't also become a snack or a kite later. Every choice closes other doors."},
     {t:"$4, because trades double the amount", ok:false, fb:"No doubling! You give exactly the price: $2. That $2 is the cost."}]}
 };
 

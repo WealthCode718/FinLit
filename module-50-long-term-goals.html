@@ -244,27 +244,27 @@ const VOCAB = {
 
 const QUESTIONS = {
   "q501a":{type:"mc", prompt:"What is retirement?", concept:"retirement", opts:[
-    {t:"The time in life when someone stops working for pay, usually when they're older", ok:true, fb:"Right. The paychecks stop, but the needs keep going."},
-    {t:"A long vacation between two jobs", ok:false, fb:"A break between jobs is short. Retirement is when someone stops working for pay for good, usually when older."},
+    {t:"The time when someone stops working for pay, usually when older", ok:true, fb:"Right. The paychecks stop, but the needs keep going."},
+    {t:"A long vacation someone takes between two jobs to rest before starting again", ok:false, fb:"A break between jobs is short. Retirement is when someone stops working for pay for good, usually when older."},
     {t:"When someone switches to a new employer", ok:false, fb:"That's a new job. Retirement is when working for pay stops."}]},
   "q501b":{type:"mc", prompt:"Tavo stops fishing. His paychecks stop. What will mostly pay for his needs?", concept:"retirement", opts:[
-    {t:"Money he built up over his working years, plus any programs he paid into", ok:true, fb:"Right. Retirement is paid for by what you set aside while you were earning."},
+    {t:"Money he built up while working, plus programs he paid into", ok:true, fb:"Right. Retirement is paid for by what you set aside while you were earning."},
     {t:"Nothing. Needs stop when work stops", ok:false, fb:"Food, a home, and medicine are still needed. Something has to pay for them."},
-    {t:"A loan he never pays back", ok:false, fb:"Loans must be paid back, and borrowing with no income is very risky. Retirement runs on money built up earlier."}]},
+    {t:"A loan he can pay back slowly, even with no paychecks coming in", ok:false, fb:"Loans must be paid back, and borrowing with no income is very risky. Retirement runs on money built up earlier."}]},
   "q501c":{type:"tf", prompt:"True or false: retirement only matters once you're old.", answer:false, concept:"retirement",
     good:"Right. It's paid for during the working years, and the earliest years help most, thanks to compound growth.",
     bad:"Look again. Retirement is paid for while you're working. Starting young gives compound growth the most time."},
   "q502a":{type:"mc", prompt:"What is a retirement account?", concept:"retacct", opts:[
-    {t:"A special account for long-term money to live on later, often with extra help like an employer adding money", ok:true, fb:"Right. Names and rules differ by place, but the idea is the same."},
+    {t:"An account for long-term money to live on later, often with extra help", ok:true, fb:"Right. Names and rules differ by place, but the idea is the same."},
     {t:"An account for next week's spending", ok:false, fb:"That's checking. A retirement account is for money you won't touch for decades."},
-    {t:"The emergency fund under a new name", ok:false, fb:"The emergency fund must be ready any day. Retirement money is meant to stay put for a very long time."}]},
+    {t:"The emergency fund under a new name, kept ready for any bad day before you're old", ok:false, fb:"The emergency fund must be ready any day. Retirement money is meant to stay put for a very long time."}]},
   "q502b":{type:"mc", prompt:"Pua put in about $11,700 starting at 20. Leo put in about $13,000 starting at 40. By 65, Pua has much more. Why?", concept:"retacct", opts:[
     {t:"Her money had 20 more years of compound growth", ok:true, fb:"Right. Time beat size. Starting small and early won."},
     {t:"Pua found a magic account", ok:false, fb:"Same kind of account. The only big difference was 20 extra years of growth on growth."},
     {t:"Leo's money disappeared", ok:false, fb:"Leo's money grew too, just for fewer years. Pua had 20 more years of compound growth."}]},
   "q503a":{type:"mc", prompt:"At 30, Kai wants to take money out of his retirement account early to buy a fancy new phone. What's the problem?", concept:"retacct", opts:[
     {t:"It can cost extra, and that money loses decades of growth he'll need later", ok:true, fb:"Right. A phone today could cost far more in retirement money later. It's long-term money for a reason."},
-    {t:"No problem. It's his money, so it's free to use any time", ok:false, fb:"It's his, but taking it out early often costs extra, and it stops decades of compound growth."},
+    {t:"No problem. It's his own money, so he can take it out any time with no cost at all", ok:false, fb:"It's his, but taking it out early often costs extra, and it stops decades of compound growth."},
     {t:"The phone will grow in value instead", ok:false, fb:"Phones lose value fast. The retirement money would have kept growing."}]},
   "q503b":{type:"mc", transfer:true, prompt:"Lena's aunt, 25, starts a new job. Her employer says: \"Put money in your retirement account and we'll add some too.\" She already has an emergency fund. What's a smart move?", concept:"retacct", opts:[
     {t:"Join, put in at least enough to get the employer's extra, read the fine print, and keep her emergency fund", ok:true, fb:"Exactly. Extra money from an employer plus decades of growth. Same ideas as Pua's head start."},

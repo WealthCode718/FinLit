@@ -239,22 +239,22 @@ const QUESTIONS = {
     {t:"A promise that money will double every year", ok:false, fb:"Nobody can promise that. Compound growth just means growth that stays in earns growth of its own."}]},
   "q441b":{type:"mc", prompt:"Kai and Mika both put $100 in. Why did Kai end with so much more after 30 years?", concept:"compound", opts:[
     {t:"He left his growth in, so it kept growing too", ok:true, fb:"Right. Mika spent her growth each year, so only her first $100 ever grew. Kai's growth piled up and grew on itself."},
-    {t:"He picked a luckier fund", ok:false, fb:"They used the same fund. The difference was that Kai left his growth in, and Mika took hers out."},
+    {t:"He picked a luckier fund that happened to grow faster than Mika's", ok:false, fb:"They used the same fund. The difference was that Kai left his growth in, and Mika took hers out."},
     {t:"He added a lot more money later", ok:false, fb:"Neither of them added anything. Kai just left his growth in to grow on itself."}]},
   "q441c":{type:"tf", prompt:"True or false: when growth is left in, the later years usually add more money than the early years did.", answer:true, concept:"compound",
     good:"Right. Kai's first ten years added $97. His last ten added $374. Same fund, more money growing.",
     bad:"Look again. Kai's first ten years added $97 and his last ten added $374. The pile was bigger, so the growth was bigger."},
   "q442a":{type:"mc", prompt:"$100 put in at age 15 grew to about $761 by age 45. $100 put in at 35 grew to only about $197. Why?", concept:"longterm", opts:[
-    {t:"The first one had 30 years to grow, and the second had only 10", ok:true, fb:"Right. Time is the biggest ingredient. The earlier money gets the most years of growth on growth."},
+    {t:"The first $100 had 30 years to grow, the second only 10", ok:true, fb:"Right. Time is the biggest ingredient. The earlier money gets the most years of growth on growth."},
     {t:"Young people get better funds", ok:false, fb:"Same fund, same $100. The only difference was how many years it had to grow."},
-    {t:"Money put in later is worth less", ok:false, fb:"$100 is $100. The early $100 just had 20 more years of growth on growth."}]},
+    {t:"Money put in later is worth less, because prices go up over time", ok:false, fb:"$100 is $100. The early $100 just had 20 more years of growth on growth."}]},
   "q442b":{type:"mc", prompt:"Which of Kai's money is long-term money?", concept:"longterm", opts:[
     {t:"Savings toward a bigger boat in about 20 years", ok:true, fb:"Right. He won't need it for many years, so it can ride out bad years and keep growing."},
     {t:"Money for next week's groceries", ok:false, fb:"He needs that next week. Long-term means many years."},
-    {t:"His emergency fund", ok:false, fb:"The emergency fund has to be ready any day. That's the opposite of long-term. It stays in savings."}]},
+    {t:"His emergency fund, since he hopes he won't need it for years", ok:false, fb:"The emergency fund has to be ready any day. That's the opposite of long-term. It stays in savings."}]},
   "q443a":{type:"mc", prompt:"Kai leaves a credit card balance unpaid for years. What does compound growth do here?", concept:"compound", opts:[
-    {t:"It works against him: interest gets charged on the interest, so the debt grows faster and faster", ok:true, fb:"Right. Compound growth is great when you own it and painful when you owe it. Pay costly debt off first."},
-    {t:"Nothing. Compound growth only works on investments", ok:false, fb:"It works on debt too. Unpaid interest gets added on, then charged interest itself. The debt snowballs."},
+    {t:"It works against him: interest on interest makes the debt grow faster", ok:true, fb:"Right. Compound growth is great when you own it and painful when you owe it. Pay costly debt off first."},
+    {t:"Nothing. Compound growth only works on money you invest, not on money you owe", ok:false, fb:"It works on debt too. Unpaid interest gets added on, then charged interest itself. The debt snowballs."},
     {t:"It shrinks the debt over time", ok:false, fb:"The opposite. Interest on interest makes an unpaid debt grow faster and faster."}]},
   "q443b":{type:"mc", transfer:true, prompt:"Lena plants one mango tree. Each year its fruit drops seeds, and she lets some grow into new trees, which then drop seeds too. What happens over many years?", concept:"compound", opts:[
     {t:"The grove grows faster and faster, because new trees make more trees", ok:true, fb:"Exactly. Trees, not dollars, but the same idea: growth that stays in makes more growth."},

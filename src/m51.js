@@ -42,7 +42,7 @@ const VOCAB = {
 const QUESTIONS = {
   "q511a":{type:"mc", prompt:"What is net worth?", concept:"networth", opts:[
     {t:"Everything you own minus everything you owe", ok:true, fb:"Right. Own minus owe."},
-    {t:"How much you earn each month", ok:false, fb:"That's income. Net worth is everything you own minus everything you owe."},
+    {t:"How much money you earn each month from your job, before spending", ok:false, fb:"That's income. Net worth is everything you own minus everything you owe."},
     {t:"How much money is in your wallet", ok:false, fb:"That's just cash. Net worth counts everything you own, minus everything you owe."}]},
   "q511b":{type:"mc", prompt:"Mika owns $500 in total and owes $100. What is her net worth?", concept:"networth", opts:[
     {t:"$400", ok:true, fb:"Right. $500 own − $100 owe = $400."},
@@ -52,16 +52,16 @@ const QUESTIONS = {
     good:"Right. If they owe almost as much as the house is worth, their net worth could be small, or even below zero.",
     bad:"Look again. Net worth is own MINUS owe. A big house with a big loan can leave a small net worth."},
   "q512a":{type:"mc", prompt:"What is a financial plan?", concept:"finplan", opts:[
-    {t:"Your whole money picture on one page, in order, that you check when life changes", ok:true, fb:"Right. Income, budget, emergency fund, costly debt, long-term investing, with room for goals and giving."},
+    {t:"Your whole money picture on one page, checked when life changes", ok:true, fb:"Right. Income, budget, emergency fund, costly debt, long-term investing, with room for goals and giving."},
     {t:"A promise from a bank that you'll get rich", ok:false, fb:"Nobody can promise that. A financial plan is your own map for your money."},
-    {t:"A list of things you want to buy", ok:false, fb:"A wish list is part of it at most. A financial plan covers income, needs, safety, debt, and the long term."}]},
+    {t:"A list of all the things you want to buy this year, with their prices", ok:false, fb:"A wish list is part of it at most. A financial plan covers income, needs, safety, debt, and the long term."}]},
   "q512b":{type:"mc", prompt:"In Kai's plan, what comes BEFORE long-term investing?", concept:"finplan", opts:[
     {t:"A budget for needs, an emergency fund, and paying off costly debt", ok:true, fb:"Right. Safety and debt first, then let long-term money go to work (Module 41)."},
     {t:"Nothing. Investing always comes first", ok:false, fb:"Investing money he might need tomorrow is risky. Budget, emergency fund, and costly debt come first."},
     {t:"Buying everything he wants", ok:false, fb:"Wants fit inside the budget, but needs, safety, and costly debt come before investing."}]},
   "q513a":{type:"mc", prompt:"Kai gets a raise of $20 a month. What's the smartest plan update?", concept:"finplan", opts:[
     {t:"Enjoy part of it, and send part to savings, investing, or giving", ok:true, fb:"Right. If all of a raise goes to spending, the plan stays stuck. Split it."},
-    {t:"Spend all of it, since he earned it", ok:false, fb:"It's his choice, but sending part of it to his goals makes the raise help his future too."},
+    {t:"Spend all of it on fun, since he earned it and his old plan already works", ok:false, fb:"It's his choice, but sending part of it to his goals makes the raise help his future too."},
     {t:"Ignore his plan from now on", ok:false, fb:"A raise is exactly when to update the plan, so the extra money has a job."}]},
   "q513b":{type:"mc", transfer:true, prompt:"Lena's cousin owns a car worth $2,000 and has $300 in savings. He owes $1,500 on a car loan. What is his net worth?", concept:"networth", opts:[
     {t:"$800", ok:true, fb:"Exactly. Own $2,000 + $300 = $2,300. Owe $1,500. $2,300 − $1,500 = $800."},

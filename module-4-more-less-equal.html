@@ -185,17 +185,17 @@ const QUESTIONS = {
     {t:"Kai", ok:false, fb:"Careful — the digits are sneaky. Dollars match (2 = 2), so compare the cents: 35 vs 53. Which is bigger?"},
     {t:"Rana", ok:true, fb:"Right. Same dollars, so compare cents: 53 beats 35. Reading carefully wins."},
     {t:"They're equal", ok:false, fb:"The same digits appear, but in a different order — 35 cents is not 53 cents."}]},
-  "q42b":{type:"tf", prompt:"True or false: whoever holds MORE coins always has MORE money.", answer:false, concept:"compare",
+  "q42b":{type:"tf", prompt:"True or false: someone holding FEWER coins can still have MORE money.", answer:true, concept:"compare",
     good:"Right — remember from Module 3: 3 quarters (75¢) beats 6 dimes (60¢). Count the cents, not the coins.",
-    bad:"Think back to Module 3: 3 quarters = 75¢, but 6 dimes = only 60¢. Fewer coins can be worth more. Count cents, not coins."},
+    bad:"It’s true! Think back to Module 3: 3 quarters = 75¢, but 6 dimes = only 60¢. Fewer coins can be worth more. Count cents, not coins."},
   "q43a":{type:"mc", transfer:true, prompt:"Two islands trade different things — one uses shells, one uses red stones. A trader wants to compare a pile of 40 shells with a pile of 40 stones. Can she just count them?", concept:"compare", opts:[
     {t:"Yes — 40 equals 40, so the piles are equal", ok:false, fb:"Counting pieces isn't enough. Remember: worth isn't about how many things you hold. One stone might be worth ten shells!"},
-    {t:"No — she needs to know what each one is worth first", ok:true, fb:"You've got it. Comparing amounts only works when you compare the same unit — like turning coins into cents first."},
+    {t:"No — first she must know what each is worth", ok:true, fb:"You've got it. Comparing amounts only works when you compare the same unit — like turning coins into cents first."},
     {t:"No — shells and stones can never be compared", ok:false, fb:"They CAN be compared — but only after finding what each is worth. Just counting pieces isn't comparing worth."}]},
   "q43b":{type:"mc", prompt:"Which of these is EQUAL to $1.50?", concept:"equal", opts:[
     {t:"6 quarters", ok:true, fb:"Perfect: 6 × 25 = 150 cents = $1.50. Equal means exactly the same amount."},
     {t:"5 quarters", ok:false, fb:"5 × 25 = 125 cents = $1.25. Not quite $1.50. One more quarter…"},
-    {t:"15 dimes", ok:false, fb:"15 × 10 = 150… wait, that IS 150 cents! Ha — trick answer, but 6 quarters is ALSO 150. Both work, but tap the quarters one."}]}
+    {t:"14 dimes and 1 nickel", ok:false, fb:"14 × 10 = 140, plus a nickel = 145 cents = $1.45. Just 5 cents short of $1.50."}]}
 };
 
 /* fix q43b: avoid the ambiguity — replace 15 dimes with 12 dimes */

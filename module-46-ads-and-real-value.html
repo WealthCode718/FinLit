@@ -239,12 +239,12 @@ const VOCAB = {
 const QUESTIONS = {
   "q461a":{type:"mc", prompt:"What is advertising?", concept:"advertising", opts:[
     {t:"Messages sellers pay for to make you want to buy their things", ok:true, fb:"Right. Signs, videos, pop-ups, and paid famous people are all advertising."},
-    {t:"Fair reviews written by people who tested the product", ok:false, fb:"A fair review isn't paid for by the seller. Advertising is the seller's own message, made to get you to buy."},
+    {t:"Fair reviews written by regular buyers who tested the product themselves", ok:false, fb:"A fair review isn't paid for by the seller. Advertising is the seller's own message, made to get you to buy."},
     {t:"Rules that say what stores are allowed to sell", ok:false, fb:"That's not it. Advertising is messages sellers pay for, to make you want their things."}]},
   "q461b":{type:"mc", prompt:"An ad shouts “ONLY TODAY! HURRY!” What is that trick trying to do?", concept:"advertising", opts:[
     {t:"Rush you so you buy before you stop and think", ok:true, fb:"Right. Scammers use the same trick (Module 23). A good deal usually survives one night of thinking."},
     {t:"Help you plan your budget", ok:false, fb:"It does the opposite. The rush is there so you skip the planning."},
-    {t:"Tell you a useful fact about the product", ok:false, fb:"“Hurry” tells you nothing about the product. It's pressure, not information."}]},
+    {t:"Tell you a useful fact: the price really will go up tomorrow", ok:false, fb:"“Hurry” tells you nothing about the product. It's pressure, not information."}]},
   "q461c":{type:"tf", prompt:"True or false: if a famous person is in an ad for a product, the product must be good.", answer:false, concept:"advertising",
     good:"Right. Famous people are often paid to be in ads. Being in an ad isn't proof that something is good.",
     bad:"Look again. Famous people are often PAID to be in ads. That's not proof the product is good."},
@@ -253,16 +253,16 @@ const QUESTIONS = {
     {t:"“The most amazing drink you'll ever taste!”", ok:false, fb:"That's an opinion dressed up as a fact. You can't check “most amazing.”"},
     {t:"“Everyone cool is drinking it!”", ok:false, fb:"That's crowd pressure, trying to make you feel left out. It tells you nothing about the drink."}]},
   "q462b":{type:"mc", prompt:"A pop-up in Kai's game: “GEM PACK 80% OFF! 2 hours left!” What's the smartest first move?", concept:"advertising", opts:[
-    {t:"Pause. Ask: do I need it, is it in my budget, and would I want it tomorrow?", ok:true, fb:"Right. A countdown timer is a rush trick. Your budget doesn't change just because a clock is ticking."},
+    {t:"Pause and check: do I need it, and does it fit my budget?", ok:true, fb:"Right. A countdown timer is a rush trick. Your budget doesn't change just because a clock is ticking."},
     {t:"Buy fast before the timer ends", ok:false, fb:"The timer is there so you don't think. 80% off something you don't need is still money spent."},
-    {t:"Buy two, because it's 80% off", ok:false, fb:"A discount on something you didn't plan to buy isn't saving money. It's spending money."}]},
+    {t:"Buy two, because at 80% off, the more he buys, the more he saves", ok:false, fb:"A discount on something you didn't plan to buy isn't saving money. It's spending money."}]},
   "q463a":{type:"mc", prompt:"Sandals A cost $4 and break after about 2 months. Sandals B cost $10 and last a whole year. Which is better value for a year of walking?", concept:"value", opts:[
     {t:"Sandals B. Kai would need about 6 pairs of A in a year, which is $24", ok:true, fb:"Right. The cheaper price wasn't the better value. B costs $10 for the whole year."},
     {t:"Sandals A, because $4 is less than $10", ok:false, fb:"Per pair, yes. But A breaks every 2 months: 6 pairs × $4 = $24 for the year, more than B's $10."},
     {t:"They are the same value", ok:false, fb:"Count the pairs: about 6 of A in a year is $24. One pair of B is $10."}]},
   "q463b":{type:"mc", transfer:true, prompt:"Lena sees a video of a popular gamer holding a $40 headset: “Use my code for 10% off, today only!” The video has a tiny “sponsored” label. What's true?", concept:"advertising", opts:[
-    {t:"It's an ad. The gamer is paid, and “today only” is a rush. Lena should compare before buying", ok:true, fb:"Exactly. Different place, same tricks: a paid famous person and a rush. “Sponsored” means advertising."},
-    {t:"It's an honest review, because the gamer uses it", ok:false, fb:"“Sponsored” means the seller paid for it. That makes it advertising, not a fair review."},
+    {t:"It's an ad: the gamer is paid, and “today only” is a rush", ok:true, fb:"Exactly. Different place, same tricks: a paid famous person and a rush. “Sponsored” means advertising."},
+    {t:"It's an honest review, because the gamer really uses the headset every day", ok:false, fb:"“Sponsored” means the seller paid for it. That makes it advertising, not a fair review."},
     {t:"10% off means she's saving money, so she should buy it now", ok:false, fb:"She only saves if she needed a headset anyway and it's good value. Compare first. The rush is a trick."}]}
 };
 

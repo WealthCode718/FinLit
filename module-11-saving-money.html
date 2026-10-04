@@ -166,7 +166,7 @@ const VOCAB = {
 
 const QUESTIONS = {
   "q111a":{type:"mc", prompt:"What does it mean to SAVE money?", concept:"save", opts:[
-    {t:"Keep it now so it can be used later", ok:true, fb:"Right. Saving is spending's patient twin: the money waits, and while it waits, it can grow with each week's earning."},
+    {t:"Keep it now to use later", ok:true, fb:"Right. Saving is spending's patient twin: the money waits, and while it waits, it can grow with each week's earning."},
     {t:"Hide it so well you forget where", ok:false, fb:"Ha — that's just losing it slowly! Saved money should be safe AND findable."},
     {t:"Give it back to whoever paid you", ok:false, fb:"You earned it — it's yours! Saving means keeping it, on purpose, for later."}]},
   "q111b":{type:"mc", prompt:"Kai kept $3 from last week and earned $2 more this week. How much waits in the tin now?", concept:"save", opts:[
@@ -177,11 +177,11 @@ const QUESTIONS = {
     {t:"$4", ok:true, fb:"Right — count up from 6 to 10: that's 4. The goal plus the gap tells you exactly where you stand."},
     {t:"$6", ok:false, fb:"$6 is what she HAS. The gap is what's missing: count up from 6 to 10."},
     {t:"$16", ok:false, fb:"That's adding them! The gap is the difference: 10 − 6 = 4."}]},
-  "q112b":{type:"tf", prompt:"True or false: when you save money, you lose it.", answer:false, concept:"save",
+  "q112b":{type:"tf", prompt:"True or false: when you save money, it is still yours.", answer:true, concept:"save",
     good:"Right — saved money is still 100% yours. It didn't leave; it's waiting. The only thing you 'gave up' is spending it TODAY.",
-    bad:"Look in Kai's tin: the $3 is right there, still Kai's, ready whenever. Saving isn't losing — it's money waiting on purpose."},
+    bad:"It’s true! Look in Kai's tin: the $3 is right there, still Kai's, ready whenever. Saving isn't losing — it's money waiting on purpose."},
   "q112c":{type:"mc", prompt:"Rana has saved $7. The drum she wants costs $7. Can she buy it now?", concept:"goal", opts:[
-    {t:"Yes — her money EQUALS the goal", ok:true, fb:"Goal reached! When what you have equals (or passes) the price, the wait is over. Equal from Module 4, doing victory laps."},
+    {t:"Yes — her $7 EQUALS the price", ok:true, fb:"Goal reached! When what you have equals (or passes) the price, the wait is over. Equal from Module 4, doing victory laps."},
     {t:"No — she needs more than $7", ok:false, fb:"Equal is enough! $7 saved, $7 price — an exact, equal trade. The drum is hers."},
     {t:"No — saved money can't be spent", ok:false, fb:"Saved money is REGULAR money that waited! Reaching the goal is exactly when you spend it — that was the whole plan."}]},
   "q113c":{type:"mc", prompt:"Kai earns $2 every market morning. The gap to the goal is $4. How many mornings until the goal?", concept:"goal", opts:[
@@ -189,9 +189,9 @@ const QUESTIONS = {
     {t:"4 mornings", ok:false, fb:"Each morning brings $2, not $1. Count: morning one → $2, morning two → $4. Done in 2!"},
     {t:"1 morning", ok:false, fb:"One morning brings only $2 — half the gap. One more does it: 2 mornings."}]},
   "q113b":{type:"mc", transfer:true, prompt:"Shell days: Rana kept 3 shells in a pouch, untouched, for a rainy-day blanket. Was that saving?", concept:"save", opts:[
-    {t:"Yes — keeping money for later is saving, in any money", ok:true, fb:"Exactly. Saving is older than dollars, older than tins — it's the choice to let money wait. Rana was saving before the word arrived."},
+    {t:"Yes — keeping money for later is saving", ok:true, fb:"Exactly. Saving is older than dollars, older than tins — it's the choice to let money wait. Rana was saving before the word arrived."},
     {t:"No — saving needs a tin with a lid", ok:false, fb:"The container doesn't matter — pouch, tin, jar, sock. The CHOICE to keep money for later is what saving is."},
-    {t:"No — shells go bad if kept too long", ok:false, fb:"Good instinct from Module 1 — but shells DON'T rot (that's why they made good money!). Rana's pouch was true saving."}]}
+    {t:"No — shells crack and go bad if kept in a pouch too long", ok:false, fb:"Good instinct from Module 1 — but shells DON'T rot (that's why they made good money!). Rana's pouch was true saving."}]}
 };
 
 /* =====================================================================

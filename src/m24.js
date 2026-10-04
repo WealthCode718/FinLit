@@ -40,19 +40,19 @@ const QUESTIONS = {
     {t:"A list of what you already spent", ok:false, fb:"That is looking back — like reading the feed. A budget looks ahead: it plans the money before it moves."},
     {t:"A special kind of bank account", ok:false, fb:"A budget is not an account. It is a plan — and it works with the checking and savings accounts you already have."}]},
   "q241b":{type:"mc", prompt:"Kai makes his budget. What order should his dollars get their jobs?", concept:"budget", opts:[
-    {t:"Needs first, then savings for the goal, then wants with what is left", ok:true, fb:"Right — the same order from Modules 10 and 11. Needs keep you going. Savings gets paid before wants can gobble it up."},
+    {t:"Needs, then savings for the goal, then wants", ok:true, fb:"Right — the same order from Modules 10 and 11. Needs keep you going. Savings gets paid before wants can gobble it up."},
     {t:"Wants first, then needs, then savings if anything is left", ok:false, fb:"If wants go first, the needs might not get covered — and savings almost never happens. Needs come first."},
     {t:"It does not matter, as long as he writes it down", ok:false, fb:"The order matters a lot. Needs first, then savings, then wants — so the important jobs are never left without money."}]},
   "q241c":{type:"tf", prompt:"True or false: a budget is only useful for people with lots of money.", answer:false, concept:"budget",
     good:"Right. A budget matters MOST when money is small — every dollar has to count.",
     bad:"The opposite! When there is only a little money, planning each dollar’s job matters even more."},
   "q242a":{type:"mc", prompt:"What is a cushion?", concept:"cushion", opts:[
-    {t:"A little money kept in checking that you plan never to spend, to catch surprises", ok:true, fb:"Right. It sits there quietly — until the day you need it, and then it keeps you above zero."},
-    {t:"Money set aside for fun things", ok:false, fb:"That is your wants money. A cushion is money you plan NOT to spend — it is there to catch you."},
+    {t:"Money left in checking, never to spend, to catch surprises", ok:true, fb:"Right. It sits there quietly — until the day you need it, and then it keeps you above zero."},
+    {t:"Money set aside for fun things, so you do not spend your savings on them", ok:false, fb:"That is your wants money. A cushion is money you plan NOT to spend — it is there to catch you."},
     {t:"The extra the bank adds to savings", ok:false, fb:"That is interest. A cushion is money YOU leave in checking on purpose, as a safety catch."}]},
   "q242b":{type:"mc", prompt:"Why does Kai keep his cushion in CHECKING, not savings?", concept:"cushion", opts:[
-    {t:"Payments come out of checking — so that is where the catch needs to be", ok:true, fb:"Right. If something goes wrong with a payment, it happens in checking. The cushion sits right where it can catch it."},
-    {t:"Because checking pays more interest", ok:false, fb:"It is the other way around for Kai — interest is a savings thing. The cushion lives in checking because that is where payments happen."},
+    {t:"Payments come out of checking, so the catch goes there", ok:true, fb:"Right. If something goes wrong with a payment, it happens in checking. The cushion sits right where it can catch it."},
+    {t:"Because savings is locked, so he could not get to the money in time", ok:false, fb:"Savings is not locked — Kai can move his money. The cushion lives in checking because that is where payments happen."},
     {t:"It does not matter where it is", ok:false, fb:"It matters! A cushion in savings cannot catch a payment that comes out of checking."}]},
   "q242c":{type:"tf", prompt:"True or false: a cushion is money you plan to spend on wants.", answer:false, concept:"cushion",
     good:"Right. A cushion is the money you plan NOT to spend. Its only job is to catch you.",
@@ -62,9 +62,9 @@ const QUESTIONS = {
     {t:"The cushion moved into savings by itself", ok:false, fb:"The cushion stays in checking. The extra in savings came from interest."},
     {t:"A mistake — savings should always match exactly what you put in", ok:false, fb:"No mistake! That little extra is interest, doing exactly what Module 21 said it would."}]},
   "q243b":{type:"mc", transfer:true, prompt:"Before fishing season, Tavo decides: some fish will feed his family, some he will sell for his boat goal, and a few he can trade for fun. What is Tavo doing?", concept:"budget", opts:[
-    {t:"Making a budget — giving each part a job before the season even starts", ok:true, fb:"Exactly. No money in sight yet — just fish — but the idea is the same: plan every part’s job before it gets used up."},
+    {t:"Making a budget — giving each part a job ahead of time", ok:true, fb:"Exactly. No money in sight yet — just fish — but the idea is the same: plan every part’s job before it gets used up."},
     {t:"Nothing about money — it is only fish", ok:false, fb:"The things changed, not the idea. Needs first, then the goal, then fun — decided ahead of time. That is a budget."},
-    {t:"Wasting time — he should decide when he catches them", ok:false, fb:"Deciding in the moment is how the fun part eats the goal part. Planning first is the whole point of a budget."}]}
+    {t:"Wasting time — he should decide when he catches them and sees how many he has", ok:false, fb:"Deciding in the moment is how the fun part eats the goal part. Planning first is the whole point of a budget."}]}
 };
 
 const CFG = {
