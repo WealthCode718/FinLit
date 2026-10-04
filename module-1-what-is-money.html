@@ -81,6 +81,13 @@
   .feedback{border-left:4px solid var(--ink); background:var(--sand); border-radius:0 10px 10px 0; padding:12px 14px; margin:10px 0 14px; font-size:15px}
   .feedback.good{border-color:var(--good)}
   .feedback.bad{border-color:var(--bad)}
+  /* optional deeper explanation for kids who want more */
+  details.more{background:var(--card); border:1.5px dashed var(--sand-deep, #d9c9a8); border-radius:12px; margin:0 0 14px; padding:0 14px}
+  details.more summary{cursor:pointer; font-weight:700; color:var(--shell); min-height:44px; display:flex; align-items:center; list-style:none}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::after{content:"＋"; margin-left:auto; font-weight:700}
+  details.more[open] summary::after{content:"−"}
+  details.more p{font-size:15px; margin:0 0 10px}
 
   /* sort task */
   .zones{display:flex; gap:10px; margin-bottom:12px}
@@ -282,6 +289,7 @@ let storageOK = true;
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
 function addXP(n){ FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function more(html){ return '<details class="more"><summary>🤔 Tell me more</summary>'+html+'</details>'; }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -415,6 +423,8 @@ const L1=[
     '<div class="scene">🐚<div class="cap">One day, the islanders make a deal.</div></div>'+
     '<div class="card"><p><strong>Everyone will take shells.</strong></p>'+
     '<p>🐟 ➡️ 🐚 ➡️ 🧣 Kai gets his blanket!</p></div>'+
+    more('<p>Kai doesn’t need to want shells. He just needs to know that <strong>everyone else</strong> will take them.</p>'+
+      '<p>So Kai gives fish to someone who wants fish, and gets shells. Then he gives the shells to the blanket maker. Done before lunch. No more asking around all day!</p>')+
     '<div class="feedback"><strong>Money</strong> is a thing almost everyone will take.</div>'+
     '<button onclick="earnWord(\'money\');next()">New word: money</button>'),
   ()=>{
@@ -437,7 +447,9 @@ const L1=[
         revealFB();
         if(o.ok && !got){ got=true; addXP(2);
           document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
-          document.getElementById("cont").innerHTML='<button onclick="next()">Continue</button>';
+          document.getElementById("cont").innerHTML=more('<p>Good money is <strong>easy to carry</strong> and <strong>doesn’t go bad</strong>.</p>'+
+            '<p>It also can’t be <strong>too easy to find</strong>. If money were everywhere, like sand, nobody would give you anything for it. They could just grab their own!</p>')+
+            '<button onclick="next()">Continue</button>';
           revealFB();
         }
       };
@@ -455,6 +467,9 @@ const L2=[
     '<div class="scene">🧶=🐚×10&nbsp;&nbsp;🐟=🐚×1<div class="cap">A blanket gets 10 shells. A fish gets 1. Why?</div></div>'+
     '<div class="card"><p>🧶 A blanket takes <strong>days</strong> to make.</p>'+
     '<p>🐟 Fish are <strong>easy</strong> to catch.</p></div>'+
+    more('<p>A blanket takes days to make, and <strong>everyone</strong> wants one when it gets cold.</p>'+
+      '<p>Fish are caught every morning by lots of people, so there are plenty.</p>'+
+      '<p>When many people want something, and it is hard to get, it is worth more.</p>')+
     '<div class="feedback"><strong>Worth</strong> is how much people want something. Hard to get? Worth more!</div>'+
     '<button onclick="earnWord(\'worth\');next()">New word: worth</button>'),
   ()=>renderMC("q12a", next),
@@ -521,6 +536,8 @@ const L3=[
   ()=>show('<div class="kicker">Lesson 3 · The Great Shell Panic</div>'+
     '<div class="scene">💵❓<div class="cap">A paper bill is just paper.</div></div>'+
     '<h1 class="display">Why does paper get you real things?</h1>'+
+    more('<p>You can’t eat paper money. You can’t wear it or build with it.</p>'+
+      '<p>So why will people give you real food and real toys for it? Let’s find out by breaking the island’s money!</p>')+
     '<button onclick="next()">Play Market Day</button>'),
   ()=>{ /* phase 1 */
     let shells=5, gotItems=0;
@@ -607,6 +624,9 @@ const L3=[
             '<div class="scene">'+(k===1?'🐚':'🔴')+'🎉<div class="cap">Everyone takes the money again.</div></div>'+
             '<div class="card"><p>The shells never changed. <strong>The deal</strong> came back.</p>'+
             '<p>Money works when everyone <strong>agrees</strong> to take it. Paper money too!</p></div>'+
+            more('<p>Money is a promise everyone keeps together: <em>“I’ll take this, because I know everyone else will take it from me.”</em></p>'+
+              '<p>When the beach filled with shells, people stopped keeping that promise. The shells were the same, but the promise broke.</p>'+
+              '<p>Paper money works the same way. The paper itself is almost worth nothing. The promise is worth everything.</p>')+
             '<button onclick="earnWord(\'agree\');next()">New word: agree</button>');
         }
       };
