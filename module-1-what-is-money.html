@@ -81,6 +81,9 @@
   .feedback{border-left:4px solid var(--ink); background:var(--sand); border-radius:0 10px 10px 0; padding:12px 14px; margin:10px 0 14px; font-size:15px}
   .feedback.good{border-color:var(--good)}
   .feedback.bad{border-color:var(--bad)}
+  ol.steps{list-style:none; margin:12px 0 0; padding:0; display:grid; gap:8px}
+  ol.steps li{display:flex; align-items:center; gap:12px; background:var(--lagoon, #e8f3f1); border-radius:10px; padding:10px 12px; font-size:16px}
+  ol.steps .se{font-size:26px; flex-shrink:0}
   /* optional deeper explanation for kids who want more */
   details.more{background:var(--card); border:1.5px dashed var(--sand-deep, #d9c9a8); border-radius:12px; margin:0 0 14px; padding:0 14px}
   details.more summary{cursor:pointer; font-weight:700; color:var(--shell); min-height:44px; display:flex; align-items:center; list-style:none}
@@ -422,9 +425,13 @@ const L1=[
   ()=>show('<div class="kicker">Lesson 1 · The deal</div>'+
     '<div class="scene">🐚<div class="cap">One day, the islanders make a deal.</div></div>'+
     '<div class="card"><p><strong>Everyone will take shells.</strong></p>'+
-    '<p>🐟 ➡️ 🐚 ➡️ 🧣 Kai gets his blanket!</p></div>'+
+    '<ol class="steps">'+
+      '<li><span class="se">🐟</span>Kai gives fish to the cook. The cook gives him shells.</li>'+
+      '<li><span class="se">🐚</span>Kai gives the shells to the blanket maker.</li>'+
+      '<li><span class="se">🧣</span>Kai gets his blanket!</li>'+
+    '</ol></div>'+
     more('<p>Kai doesn’t need to want shells. He just needs to know that <strong>everyone else</strong> will take them.</p>'+
-      '<p>So Kai gives fish to someone who wants fish, and gets shells. Then he gives the shells to the blanket maker. Done before lunch. No more asking around all day!</p>')+
+      '<p>The cook wants fish. The blanket maker wants shells. Shells connect them. No more asking around all day!</p>')+
     '<div class="feedback"><strong>Money</strong> is a thing almost everyone will take.</div>'+
     '<button onclick="earnWord(\'money\');next()">New word: money</button>'),
   ()=>{
