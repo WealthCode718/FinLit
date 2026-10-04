@@ -119,7 +119,7 @@ def advance(pg, tried):
     k = tried.get(sig, 0)
     if cands and k < len(cands):
         tried[sig] = k + 1; cands[k].click(); return True
-    btns = pg.query_selector_all("main button:not(.btn-ghost):not([disabled]):not(.opt):not(.word-chip)")
+    btns = pg.query_selector_all("main button:not(.btn-ghost):not(.back-btn):not([disabled]):not(.opt):not(.word-chip)")
     if btns:
         btns[-1].click(); return True
     # last resort: clickable non-button pieces (tap-to-sort items, shelves)

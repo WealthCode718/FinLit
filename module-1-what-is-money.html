@@ -194,6 +194,8 @@
     .traders{grid-template-columns:1fr}
     .duo{flex-direction:column}
   }
+  .back-btn{background:transparent; color:var(--ink); border:2px solid #cfdcd8; margin-top:12px; min-height:44px}
+  .back-btn:hover{border-color:var(--ink)}
 </style>
 </head>
 <body>
@@ -242,7 +244,7 @@ const MODULE_N = 1;
    CONTENT — rendered from structured objects (matches module-01 JSON)
 ===================================================================== */
 const VOCAB = {
-  money:{term:"money", def:"A thing almost everyone will take when you want to get something from them."},
+  money:{term:"money", def:"A form of payment: something you use to pay for things. Almost everyone will take it."},
   worth:{term:"worth", def:"How much people want something. If lots of people want it, it is worth a lot."},
   agree:{term:"agree", def:"When people all say yes to the same idea. Money works because everyone agrees it does."}
 };
@@ -291,7 +293,7 @@ let storageOK = true;
 
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
-function addXP(n){ FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function addXP(n){ if(_replay) return; FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
 function more(html){ return '<details class="more"><summary>🤔 Tell me more</summary>'+html+'</details>'; }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
@@ -320,7 +322,11 @@ function closeModal(){ document.getElementById("modal").classList.remove("on"); 
    SCREEN ENGINE — each lesson is a list of step-render functions
 ===================================================================== */
 const M = document.getElementById("main");
-function show(html){ M.innerHTML='<div class="screen on">'+html+'</div>'; window.scrollTo(0,0); }
+function show(html){ const canBack = _inLesson && S.lesson!==3 && S.step>0;
+  M.innerHTML='<div class="screen on">'+html+(canBack?'<button type="button" class="back-btn" onclick="back()">← Back</button>':'')+'</div>'; window.scrollTo(0,0); }
+/* Back: replay the previous step. Steps revisited this way give no extra XP. */
+const _far = {}; let _replay = false, _inLesson = false;
+function back(){ if(S.lesson!==3 && S.step>0){ S.step--; saveState(); render(); } }
 function revealFB(){ setTimeout(function(){
   var ids=["cont","c2","fb","fb2"];
   for(var i=0;i<ids.length;i++){
@@ -340,6 +346,8 @@ function render(){
   const les=LESSONS[S.lesson];
   dots(les.steps.length, S.step);
   if(S.step>=les.steps.length){ lessonComplete(); return; }
+  _inLesson = true;
+  { const f=_far[S.lesson]||0; _replay = S.step < f; _far[S.lesson]=Math.max(f, S.step); }
   FL.checkpoint(S, LESSONS); saveState();
   les.steps[S.step]();
 }
@@ -417,8 +425,10 @@ const L1=[
       show('<div class="kicker">Lesson 1 · Kai’s problem</div>'+
         '<div class="scene">'+beats[b][0]+'<div class="cap">'+beats[b][1]+'</div></div>'+
         '<p class="muted">'+(b+1)+' of '+beats.length+'</p>'+
-        '<button onclick="window._b()">'+(b<beats.length-1?"Next":"What can fix this?")+'</button>');
+        '<button onclick="window._b()">'+(b<beats.length-1?"Next":"What can fix this?")+'</button>'+
+        (b>0?'<button type="button" class="back-btn" onclick="window._bb()">← Back</button>':''));
       window._b=()=>{ b++; if(b<beats.length) draw(); else next(); };
+      window._bb=()=>{ if(b>0){ b--; draw(); } };
     }
     draw();
   },
@@ -432,7 +442,7 @@ const L1=[
     '</ol></div>'+
     more('<p>Kai doesn’t need to want shells. He just needs to know that <strong>everyone else</strong> will take them.</p>'+
       '<p>The cook wants fish. The blanket maker wants shells. Shells connect them. No more asking around all day!</p>')+
-    '<div class="feedback"><strong>Money</strong> is a thing almost everyone will take.</div>'+
+    '<div class="feedback"><strong>Money</strong> is a <strong>form of payment</strong>. You use it to pay for things, and almost everyone will take it.</div>'+
     '<button onclick="earnWord(\'money\');next()">New word: money</button>'),
   ()=>{
     const opts=[
@@ -845,7 +855,7 @@ const LESSONS=[
 /* =====================================================================
    HOME
 ===================================================================== */
-function goHome(){
+function goHome(){ _inLesson = false;
   dots(4, S.done.filter(Boolean).length-1);
   let html='<div class="kicker">Module 1</div><h1 class="display">What Is Money?</h1>'+
     '<p class="muted">Four short lessons. Finish them all to light the lantern.</p>';
@@ -882,7 +892,7 @@ async function sendTutor(){
   const think=document.createElement("div"); think.className="msg a"; think.innerHTML='<span class="spin" style="border-color:var(--ink);border-top-color:transparent"></span>';
   document.getElementById("tlog").appendChild(think);
   const sys="You are the tutor inside Module 1 (What Is Money?) of a financial-literacy app. The learner may be a child or an adult. "+
-    "They have learned ONLY: money (a thing almost everyone will take in exchange for other things), worth (how much people want something), agree (money works because everyone agrees to take it) — plus the island story: Kai, shells, the trader chain, the storm and Rana's firewood, the Great Shell Panic (a big wave leaves shells everywhere, traders stop taking them, the village votes to fix the deal). The learners are young (about 7-11): use short sentences and simple words. "+
+    "They have learned ONLY: money (a form of payment: something you use to pay for things, and almost everyone will take it), worth (how much people want something), agree (money works because everyone agrees to take it) — plus the island story: Kai, shells, the trader chain, the storm and Rana's firewood, the Great Shell Panic (a big wave leaves shells everywhere, traders stop taking them, the village votes to fix the deal). The learners are young (about 7-11): use short sentences and simple words. "+
     "STRICT RULES: never use or explain these words: price, cost, buy, sell, earn, spend, save, bank, pay, currency, barter, economy, interest, credit, invest, purchase, afford. If a question needs a future concept, say warmly that it's coming in a later module and answer what you can within bounds. "+
     "Never repeat an explanation that failed — switch to a new analogy from the learner's world (stickers, game tokens, trading cards). Keep answers under 80 words, warm, honest, never marking a wrong idea as right. If asked to 'Quiz me', ask ONE simple question about money/worth/agree and wait.";
   try{

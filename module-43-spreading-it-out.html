@@ -177,6 +177,8 @@
     .traders{grid-template-columns:1fr}
     .duo{flex-direction:column}
   }
+  .back-btn{background:transparent; color:var(--ink); border:2px solid #cfdcd8; margin-top:12px; min-height:44px}
+  .back-btn:hover{border-color:var(--ink)}
 </style>
 </head>
 <body>
@@ -298,7 +300,7 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
-function addXP(n){ FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function addXP(n){ if(_replay) return; FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -326,7 +328,11 @@ function closeModal(){ document.getElementById("modal").classList.remove("on"); 
    SCREEN ENGINE
 ===================================================================== */
 const M = document.getElementById("main");
-function show(html){ M.innerHTML='<div class="screen on">'+html+'</div>'; window.scrollTo(0,0); }
+function show(html){ const canBack = _inLesson && S.lesson!==3 && S.step>0;
+  M.innerHTML='<div class="screen on">'+html+(canBack?'<button type="button" class="back-btn" onclick="back()">← Back</button>':'')+'</div>'; window.scrollTo(0,0); }
+/* Back: replay the previous step. Steps revisited this way give no extra XP. */
+const _far = {}; let _replay = false, _inLesson = false;
+function back(){ if(S.lesson!==3 && S.step>0){ S.step--; saveState(); render(); } }
 function revealFB(){ setTimeout(function(){
   var ids=["cont","c2","fb","fb2"];
   for(var i=0;i<ids.length;i++){
@@ -346,6 +352,8 @@ function render(){
   const les=LESSONS[S.lesson];
   dots(les.steps.length, S.step);
   if(S.step>=les.steps.length){ lessonComplete(); return; }
+  _inLesson = true;
+  { const f=_far[S.lesson]||0; _replay = S.step < f; _far[S.lesson]=Math.max(f, S.step); }
   FL.checkpoint(S, LESSONS); saveState();
   les.steps[S.step]();
 }
@@ -713,7 +721,7 @@ const LESSONS=[
 /* =====================================================================
    HOME
 ===================================================================== */
-function goHome(){
+function goHome(){ _inLesson = false;
   dots(4, S.done.filter(Boolean).length-1);
   let html='<div class="kicker">Module '+CFG.n+'</div><h1 class="display">'+CFG.title+'</h1>'+
     '<p class="muted">'+CFG.homeSub+'</p>';
