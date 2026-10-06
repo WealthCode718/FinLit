@@ -197,3 +197,149 @@
      the module's own top-level names */
   window.resumeLesson = function(){ FL.resume(S); saveState(); render(); };
 })();
+
+/* =====================================================================
+   READ ALOUD — the app reads each lesson screen to the child.
+   Uses the browser's built-in voice (Web Speech API): free, no account,
+   works offline on most phones. Nothing is sent anywhere.
+   - A 🔊 button in the module header turns it on/off (remembered).
+   - On by default in Modules 1–11 (young readers), off later on.
+   - Reads each new screen, feedback after an answer, a "Tell me more"
+     box when opened, and the new-word card. Emoji and buttons are
+     skipped, except answer choices, which are read as a list.
+===================================================================== */
+(function(){ function initReadAloud(){
+  const synth = window.speechSynthesis;
+  const main = document.getElementById("main");
+  const xpBox = document.getElementById("xpBox");
+  if(!synth || !window.SpeechSynthesisUtterance || !main || !xpBox) return;   // home page / old browsers
+  const KEY = "finlit-read";
+  const modN = (typeof MODULE_N !== "undefined") ? MODULE_N : 99;
+  function getPref(){ try{ const v = localStorage.getItem(KEY); if(v === "1") return true; if(v === "0") return false; }catch(e){} return modN <= 11; }
+  function setPref(on){ try{ localStorage.setItem(KEY, on ? "1" : "0"); }catch(e){} }
+  let on = getPref();
+
+  /* ---- voice ---- */
+  let voice = null;
+  function pickVoice(){
+    const vs = synth.getVoices() || [];
+    const en = vs.filter(v => /^en(-|_)/i.test(v.lang));
+    const prefer = ["Samantha","Google US English","Microsoft Aria","Microsoft Jenny","Karen","Daniel","Moira"];
+    voice = prefer.map(n => en.find(v => v.name.indexOf(n) === 0)).find(Boolean)
+         || en.find(v => /en(-|_)US/i.test(v.lang) && v.localService) || en.find(v => /en(-|_)US/i.test(v.lang)) || en[0] || null;
+  }
+  pickVoice(); if(synth.onvoiceschanged !== undefined) synth.onvoiceschanged = pickVoice;
+
+  /* ---- turn a piece of the page into speakable text ---- */
+  const EMOJI = /[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{2300}-\u{23FF}\u{2190}-\u{21FF}\u{25A0}-\u{25FF}\u{FE0F}\u{200D}\u{20E3}]/gu;
+  function clean(t){
+    return t.replace(EMOJI, " ")
+      .replace(/(\d)¢/g, "$1 cents").replace(/¢/g, " cents")
+      .replace(/×/g, " times ").replace(/÷/g, " divided by ").replace(/\s=\s?/g, " equals ")
+      .replace(/[→⟶➡←⬅]/g, " ").replace(/·/g, ". ").replace(/[“”"]/g, "")
+      .replace(/\s+/g, " ").trim();
+  }
+  function textOf(root, opts){
+    const c = root.cloneNode(true);
+    c.querySelectorAll(".back-btn, .kicker, script, style, [aria-hidden='true'], .hud").forEach(e => e.remove());
+    c.querySelectorAll("details").forEach(d => { if(!(opts && opts.keepDetails)) d.remove(); });
+    c.querySelectorAll("summary").forEach(e => e.remove());
+    // answer choices become a spoken list; every other button is skipped
+    const choices = [];
+    c.querySelectorAll("button").forEach(b => {
+      if(b.classList.contains("opt") || b.closest(".choice") || b.hasAttribute("data-bot")){
+        const t = clean(b.textContent); if(t) choices.push(t);
+      }
+      b.remove();
+    });
+    c.querySelectorAll("p.muted").forEach(p => { if(/^\s*\d+\s+of\s+\d+\s*$/.test(p.textContent)) p.remove(); });
+    // keep block boundaries as sentence breaks
+    c.querySelectorAll("p,div,li,h1,h2,h3,h4,br").forEach(e => e.insertAdjacentText("afterend", ". "));
+    let t = clean(c.textContent).replace(/([.!?])(\s*\.)+/g, "$1").replace(/^\.\s*/, "");
+    if(choices.length) t += (t ? " " : "") + "Choices: " + choices.join(". ") + ".";
+    return t;
+  }
+
+  /* ---- speaking (short chunks: some phones cut long ones off) ---- */
+  function speak(text){
+    if(!on || !text) return;
+    synth.cancel();
+    const parts = text.match(/[^.!?]+[.!?]*/g) || [text];
+    parts.map(s => s.trim()).filter(s => s.length > 1).forEach(s => {
+      const u = new SpeechSynthesisUtterance(s);
+      if(voice) u.voice = voice;
+      u.lang = voice ? voice.lang : "en-US"; u.rate = 0.9; u.pitch = 1.05;
+      synth.speak(u);
+    });
+  }
+  function readScreen(){ const s = main.querySelector(".screen"); if(s) speak(textOf(s)); }
+  // iPhone/iPad only allow speech after a tap: unlock on the first touch
+  let unlocked = false;
+  document.addEventListener("pointerdown", function(){
+    if(unlocked) return; unlocked = true;
+    try{ const u = new SpeechSynthesisUtterance(" "); u.volume = 0; synth.speak(u); }catch(e){}
+  }, {capture:true});
+
+  /* ---- header buttons ---- */
+  const wrap = document.createElement("div"); wrap.className = "read-wrap";
+  wrap.innerHTML = '<button type="button" class="read-again" aria-label="Read this screen again">🔁</button>'+
+                   '<button type="button" class="read-btn" aria-pressed="false"></button>';
+  const dotsEl = document.getElementById("dots");
+  if(dotsEl){ const row = document.createElement("div"); row.className = "read-row";
+    dotsEl.parentNode.insertBefore(row, dotsEl); row.appendChild(dotsEl); row.appendChild(wrap); }
+  else xpBox.parentNode.insertBefore(wrap, xpBox);
+  const btn = wrap.querySelector(".read-btn"), again = wrap.querySelector(".read-again");
+  const css = document.createElement("style");
+  css.textContent = ".read-row{display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:6px}"+
+    ".read-row .dots{margin:0}"+
+    ".read-wrap{display:flex; gap:6px; margin-left:auto; align-items:center}"+
+    ".read-wrap button{width:auto; min-height:36px; min-width:44px; padding:4px 10px; border-radius:999px; font-size:14px; font-weight:700;"+
+    " background:var(--card,#fff); color:var(--ink,#123a3f); border:2px solid #cfdcd8; white-space:nowrap}"+
+    ".read-wrap .read-btn[aria-pressed='true']{background:var(--shell,#c96f4a); border-color:var(--shell,#c96f4a); color:#fff}"+
+    ".read-wrap .read-again[hidden]{display:none}";
+  document.head.appendChild(css);
+  function paint(){
+    btn.setAttribute("aria-pressed", on ? "true" : "false");
+    btn.textContent = on ? "🔊 On" : "🔈 Read to me";
+    btn.setAttribute("aria-label", on ? "Reading aloud is on. Tap to turn it off." : "Read the lesson out loud");
+    again.hidden = !on;
+  }
+  btn.addEventListener("click", function(){
+    on = !on; setPref(on); paint();
+    if(on) readScreen(); else synth.cancel();
+  });
+  again.addEventListener("click", readScreen);
+  paint();
+
+  /* ---- react to the page changing ---- */
+  let lastScreen = null, said = new Set();
+  new MutationObserver(function(){
+    if(!on) return;
+    const s = main.querySelector(".screen");
+    if(s && s !== lastScreen){
+      lastScreen = s; said = new Set();
+      s.querySelectorAll(".feedback, .bubble, #fb2, .chain-beat").forEach(el => said.add(textOf(el)));
+      if(!modalOpen()) readScreen();
+      return;
+    }
+    // same screen, new feedback (after an answer or a game step)
+    const bits = [];
+    main.querySelectorAll(".feedback, .bubble, #fb2, .chain-beat").forEach(el => {
+      const t = textOf(el); if(t && !said.has(t)){ said.add(t); bits.push(t); }
+    });
+    if(bits.length) speak(bits.join(" "));
+  }).observe(main, {childList:true, subtree:true});
+  main.addEventListener("toggle", function(e){
+    const d = e.target; if(on && d.tagName === "DETAILS" && d.open) speak(textOf(d, {keepDetails:true}));
+  }, true);
+  const wc = document.getElementById("wordCard");
+  if(wc) new MutationObserver(function(){ if(on && wc.textContent.trim()) speak("New word. " + textOf(wc)); }).observe(wc, {childList:true});
+  const modal = document.getElementById("modal");
+  function modalOpen(){ return !!(modal && modal.classList.contains("on")); }
+  if(modal){ let was = modalOpen();
+    new MutationObserver(function(){ const now = modalOpen(); if(was && !now && on) readScreen(); was = now; })
+      .observe(modal, {attributes:true, attributeFilter:["class"]}); }
+  window.addEventListener("pagehide", function(){ synth.cancel(); });
+}
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", initReadAloud); else setTimeout(initReadAloud, 0);
+})();

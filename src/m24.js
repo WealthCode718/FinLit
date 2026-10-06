@@ -142,7 +142,9 @@ function lockBudget(){
   fb.innerHTML='<div class="feedback good">A real budget. Needs covered with $'+BUD.needs+', $'+BUD.save+' for the sail, and $'+BUD.wants+' to enjoy — all decided before a single dollar moved.</div>';
   document.getElementById("bLock").disabled=true;
   document.querySelectorAll(".jar button").forEach(b=>b.disabled=true);
-  document.getElementById("cont").innerHTML='<button onclick="addXP(4);next()">Continue</button>';
+  document.getElementById("cont").innerHTML=more('<p>A budget is not carved in stone. It is a plan, and plans can change.</p>'+
+    '<p>If Kai’s wants money runs out by Tuesday every week, he can try a different split next week. If the sail is taking too long, he can move a dollar from wants to savings.</p>'+
+    '<p>Each week, Kai looks at how the plan went and makes it a little better.</p>')+'<button onclick="addXP(4);next()">Continue</button>';
   revealFB();
 }
 
@@ -162,6 +164,9 @@ const L1=[
       <li><strong>Savings for the goal</strong> — paid before wants can eat it (Module 11).</li>
       <li><strong>Wants</strong> — with what is left, guilt-free.</li>
     </ol></div>
+    ${more('<p>Why does savings come <strong>before</strong> wants? Because wants are never finished. There is always one more snack, one more toy.</p>'+
+      '<p>If savings waits for “whatever is left,” there is usually nothing left.</p>'+
+      '<p>So Kai moves his goal money first, on payday. Then he enjoys his wants without worrying. The sail is already taken care of.</p>')}
     <button onclick="earnWord('budget');next()">New word: budget</button>`),
   ()=>{ BUD={needs:0, save:0, wants:0}; drawBudget(); },
   ()=>renderMC("q241a", next),
@@ -178,6 +183,9 @@ const L2=[
     <div class="card"><p>Remember Rana’s trick from Module 22? "I keep a few dollars in checking that I pretend are not there."</p>
     <p>That money has a name. It is a <strong>cushion</strong> — a little money you keep in checking and plan never to spend.</p>
     <p>It is not for wants. It is not for the goal. Its only job is to <strong>catch you</strong>.</p></div>
+    ${more('<p>Why <em>pretend</em> the money is not there? Because if Kai counts it as spending money, he will spend it. Then it cannot catch him.</p>'+
+      '<p>Some people picture their balance as starting at the cushion, not at zero. Their “empty” is a few dollars above zero.</p>'+
+      '<p>A cushion can start small. Even $2 or $3 is better than none.</p>')}
     <button onclick="earnWord('cushion');next()">New word: cushion</button>`),
   ()=>show(`<div class="kicker">Lesson 2 · Why it matters</div>
     <div class="card"><p>Surprise: Tavo’s goat chews through Kai’s rope. A new one costs $4, today. Payday is next week.</p></div>
@@ -187,6 +195,9 @@ const L2=[
     </div>
     <div class="card"><p>Same week. Same rope. The only difference is a few dollars Kai decided ahead of time not to touch.</p>
     <p>And it lives in <strong>checking</strong>, because that is where payments come from — right where the catch is needed.</p></div>
+    ${more('<p>What happens after the cushion catches Kai? It is smaller now. So next payday, refilling it is part of the plan, right after needs.</p>'+
+      '<p>Think of it like a spare rope on Kai’s boat. Once you use the spare, you get a new one before the next trip.</p>'+
+      '<p>A cushion only works if it is there for the <strong>next</strong> surprise too.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q242a", next),
   ()=>renderMC("q242b", next),
@@ -279,6 +290,9 @@ const L3=[
       <li>✅ <strong>The cushion caught one surprise.</strong> And it is still standing guard.</li>
       <li>✅ <strong>One scam, deleted.</strong> His PIN never left his head.</li>
     </ul></div>
+    ${more('<p>Did you see the pattern? Every good moment in Kai’s month came from a choice he made <strong>ahead of time</strong>: the budget, the cushion, the rule to look first.</p>'+
+      '<p>When the surprise came, he did not have to think hard. The plan had already decided.</p>'+
+      '<p>That is the real power of a budget. It does the hard thinking on a calm day, so busy days are easy.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q243a", next),
 ];

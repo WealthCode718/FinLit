@@ -186,6 +186,8 @@ const L1=[
   ()=>show(`<div class="kicker">Lesson 1 · A new word</div>
     <div class="card"><p>You’ve seen it before: the tiny print on the Sparkle Snack poster, the small lines in Nalu’s blender contract. Now it gets its name.</p>
     <p>The small words where the important details hide are the <strong>fine print</strong>: the real price, how long it lasts, extra fees, how to cancel.</p></div>
+    ${more('<p>Why is the fine print so small? Sellers have to tell you the details, but they don’t have to make them easy to spot. Tiny letters hide the parts they hope you skip.</p>'+
+      '<p>A star (*) next to a big claim is a clue. It means “wait, there’s more.” Always look for where the star leads.</p>')}
     <button onclick="earnWord('fineprint');next()">New word: fine print</button>`),
   ()=>renderMC("q491a", next),
   ()=>renderMC("q491b", next),
@@ -223,6 +225,8 @@ const L2=[
   ()=>show(`<div class="kicker">Lesson 2 · Another new word</div>
     <div class="card"><p>Checking several sellers before you buy, to compare price, quality, promises, and what other buyers say, is called <strong>comparison shopping</strong>.</p>
     <p>Kai didn’t pick the loudest sign, and he didn’t pick the cheapest. He picked the best <strong>value</strong>, and he kept the receipt with the written promise.</p></div>
+    ${more('<p>Why not just buy the cheapest? Stall C’s net costs $7. But if it tears in a few weeks, Kai pays $7, then $7 again, then $7 again. Soon he has spent more than the $9 net that lasts.</p>'+
+      '<p>Asking other buyers helps too. The fishers on the dock already tried these nets, so their stories are free information.</p>')}
     <button onclick="earnWord('compshop');next()">New word: comparison shopping</button>`),
   ()=>renderMC("q492a", next),
   ()=>renderMC("q492b", next),
@@ -284,6 +288,8 @@ const L3=[
       <li>✅ <strong>Skipped</strong> a “sale” on a want.</li>
       <li>✅ <strong>Kept</strong> a steady giving plan.</li>
     </ul></div>
+    ${more('<p>Notice how one week mixed every skill? Real life doesn’t come in neat lessons. An ad, a contract, and a scam can all show up on the same day.</p>'+
+      '<p>The good news: one calm move works for all of them. Slow down and ask, “What’s the real deal here?”</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q493a", next),
 ];

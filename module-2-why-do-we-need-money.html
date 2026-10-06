@@ -162,6 +162,13 @@
   }
   .back-btn{background:transparent; color:var(--ink); border:2px solid #cfdcd8; margin-top:12px; min-height:44px}
   .back-btn:hover{border-color:var(--ink)}
+  /* optional deeper explanation for kids who want more */
+  details.more{background:var(--card); border:1.5px dashed var(--sand-deep, #d9c9a8); border-radius:12px; margin:0 0 14px; padding:0 14px}
+  details.more summary{cursor:pointer; font-weight:700; color:var(--shell); min-height:44px; display:flex; align-items:center; list-style:none}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::after{content:"＋"; margin-left:auto; font-weight:700}
+  details.more[open] summary::after{content:"−"}
+  details.more p{font-size:15px; margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -245,6 +252,7 @@ let storageOK = true;
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
 function addXP(n){ if(_replay) return; FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function more(html){ return '<details class="more"><summary>🤔 Tell me more</summary>'+html+'</details>'; }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -373,6 +381,9 @@ const L1=[
   ()=>show('<div class="kicker">Lesson 1 · A new word</div>'+
     '<div class="card"><p>Swapping things with <strong>no money</strong> is called <strong>barter</strong>.</p>'+
     '<p>Barter only works when you <strong>both</strong> want what the other one has.</p></div>'+
+    more('<p>Kai isn’t alone. Lots of people live on the island, and each one wants something different.</p>'+
+      '<p>Kai has fish. The blanket maker wants firewood. The wood collector wants rope. The rope maker wants mangoes. Everyone wants something else!</p>'+
+      '<p>With barter, Kai has to find someone who has what he wants <strong>and</strong> wants what he has. That can take all day.</p>')+
     '<button onclick="earnWord(\'barter\');next()">New word: barter</button>'),
   ()=>renderMC("q21a", next),
   ()=>renderTF("q22b", next),
@@ -413,6 +424,9 @@ const L2=[
   ()=>show('<div class="kicker">Lesson 2 · A new word</div>'+
     '<div class="card"><p>Everyone had something. But <strong>nobody wanted fish</strong>.</p>'+
     '<p>When the person who has what you want doesn’t want what you have, it’s called the <strong>matching problem</strong>.</p></div>'+
+    more('<p>Think of a chain. Kai wants firewood. The wood collector wants rope. The rope maker wants mangoes. The mango grower wants a basket.</p>'+
+      '<p>Nobody in the chain wants fish. So the chain breaks, and Kai is stuck.</p>'+
+      '<p>The more people and things there are, the harder it gets to find a match.</p>')+
     '<button onclick="earnWord(\'matching\');next()">New word: matching problem</button>'),
   ()=>renderMC("q22a", next),
 ];
@@ -424,6 +438,9 @@ const L3=[
   ()=>show('<div class="kicker">Lesson 3 · Shells to the rescue</div>'+
     '<div class="scene">🐚<div class="cap">The island starts using shells as money.</div></div>'+
     '<p>Now <strong>everyone</strong> takes shells, because everyone agrees they are money.</p>'+
+    more('<p>Money fixes the matching problem. How? It is something <strong>everyone</strong> will take.</p>'+
+      '<p>The blanket maker doesn’t care about fish. But she will take shells, because she knows the wood collector will take shells from her too.</p>'+
+      '<p>Kai no longer needs someone who wants fish. He just needs someone who has what he wants.</p>')+
     '<button onclick="next()">Try again with shells</button>'),
   ()=>{
     let stepN=0;
@@ -441,6 +458,9 @@ const L3=[
   ()=>show('<div class="kicker">Lesson 3 · A new word</div>'+
     '<div class="card"><p>Kai gave fish and got shells. Then he gave shells and got a blanket.</p>'+
     '<p>Each swap, where both people give something and get something, is a <strong>trade</strong>.</p></div>'+
+    more('<p><strong>With barter:</strong> one swap, and both people must want what the other has. Hard!</p>'+
+      '<p><strong>With money:</strong> two easy trades. Fish for shells, then shells for a blanket.</p>'+
+      '<p>Two trades sound like more work. But they are much faster than walking all over the island looking for a match!</p>')+
     '<button onclick="earnWord(\'trade\');next()">New word: trade</button>'),
   ()=>renderMC("q23a", next),
 ];

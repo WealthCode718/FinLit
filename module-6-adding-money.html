@@ -118,6 +118,13 @@
   }
   .back-btn{background:transparent; color:var(--ink); border:2px solid #cfdcd8; margin-top:12px; min-height:44px}
   .back-btn:hover{border-color:var(--ink)}
+  /* optional deeper explanation for kids who want more */
+  details.more{background:var(--card); border:1.5px dashed var(--sand-deep, #d9c9a8); border-radius:12px; margin:0 0 14px; padding:0 14px}
+  details.more summary{cursor:pointer; font-weight:700; color:var(--shell); min-height:44px; display:flex; align-items:center; list-style:none}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::after{content:"＋"; margin-left:auto; font-weight:700}
+  details.more[open] summary::after{content:"−"}
+  details.more p{font-size:15px; margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -208,6 +215,7 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
 function addXP(n){ if(_replay) return; FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function more(html){ return '<details class="more"><summary>🤔 Tell me more</summary>'+html+'</details>'; }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -330,17 +338,26 @@ const L1=[
     '<div class="card"><p>Putting amounts together is called <strong>adding</strong>.</p>'+
     '<p>The sign for it is <strong>+</strong></p>'+
     '<p>75¢ + 95¢ means 75 and 95 put together.</p></div>'+
+    more('<p>You have done this before! Every time you counted coins in Module 3, you were adding.</p>'+
+      '<p>A quarter, then another quarter, then a dime: 25, 50, 60. That is adding, one coin at a time.</p>'+
+      '<p>Now it has its real name and its own sign: <strong>+</strong></p>')+
     '<button onclick="earnWord(\'add\');next()">New word: add</button>'),
   ()=>show('<div class="kicker">Lesson 1 · The hundred trick</div>'+
     '<div class="card"><p>95 is close to 100. It needs 5 more.</p>'+
     '<p>Move 5 from the 75. Now it is <strong>100 + 70</strong>.</p>'+
     '<p>That is 170 cents, or <strong>$1.70</strong>.</p>'+
     '<p>The answer is called the <strong>total</strong>.</p></div>'+
+    more('<p>This is how islanders add in their heads. Look for a number that is close to 100.</p>'+
+      '<p>95 only needs 5 more. So take 5 from the 75. The 95 becomes 100, and the 75 becomes 70.</p>'+
+      '<p>Nothing was lost. You just moved 5 cents! 100 + 70 is easy: 170.</p>')+
     '<button onclick="earnWord(\'total\');next()">New word: total</button>'),
   ()=>show('<div class="kicker">Lesson 1 · Uh-oh</div>'+
     '<div class="card"><p>Total: <strong>$1.70</strong>. Kai has: <strong>$1.25</strong>.</p>'+
     '<p>125 cents is less than 170 cents. Not enough today.</p>'+
     '<p>But adding told Kai <strong>before</strong> he got to the front of the line.</p></div>'+
+    more('<p>Use your comparing eye: 125 cents vs 170 cents. Kai’s money is less than the total.</p>'+
+      '<p>Without adding, Kai might pick up both, wait in line, and only then find out. That would be a long wait for nothing!</p>'+
+      '<p>Adding first lets you know what you can get before you ask.</p>')+
     '<button onclick="next()">Practice time</button>'),
   ()=>renderMC("q61a", next),
   ()=>renderMC("q61b", next),
@@ -387,7 +404,9 @@ const L2=[
           if(ok){
             answered=true; addXP(2);
             document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
-            document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(round<TILL_ROUNDS.length-1?"Next customer":"Close the till")+'</button>';
+            document.getElementById("cont").innerHTML=(round===TILL_ROUNDS.length-1?more('<p>Big tags? Break them into parts. Add the dollars to the dollars, and the cents to the cents.</p>'+
+              '<p>$2.05 + $1.25: dollars 2 + 1 = 3. Cents 5 + 25 = 30. Put them back together: $3.30.</p>'+
+              '<p>Mixing dollars with cents is how mistakes sneak in, so keep them in their own piles.</p>'):'')+'<button onclick="window._n()">'+(round<TILL_ROUNDS.length-1?"Next customer":"Close the till")+'</button>';
             revealFB();
             window._n=()=>{ round++; if(round<TILL_ROUNDS.length) draw(); else { addXP(4); next(); } };
           } else { answered=true; }
@@ -411,6 +430,9 @@ const L3=[
     '<div class="card"><p>Yes! But every 100 cents is a dollar.</p>'+
     '<p style="text-align:center; font-size:22px"><strong>120¢ → $1.20</strong></p>'+
     '<p>100 cents make the dollar. 20 cents are left. Same amount!</p></div>'+
+    more('<p>Cents can pile up as high as they want. 120 cents is not wrong.</p>'+
+      '<p>But remember the rule from Module 3: every 100 cents is a dollar.</p>'+
+      '<p>So when a total goes past 100, swap 100 cents for one dollar. It is like trading 10 dimes for one dollar bill: same amount, easier to carry and read.</p>')+
     '<button onclick="next()">Got it</button>'),
   ()=>renderMC("q63a", next),
   ()=>renderMC("q63c", next),

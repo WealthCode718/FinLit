@@ -116,6 +116,9 @@ const L1=[
     ${coco}
     <div class="card"><p>"Before your month starts," Rana says, "two more words. First: in every loan there are two sides."</p>
     <p>Tavo was the <em>borrower</em>. FinLit Bank handed over the money. Whoever lends the money — a bank, a shop, even a friend — is the <strong>lender</strong>. The lender is the one who gets paid back.</p></div>
+    ${more('<p>A lender takes a chance. It hands over money now and trusts that it will come back later.</p>'+
+      '<p>That is why a lender looks at your credit score first. It is also why a lender usually asks for a little extra back: extra for waiting, and for the chance it takes.</p>'+
+      '<p>When you lend a friend your pencil, you are the lender!</p>')}
     <button onclick="earnWord('lender');next()">New word: lender</button>`),
   ()=>renderMC("q291a", next),
   ()=>renderMC("q291b", next),
@@ -133,6 +136,9 @@ const L2=[
     <p>The <strong>minimum payment</strong> is the smallest amount the bill lets you pay by the due date without a late fee.</p>
     <p>"Only three dollars?" Kai says. "That sounds easy."</p>
     <p>Rana shakes her head slowly. "That’s exactly why it’s a trap."</p></div>
+    ${more('<p>Why would a bill show such a small number? Paying the minimum keeps you from a late fee this month. That part is true.</p>'+
+      '<p>But the rest stays as debt, and debt grows. The slower you pay, the more extra goes to the lender.</p>'+
+      '<p>The minimum is the <strong>least</strong> you may pay. It is not what you <strong>should</strong> pay.</p>')}
     <button onclick="earnWord('minpay');next()">New word: minimum payment</button>`),
   ()=>show(`<div class="kicker">Lesson 2 · Two roads</div>
     <div class="compare">
@@ -141,6 +147,9 @@ const L2=[
     </div>
     <div class="card"><p>Pay the minimum and there is no late fee. But everything he did <em>not</em> pay becomes <strong>debt</strong> — and from Module 26, you know what debt does. It grows, while the small payments barely keep up.</p>
     <p style="text-align:center; font-size:18px"><strong>The small number is not what you owe. The big number is.</strong></p></div>
+    ${more('<p>Think of a leaky bucket. Each small payment scoops a little water out. But the debt keeps dripping more back in.</p>'+
+      '<p>Pay only the minimum, and the bucket takes a long, long time to empty. Pay the whole bill, and it is empty today.</p>'+
+      '<p>That is why grown-ups who handle cards well try to pay the big number every time.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q292a", next),
   ()=>renderMC("q292b", next),
@@ -224,6 +233,9 @@ const L3=[
       <li>✅ <strong>The right card for the job.</strong> Debit for money he had; credit only for what he could pay in full.</li>
       <li>✅ <strong>One scam, deleted.</strong></li>
     </ul></div>
+    ${more('<p>Kai’s month shows the golden rule: only tap a credit card for what you could pay in full when the bill comes.</p>'+
+      '<p>Used that way, a card costs nothing extra and helps build a good credit score. Used the other way, small buys turn into debt that grows.</p>'+
+      '<p>The card is the same either way. The choices make the difference.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q293a", next),
 ];

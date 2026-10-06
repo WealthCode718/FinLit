@@ -114,6 +114,13 @@
   }
   .back-btn{background:transparent; color:var(--ink); border:2px solid #cfdcd8; margin-top:12px; min-height:44px}
   .back-btn:hover{border-color:var(--ink)}
+  /* optional deeper explanation for kids who want more */
+  details.more{background:var(--card); border:1.5px dashed var(--sand-deep, #d9c9a8); border-radius:12px; margin:0 0 14px; padding:0 14px}
+  details.more summary{cursor:pointer; font-weight:700; color:var(--shell); min-height:44px; display:flex; align-items:center; list-style:none}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::after{content:"＋"; margin-left:auto; font-weight:700}
+  details.more[open] summary::after{content:"−"}
+  details.more p{font-size:15px; margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -203,6 +210,7 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
 function addXP(n){ if(_replay) return; FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function more(html){ return '<details class="more"><summary>🤔 Tell me more</summary>'+html+'</details>'; }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -326,11 +334,15 @@ const L1=[
     '<p>They stack: <strong>8 stacks, 5¢ in each spot… wait, 8 nickels</strong>. Instead of counting 5, 10, 15, 20, 25, 30, 35, 40 — Rana says:</p>'+
     '<p style="text-align:center; font-size:24px"><strong>8 × 5 = 40¢</strong></p>'+
     '<p>Counting equal groups in ONE step is called <strong>multiplying</strong>. The × sign means "groups of." Eight groups of five. Done.</p></div>'+
+    more('<p>Why stack coins? Because your eyes can count stacks much faster than loose coins. Eight neat stacks are easy to see. A messy pile is not!</p>'+
+      '<p>Stores do this too. Eggs come in rows. Juice boxes come in packs. Rows and packs are equal groups, so one quick multiply tells you how many.</p>')+
     '<button onclick="earnWord(\'multiply\');next()">New word: multiply</button>'),
   ()=>show('<div class="kicker">Lesson 1 · Why it works</div>'+
     '<div class="card"><p>Multiplying isn\'t new magic — it\'s your old friend <strong>adding</strong>, moving fast.</p>'+
     '<p>3 × 25¢ literally means 25 + 25 + 25. Same answer (75¢), one step instead of three.</p>'+
     '<p>The trick only works when the groups are <strong>equal</strong>. Three quarters? Multiply. A quarter, a dime, and a nickel? Different sizes — back to adding.</p></div>'+
+    more('<p>Here’s a neat trick: you can flip the order. 3 × 25 and 25 × 3 give the same total. Three groups of 25, or 25 groups of 3 — still 75.</p>'+
+      '<p>So pick the way that’s easier to think about. For money, it is usually easier to picture the coins: “three quarters.”</p>')+
     '<button onclick="next()">Practice</button>'),
   ()=>renderMC("q121a", next),
   ()=>renderMC("q121b", next),
@@ -373,7 +385,9 @@ const L2=[
           if(ok){
             answered=true; addXP(2);
             document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
-            document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(round<CC_ROUNDS.length-1?"Next pile":"Done")+'</button>';
+            document.getElementById("cont").innerHTML=(round===CC_ROUNDS.length-1?more('<p>Look at that last pile. It wasn’t coins at all. It was <strong>mornings</strong>!</p>'+
+              '<p>Multiplying works on time, too. If Kai earns $2 every market morning, then 4 mornings earn 4 × $2. Ten mornings would earn 10 × $2 = $20.</p>'+
+              '<p>That’s how you can see a saving goal coming before you get there.</p>'):'')+'<button onclick="window._n()">'+(round<CC_ROUNDS.length-1?"Next pile":"Done")+'</button>';
             revealFB();
             window._n=()=>{ round++; if(round<CC_ROUNDS.length) draw(); else { addXP(4); next(); } };
           } else { answered=true; }
@@ -399,6 +413,9 @@ const L3=[
     '<p>Double $3 → $6. Fine. Double again → $12. Okay. Again → $24. Again → <strong>$48</strong>.</p>'+
     '<p>Four little doubles turned $3 into $48. Doubling stacks up shockingly fast — much faster than adding the same number over and over.</p>'+
     '<p class="muted">File this word away somewhere safe. Around Module 40, it comes back and changes everything.</p></div>'+
+    more('<p>Why does doubling race ahead? Because each double adds a <strong>bigger</strong> jump than the last one.</p>'+
+      '<p>From $3 to $6 is a jump of $3. From $24 to $48 is a jump of $24! Adding $3 each time would only get you to $15 after four steps.</p>'+
+      '<p>Try it with one grain of rice, doubled each day. In a month, you would need a whole room to hold it!</p>')+
     '<button onclick="earnWord(\'double\');next()">New word: double</button>'),
   ()=>renderMC("q123a", next),
   ()=>renderMC("q123c", next),

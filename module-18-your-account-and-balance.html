@@ -131,6 +131,13 @@
   }
   .back-btn{background:transparent; color:var(--ink); border:2px solid #cfdcd8; margin-top:12px; min-height:44px}
   .back-btn:hover{border-color:var(--ink)}
+  /* optional deeper explanation for kids who want more */
+  details.more{background:var(--card); border:1.5px dashed var(--sand-deep, #d9c9a8); border-radius:12px; margin:0 0 14px; padding:0 14px}
+  details.more summary{cursor:pointer; font-weight:700; color:var(--shell); min-height:44px; display:flex; align-items:center; list-style:none}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::after{content:"＋"; margin-left:auto; font-weight:700}
+  details.more[open] summary::after{content:"−"}
+  details.more p{font-size:15px; margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -223,6 +230,7 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
 function addXP(n){ if(_replay) return; FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function more(html){ return '<details class="more"><summary>🤔 Tell me more</summary>'+html+'</details>'; }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -381,11 +389,15 @@ const L1=[
     '<div class="card"><p>Two words unlock the whole slip.</p>'+
     '<p>Remember Module 17, when Kai asked for $4 back for a kite? That has a name: a <strong>withdrawal</strong>. To <strong>withdraw</strong> is to take money OUT.</p>'+
     '<p>So the account only ever does two things: deposits push money in, withdrawals pull money out.</p></div>'+
+        more('<p>A withdrawal isn’t losing money. It’s Kai using his own money for something he chose, like rope or a kite.</p>'+
+      '<p>Think of the account like a water jug. A deposit pours water in. A withdrawal pours some out into your cup. The water was always yours to drink.</p>')+
     '<button onclick="earnWord(\'withdraw\');next()">New word: withdraw</button>'),
   ()=>show('<div class="kicker">Lesson 1</div>'+
     '<div class="card"><p>And the number Kai actually wants has a name too: the <strong>balance</strong>.</p>'+
     '<p>The balance is what\'s in the account <strong>right now</strong> — not what he earned, not what he spent. What\'s left, this moment.</p>'+
     '<p>Every deposit raises it. Every withdrawal lowers it. That\'s the whole slip.</p></div>'+
+        more('<p>Why not just remember how much you put in? Because that’s only half the story. Kai put in $30, but he also took out $4. If he only remembered the $30, he’d think he had more than he really does.</p>'+
+      '<p>The balance has already done the adding and subtracting for you. It’s the one number to check before you buy something.</p>')+
     '<button onclick="earnWord(\'balance\');next()">New word: balance</button>'),
   ()=>renderMC("q181a", next),
   ()=>renderMC("q181b", next),
@@ -418,6 +430,8 @@ const L2=[
       '<p>Each line shows what happened, whether money went in or out, and the <strong>new balance</strong> after it.</p>'+
       '<p>Your turn: work out each balance before the bank tells you.</p></div>'+
       ledger()+
+            more('<p>Why work out each balance one line at a time? Because each new balance starts from the one just before it, like stepping stones across a stream.</p>'+
+        '<p>That means one mistake early on carries all the way down. Get each step right, and the last number will be right too.</p>')+
       '<button onclick="next()">Start</button>'); },
   ()=>{
     let i=0;
@@ -477,6 +491,8 @@ const L3=[
     '<p><strong>2. Where it went.</strong> Every line is labelled. The net cost $12; there\'s no mystery about it.</p>'+
     '<p><strong>3. Proof.</strong> If anyone ever disagrees, the slip settles it.</p>'+
     '<p>Kai reads the last line and grins. He knows exactly where he stands.</p></div>'+
+        more('<p>Grown-ups read their slips too. Sometimes a line shows up that they don’t remember, or a number looks wrong. Reading each line is how they catch it.</p>'+
+      '<p>It’s smart to start young: look at every line and ask, “Did I do that?” If something looks wrong, ask a trusted adult to help you check it.</p>')+
     '<button onclick="next()">Practice</button>'),
   ()=>renderMC("q183a", next),
   ()=>renderMC("q183c", next),

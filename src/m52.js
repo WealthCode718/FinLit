@@ -174,6 +174,8 @@ const L1=[
     <div class="card"><p>"So what was it all <em>for</em>?" Kai asks.</p>
     <p>"Not to be the richest person on the island," Rana says. "It’s to feel secure today and ready for tomorrow: needs covered, a cushion for surprises, no debt you can’t handle, and choices about your future."</p>
     <p>That feeling has a name: <strong>financial well-being</strong>. It comes from habits and plans, not just from how much you earn.</p></div>
+    ${more('<p>Why isn’t it just about being rich? Some people earn a lot but spend even more, and they worry all the time. Others earn less, plan well, and sleep easy.</p>'+
+      '<p>Well-being is a feeling too. It’s knowing that if the boat breaks, you’ll be okay. That calm feeling is worth a lot.</p>')}
     <button onclick="earnWord('wellbeing');next()">New word: financial well-being</button>`),
   ()=>renderMC("q521a", next),
   ()=>renderMC("q521b", next),
@@ -231,6 +233,8 @@ const L2=[
     <p class="muted" style="text-align:center">${lStars} of ${LIFE.length} on the first try</p>
     <div class="card"><p>Kai didn’t win a prize or find a shortcut. He made the same kinds of choices over and over: budget first, keep a cushion, read before signing, insure the big stuff, walk away from “guaranteed,” stick to the plan, and give what he could.</p>
     <p style="text-align:center"><strong>His plan held, because his habits held.</strong></p></div>
+    ${more('<p>Kai never had to be perfect. Even after a wrong pick, the next good choice still helped. Habits win over a lifetime, not in one day.</p>'+
+      '<p>Look at how his net worth grew: slowly at first, then much faster later. That’s compound growth again. His early good choices kept paying off for decades.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q522a", next),
   ()=>renderMC("q522b", next),
@@ -244,6 +248,8 @@ const L3=[
     <div class="recap"><strong>So far:</strong> Kai’s plan held because his habits held.</div>
     <div class="card"><p>Something you do so often it becomes automatic is a <strong>habit</strong>. Good money habits work quietly in the background, for your whole life.</p>
     <p>Sort these: good habit, or bad habit?</p></div>
+    ${more('<p>Why do habits matter so much? A choice you make once takes effort. A habit runs on its own, like brushing your teeth. You don’t have to decide again every time.</p>'+
+      '<p>A good trick is to start tiny. Saving 50 cents a week is easy to keep. Once it’s a habit, you can make it bigger.</p>')}
     <button onclick="earnWord('habit');next()">New word: habit</button>`),
   ()=>{
     let i=0;
@@ -291,6 +297,8 @@ const L3=[
     <ul class="recaplist" style="text-align:left; margin-top:10px">${(window._pledge||PLEDGES.slice(0,3)).map(p=>'<li>'+p+'</li>').join('')}</ul></div>
     <div class="card"><p>Small habits, every week, for a lifetime. That’s how Kai’s plan held, and it’s how yours will too.</p>
     <p>One last practice question, then the final mastery check.</p></div>
+    ${more('<p>Why pick only three? Trying to change everything at once is hard, and most people give up. Three is enough to start, and you can add more later.</p>'+
+      '<p>Try writing your three habits on a card and putting it where you’ll see it. You could share them with a grown-up too, so you can cheer each other on.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q523a", next),
 ];

@@ -113,6 +113,13 @@
   }
   .back-btn{background:transparent; color:var(--ink); border:2px solid #cfdcd8; margin-top:12px; min-height:44px}
   .back-btn:hover{border-color:var(--ink)}
+  /* optional deeper explanation for kids who want more */
+  details.more{background:var(--card); border:1.5px dashed var(--sand-deep, #d9c9a8); border-radius:12px; margin:0 0 14px; padding:0 14px}
+  details.more summary{cursor:pointer; font-weight:700; color:var(--shell); min-height:44px; display:flex; align-items:center; list-style:none}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::after{content:"＋"; margin-left:auto; font-weight:700}
+  details.more[open] summary::after{content:"−"}
+  details.more p{font-size:15px; margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -202,6 +209,7 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
 function addXP(n){ if(_replay) return; FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function more(html){ return '<details class="more"><summary>🤔 Tell me more</summary>'+html+'</details>'; }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -325,6 +333,8 @@ const L1=[
     '<p>The % sign means <strong>"out of 100."</strong> It\'s the SAME idea as hundredths from last module — just written with a fun new symbol instead of a dot.</p>'+
     '<p style="text-align:center; font-size:24px"><strong>50% = 50 out of 100 = 0.50 = half</strong></p>'+
     '<p>Numbers written this way are called <strong>percentages</strong>.</p></div>'+
+    more('<p>Look closely at the word: per-<strong>CENT</strong>. It’s the same “cent” as in 100 cents in a dollar. Very old words: “per cent” means “for each hundred.”</p>'+
+      '<p>You see percents a lot. A phone battery at 80% has 80 out of 100 parts of its charge left. At 100%, it is full!</p>')+
     '<button onclick="earnWord(\'percent\');next()">New word: percent</button>'),
   ()=>renderMC("q161a", next),
   ()=>renderMC("q161b", next),
@@ -344,6 +354,9 @@ const L2=[
     '<div class="recap"><strong>So far:</strong> % means out of 100 — same as hundredths.</div>'+
     '<div class="card"><p>Here\'s the big reveal of this whole block: <strong>fractions, decimals, and percents are the SAME family</strong>, just wearing different clothes.</p>'+
     '<p>½ the fraction. 0.50 the decimal. 50% the percent. All three mean exactly <strong>half</strong> — pick whichever costume fits the moment.</p></div>'+
+    more('<p>Why keep three costumes? Because each one is handy in a different place.</p>'+
+      '<p><strong>Fractions</strong> show up in cooking: ½ cup of rice. <strong>Decimals</strong> show up on prices: $0.50. <strong>Percents</strong> show up on signs and screens: 50% off, 50% charged.</p>'+
+      '<p>Knowing all three means you can read any of them.</p>')+
     '<button onclick="next()">Match them up</button>'),
   ()=>{
     let round=0;
@@ -367,7 +380,9 @@ const L2=[
           if(ok){
             answered=true; addXP(2);
             document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
-            document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(round<COSTUME_ROUNDS.length-1?"Next":"Done")+'</button>';
+            document.getElementById("cont").innerHTML=(round===COSTUME_ROUNDS.length-1?more('<p>Here’s an easy way to sense a percent: <strong>0%</strong> means none of it, and <strong>100%</strong> means all of it.</p>'+
+              '<p>Everything else sits in between. 10% is a small slice. 50% is the middle. 90% is almost all.</p>'+
+              '<p>So if a sign says 10% off, Kai knows right away: nice, but only a small cut.</p>'):'')+'<button onclick="window._n()">'+(round<COSTUME_ROUNDS.length-1?"Next":"Done")+'</button>';
             revealFB();
             window._n=()=>{ round++; if(round<COSTUME_ROUNDS.length) draw(); else { addXP(4); next(); } };
           } else { answered=true; }
@@ -393,6 +408,9 @@ const L3=[
     '<p>"50% OFF" on a $4 kite means: the store cuts the price by half. $4 → <strong>$2</strong>.</p>'+
     '<p>The trick that always works: turn the percent into its costume you like best. 50% = half. Half of $4 = $2. Done.</p>'+
     '<p>For trickier percents (like 25%), remember the quarter coin: 25% off means subtract ONE quarter of the price.</p></div>'+
+    more('<p>A discount only helps if you were going to buy the thing anyway. If Kai doesn’t need a kite, “50% off” still means he spends $2 he could save.</p>'+
+      '<p>Also, a sale price isn’t always the lowest price. Another stall might sell the same kite for $1.50 with no sign at all!</p>'+
+      '<p>Smart shoppers compare first.</p>')+
     '<button onclick="earnWord(\'discount\');next()">New word: discount</button>'),
   ()=>renderMC("q163a", next),
   ()=>renderMC("q163c", next),

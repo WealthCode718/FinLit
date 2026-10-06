@@ -172,6 +172,13 @@
   }
   .back-btn{background:transparent; color:var(--ink); border:2px solid #cfdcd8; margin-top:12px; min-height:44px}
   .back-btn:hover{border-color:var(--ink)}
+  /* optional deeper explanation for kids who want more */
+  details.more{background:var(--card); border:1.5px dashed var(--sand-deep, #d9c9a8); border-radius:12px; margin:0 0 14px; padding:0 14px}
+  details.more summary{cursor:pointer; font-weight:700; color:var(--shell); min-height:44px; display:flex; align-items:center; list-style:none}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::after{content:"＋"; margin-left:auto; font-weight:700}
+  details.more[open] summary::after{content:"−"}
+  details.more p{font-size:15px; margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -293,6 +300,7 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
 function addXP(n){ if(_replay) return; FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function more(html){ return '<details class="more"><summary>🤔 Tell me more</summary>'+html+'</details>'; }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -477,11 +485,15 @@ const L1=[
     <div class="card"><p>An agreement that both sides must follow, often written down and signed, is a <strong>contract</strong>.</p>
     <p>Here’s the big rule: <strong>your signature means you agree to ALL of it</strong>, even the lines you skipped.</p>
     <p>Nalu adds it up: 3 years at $8 a month is $288, for a blender she never owns. Her own blender would cost about $40.</p></div>
+    ${more('<p>Why are the big words so big? The top line is what the seller wants you to see. The lines that cost you money are often small and near the bottom.</p>'+
+      '<p>Nalu would pay $288 over 3 years and still not own a blender. If she buys her own for $40, she owns it for good and keeps the rest of her money.</p>')}
     <button onclick="earnWord('contract');next()">New word: contract</button>`),
   ()=>show(`<div class="kicker">Lesson 1 · Contracts in your pocket</div>
     <div class="card"><p>That night, Kai’s game pops up: <strong>“7 days FREE! Then $5 every month until you cancel.”</strong></p>
     <p>One tap of “Yes” is agreeing to a contract. Free trials, phone plans, and app sign-ups all have terms, the small words most people skip.</p>
     <p>Before agreeing to anything, ask: <em>How much in total? For how long? Can the price change? How do I stop?</em></p></div>
+    ${more('<p>Why do free trials ask for a payment card right away? Because lots of people forget to cancel. The company counts on that.</p>'+
+      '<p>A smart trick: the moment you start a trial, set a reminder for a day or two before it ends. Then you choose on purpose, not by forgetting.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q471a", next),
   ()=>renderMC("q471b", next),
@@ -507,6 +519,8 @@ const L2=[
       <li>✅ Complain, and be taken seriously</li>
     </ul>
     <p class="muted">The exact rules differ from place to place. A trusted adult can help with the details.</p></div>
+    ${more('<p>Why do buyers need protections? The seller usually knows much more about the product than you do. Rules help keep the deal fair for both sides.</p>'+
+      '<p>This is one more reason to keep your receipt (Module 33). It is your proof of what you bought, when, and for how much.</p>')}
     <button onclick="earnWord('rights');next()">New word: consumer rights</button>`),
   ()=>{
     let i=0;
@@ -541,6 +555,8 @@ const L2=[
     <p style="font-style:italic">"Hi. I bought this flashlight yesterday. Here’s my receipt. It doesn’t work, even with new batteries. Could I get a new one, please?"</p>
     <p>The shopkeeper tests it, nods, and hands him a new one.</p>
     <ul class="recaplist"><li>🧾 Bring proof (the receipt)</li><li>🗣️ Say calmly what happened</li><li>🎯 Say what you want: a repair, a new one, or a refund</li></ul></div>
+    ${more('<p>Why stay calm? The person at the counter probably didn’t make the flashlight. Most of them want to help, and a calm, clear ask makes that easy.</p>'+
+      '<p>If the first person can’t help, you can politely ask to speak with the person in charge. Still stuck? Ask a trusted adult what to do next.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q472a", next),
   ()=>renderMC("q472b", next),
@@ -595,6 +611,8 @@ const L3=[
       <li>✅ “Sign now” means slow down.</li>
       <li>✅ Ask a trusted adult.</li>
     </ul></div>
+    ${more('<p>Grown-ups sign contracts all the time: for a phone, a place to live, a job. The same five checks work for every one of them.</p>'+
+      '<p>Even grown-ups ask someone to read a big contract with them before signing. Asking for help doesn’t mean you don’t understand. It means you’re careful.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q473a", next),
 ];

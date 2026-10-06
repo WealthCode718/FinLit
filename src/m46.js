@@ -143,7 +143,8 @@ const L1=[
         <p class="tally">Tap each trick on the poster · ${found.size} of ${TRICKS.length} found</p>
         ${poster(found)}
         <div id="fb">${last?'<div class="feedback good">'+last.why+'</div>':''}</div>
-        <div id="cont">${all?'<button onclick="next()">All five found!</button>':''}</div>`);
+        <div id="cont">${all?more('<p>Most ads use more than one trick at once. A rush plus a famous face plus tiny words makes a strong pull.</p>'+
+          '<p>Once you know the tricks, you start seeing them everywhere: on signs, in videos, even on the snack box itself. Spotting them is like a superpower.</p>')+'<button onclick="next()">All five found!</button>':''}</div>`);
       document.querySelectorAll(".poster .tk").forEach(b=>{ b.onclick=()=>{
         const id=b.dataset.id; if(!found.has(id)){ found.add(id); addXP(1); }
         last=TRICKS.find(t=>t.id===id); draw(); revealFB(); }; });
@@ -154,6 +155,9 @@ const L1=[
     <div class="card"><p>Messages that sellers pay for, to make you want to buy, are called <strong>advertising</strong>. Signs, videos, songs, pop-ups, and famous people holding a product are all advertising.</p>
     <p>"Is advertising bad?" Kai asks.</p>
     <p>"Not always," says Rana. "An ad can tell you real facts: the price, what’s in it, where to find it. The trick is to keep the facts and ignore the pushing."</p></div>
+    ${more('<p>Why do sellers spend money on ads? Because ads work! A good ad can make people buy things they never planned to.</p>'+
+      '<p>That pull Kai felt by the cart was not an accident. The bright colors, the big letters, and the crowd of kids were all chosen to make him want it.</p>'+
+      '<p>A good trick: when you feel that pull, wait a day. If you still want it tomorrow, it might be a real want.</p>')}
     <button onclick="earnWord('advertising');next()">New word: advertising</button>`),
   ()=>renderMC("q461a", next),
   ()=>renderMC("q461b", next),
@@ -201,6 +205,8 @@ const L2=[
     <div class="phone"><div class="pop"><div class="h">💎 GEM PACK 80% OFF! 💎</div><div class="t">⏰ Only 1:59:42 left! Your friends already bought theirs!</div></div></div>
     <div class="card"><p>Same tricks, new place: a countdown <strong>rush</strong>, <strong>crowd pressure</strong> ("your friends"), and a big <strong>discount</strong> on something he hadn’t planned to buy.</p>
     <p>Ads are everywhere online too: pop-ups in games, and videos where creators are paid to show products. Look for small labels like “ad” or “sponsored.”</p></div>
+    ${more('<p>Why put ads inside games? Because you are already having fun and not thinking about money. A pop-up in the middle of play is hard to say no to.</p>'+
+      '<p>Some games are free to play but are built to sell you small things again and again. Before you buy anything in a game, stop and ask a trusted adult.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q462a", next),
   ()=>renderMC("q462b", next),
@@ -251,6 +257,9 @@ const L3=[
       <li>🏷️ A <strong>sale</strong> on something you don’t need isn’t saving. It’s spending.</li>
       <li>🔁 Something you’ll <strong>use a lot</strong> is often worth paying more for.</li>
     </ul></div>
+    ${more('<p>A handy test: think about the cost for each time you use it. A $10 pair of sandals you wear every day for a year costs only a few cents each day.</p>'+
+      '<p>Game gems for $5 that you use once cost the whole $5 for one use.</p>'+
+      '<p>Value is also personal. A great fishing rope is good value for Kai, but not for someone who never fishes.</p>')}
     <button onclick="earnWord('value');next()">New word: value</button>`),
   ()=>renderMC("q463a", next),
 ];

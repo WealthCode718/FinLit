@@ -120,6 +120,9 @@ const L1=[
     <div class="card"><p>That is his <strong>PIN</strong> — a secret number that proves to the bank it is really him.</p>
     <p>Think of it like the key to the tin, except the tin now holds everything. Anyone who has the PIN can get in.</p>
     <p>So the PIN has one job: <strong>stay secret</strong>. Not for friends. Not for anyone who says they are from the bank. Not even for someone you really like.</p></div>
+    ${more('<p>Why are four numbers enough? There are thousands of ways to mix them. And most banks stop someone after a few wrong tries.</p>'+
+      '<p>The real danger is not guessing. It is someone <strong>seeing</strong> or <strong>being told</strong> the PIN.</p>'+
+      '<p>So when Kai types it, he turns his screen away or covers it with his other hand. Even when only friends are nearby.</p>')}
     <button onclick="earnWord('pin');next()">New word: PIN</button>`),
   ()=>show(`<div class="kicker">Lesson 1 · A good PIN</div>
     <div class="card"><p>Tricksters guess the easy ones first. So a good PIN is:</p>
@@ -159,6 +162,9 @@ const L2=[
     <div class="card"><p>"So," Rana says. "This message wants your PIN. What do you think now?"</p>
     <p>Kai stares at it. "The real bank already knows it’s me. Why would it ask?"</p>
     <p>"It wouldn’t. That message is a <strong>scam</strong> — a trick where someone pretends to be someone they are not, to get your money or your secrets."</p></div>
+    ${more('<p>Why do scams work on smart people? They go after feelings. Scared feelings, like “you will lose everything!” Or excited ones, like “you won a prize!”</p>'+
+      '<p>Big feelings make us want to act fast, before we think.</p>'+
+      '<p>Kai did the smartest thing: he stopped, and he showed a trusted adult before doing anything.</p>')}
     <button onclick="earnWord('scam');next()">New word: scam</button>`),
   ()=>show(`<div class="kicker">Lesson 2 · The warning signs</div>
     <div class="card"><p>Scams wear different costumes, but they usually give themselves away:</p>
@@ -189,6 +195,9 @@ const L2=[
           done=true; addXP(1);
           document.getElementById("sReal").disabled=true; document.getElementById("sScam").disabled=true;
           document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(i<INBOX.length-1?"Next message":"Done")+'</button>';
+          if(i===INBOX.length-1) document.getElementById("cont").innerHTML=more('<p>Did you notice? The real messages only <strong>told</strong> Kai something. The scams all <strong>wanted</strong> something: money, a PIN, or speed.</p>'+
+            '<p>That one question sorts most messages: <em>“Is this asking me to do something?”</em></p>'+
+            '<p>Even a message from a friend’s name can be a costume. When money is asked for, check with the real person, face to face.</p>')+document.getElementById("cont").innerHTML;
           window._n=()=>{ i++; draw(); };
           revealFB();
         }
@@ -221,11 +230,17 @@ const L3=[
       <li><strong>Change the PIN.</strong> If someone might know the old secret, make a new one.</li>
     </ol>
     <p style="margin-top:8px">Speed matters. When you speak up fast, the bank can usually do much more to help.</p></div>
+    ${more('<p>Why not just tap the link in the message? A scam link can open a page that looks <strong>exactly</strong> like the bank, with the same colors and logo. It is a costume.</p>'+
+      '<p>If Kai types his PIN there, it goes straight to the trickster.</p>'+
+      '<p>The app Kai already has, or a number he already knows, cannot be swapped out by a stranger’s message. That is why it is safe.</p>')}
     <button onclick="next()">What happened next?</button>`),
   ()=>show(`<div class="kicker">Lesson 3</div>
     <div class="notif"><span class="bell">🔔</span><span><strong>FinLit Bank</strong><br>Money in: $7.00 — Returned: Unknown shop. Balance now $22.00.</span></div>
     <div class="card"><p>Because Kai looked, and spoke up the same day, the bank sorted it out and put his $7 back.</p>
     <p>Looking, keeping the PIN secret, and acting fast — those three habits protect Kai’s money better than any lock on any tin.</p></div>
+    ${more('<p>Will a bank always give the money back? Not always. Each bank has its own rules, and they are different in different places. Ask a trusted adult how your bank handles it.</p>'+
+      '<p>But one thing is true almost everywhere: the sooner you speak up, the better your chances.</p>'+
+      '<p>Waiting a month makes it much harder to sort out.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q233a", next),
   ()=>renderMC("q233c", next),

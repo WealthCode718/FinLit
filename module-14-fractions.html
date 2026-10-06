@@ -113,6 +113,13 @@
   }
   .back-btn{background:transparent; color:var(--ink); border:2px solid #cfdcd8; margin-top:12px; min-height:44px}
   .back-btn:hover{border-color:var(--ink)}
+  /* optional deeper explanation for kids who want more */
+  details.more{background:var(--card); border:1.5px dashed var(--sand-deep, #d9c9a8); border-radius:12px; margin:0 0 14px; padding:0 14px}
+  details.more summary{cursor:pointer; font-weight:700; color:var(--shell); min-height:44px; display:flex; align-items:center; list-style:none}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::after{content:"＋"; margin-left:auto; font-weight:700}
+  details.more[open] summary::after{content:"−"}
+  details.more p{font-size:15px; margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -202,6 +209,7 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
 function addXP(n){ if(_replay) return; FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function more(html){ return '<details class="more"><summary>🤔 Tell me more</summary>'+html+'</details>'; }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -325,11 +333,17 @@ const L1=[
     '<p>Each part has a name: <strong>one half</strong>.</p>'+
     '<p>Names for equal parts of one whole are called <strong>fractions</strong>. Halves, thirds, quarters — a whole new family of numbers that live BETWEEN the whole ones.</p>'+
     '<p>Two friends, two halves, zero arguments. The mango problem is solved forever.</p></div>'+
+    more('<p>Fractions have their own way to be written: two numbers stacked with a line between them.</p>'+
+      '<p>The <strong>bottom</strong> number says how many equal parts the whole was cut into. The <strong>top</strong> number says how many of those parts you have.</p>'+
+      '<p>So Kai’s piece of mango is written 1/2: one part, out of two equal parts.</p>')+
     '<button onclick="earnWord(\'fraction\');next()">New word: fraction</button>'),
   ()=>show('<div class="kicker">Lesson 1 · The equal rule</div>'+
     '<div class="card"><p>One rule makes fractions work: <strong>the parts must be EQUAL.</strong></p>'+
     '<p>Cut a mango into a big piece and a small piece? Those aren\'t halves — those are an argument waiting to happen.</p>'+
     '<p>Equal (Module 4\'s word!) is what makes a fraction fair. Two equal parts → halves. Three equal parts → thirds. Four equal parts → quarters.</p></div>'+
+    more('<p>Here’s a surprise that tricks lots of people: <strong>more parts means smaller pieces.</strong></p>'+
+      '<p>Cut a mango for 2 friends, and each piece is big. Cut the same mango for 4 friends, and each piece is smaller.</p>'+
+      '<p>So a quarter is less than a half, even though 4 is bigger than 2. Hungry? Hope for halves!</p>')+
     '<button onclick="earnWord(\'half\');next()">New word: half</button>'),
   ()=>renderMC("q141a", next),
   ()=>renderMC("q141b", next),
@@ -371,7 +385,9 @@ const L2=[
           if(ok){
             answered=true; addXP(2);
             document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
-            document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(round<CUT_ROUNDS.length-1?"Next cut":"Done")+'</button>';
+            document.getElementById("cont").innerHTML=(round===CUT_ROUNDS.length-1?more('<p>Why be so strict about equal parts? Because a fraction name is a <strong>promise</strong>.</p>'+
+              '<p>If Tavo says “I gave you half,” you should be able to trust that you got the same as him. A big piece and a small piece would break that promise.</p>'+
+              '<p>When someone says “half,” it is fair to check that the parts really are equal.</p>'):'')+'<button onclick="window._n()">'+(round<CUT_ROUNDS.length-1?"Next cut":"Done")+'</button>';
             revealFB();
             window._n=()=>{ round++; if(round<CUT_ROUNDS.length) draw(); else { addXP(4); next(); } };
           } else { answered=true; }
@@ -397,6 +413,9 @@ const L3=[
     '<p>Cut $1 into 4 equal parts → each part is 25¢ → that\'s the coin! And just like mango quarters: <strong>4 quarters snap back into 1 whole dollar</strong> (you\'ve known 4 × 25 = 100 since Module 3).</p>'+
     '<p>Half of a dollar works too: $1 cut into 2 equal parts → <strong>50¢ each</strong>. Rana\'s 100-penny trick from last module? That was fractions, secretly: 50¢ is half of a dollar.</p>'+
     '<p>The money system has been speaking fractions to you this whole time.</p></div>'+
+    more('<p>The other coins are fractions too! A dime is one of 10 equal parts of a dollar, so 10 dimes make $1.</p>'+
+      '<p>A nickel is one of 20 equal parts, so 20 nickels make $1. And a penny is the tiniest part of all: one of 100.</p>'+
+      '<p>Each coin is just a different way to cut up one dollar.</p>')+
     '<button onclick="next()">Practice</button>'),
   ()=>renderMC("q143a", next),
   ()=>renderMC("q143c", next),

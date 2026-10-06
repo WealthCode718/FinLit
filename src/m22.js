@@ -122,12 +122,17 @@ const L1=[
     <div class="card"><p>That $1 is called a <strong>fee</strong> — money a bank takes out of your account for a service, or for breaking one of its rules.</p>
     <p>Kai did not buy anything. The bank took it anyway, because the rules said so.</p>
     <p>Put it next to last module’s word: <strong>interest adds a little. A fee takes some away.</strong></p></div>
+    ${more('<p>Why would a bank charge for paper? Printing, envelopes, and carrying letters all cost the bank money. The fee pays for that work.</p>'+
+      '<p>Every bank keeps a list of its fees and the rules behind them. They can be different at each bank.</p>'+
+      '<p>When you have an account, ask a trusted adult to read that list with you. It is short, and it can save you money.</p>')}
     <button onclick="earnWord('fee');next()">New word: fee</button>`),
   ()=>show(`<div class="kicker">Lesson 1 · Knowing the rule</div>
     <div class="card"><p>Here is the good news. Kai already reads every transaction on his phone. He does not need the paper at all.</p>
     <p>He taps one switch in the app: <strong>paper statement — off</strong>.</p>
     <p>Next month, no paper. No fee. Same information, for free.</p>
     <p style="text-align:center; font-size:19px"><strong>Many fees can be avoided — once you know the rule that causes them.</strong></p></div>
+    ${more('<p>Some banks have other fees too. One bank might charge if your balance gets very small. Another might charge for taking cash from a machine that belongs to a different bank.</p>'+
+      '<p>Each fee has a rule behind it. Ask: <em>“What causes this fee?”</em> Once you know, you can often step around it, just like Kai did.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q221a", next),
   ()=>renderMC("q221b", next),
@@ -149,6 +154,9 @@ const L2=[
     <div class="card"><p>The payment went through! But look at the balance. There is a little minus sign in front: <strong>−$3.00</strong>.</p>
     <p>That means <strong>below zero</strong>. Kai did not just run out of money — he spent $3 he never had. The bank covered the gap for him, for a moment.</p>
     <p>This is called an <strong>overdraft</strong>: spending more than your balance, so it goes below zero.</p></div>
+    ${more('<p>Why did the payment go through at all? Some banks let it through so the shop still gets paid. In that moment, it can feel like the bank is being kind.</p>'+
+      '<p>Other banks just say no and stop the payment. That feels annoying at the counter, but it means no surprise below zero.</p>'+
+      '<p>Either way, the bank does not cover the gap for free. Watch the next screen.</p>')}
     <button onclick="earnWord('overdraft');next()">New word: overdraft</button>`),
   ()=>show(`<div class="kicker">Lesson 2 · The buzz</div>
     <div class="notif"><span class="bell">🔔</span><span><strong>FinLit Bank</strong><br>Overdraft fee: −$5.00. Your balance is below zero.</span></div>
@@ -160,6 +168,9 @@ const L2=[
     <div class="card"><p>On Monday Kai earns $10 at the market and deposits it.</p>
     <p>But he does not get to use all $10. Part of it goes first to <strong>filling the hole</strong> below zero — money already spent before it even arrived.</p>
     <p>That is the real sting of an overdraft. It costs the price, <strong>plus</strong> a fee, <strong>plus</strong> it eats into money you have not even earned yet.</p></div>
+    ${more('<p>Picture digging a hole at the beach. The first buckets of sand you bring do not build a castle. They just fill the hole back to flat ground.</p>'+
+      '<p>Money below zero works the same way. Kai’s deposit fills the hole first. Only what is left over is his to spend or save.</p>'+
+      '<p>So one quick payment without looking can follow Kai into next week.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q222a", next),
   ()=>renderMC("q222b", next),
@@ -232,6 +243,9 @@ const L3=[
     <div class="card"><p>Kai finished the market with money left and <strong>zero</strong> fees. One look, every time.</p>
     <p>Rana shares one more trick: "I keep a few dollars in checking that I pretend are not there. If I ever forget to look, those few dollars catch me before I go below zero."</p>
     <p>And the goal money? It stays in savings, where Kai does not spend it by accident — and where it keeps growing.</p></div>
+    ${more('<p>Why do Rana’s hidden dollars work? Everyone forgets sometimes. A busy day, a big smile at the market, and the look gets skipped.</p>'+
+      '<p>Those few dollars are like a seatbelt. You hope you never need them, but they are there if you slip.</p>'+
+      '<p>Notice the pattern: checking is for spending, savings is for goals. Two jobs, two places, fewer mistakes.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q223a", next),
   ()=>renderMC("q223c", next),

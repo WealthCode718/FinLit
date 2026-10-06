@@ -110,6 +110,9 @@ const L1=[
     <div class="card"><p>Kai has earned money before — selling fish at the market, helping neighbors. But this is different. Tavo will pay Kai to work for <em>him</em>.</p>
     <p>That makes Tavo Kai’s <strong>employer</strong>: the person or business that pays you to work for them.</p>
     <p>Rana nods. "An employer is someone trusting you with their work. Show up on time, do it well, and they will want you back."</p></div>
+    ${more('<p>Lots of grown-ups work for an employer: a shop, a school, a farm, a hospital. Some people work for themselves instead, like Kai selling fish at the market.</p>'+
+      '<p>Both ways earn money. With an employer, someone else decides the work and pays you for it.</p>'+
+      '<p>For kids, work usually means small jobs like chores or helping family. Rules about young people working differ by place, so ask a trusted adult.</p>')}
     <button onclick="earnWord('employer');next()">New word: employer</button>`),
   ()=>renderMC("q301a", next),
   ()=>renderTF("q301b", next),
@@ -141,6 +144,9 @@ const L2=[
     ${payCard(5,"Saturday · 5 hours × $4")}
     <div class="card"><p>Every hour added the same $4. Five hours, $20.</p>
     <p>That is the whole idea of a wage: <strong>same wage, more hours, more money.</strong> Fewer hours, less money.</p></div>
+    ${more('<p>Not every wage is by the hour. Some are paid by the day, or for a whole job, like $10 to paint a fence.</p>'+
+      '<p>Knowing the wage helps you plan. Kai’s goal costs $20? That is one Saturday on the boat.</p>'+
+      '<p>Wages often go up as a worker learns more skills and is trusted with more.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q302a", next),
   ()=>renderMC("q302b", next),
@@ -161,6 +167,9 @@ const L3=[
     </div>
     <div class="card"><p>The bakery wage is higher. But the hours are so few that it brings in <strong>half</strong> as much.</p>
     <p style="text-align:center"><strong>Pay depends on the wage AND the hours.</strong></p></div>
+    ${more('<p>A quick trick: picture the end of the day, not one hour. How much will you carry home?</p>'+
+      '<p>Think about travel time too. A job that is a long walk away uses more of your day than its hours show.</p>'+
+      '<p>It is like shopping: a lower price on a much smaller bag is not always the better deal.</p>')}
     <button onclick="next()">Is money the only thing?</button>`),
   ()=>show(`<div class="kicker">Lesson 3 · More than a number</div>
     <div class="card"><p>Rana adds one more thing. "A job is part of your whole week. Before you say yes, ask:"</p>
@@ -170,6 +179,9 @@ const L3=[
       <li style="padding:6px 0">😴 <strong>Does it leave time to rest?</strong></li>
     </ul>
     <p>Tavo’s job is Saturdays only, with an adult he trusts. Kai takes it.</p></div>
+    ${more('<p>A job trades two things: your time for money. Every hour you work is an hour you can’t spend on school, friends, or rest.</p>'+
+      '<p>A good job is a fair trade, where you stay safe and well.</p>'+
+      '<p>If a job ever feels unsafe or unfair, tell a trusted adult right away.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q303a", next),
   ()=>renderMC("q303c", next),

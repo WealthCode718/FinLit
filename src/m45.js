@@ -187,6 +187,8 @@ const L1=[
   ()=>show(`<div class="kicker">Lesson 1 · A new word</div>
     <div class="card"><p>How much up-and-down someone can handle, without panicking or needing the money, is their <strong>risk tolerance</strong>.</p>
     <p>Nalu taught Kai something important: the plan with the biggest possible return isn’t always the best. <strong>The best plan is one you can stick with.</strong></p></div>
+    ${more('<p>Think of a roller coaster. Some people love the big drops. Others feel sick and want to get off halfway. Neither one is wrong. They just have a different risk tolerance.</p>'+
+      '<p>With money, getting off halfway is the problem. Nalu might sell everything in a bad year and lock in the loss. A calmer plan she can ride all the way is better for her.</p>')}
     <button onclick="earnWord('risktol');next()">New word: risk tolerance</button>`),
   ()=>renderMC("q451a", next),
   ()=>renderMC("q451b", next),
@@ -201,6 +203,8 @@ const L2=[
     <div class="recap"><strong>So far:</strong> risk tolerance depends on when you need the money and how you handle drops.</div>
     <div class="card"><p>"Now you," Rana says, handing Kai a pencil. "Remember your insurance policy? Real plans get written down. Write your money plan on a calm day, so you can follow it on a scary one."</p>
     <p>Kai has five pots of money. For each one, choose where it goes.</p></div>
+    ${more('<p>Why write it on a calm day? When something scary happens, like a big drop, it is hard to think clearly. People make rushed choices they wish they had not.</p>'+
+      '<p>A written plan is like a note from your calm self to your worried self: “Here is what we decided, and why.”</p>')}
     <button onclick="next()">Start writing</button>`),
   ()=>{
     let i=0;
@@ -235,6 +239,8 @@ const L2=[
   ()=>show(`<div class="kicker">Lesson 2 · Another new word</div>
     ${planCard(POTS.length)}
     <div class="card"><p>Written rules for your money, covering what stays safe, what debt goes first, what gets invested for the long term, and what you’ll do when it drops, make an <strong>investment plan</strong>.</p></div>
+    ${more('<p>See the order? Safety first, then debt, then growing. It is the same checklist Kai learned in Module 41, now written down in his own words.</p>'+
+      '<p>A plan is not set in stone. When life changes, like a new job or a new goal, Kai can sit down on a calm day and update it. What he should not do is toss it out in a panic.</p>')}
     <button onclick="earnWord('invplan');next()">New word: investment plan</button>`),
   ()=>renderMC("q452a", next),
   ()=>renderMC("q452b", next),
@@ -297,6 +303,8 @@ const L3=[
       <li>✅ <strong>Watched the fees.</strong></li>
       <li>✅ <strong>Kept adding</strong> a little.</li>
     </ul></div>
+    ${more('<p>Notice that none of Kai’s smart moves were about picking a winner. He did not guess which stand would do best. He just followed simple rules, again and again.</p>'+
+      '<p>That is the secret of smart money choices: boring, steady steps, repeated for years. Many grown-ups ask someone they trust to help them write their plan, too.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q453a", next),
 ];

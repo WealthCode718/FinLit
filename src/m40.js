@@ -154,6 +154,8 @@ const L1=[
     <p>When prices on almost everything slowly go up over the years, it is called <strong>inflation</strong>.</p>
     <p>"But why?" Kai asks.</p>
     <p>"Boat fuel costs more. Workers earn bigger wages than I did back then. And when people have more money to spend on the same number of mangoes, sellers ask more for them," Tavo says. "It happens slowly, and it happens almost everywhere."</p></div>
+    ${more('<p>Why does it happen so slowly? Each year, prices only creep up a tiny bit. You hardly notice from one week to the next.</p>'+
+      '<p>But tiny steps add up. Ask a grown-up what a snack or a bus ride cost when they were your age. The answer will probably surprise you!</p>')}
     <button onclick="earnWord('inflation');next()">New word: inflation</button>`),
   ()=>renderMC("q401a", next),
   ()=>renderMC("q401b", next),
@@ -187,6 +189,8 @@ const L2=[
     <div class="card"><p>Nobody opened the tin. Nobody took a dollar. It is still $10.</p>
     <p>What shrank is its <strong>buying power</strong>: how much your money can actually get you.</p>
     <p style="text-align:center"><strong>Inflation does not take your dollars. It shrinks what they can buy.</strong></p></div>
+    ${more('<p>Think of your dollars like a bucket, and the things you want like water. Inflation does not make the bucket leak. It makes each scoop of water cost more bucket.</p>'+
+      '<p>Good news: wages usually go up over the years too. That is why grown-ups can still pay for things, even when prices are higher than when they were kids.</p>')}
     <button onclick="earnWord('buyingpower');next()">New word: buying power</button>`),
   ()=>show(`<div class="kicker">Lesson 2 · Round two</div>
     <div class="card"><p>"Now play it again," Rana says. "This time, also put $10 in your <strong>savings account</strong>, where it earns interest, like you saw back in Module 21."</p></div>
@@ -198,7 +202,10 @@ const L2=[
       show(`<div class="kicker">Lesson 2 · Tin vs. savings</div>
         ${jars(k,true)}
         <div id="cont">${last
-          ? '<div class="feedback good">The tin fell to 4 coconuts. The savings grew to $20 and still buys 8. It kept up much better, but not perfectly.</div><button onclick="next()">Continue</button>'
+          ? '<div class="feedback good">The tin fell to 4 coconuts. The savings grew to $20 and still buys 8. It kept up much better, but not perfectly.</div>'+
+            more('<p>Why did the savings do better? Interest made the balance grow, year after year, while the tin just sat there.</p>'+
+              '<p>The tin is not useless. It is fine for a little money you need soon. But for money you want to keep for many years, a place where it can grow helps it keep up with rising prices.</p>')+
+            '<button onclick="next()">Continue</button>'
           : '<button data-bot="1" onclick="window._w()">⏩ Wait 5 years</button>'}</div>`);
       window._w=()=>{ k++; draw(); };
     }
@@ -276,6 +283,9 @@ const L3=[
       <li>✅ Goals years away need money that <strong>grows</strong>.</li>
       <li>✅ The emergency fund stays in savings, ready, and gets topped up.</li>
     </ul></div>
+    ${more('<p>Inflation is like a slow tide. You cannot stop it, but you can plan for it.</p>'+
+      '<p>Kai still keeps his needs first, saves toward his goals, and keeps his emergency fund ready. The only change: he keeps saved money in a place where it can grow, and he adds a little more now and then.</p>'+
+      '<p>Rana hinted that money can go out and work. That is the next part of Kai’s story.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q403a", next),
 ];

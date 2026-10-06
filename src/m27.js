@@ -130,6 +130,8 @@ const L1=[
     ${acctCard(12,"Kai · right after tapping")}
     <div class="card"><p>The money left his own checking <strong>right away</strong> — like a withdrawal he can tap.</p>
     <p>That is a <strong>debit card</strong>. It spends money you already have. It needs his PIN, and everything from Modules 22 and 23 still applies: look before you pay, and keep the PIN secret.</p></div>
+    ${more('<p>Why use a card instead of cash? No counting coins, no waiting for change. And every tap shows up in Kai’s feed as a transaction, so he can see where his money went.</p>'+
+      '<p>There is a safety reason too. If Kai drops cash on the beach, it is gone. If he loses his card, he can tell the bank fast, and they can stop it.</p>')}
     <button onclick="earnWord('debitcard');next()">New word: debit card</button>`),
   ()=>renderMC("q271a", next),
   ()=>renderTF("q271b", next),
@@ -151,6 +153,9 @@ const L2=[
     <div class="card"><p>That is a <strong>credit card</strong>. It pays with the bank’s money, and you pay the bank back later. <em>Credit</em> means the bank trusts you to pay it back.</p>
     <p>Here is the danger Nilo learned the hard way: <strong>because his checking never moved, it did not feel like spending.</strong> Four little taps, no number going down, no alarm bells.</p>
     <p>Every one of them was borrowing.</p></div>
+    ${more('<p>Rana has a habit for her credit card. Before she taps it, she asks: <em>“Is this money already in my checking?”</em> If not, she does not tap.</p>'+
+      '<p>Then, when the bill comes, the money is waiting. She pays it all.</p>'+
+      '<p>Kids usually cannot get a credit card of their own. The rules are different in different places, so ask a trusted adult how it works where you live.</p>')}
     <button onclick="earnWord('creditcard');next()">New word: credit card</button>`),
   ()=>renderMC("q272a", next),
   ()=>renderMC("q272b", next),
@@ -176,6 +181,9 @@ const L3=[
     <p>Nilo has a choice, and it decides everything:</p>
     <p><strong>Pay the whole bill by the date</strong> → usually no interest at all. The bank lent him the money for free.</p>
     <p><strong>Pay only part</strong> → whatever is left becomes <strong>debt</strong>, and from Module 26 you know what debt does. It grows.</p></div>
+    ${more('<p>Wait, why would a bank lend money for free? Two reasons.</p>'+
+      '<p>First, many people do <strong>not</strong> pay the whole bill. The bank earns interest from them.</p>'+
+      '<p>Second, every time someone taps a card, the shop pays the bank a small fee. So the bank still earns, even from people like Rana who always pay it all.</p>')}
     <button onclick="next()">Debit or credit? Sort six facts</button>`),
   ()=>{
     let i=0;
@@ -196,6 +204,9 @@ const L3=[
           done=true; addXP(1);
           document.getElementById("sDeb").disabled=true; document.getElementById("sCred").disabled=true;
           document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(i<FACTS.length-1?"Next":"Done")+'</button>';
+          if(i===FACTS.length-1) document.getElementById("cont").innerHTML=more('<p>Here is one question that sorts almost everything: <em>“Whose money is this?”</em></p>'+
+            '<p>Debit card: my money, today. Credit card: the bank’s money, which I pay back later.</p>'+
+            '<p>The cards look the same. Asking that question before each tap is what keeps Kai out of Nilo’s trouble.</p>')+document.getElementById("cont").innerHTML;
           window._n=()=>{ i++; draw(); };
           revealFB();
         }

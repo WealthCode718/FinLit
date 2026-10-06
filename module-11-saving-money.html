@@ -114,6 +114,13 @@
   }
   .back-btn{background:transparent; color:var(--ink); border:2px solid #cfdcd8; margin-top:12px; min-height:44px}
   .back-btn:hover{border-color:var(--ink)}
+  /* optional deeper explanation for kids who want more */
+  details.more{background:var(--card); border:1.5px dashed var(--sand-deep, #d9c9a8); border-radius:12px; margin:0 0 14px; padding:0 14px}
+  details.more summary{cursor:pointer; font-weight:700; color:var(--shell); min-height:44px; display:flex; align-items:center; list-style:none}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::after{content:"＋"; margin-left:auto; font-weight:700}
+  details.more[open] summary::after{content:"−"}
+  details.more p{font-size:15px; margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -204,6 +211,7 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
 function addXP(n){ if(_replay) return; FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function more(html){ return '<details class="more"><summary>🤔 Tell me more</summary>'+html+'</details>'; }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -326,6 +334,9 @@ const L1=[
     '<div class="card"><p>Kai puts his $3 in the tin. He puts the tin up high.</p>'+
     '<p>Keeping money now to use later is called <strong>saving</strong>.</p>'+
     '<p>The money is not gone. It’s <em>waiting</em>.</p></div>'+
+    more('<p>Kai does something new: <strong>nothing</strong>! No candy. No little treats.</p>'+
+      '<p>That is the hard part of saving. You choose <strong>not</strong> to spend, even when you could.</p>'+
+      '<p>The money is not lost. Kai knows right where it is. He is just keeping it for something he wants more.</p>')+
     '<button onclick="earnWord(\'save\');next()">New word: save</button>'),
   ()=>{
     let added=false;
@@ -334,7 +345,8 @@ const L1=[
         '<p>Kai earns $2 at the market.</p>'+
         '<div class="jar"><div class="lvl">🫙 '+(added?'$5':'$3')+'</div><div class="amt">'+(added?'$3 + $2 = $5':'In the tin: $3')+'</div></div>'+
         '<div id="cont">'+(added?
-          '<div class="feedback good">$5 is more than $4. Kai buys the book! $1 is left in the tin. 🎉</div><button onclick="next()">Practice</button>':
+          '<div class="feedback good">$5 is more than $4. Kai buys the book! $1 is left in the tin. 🎉</div>'+more('<p>Last week, the book was impossible. This week, it’s done, with $1 left over!</p>'+
+            '<p>That is what saving does. Small amounts <strong>meet</strong> in the tin and add up to enough. $3 alone was not enough. $2 alone was not enough. Together, they were.</p>')+'<button onclick="next()">Practice</button>':
           '<button data-bot="1" onclick="window._add()">Put $2 in the tin</button>')+'</div>');
       window._add=()=>{ added=true; addXP(3); draw(); revealFB(); };
     }
@@ -352,6 +364,8 @@ const L2=[
     '<div class="card"><p>The thing you save for is your <strong>goal</strong>.</p>'+
     '<p>Kai’s goal was the $4 book. He had $3. The gap was $1.</p>'+
     '<p>Know your goal. Find the gap. Then you know how far you have to go.</p></div>'+
+    more('<p>A goal you can name is powerful. “Saving” is foggy. “Saving for a fishing net” is a picture in your head.</p>'+
+      '<p>A goal also helps with math. Remember Module 7? Subtract what you have from the goal, and you get the <strong>gap</strong>: exactly how much more you need.</p>')+
     '<p class="muted">Now try it with Rana. She lives on the island too.</p>'+
     '<button onclick="earnWord(\'goal\');next()">New word: goal</button>'),
   ()=>renderMC("q112a", next),
@@ -371,6 +385,9 @@ const L3=[
     '<div class="card"><p>🎯 <strong>Name your goal.</strong> Picture the thing you want.</p>'+
     '<p>📉 <strong>Watch the gap get small.</strong> $4 to go… then $2…</p>'+
     '<p>🫙 <strong>Keep it out of your pocket.</strong> Money up high is harder to spend.</p></div>'+
+    more('<p>Watching the gap get smaller feels like winning, because it <strong>is</strong> winning! $4 to go, then $2 to go, then you’re there.</p>'+
+      '<p>And money in a tin on a high shelf is quiet. When the candy stall calls, it can’t jump out of your pocket.</p>'+
+      '<p>You can try these tricks too. Draw your goal, and mark each step closer.</p>')+
     '<p>Saving is simple. But it is not always easy. These tricks help.</p>'+
     '<button onclick="next()">Practice</button>'),
   ()=>renderTF("q112b", next),

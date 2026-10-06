@@ -115,6 +115,8 @@ const L1=[
     <p>Twenty small payments. One big loss, covered. Nobody faces it alone.</p>
     <p>That is <strong>insurance</strong>: paying a small, certain amount so that a big loss gets paid for if it happens. It is the fourth way to handle risk from Module 35: <strong>share it</strong>.</p>
     <p class="muted">In most places, people buy insurance from an insurance company, which collects from thousands of people and keeps some to run itself. Same idea, bigger pot.</p></div>
+    ${more('<p>Why does the deal work? Nobody knows whose boat the storm will hit. But with twenty boats, only one or two will likely get hit in a season.</p>'+
+      '<p>So twenty small, certain payments can cover one or two big, surprise losses. Each fisher trades a scary “maybe” for a small, sure cost.</p>')}
     <button onclick="earnWord('insurance');next()">New word: insurance</button>`),
   ()=>renderMC("q371a", next),
   ()=>renderTF("q371c", next),
@@ -128,6 +130,8 @@ const L2=[
     <div class="recap"><strong>So far:</strong> insurance means many people share the cost of big losses.</div>
     <div class="card"><p>Kai signs up, with Tavo’s help, for his little boat. His part: $5 at the start of every season, whether or not a storm hits.</p>
     <p>That regular payment is called a <strong>premium</strong>. It is the price of being protected.</p></div>
+    ${more('<p>Why pay before anything goes wrong? The pot has to be full before the storm comes. If people only paid after their boat broke, the pot would be empty.</p>'+
+      '<p>It is a bit like carrying an umbrella. You bring it on cloudy days, not after you are already soaked.</p>')}
     <button onclick="earnWord('premium');next()">New word: premium</button>`),
   ()=>{
     let step=0;
@@ -152,7 +156,10 @@ const L2=[
           <div class="card"><p>The damaged boat is fixed. The fisher never had to borrow.</p>
           <p>And the other nineteen, including Kai? They paid $5 and their boats were fine. Did they waste it?</p>
           <p><strong>No.</strong> Every day of the season, they were protected. If the storm had picked <em>their</em> boat, the pot would have paid for them. That protection is what the premium buys.</p></div>
-          <div id="cont"><button onclick="addXP(4);next()">Continue</button></div>`);
+          ${more('<p>What about the $40 left in the pot? On the island, it stays for next season, in case two boats get hit.</p>'+
+      '<p>A real insurance company works a bit like this. It collects premiums from many people, pays for big losses, and keeps some to pay its own workers.</p>'+
+      '<p>That is why, all together, people pay in a little more than the company pays out.</p>')}
+    <div id="cont"><button onclick="addXP(4);next()">Continue</button></div>`);
       }
     }
     draw();
@@ -177,6 +184,8 @@ const L3=[
       <div><span>⛵</span><strong>Boats & belongings</strong>Helps replace big things that get damaged or stolen.</div>
     </div>
     <div class="card"><p>Notice what they have in common: <strong>losses too big to handle alone</strong>. That is where insurance earns its premium.</p></div>
+    ${more('<p>Why not insure everything? Paying a premium every season to protect a $1 cup would cost more than the cup itself.</p>'+
+      '<p>Small losses are better to keep, like Kai’s lost fish hooks. Insurance is for losses that would really hurt, like a home, a hospital visit, or a boat. For the small stuff, your emergency fund and budget do the job.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q373a", next),
 ];

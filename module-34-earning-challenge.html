@@ -180,6 +180,13 @@
   }
   .back-btn{background:transparent; color:var(--ink); border:2px solid #cfdcd8; margin-top:12px; min-height:44px}
   .back-btn:hover{border-color:var(--ink)}
+  /* optional deeper explanation for kids who want more */
+  details.more{background:var(--card); border:1.5px dashed var(--sand-deep, #d9c9a8); border-radius:12px; margin:0 0 14px; padding:0 14px}
+  details.more summary{cursor:pointer; font-weight:700; color:var(--shell); min-height:44px; display:flex; align-items:center; list-style:none}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::after{content:"＋"; margin-left:auto; font-weight:700}
+  details.more[open] summary::after{content:"−"}
+  details.more p{font-size:15px; margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -303,6 +310,7 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
 function addXP(n){ if(_replay) return; FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function more(html){ return '<details class="more"><summary>🤔 Tell me more</summary>'+html+'</details>'; }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -445,6 +453,9 @@ const L1=[
     ${taxForm()}
     <div class="card"><p>With Tavo’s help, Kai fills out a form listing <strong>all</strong> his income for the year, and how much tax was already taken from his pay slips.</p>
     <p>That form is a <strong>tax return</strong>. It checks whether you paid the right amount of tax. Every bit of income goes on it — honest and complete, always.</p></div>
+    ${more('<p>Why not just check each paycheck? During the season, nobody knows yet how much you will earn in all. Maybe you work extra hours in summer.</p>'+
+      '<p>So the tax taken from each paycheck is a careful guess. The tax return, at the end, checks that guess against what really happened.</p>'+
+      '<p>It is like counting all your fish at the end of the season, instead of guessing day by day.</p>')}
     <button onclick="earnWord('taxreturn');next()">New word: tax return</button>`),
   ()=>show(`<div class="kicker">Lesson 1 · Three ways it can go</div>
     <div class="three">
@@ -454,6 +465,8 @@ const L1=[
     </div>
     <div class="card"><p>Kai’s turned out to be the first kind: a little too much was taken during the season.</p>
     <p class="muted">(This is how it works on Kai\u2019s island. In real life, rules about who fills one out, and when, differ from place to place. Some places also have special tax rules that can give people money back even when they owed little or no tax. A trusted adult can help with a real one.)</p></div>
+    ${more('<p>Why did Kai get some back? The guess taken from each paycheck was a little too big for what he earned in the whole year.</p>'+
+      '<p>If the guess had been too small, he would pay the rest. Neither one is a prize or a punishment. The tax return just makes things even.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q341a", next),
   ()=>renderMC("q341b", next),
@@ -468,11 +481,16 @@ const L2=[
     <div class="recap"><strong>So far:</strong> a tax return checks whether the right amount of tax was paid.</div>
     <div class="card"><p>Because too much was taken, the island council sends Kai back $6. Money given back to you is called a <strong>refund</strong>. For Kai, it is tax he paid too much of, coming home.</p>
     <p>You get refunds in shops too — bring back a ripped net with your receipt, and they give your money back. Same word, same idea.</p></div>
+    ${more('<p>A refund is always money that was already yours. It is not a gift from the shop or the council.</p>'+
+      '<p>That is why a receipt matters. It shows what you paid, so the shop knows how much to give back.</p>'+
+      '<p>If you paid with a debit card, the refund often goes back into your bank account instead of coming as cash.</p>')}
     <button onclick="earnWord('refund');next()">New word: refund</button>`),
   ()=>show(`<div class="kicker">Lesson 2 · Not a bonus</div>
     <div class="card"><p>"Six free dollars!" Kai says.</p>
     <p>"Not free," Rana says. "That was <em>your</em> money all season. It is just coming home late. So treat it like every other dollar: <strong>give it a job.</strong>"</p>
     <p>And one warning. Tricksters know people are excited about refunds. A message that says <em>“You have a refund! Reply with your PIN”</em> is a scam — every time.</p></div>
+    ${more('<p>Why is a refund so easy to spend fast? Money that shows up all at once feels like shells found on the beach. It feels extra.</p>'+
+      '<p>But a refund dollar buys exactly as much as a paycheck dollar. Giving it a job in your budget keeps it from slipping away.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q342a", next),
   ()=>renderMC("q342b", next),
@@ -558,6 +576,9 @@ const L3=[
       <li>✅ <strong>Spotted a fake tax-office scam.</strong></li>
       <li>✅ <strong>Filed an honest tax return</strong> and gave the refund a job.</li>
     </ul></div>
+    ${more('<p>Look at how the sail got paid for. No single big moment did it. Extra hours, a little set aside each payday, and a refund with a job.</p>'+
+      '<p>Small, smart choices, made again and again, add up. That works for a sail, and for almost any big goal.</p>'+
+      '<p>The choices Kai skipped mattered too: no overdraft, no scam, no debt.</p>')}
     <button onclick="next()">Practice</button>`); },
   ()=>renderMC("q343a", next),
 ];

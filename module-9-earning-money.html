@@ -114,6 +114,13 @@
   }
   .back-btn{background:transparent; color:var(--ink); border:2px solid #cfdcd8; margin-top:12px; min-height:44px}
   .back-btn:hover{border-color:var(--ink)}
+  /* optional deeper explanation for kids who want more */
+  details.more{background:var(--card); border:1.5px dashed var(--sand-deep, #d9c9a8); border-radius:12px; margin:0 0 14px; padding:0 14px}
+  details.more summary{cursor:pointer; font-weight:700; color:var(--shell); min-height:44px; display:flex; align-items:center; list-style:none}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::after{content:"＋"; margin-left:auto; font-weight:700}
+  details.more[open] summary::after{content:"−"}
+  details.more p{font-size:15px; margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -204,6 +211,7 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
 function addXP(n){ if(_replay) return; FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function more(html){ return '<details class="more"><summary>🤔 Tell me more</summary>'+html+'</details>'; }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -330,10 +338,15 @@ const L1=[
   ()=>show('<div class="kicker">Lesson 1 · A new word</div>'+
     '<div class="card"><p>Money came <strong>in</strong>!</p>'+
     '<p>Getting money for doing work someone wants is called <strong>earning</strong>.</p></div>'+
+    more('<p>Think about Kai’s story so far. Feast, drum, kite… money only went <strong>out</strong> of his pocket.</p>'+
+      '<p>Now, for the first time, money flows <strong>in</strong>. The trader puts two dollar coins in Kai’s hand.</p>'+
+      '<p>Kai did not find the money or get it as a present. He earned it, by doing something the trader needed.</p>')+
     '<button onclick="earnWord(\'earn\');next()">New word: earn</button>'),
   ()=>show('<div class="kicker">Lesson 1 · Why did she pay?</div>'+
     '<div class="card"><p>Nobody made her pay. Kai’s help was <strong>worth</strong> $2 to her.</p><p>Her morning went better with his help. So she was happy to pay.</p>'+
     '<p>Carrying, building, fixing… helping like this is called <strong>work</strong>.</p></div>'+
+    more('<p>Before Kai came, the trader had baskets everywhere and customers waiting. With Kai carrying, she helped every customer and lost none.</p>'+
+      '<p>Remember <strong>worth</strong>? It is about how much people want something. Work is the same as firewood or a blanket. Work that someone really wants is worth more.</p>')+
     '<button onclick="earnWord(\'work\');next()">New word: work</button>'),
   ()=>renderMC("q91a", next),
   ()=>renderMC("q91b", next),
@@ -364,6 +377,9 @@ const L3=[
     '<div class="card"><p>Yes! It is buying and selling.</p>'+
     '<p><strong>Kai sells</strong> his work.</p>'+
     '<p><strong>The trader buys</strong> it. She pays $2.</p><p>Kai was a seller all along, and he never knew it!</p></div>'+
+    more('<p>Every rule from Module 8 still works here.</p>'+
+      '<p>The work has to be <strong>wanted</strong>, or nobody will buy it. The money Kai gets is like the <strong>price</strong> of his work.</p>'+
+      '<p>And both sides walk away happy. Kai gets $2. The trader gets a better morning. If one side did not want the trade, it would not happen!</p>')+
     '<div class="feedback">Earning is selling your work!</div>'+
     '<button style="margin-top:12px" onclick="next()">Practice</button>'),
   ()=>renderMC("q93a", next),

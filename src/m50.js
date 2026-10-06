@@ -182,6 +182,8 @@ const L1=[
   ()=>show(`<div class="kicker">Lesson 1 · A new word</div>
     <div class="card"><p>The time in life when someone stops working for pay, usually when they’re older, is called <strong>retirement</strong>.</p>
     <p>The big lesson from Tavo’s buckets: <strong>retirement is paid for during the working years.</strong> Every bucket was filled while he was still fishing.</p></div>
+    ${more('<p>Why can’t Tavo just fish forever? Bodies get older. Hauling heavy nets gets harder, and after so many years of work, he has earned some rest.</p>'+
+      '<p>Many people also live a long time after they stop working. Twenty years or more without a paycheck is a long time, so the buckets need to be big.</p>')}
     <button onclick="earnWord('retirement');next()">New word: retirement</button>`),
   ()=>renderMC("q501a", next),
   ()=>renderMC("q501b", next),
@@ -217,6 +219,8 @@ const L2=[
       <li>🎁 Often there’s <strong>extra help</strong>, like an employer adding money when you put some in.</li>
       <li>⛔ Taking money out <strong>early</strong> can cost extra, and it loses years of growth.</li>
     </ul></div>
+    ${more('<p>Why did Pua end with so much more? Her early dollars grew, and then the growth grew too. That’s compound growth from Module 44. Leo’s dollars just had fewer years to work.</p>'+
+      '<p>Leo didn’t fail. Starting at 40 still helped him a lot. The best time to start is early. The next best time is now.</p>')}
     <button onclick="earnWord('retacct');next()">New word: retirement account</button>`),
   ()=>renderMC("q502a", next),
   ()=>renderMC("q502b", next),
@@ -230,6 +234,8 @@ const L3=[
     <div class="recap"><strong>So far:</strong> small and early beats big and late.</div>
     <div class="card"><p>Kai realizes he has goals on very different clocks. Some are days away. One is fifty years away.</p>
     <p>Short-term goal money stays safe and handy. Long-term goal money can go to work.</p></div>
+    ${more('<p>Why keep short-term money safe? If Kai invests the money for Mika’s gift and it drops next week, he could come up short right when he needs it.</p>'+
+      '<p>Long-term money has time to wait out the bumps. So the same dollar can have a different job, depending on when you need it.</p>')}
     <button onclick="next()">Sort Kai’s goals</button>`),
   ()=>{
     let i=0;
@@ -302,6 +308,8 @@ const L3=[
       <li>✅ Leave retirement money alone.</li>
       <li>✅ Keep the emergency fund too.</li>
     </ul></div>
+    ${more('<p>Retirement can feel very far away at your age. That’s okay! Right now, getting used to setting a little aside matters more than the amount.</p>'+
+      '<p>You could ask a grown-up you trust how they think about the years after work. Their answer might surprise you.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q503a", next),
 ];

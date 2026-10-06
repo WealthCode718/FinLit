@@ -153,6 +153,13 @@
   }
   .back-btn{background:transparent; color:var(--ink); border:2px solid #cfdcd8; margin-top:12px; min-height:44px}
   .back-btn:hover{border-color:var(--ink)}
+  /* optional deeper explanation for kids who want more */
+  details.more{background:var(--card); border:1.5px dashed var(--sand-deep, #d9c9a8); border-radius:12px; margin:0 0 14px; padding:0 14px}
+  details.more summary{cursor:pointer; font-weight:700; color:var(--shell); min-height:44px; display:flex; align-items:center; list-style:none}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::after{content:"＋"; margin-left:auto; font-weight:700}
+  details.more[open] summary::after{content:"−"}
+  details.more p{font-size:15px; margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -246,6 +253,7 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
 function addXP(n){ if(_replay) return; FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function more(html){ return '<details class="more"><summary>🤔 Tell me more</summary>'+html+'</details>'; }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -415,6 +423,8 @@ const L1=[
     '<p>And underneath, something Kai has never seen all in one place: <strong>every single movement of money</strong>, listed in order.</p>'+
     '<p>Each one of those movements has a name. A <strong>transaction</strong> is any time money moves in or out of your account — a deposit or a withdrawal, either direction.</p>'+
     '<p>Kai has been making transactions since Module 17. Now he can watch them.</p></div>'+
+        more('<p>Even moving money from savings to checking is a transaction. The money is still Kai’s, but it moved, so it gets a line.</p>'+
+      '<p>Big or small, every transaction is listed. A $2 sweet cake counts just as much as a $15 deposit. That is what makes the list complete, and a list you can trust.</p>')+
     '<button onclick="earnWord(\'transaction\');next()">New word: transaction</button>'),
   ()=>renderMC("q201a", next),
   ()=>renderMC("q201b", next),
@@ -475,6 +485,8 @@ const L2=[
     phone(undefined,true)+
     '<div class="card"><p>Same feed, with the balance after each line — the ledger from Module 18, except Kai did not have to write any of it.</p>'+
     '<p>The bank keeps the running total. Kai just has to look.</p></div>'+
+        more('<p>The phone and the paper slip show the same thing. The phone is just faster: a new line shows up soon after money moves, not days later.</p>'+
+      '<p>Faster matters. If Kai spots something odd the same day, it is much easier to remember what happened and sort it out.</p>')+
     '<button onclick="next()">Practice</button>'),
   ()=>renderMC("q202a", next),
   ()=>renderTF("q202b", next),
@@ -489,6 +501,8 @@ const L3=[
     '<div class="notif"><span class="bell">🔔</span><span><strong>FinLit Bank</strong><br>Money out: $4.00 — Rope. Balance now $11.00.</span></div>'+
     '<div class="card"><p>Kai\'s phone buzzed the moment the rope was paid for.</p>'+
     '<p>That is a <strong>notification</strong> — the bank telling you a transaction just happened, instead of waiting for you to come and ask.</p></div>'+
+        more('<p>A notification is the bank’s way of saying, “Hey, money just moved. Was that you?”</p>'+
+      '<p>Many banks let you choose what your phone tells you about: every transaction, or only big ones. Lots of people pick every one, because small surprises are the easiest to miss.</p>')+
     '<button onclick="earnWord(\'notification\');next()">New word: notification</button>'),
   ()=>show('<div class="kicker">Lesson 3</div>'+
     '<div class="notif"><span class="bell">🔔</span><span><strong>FinLit Bank</strong><br>Money in: $6.00 — Helping Tavo. Balance now $17.00.</span></div>'+
@@ -497,6 +511,8 @@ const L3=[
     '<p>And that matters more than it sounds. Here is the whole point:</p>'+
     '<p style="text-align:center; font-size:19px"><strong>You can only notice something is wrong if you look.</strong></p>'+
     '<p>Kai now knows where he stands every single day, without trying. That is the habit worth keeping.</p></div>'+
+        more('<p>What if Kai saw a line he didn’t make? Say, “Money out: $5” on a day he bought nothing.</p>'+
+      '<p>Because he looked that same day, he could tell a trusted adult and the bank right away. The sooner a mistake is spotted, the easier it is to fix. And looking takes only a few seconds.</p>')+
     '<button onclick="next()">Practice</button>'),
   ()=>renderMC("q203a", next),
   ()=>renderMC("q203c", next),

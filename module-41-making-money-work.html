@@ -178,6 +178,13 @@
   }
   .back-btn{background:transparent; color:var(--ink); border:2px solid #cfdcd8; margin-top:12px; min-height:44px}
   .back-btn:hover{border-color:var(--ink)}
+  /* optional deeper explanation for kids who want more */
+  details.more{background:var(--card); border:1.5px dashed var(--sand-deep, #d9c9a8); border-radius:12px; margin:0 0 14px; padding:0 14px}
+  details.more summary{cursor:pointer; font-weight:700; color:var(--shell); min-height:44px; display:flex; align-items:center; list-style:none}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::after{content:"＋"; margin-left:auto; font-weight:700}
+  details.more[open] summary::after{content:"−"}
+  details.more p{font-size:15px; margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -298,6 +305,7 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
 function addXP(n){ if(_replay) return; FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function more(html){ return '<details class="more"><summary>🤔 Tell me more</summary>'+html+'</details>'; }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -471,10 +479,15 @@ const L1=[
   ()=>show(`<div class="kicker">Lesson 1 · A new word</div>
     <div class="card"><p>Kai didn’t just spend $20. He put money into something now because he hoped it would bring more money back later.</p>
     <p>That is called investing. To <strong>invest</strong>.</p></div>
+    ${more('<p>What is the difference between spending and investing? When you spend, the money is used up. A snack is eaten, a ticket is used.</p>'+
+      '<p>When you invest, you hope the thing you paid for keeps bringing money back, like Kai’s net catching extra fish week after week.</p>'+
+      '<p>A farmer who pays for seeds is investing too. The seeds can grow into many plants to sell.</p>')}
     <button onclick="earnWord('invest');next()">New word: invest</button>`),
   ()=>show(`<div class="kicker">Lesson 1 · Another new word</div>
     <div class="card"><p>What an investment brings back is its <strong>return</strong>. Kai put in $20 and got back $30: all his money, plus $10.</p>
     <p>"Hope is the key word," Rana says. "A net can tear. The fish can move away. A return is never a promise."</p></div>
+    ${more('<p>Notice the net needed time. After two weeks, Kai had only $10 back. It took four weeks just to get his $20 back, and six weeks to get $10 more.</p>'+
+      '<p>Most investments are like that: the return comes slowly, and only if things go well. That is why patience matters as much as the money.</p>')}
     <button onclick="earnWord('return');next()">New word: return</button>`),
   ()=>{
     let i=0;
@@ -537,6 +550,9 @@ const L2=[
     <p>Savings is steady and safe, with a small return. Investing can bring a bigger return, but it can also go down.</p>
     <p style="text-align:center"><strong>A chance for more comes with more risk.</strong></p>
     <p>That is the same risk you learned to weigh in Module 35: how likely, and how big?</p></div>
+    ${more('<p>Why can’t savings give a big return too? The bank keeps savings safe and steady, so it only adds a little interest.</p>'+
+      '<p>An investment has no such promise. In good seasons it can grow a lot. In bad seasons it can shrink.</p>'+
+      '<p>Think of a slide and a staircase. The staircase goes up slowly, one step at a time. The slide is fast and fun, but it can also take you down.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q412a", next),
   ()=>renderMC("q412b", next),
@@ -614,6 +630,9 @@ const L3=[
       <li>✅ The money can wait a long time.</li>
       <li>✅ No one is promising a “guaranteed” big return.</li>
     </ul></div>
+    ${more('<p>Why this order? Each step protects the next one. The emergency fund catches surprises. Paying off costly debt stops money from leaking away.</p>'+
+      '<p>Only then is there money that can sit through a bad season without causing trouble.</p>'+
+      '<p>Grown-ups use this same checklist. If you are ever unsure, ask a trusted adult before you put money anywhere.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q413a", next),
 ];

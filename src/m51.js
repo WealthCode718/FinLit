@@ -178,6 +178,8 @@ const L1=[
     <div class="card"><p>Everything you own minus everything you owe is your <strong>net worth</strong>.</p>
     <p>Notice the jacket: it cost $60 but would only sell for $20. Things count at what someone would pay for them <em>now</em>.</p>
     <p>Saving, investing, and paying off debt make net worth grow. Borrowing for wants makes it shrink.</p></div>
+    ${more('<p>Think of net worth as a snapshot. If Kai sold everything he owns today and paid back everyone he owes, what would be left? That’s his net worth.</p>'+
+      '<p>It isn’t the same as cash in your pocket. Kai has only $50 in savings, but his boat makes his net worth much bigger. And net worth says nothing about how kind or smart a person is.</p>')}
     <button onclick="earnWord('networth');next()">New word: net worth</button>`),
   ()=>renderMC("q511a", next),
   ()=>renderMC("q511b", next),
@@ -214,6 +216,8 @@ const L2=[
   ()=>show(`<div class="kicker">Lesson 2 · Another new word</div>
     <div class="plan"><div class="hd">Kai’s Financial Plan</div><ol>${STEPS.map(s=>'<li>'+s.t+'</li>').join('')}</ol></div>
     <div class="card"><p>Your whole money picture on one page, in order, is a <strong>financial plan</strong>. It also has room for goals, fun, and giving, and you check it whenever life changes.</p></div>
+    ${more('<p>Why this order? Each step protects the next one. Without an emergency fund, one bad day can push Kai onto a credit card. And costly debt usually grows faster than investments do.</p>'+
+      '<p>Lots of grown-ups keep their plan on one simple page, so it’s easy to look at. Simple beats fancy.</p>')}
     <button onclick="earnWord('finplan');next()">New word: financial plan</button>`),
   ()=>renderMC("q512a", next),
   ()=>renderMC("q512b", next),
@@ -268,6 +272,8 @@ const L3=[
       <li>✅ You have a new goal.</li>
       <li>✅ And once in a while, just to see your net worth grow.</li>
     </ul></div>
+    ${more('<p>Why check a plan at all? A map only helps if it matches the road. When income, prices, or goals change, an old plan can quietly lead you the wrong way.</p>'+
+      '<p>Many people pick a regular day, like their birthday or the start of the year, to sit down and check. Kai picks the first calm day after fishing season ends.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q513a", next),
 ];

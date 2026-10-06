@@ -107,6 +107,9 @@ const L1=[
     <div class="scene">🚤💥🛠️<div class="cap">No loan. No panic. The boat is fixed by Thursday.</div></div>
     <div class="card"><p>"A smashed boat is a surprise," Tavo says, "and it cannot wait. If I don’t fix it, I don’t fish. If I don’t fish, I don’t earn."</p>
     <p>A surprise that needs money right away and cannot wait has a name: an <strong>emergency</strong>.</p></div>
+    ${more('<p>Not every surprise is an emergency. Finding a pretty shell is a surprise, but nothing bad happens if you wait.</p>'+
+      '<p>And not every big cost is an emergency. A new school bag can cost a lot, but you know it is coming, so you can plan for it.</p>'+
+      '<p>An emergency is both at once: a surprise, and it cannot wait.</p>')}
     <button onclick="earnWord('emergency');next()">New word: emergency</button>`),
   ()=>show(`<div class="kicker">Lesson 1 · The account for days like this</div>
     <div class="card"><p>Years ago, Tavo started putting a little from every paycheck into a separate pile. He never spends it on wants, or on goals. It just waits.</p>
@@ -117,6 +120,8 @@ const L1=[
       <tr><td><strong>Size</strong></td><td>A few dollars</td><td>Bigger, and growing</td></tr>
       <tr><td><strong>Job</strong></td><td>Catch a forgotten look before an overdraft</td><td>Pay for real surprises without borrowing</td></tr>
     </table>
+    ${more('<p>Why keep it in savings, not checking? Money in checking is easy to spend by mistake. In savings, it sits one step away from everyday spending, but it is still there when you need it.</p>'+
+      '<p>It can even grow a little with interest while it waits. It starts small, like Kai’s, and gets bigger over time. A bigger fund can handle a bigger surprise.</p>')}
     <button onclick="earnWord('efund');next()">New word: emergency fund</button>`),
   ()=>renderMC("q361a", next),
   ()=>renderMC("q361b", next),
@@ -159,7 +164,8 @@ const L2=[
         if(ok){
           done=true; addXP(1);
           document.getElementById("sYes").disabled=true; document.getElementById("sNo").disabled=true;
-          document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(i<SURPRISES.length-1?"Next":"Done")+'</button>';
+          document.getElementById("cont").innerHTML=(i===SURPRISES.length-1?more('<p>Wanting something a lot can feel urgent. That feeling is strong, but it is not the same as a real emergency.</p>'+
+      '<p>A good trick: ask, “What happens if I wait a week?” If the answer is “nothing bad,” it is not an emergency. It belongs in the budget.</p>'):'')+'<button onclick="window._n()">'+(i<SURPRISES.length-1?"Next":"Done")+'</button>';
           window._n=()=>{ i++; draw(); };
           revealFB();
         }
@@ -204,7 +210,10 @@ const L3=[
       if(step>=PAYDAYS+3){
         show(`<div class="kicker">Build, use, refill</div>${fundCard(v,'refilling — ready for the next surprise')}
           <div class="card"><p style="margin:0">Built a little at a time. Used for a real emergency. Refilled. That is the whole cycle — and Kai never borrowed a cent.</p></div>
-          <div id="cont"><button onclick="addXP(5);next()">Continue</button></div>`);
+          ${more('<p>Why refill right away? Emergencies do not take turns. Another storm could come next month.</p>'+
+      '<p>Refilling the fund is like putting a spare net back in the boat. You hope you never need it, but you feel calmer knowing it is there.</p>'+
+      '<p>That calm is worth a lot. Without a fund, every storm cloud feels scary.</p>')}
+    <div id="cont"><button onclick="addXP(5);next()">Continue</button></div>`);
         return;
       }
       show(`<div class="kicker">Build, use, refill</div>${fundCard(v)}<div class="card"><p style="margin:0">${body}</p></div>${btn}`);

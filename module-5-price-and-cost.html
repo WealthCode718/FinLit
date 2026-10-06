@@ -122,6 +122,13 @@
   }
   .back-btn{background:transparent; color:var(--ink); border:2px solid #cfdcd8; margin-top:12px; min-height:44px}
   .back-btn:hover{border-color:var(--ink)}
+  /* optional deeper explanation for kids who want more */
+  details.more{background:var(--card); border:1.5px dashed var(--sand-deep, #d9c9a8); border-radius:12px; margin:0 0 14px; padding:0 14px}
+  details.more summary{cursor:pointer; font-weight:700; color:var(--shell); min-height:44px; display:flex; align-items:center; list-style:none}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::after{content:"＋"; margin-left:auto; font-weight:700}
+  details.more[open] summary::after{content:"−"}
+  details.more p{font-size:15px; margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -211,6 +218,7 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
 function addXP(n){ if(_replay) return; FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function more(html){ return '<details class="more"><summary>🤔 Tell me more</summary>'+html+'</details>'; }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -333,11 +341,17 @@ const L1=[
     '<div class="card"><p>Each tag shows the amount the trader asks for.</p>'+
     '<p>Drum: $3.50. Kite: $4. Mango: 75¢.</p>'+
     '<p>That number is called the <strong>price</strong>.</p></div>'+
+    more('<p>Before the tags, Kai had to ask, “What do you want for this drum?” Every single time.</p>'+
+      '<p>And the answer could change by the hour!</p>'+
+      '<p>Now one look at a tag tells him the amount. The whole trading post is easy to read.</p>')+
     '<button onclick="earnWord(\'price\');next()">New word: price</button>'),
   ()=>show('<div class="kicker">Lesson 1 · Who picks the price?</div>'+
     '<div class="card"><p>Kai asks the drum maker, “Who picked $3.50?”</p>'+
     '<p>“I did,” she says. “Ask too much, and nobody trades. Ask too little, and my drums go fast.”</p></div>'+
     '<p>So a price follows <strong>worth</strong>: how much people want it.</p>'+
+    more('<p>The drum maker does not pick a number out of thin air.</p>'+
+      '<p>If she asks too much, nobody trades with her. If she asks too little, her drums are gone by noon, and she could have gotten more.</p>'+
+      '<p>Remember Rana’s firewood after the storm? Everyone wanted it, so it was worth more. A price is that same idea, written on a tag.</p>')+
     '<button onclick="next()">Got it</button>'),
   ()=>renderMC("q51a", next),
   ()=>renderMC("q51b", next),
@@ -422,7 +436,10 @@ const L2=[
         (ok?'Yes! Mango (75¢) and coconut (95¢) both fit in 100 cents.'
            :'Only the mango (75¢) and coconut (95¢) fit in 100 cents.')+'</div>';
       done=true; if(ok) addXP(4); else addXP(1);
-      document.getElementById("cont").innerHTML='<button onclick="next()">Continue</button>';
+      document.getElementById("cont").innerHTML=more('<p>Here is the trick: turn every tag into cents. Your $1 is 100 cents.</p>'+
+        '<p>Mango 75 and coconut 95 are both 100 or less, so they fit. Kite 125 and drum 205 ask for more than you are holding.</p>'+
+        '<p>When you compare tags, cents make it easy.</p>')+
+        '<button onclick="next()">Continue</button>';
       revealFB();
     };
   },
@@ -441,11 +458,17 @@ const L3=[
     '<div class="card"><p>If Kai gets the boat, his $2 is gone.</p>'+
     '<p>No mango. No coconut. He gave them up.</p>'+
     '<p>What you give up to get something is its <strong>cost</strong>.</p></div>'+
+    more('<p>That same $2 could become a boat. Or a mango and a coconut. Or it could stay in Kai’s pocket for tomorrow.</p>'+
+      '<p>But it can only become <strong>one</strong> of those things.</p>'+
+      '<p>Once Kai picks, the $2 stops being able to become anything else. That is why he stops to think first.</p>')+
     '<button onclick="earnWord(\'cost\');next()">New word: cost</button>'),
   ()=>show('<div class="kicker">Lesson 3 · Price or cost?</div>'+
     '<div class="card"><p><strong>Price</strong> = the number on the tag.</p>'+
     '<p><strong>Cost</strong> = what you give up.</p></div>'+
     '<p>So the boat costs Kai his $2, <em>and</em> the mango and coconut.</p>'+
+    more('<p>Price and cost sound like twins, but they are different.</p>'+
+      '<p>The price is the trader’s ask. It is the same for everyone who reads the tag.</p>'+
+      '<p>The cost is about <strong>you</strong>: what leaves your hands, and everything else that money could have been. If you really wanted that mango, the boat costs you more!</p>')+
     '<button onclick="next()">Got it</button>'),
   ()=>renderMC("q53c", next),
   ()=>renderTF("q52b", next),

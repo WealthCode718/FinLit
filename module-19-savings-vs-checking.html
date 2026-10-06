@@ -143,6 +143,13 @@
   }
   .back-btn{background:transparent; color:var(--ink); border:2px solid #cfdcd8; margin-top:12px; min-height:44px}
   .back-btn:hover{border-color:var(--ink)}
+  /* optional deeper explanation for kids who want more */
+  details.more{background:var(--card); border:1.5px dashed var(--sand-deep, #d9c9a8); border-radius:12px; margin:0 0 14px; padding:0 14px}
+  details.more summary{cursor:pointer; font-weight:700; color:var(--shell); min-height:44px; display:flex; align-items:center; list-style:none}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::after{content:"＋"; margin-left:auto; font-weight:700}
+  details.more[open] summary::after{content:"−"}
+  details.more p{font-size:15px; margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -235,6 +242,7 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
 function addXP(n){ if(_replay) return; FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function more(html){ return '<details class="more"><summary>🤔 Tell me more</summary>'+html+'</details>'; }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -381,12 +389,16 @@ const L1=[
     '<p>Think about the $25. Some of it is for <strong>this week</strong> — food, rope, small things. Some of it is for the <strong>sail</strong> Kai wants in a few months.</p>'+
     '<p>Same money. Completely different jobs.</p>'+
     '<p>So the bank offers two accounts, one for each job. The everyday one is called <strong>checking</strong>.</p></div>'+
+        more('<p>Why such a funny name? Long ago, people paid for things by writing a note to their bank: “Please pay this person this much from my account.” That note was called a <strong>check</strong>.</p>'+
+      '<p>Today most people pay in other ways. But the everyday account kept its old name.</p>')+
     '<button onclick="earnWord(\'checking\');next()">New word: checking</button>'),
   ()=>show('<div class="kicker">Lesson 1</div>'+
     '<div class="card"><p>The other one is <strong>savings</strong> — the account for money you are keeping toward a goal.</p>'+
     '<p>Here is the honest reason it helps, and it is not a trick: <strong>money that is easy to reach gets reached for.</strong></p>'+
     '<p>Remember Module 10, when Kai came up $1 short because the money had leaked away on small things? Savings is the fix. Goal money sits somewhere separate, so a weak moment on a Tuesday cannot quietly eat the sail.</p>'+
     '<p>Separate does not mean locked away. Savings money is still Kai\'s, and he can move it to checking when he truly needs it.</p></div>'+
+        more('<p>Here’s a trick lots of grown-ups use: when money comes in, they put some in savings <strong>first</strong>, before they spend anything. Then they spend from what is left in checking.</p>'+
+      '<p>Why first? If you wait to save whatever is left at the end of the week, there is often nothing left at all!</p>')+
     '<button onclick="earnWord(\'savings\');next()">New word: savings</button>'),
   ()=>renderMC("q191a", next),
   ()=>renderMC("q191b", next),
@@ -464,6 +476,8 @@ const L3=[
       duoCard()+
       '<div class="card"><p>Both accounts start empty. Kai has <strong>$25</strong> to place.</p>'+
       '<p>He does not split it evenly, or by feel. He splits it by <strong>job</strong>.</p></div>'+
+            more('<p>Kai didn’t split it in half. $12.50 each might sound fair, but fair isn’t the point here.</p>'+
+        '<p>Food and rope this week need about $10, so that is what checking gets. Give spend-soon money what it truly needs, and let the rest go toward the goal.</p>')+
       '<button onclick="next()">Place the money</button>'); },
   ()=>{
     let i=0;
@@ -506,6 +520,8 @@ const L3=[
     '<p><strong>"Can I buy this?"</strong> — check the checking balance. That is what is actually spendable.</p>'+
     '<p><strong>"How is the sail coming?"</strong> — check savings. Nothing else is mixed in, so the number means something.</p>'+
     '<p>One pile could never answer both.</p></div>'+
+        more('<p>Kai can still move money between his two accounts. If rope costs more than he thought, he can move a little from savings to checking.</p>'+
+      '<p>But making that move gives him a moment to stop and think: “Do I really need this? Or do I want the sail more?” That small pause protects a lot of goals.</p>')+
     '<button onclick="next()">Practice</button>'),
   ()=>renderMC("q193a", next),
   ()=>renderMC("q193c", next),

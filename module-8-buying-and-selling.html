@@ -117,6 +117,13 @@
   }
   .back-btn{background:transparent; color:var(--ink); border:2px solid #cfdcd8; margin-top:12px; min-height:44px}
   .back-btn:hover{border-color:var(--ink)}
+  /* optional deeper explanation for kids who want more */
+  details.more{background:var(--card); border:1.5px dashed var(--sand-deep, #d9c9a8); border-radius:12px; margin:0 0 14px; padding:0 14px}
+  details.more summary{cursor:pointer; font-weight:700; color:var(--shell); min-height:44px; display:flex; align-items:center; list-style:none}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::after{content:"＋"; margin-left:auto; font-weight:700}
+  details.more[open] summary::after{content:"−"}
+  details.more p{font-size:15px; margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -208,6 +215,7 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
 function addXP(n){ if(_replay) return; FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function more(html){ return '<details class="more"><summary>🤔 Tell me more</summary>'+html+'</details>'; }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -330,11 +338,17 @@ const L1=[
   ()=>show('<div class="kicker">Lesson 1 · A new word</div>'+
     '<div class="scene">🧒🏽 💵➡️ 🥭⬅️<div class="cap">Kai gives 75¢. Kai gets a mango.</div></div>'+
     '<div class="card"><p>Money out, thing in.</p><p>Kai <strong>buys</strong> the mango.</p></div>'+
+    more('<p>Kai used to say, “I’ll trade you money for a mango.” That is a lot of words!</p>'+
+      '<p>On the mainland, people use one short word. When money goes one way and a thing goes the other way, the person giving the <strong>money</strong> is <strong>buying</strong>.</p>'+
+      '<p>Kai gives 75¢. The mango comes to Kai. Kai is the buyer.</p>')+
     '<button onclick="earnWord(\'buy\');next()">New word: buy</button>'),
   ()=>show('<div class="kicker">Lesson 1 · A new word</div>'+
     '<div class="scene">👩🏾 🥭➡️ 💵⬅️<div class="cap">The trader gives the mango. She gets 75¢.</div></div>'+
     '<div class="card"><p>Thing out, money in.</p><p>She <strong>sells</strong> the mango.</p>'+
     '<p>It is <strong>one trade with two sides</strong>.</p></div>'+
+    more('<p>Here is the secret: buying and selling are not two different things that happen.</p>'+
+      '<p>They are the <strong>same moment</strong>, seen from two sides. It is like a handshake. A handshake needs two hands!</p>'+
+      '<p>Every time someone buys, someone else sells. Kai buys the mango at the very same moment the trader sells it.</p>')+
     '<button onclick="earnWord(\'sell\');next()">New word: sell</button>'),
   ()=>renderMC("q81a", next),
   ()=>renderMC("q81b", next),
@@ -383,7 +397,8 @@ const L2=[
         document.getElementById("fb").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+r.fb[pick]+'</div>';
         revealFB();
         if(ok){
-          document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(round<SIDE_ROUNDS.length-1?"Next trade":"Done")+'</button>';
+          document.getElementById("cont").innerHTML=(round===SIDE_ROUNDS.length-1 ? more('<p>A good trick: first, look for <strong>money</strong>. No money? Then nobody is buying or selling. It is <strong>barter</strong>, the old way, from before shells.</p>'+
+            '<p>If there is money, follow it. The person whose money goes <strong>out</strong> is buying. The person whose money comes <strong>in</strong> is selling.</p>') : '')+'<button onclick="window._n()">'+(round<SIDE_ROUNDS.length-1?"Next trade":"Done")+'</button>';
           revealFB();
           window._n=()=>{ round++; if(round<SIDE_ROUNDS.length) draw(); else { addXP(3); next(); } };
         }
@@ -408,6 +423,8 @@ const L3=[
     '<div class="card"><p><strong>Exact:</strong> The price is 75¢. You give 75¢. No change.</p></div>'+
     '<div class="card"><p><strong>More:</strong> The price is 75¢. You give $1. You get 25¢ change.</p></div>'+
     '<p>Both ways work!</p>'+
+    more('<p>When you give more, the seller counts up from the price to what you gave: “75… 85, 95, 100.” Then the seller hands back 25¢ in change.</p>'+
+      '<p>Look! Everything Kai learned comes together in one moment. He <strong>compares</strong> his money to the price, he <strong>pays</strong>, and he checks his <strong>change</strong>.</p>')+
     '<button onclick="next()">Got it</button>'),
   ()=>renderMC("q83c", next),
   ()=>renderMC("q83a", next),

@@ -173,6 +173,13 @@
   }
   .back-btn{background:transparent; color:var(--ink); border:2px solid #cfdcd8; margin-top:12px; min-height:44px}
   .back-btn:hover{border-color:var(--ink)}
+  /* optional deeper explanation for kids who want more */
+  details.more{background:var(--card); border:1.5px dashed var(--sand-deep, #d9c9a8); border-radius:12px; margin:0 0 14px; padding:0 14px}
+  details.more summary{cursor:pointer; font-weight:700; color:var(--shell); min-height:44px; display:flex; align-items:center; list-style:none}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::after{content:"＋"; margin-left:auto; font-weight:700}
+  details.more[open] summary::after{content:"−"}
+  details.more p{font-size:15px; margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -293,6 +300,7 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
 function addXP(n){ if(_replay) return; FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function more(html){ return '<details class="more"><summary>🤔 Tell me more</summary>'+html+'</details>'; }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -428,6 +436,9 @@ const L1=[
     ${stub(false)}
     <div class="card"><p>This is Kai’s first <strong>paycheck</strong> — the payment an employer gives you for your work, with a slip showing the details.</p>
     <p>"Most of my helpers don’t even get an envelope anymore," Tavo says. "The money goes straight into their checking account. But everyone should see their first slip on paper."</p></div>
+    ${more('<p>Most paychecks today never touch paper. The money moves straight into a bank account, and a notification says it arrived.</p>'+
+      '<p>The slip still matters. It shows the hours, the wage, and anything taken out, so you can check that it is right.</p>'+
+      '<p>Employers can make mistakes too. If the hours look wrong, it is fine to ask.</p>')}
     <button onclick="earnWord('paycheck');next()">New word: paycheck</button>`),
   ()=>show(`<div class="kicker">Lesson 1 · Wait a second</div>
     ${stub(true)}
@@ -455,6 +466,9 @@ const L2=[
     <div class="recap"><strong>So far:</strong> a paycheck shows what you earned, what was taken out, and what you get.</div>
     <div class="card"><p>Kai’s paycheck is one kind of <strong>income</strong>: money that comes in to you and is yours to keep.</p>
     <p>But not every dollar that shows up counts. The test is simple: <strong>is it new money, and is it truly mine to keep?</strong></p></div>
+    ${more('<p>Why does the test matter? Because income is the money you can plan with. Borrowed money has to go back. Moved money was already yours.</p>'+
+      '<p>Many grown-ups have more than one kind of income. Someone might earn a wage at a shop and also sell crafts at the market.</p>'+
+      '<p>A budget starts with one question: how much income is coming in?</p>')}
     <button onclick="earnWord('income');next()">New word: income</button>`),
   ()=>{
     let i=0;
@@ -474,7 +488,8 @@ const L2=[
         if(ok){
           done=true; addXP(1);
           document.getElementById("sYes").disabled=true; document.getElementById("sNo").disabled=true;
-          document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(i<MONEYIN.length-1?"Next":"Done")+'</button>';
+          document.getElementById("cont").innerHTML=(i===MONEYIN.length-1?more('<p>The tricky part: money that moves is not always money that comes in.</p>'+
+            '<p>A loan feels like new money, but it has to go back. Moving money from savings to checking is like moving a coin from one pocket to the other. You do not have any more than before.</p>'):'')+'<button onclick="window._n()">'+(i<MONEYIN.length-1?"Next":"Done")+'</button>';
           window._n=()=>{ i++; draw(); };
           revealFB();
         }
@@ -503,6 +518,9 @@ const L3=[
     <div class="cal2">${Array.from({length:14},(_,k)=>'<span class="'+(k===0?'pd':'')+'">'+(k===0?'PAY':'day '+(k+1))+'</span>').join('').replace(/day /g,'')}</div>
     <div class="card"><p>Tavo pays every <strong>two weeks</strong>. That $36 has to cover every day until the next paycheck.</p>
     <p>If Kai spends it all in the first three days, days four through fourteen are empty. The budget spreads it out: needs for both weeks first, then savings, then wants — with his cushion sitting quietly in checking.</p></div>
+    ${more('<p>Grown-ups face this every payday. Some are paid every week, some every two weeks, some once a month. The longer the wait, the more careful the plan.</p>'+
+      '<p>One trick: split the money right away into week 1 money and week 2 money. Then check the balance halfway.</p>'+
+      '<p>Bills with due dates go first, so nothing is missed.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q313a", next),
   ()=>renderMC("q313c", next),

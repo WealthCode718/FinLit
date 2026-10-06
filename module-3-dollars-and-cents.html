@@ -171,6 +171,13 @@
   }
   .back-btn{background:transparent; color:var(--ink); border:2px solid #cfdcd8; margin-top:12px; min-height:44px}
   .back-btn:hover{border-color:var(--ink)}
+  /* optional deeper explanation for kids who want more */
+  details.more{background:var(--card); border:1.5px dashed var(--sand-deep, #d9c9a8); border-radius:12px; margin:0 0 14px; padding:0 14px}
+  details.more summary{cursor:pointer; font-weight:700; color:var(--shell); min-height:44px; display:flex; align-items:center; list-style:none}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::after{content:"＋"; margin-left:auto; font-weight:700}
+  details.more[open] summary::after{content:"−"}
+  details.more p{font-size:15px; margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -261,6 +268,7 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
 function addXP(n){ if(_replay) return; FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function more(html){ return '<details class="more"><summary>🤔 Tell me more</summary>'+html+'</details>'; }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -390,11 +398,17 @@ const L1=[
     '<div class="money-big">100 cents = 1 dollar<div class="money-split"><span>💵 dollar = big piece</span><span>🪙 cent = small piece</span></div></div>'+
     '<div class="card"><p>It always takes <strong>100 cents</strong> to make <strong>1 dollar</strong>.</p>'+
     '<p>Everyone agrees on it, just like the shells.</p></div>'+
+    more('<p>That’s the whole idea. Dollars are the big pieces. Cents are the small pieces.</p>'+
+      '<p>The rule never changes. It works for the same reason the shells work: everyone on the mainland agrees on it.</p>'+
+      '<p>So a trader on the ferry and a trader far away both know exactly what 1 dollar is worth.</p>')+
     '<button onclick="earnWord(\'dollar\');next()">New word: dollar</button>'),
   ()=>show('<div class="kicker">Lesson 1</div>'+
     '<div class="scene">🪙🪙🪙<div class="cap">Cents are small pieces of a dollar.</div></div>'+
     '<div class="card"><p>Some things are worth less than a dollar.</p>'+
     '<p>Cents let you match money to small things.</p></div>'+
+    more('<p>Why have small pieces at all? Because not everything is worth a whole dollar.</p>'+
+      '<p>A tiny shell or one mango might be worth just a few cents.</p>'+
+      '<p>Cents are like counting by ones instead of only by hundreds. They let you get the amount just right.</p>')+
     '<button onclick="earnWord(\'cent\');next()">New word: cent</button>'),
   ()=>renderMC("q31a", next),
   ()=>renderTF("q31b", next),
@@ -417,6 +431,9 @@ const L2=[
     '<p>⚪ <strong>Dime</strong> = 10 cents <span class="muted">(the smallest coin!)</span></p>'+
     '<p>⚪ <strong>Quarter</strong> = 25 cents</p>'+
     '</div>'+
+    more('<p>Remember the giant boulder from Module 1? Big doesn’t mean worth more. The tiny dime beats the bigger nickel.</p>'+
+      '<p>There are lots of ways to make the same amount. 25 cents can be 1 quarter, or 2 dimes and 1 nickel, or 25 pennies!</p>'+
+      '<p>Using bigger coins means fewer coins to carry.</p>')+
     '<div class="feedback">The dime is tiny. But it is worth more than the nickel! Worth isn’t about size.</div>'+
     '<button onclick="next()">Let me try</button>'),
   ()=>coinGame(40, "An apple is 40 cents. Make 40¢.", next),
@@ -473,6 +490,9 @@ const L3=[
     '<div class="card"><p><strong>$</strong> means money.</p>'+
     '<p>Before the dot: <strong>dollars</strong>.</p>'+
     '<p>After the dot: <strong>cents</strong>.</p></div>'+
+    more('<p>Think of it as a code, and the dot is the key.</p>'+
+      '<p>$2.35 is just a short way to write “2 dollars and 35 cents.” It shows both kinds of money at once.</p>'+
+      '<p>That’s why signs use it. It is quick to write and quick to read.</p>')+
     '<button onclick="next()">Test me</button>'),
   ()=>renderMC("q33a", next),
   ()=>renderMC("q33b", next),
@@ -480,6 +500,9 @@ const L3=[
     '<div class="card"><p>$0.75 = just 75 cents</p>'+
     '<p>$3.00 = just 3 dollars</p>'+
     '<p>$3.05 = 3 dollars and <strong>5</strong> cents. The 0 holds a spot, so it’s 5, not 50.</p></div>'+
+    more('<p>Look closely: after the dot there are always <strong>two</strong> numbers.</p>'+
+      '<p>Why? Cents only go up to 99. Once you get to 100 cents, that makes a new dollar, so it moves before the dot.</p>'+
+      '<p>That’s why $3.05 needs the 0. It keeps the 5 in the right spot, so nobody mixes it up with 50 cents.</p>')+
     '<div class="feedback">Now Kai can read shells AND dollars!</div>'+
     '<button onclick="next()">Finish the lesson</button>'),
 ];

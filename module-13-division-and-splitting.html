@@ -113,6 +113,13 @@
   }
   .back-btn{background:transparent; color:var(--ink); border:2px solid #cfdcd8; margin-top:12px; min-height:44px}
   .back-btn:hover{border-color:var(--ink)}
+  /* optional deeper explanation for kids who want more */
+  details.more{background:var(--card); border:1.5px dashed var(--sand-deep, #d9c9a8); border-radius:12px; margin:0 0 14px; padding:0 14px}
+  details.more summary{cursor:pointer; font-weight:700; color:var(--shell); min-height:44px; display:flex; align-items:center; list-style:none}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::after{content:"＋"; margin-left:auto; font-weight:700}
+  details.more[open] summary::after{content:"−"}
+  details.more p{font-size:15px; margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -203,6 +210,7 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
 function addXP(n){ if(_replay) return; FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function more(html){ return '<details class="more"><summary>🤔 Tell me more</summary>'+html+'</details>'; }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -326,11 +334,15 @@ const L1=[
     '<p>They deal it out like cards: one dollar to Kai, one to Rana, one to Tavo. Again: one, one, one. The pile is gone — and everyone holds <strong>$2</strong>.</p>'+
     '<p>Splitting an amount into equal parts is called <strong>dividing</strong>. The ÷ sign means "split into":</p>'+
     '<p style="text-align:center; font-size:24px"><strong>$6 ÷ 3 = $2</strong></p></div>'+
+    more('<p>Why deal it out one at a time, like cards? Because nobody has to trust a guess. Everyone can watch each dollar land.</p>'+
+      '<p>Friends often argue about money because a share <em>feels</em> unfair. Dealing it out where everyone can see keeps the team happy, and ready to work together again tomorrow.</p>')+
     '<button onclick="earnWord(\'divide\');next()">New word: divide</button>'),
   ()=>show('<div class="kicker">Lesson 1 · The undo button</div>'+
     '<div class="card"><p>Notice something beautiful: dividing <strong>undoes</strong> multiplying.</p>'+
     '<p>3 friends × $2 each = $6 total. And $6 ÷ 3 friends = $2 each.</p>'+
     '<p>Same three numbers, opposite directions. If you ever doubt a split, check it with a multiply: does share × people = the pile? Then it\'s fair.</p></div>'+
+    more('<p>Think of a game you can play forwards and backwards. Multiplying puts groups <strong>together</strong>. Dividing takes them <strong>apart</strong>.</p>'+
+      '<p>That’s why the check works. If Tavo says “$2 each,” you multiply 3 × $2. If you get $6, the whole pile is there. Nothing went missing!</p>')+
     '<button onclick="next()">Practice</button>'),
   ()=>renderMC("q131a", next),
   ()=>renderMC("q131b", next),
@@ -372,7 +384,9 @@ const L2=[
           if(ok){
             answered=true; addXP(2);
             document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
-            document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(round<FS_ROUNDS.length-1?"Next split":"Done")+'</button>';
+            document.getElementById("cont").innerHTML=(round===FS_ROUNDS.length-1?more('<p>Dividing can answer two different questions.</p>'+
+              '<p><strong>“How much does each person get?”</strong> That was the shells: 12 ÷ 4 = 3 each.</p>'+
+              '<p><strong>“How many fit?”</strong> That was the kites: $10 ÷ $2 = 5 kites. Kai uses this one when he plans what his saved money can buy.</p>'):'')+'<button onclick="window._n()">'+(round<FS_ROUNDS.length-1?"Next split":"Done")+'</button>';
             revealFB();
             window._n=()=>{ round++; if(round<FS_ROUNDS.length) draw(); else { addXP(4); next(); } };
           } else { answered=true; }
@@ -397,6 +411,9 @@ const L3=[
     '<div class="card"><p>One to Kai, one to Rana… one to Kai, one to Rana… one to Kai, one to Rana… and then — <strong>one dollar sits alone on the table.</strong></p>'+
     '<p>$7 ÷ 2 gives $3 each, with <strong>$1 left over</strong>. Seven just won\'t break into two equal whole-dollar shares.</p>'+
     '<p>Some splits leave a leftover. That\'s not a mistake — it\'s just what the numbers do. The question is: what do you DO with it?</p></div>'+
+    more('<p>Friends handle a leftover in different ways. One person could keep it this time, and the other gets it next time.</p>'+
+      '<p>Or they could spend it on something they both share, like a snack for the walk home.</p>'+
+      '<p>Any of these can be fair, as long as everyone <strong>agrees</strong> before the dollar goes anywhere.</p>')+
     '<button onclick="earnWord(\'split\');next()">New word: split</button>'),
   ()=>show('<div class="kicker">Lesson 3 · The islander\'s trick</div>'+
     '<div class="card"><p>Rana grins and takes the lonely dollar to the trading post. She comes back with <strong>100 pennies</strong>.</p>'+

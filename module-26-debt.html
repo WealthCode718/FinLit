@@ -178,6 +178,13 @@
   }
   .back-btn{background:transparent; color:var(--ink); border:2px solid #cfdcd8; margin-top:12px; min-height:44px}
   .back-btn:hover{border-color:var(--ink)}
+  /* optional deeper explanation for kids who want more */
+  details.more{background:var(--card); border:1.5px dashed var(--sand-deep, #d9c9a8); border-radius:12px; margin:0 0 14px; padding:0 14px}
+  details.more summary{cursor:pointer; font-weight:700; color:var(--shell); min-height:44px; display:flex; align-items:center; list-style:none}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::after{content:"＋"; margin-left:auto; font-weight:700}
+  details.more[open] summary::after{content:"−"}
+  details.more p{font-size:15px; margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -303,6 +310,7 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
 function addXP(n){ if(_replay) return; FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function more(html){ return '<details class="more"><summary>🤔 Tell me more</summary>'+html+'</details>'; }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -440,12 +448,18 @@ const L1=[
   ()=>show(`<div class="kicker">Lesson 1</div>
     <div class="card"><p>Nilo has the jacket. The bank has an agreement with his name on it. Until he pays the money back, he <strong>owes</strong> it.</p>
     <p>To owe means you need to pay money back to someone. Right now, Nilo owes the bank.</p></div>
+    ${more('<p>You can owe more than just a bank. If a friend pays for your snack and you say “I’ll pay you back tomorrow,” now you owe your friend.</p>'+
+      '<p>Owing is really a promise. Someone helped you, and you promised to make it even again.</p>'+
+      '<p>Keeping that promise is how people learn they can trust you.</p>')}
     <button onclick="earnWord('owe');next()">New word: owe</button>`),
   ()=>show(`<div class="kicker">Lesson 1 · A name for it</div>
     ${debtCard(20,"Nilo owes the bank")}
     <div class="card"><p>Money you owe and have not paid back yet has a name: <strong>debt</strong>.</p>
     <p>Tavo has debt too — his boat loan. That is not a bad thing by itself. Tavo borrowed for a need, has a plan, and pays every week. His debt gets smaller.</p>
     <p>Nilo’s story is going a different direction.</p></div>
+    ${more('<p>So is debt good or bad? It depends on what it bought and whether there is a plan.</p>'+
+      '<p>Tavo’s boat helps him earn. Each week he fishes, earns, and pays some back. His debt is helping him.</p>'+
+      '<p>Nilo’s jacket is a want. It does not earn him anything. So paying it back has to come out of money he needs for other things.</p>')}
     <button onclick="earnWord('debt');next()">New word: debt</button>`),
   ()=>renderMC("q261a", next),
   ()=>renderMC("q261b", next),
@@ -501,6 +515,8 @@ const L2=[
       <div class="card"><p>Same jacket. Same $20 borrowed. Four weeks later, the gap between paying and skipping is huge.</p>
       <p>That is the thing about debt: <strong>skipping does not pause it.</strong> It keeps growing whether you look at it or not.</p>
       <p>What really happened? Nilo skipped every week. He now owes more than the jacket ever cost.</p></div>
+      ${more('<p>Why does skipping hurt so much? Two things land at once. Interest keeps adding, because Nilo is still using the bank’s money. And a late fee lands on top.</p>'+
+        '<p>Think of a leaky boat. Bail out a little water every day and it stays afloat. Stop bailing, and the water does not wait for you. It keeps coming in.</p>')}
       <button onclick="next()">Practice</button>`);
   },
   ()=>renderMC("q262a", next),
@@ -523,6 +539,8 @@ const L3=[
       <li style="margin-bottom:10px"><strong>Pay something, every time.</strong> Even a small payment on time beats a skipped one. Nilo puts the payment in his budget, right next to his needs.</li>
       <li><strong>Speak up early.</strong> If a payment is going to be hard, tell whoever lent the money <em>before</em> missing it — and tell a trusted adult. Talking early gives you more choices. Hiding gives you fewer.</li>
     </ol></div>
+    ${more('<p>Why speak up <em>before</em> missing a payment? Many banks would rather help than lose track of their money. Sometimes they can make the payments smaller for a while, or give a little more time.</p>'+
+      '<p>But they can only help if they know. Rules are different at each bank and in each place, so a trusted adult should be part of that talk.</p>')}
     ${debtCard(12,"Nilo owes — two months later")}
     <div class="card"><p>Slowly, the number starts going the right way.</p></div>
     <button onclick="next()">Practice</button>`),

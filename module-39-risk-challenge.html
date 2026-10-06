@@ -179,6 +179,13 @@
   }
   .back-btn{background:transparent; color:var(--ink); border:2px solid #cfdcd8; margin-top:12px; min-height:44px}
   .back-btn:hover{border-color:var(--ink)}
+  /* optional deeper explanation for kids who want more */
+  details.more{background:var(--card); border:1.5px dashed var(--sand-deep, #d9c9a8); border-radius:12px; margin:0 0 14px; padding:0 14px}
+  details.more summary{cursor:pointer; font-weight:700; color:var(--shell); min-height:44px; display:flex; align-items:center; list-style:none}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::after{content:"＋"; margin-left:auto; font-weight:700}
+  details.more[open] summary::after{content:"−"}
+  details.more p{font-size:15px; margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -298,6 +305,7 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
 function addXP(n){ if(_replay) return; FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function more(html){ return '<details class="more"><summary>🤔 Tell me more</summary>'+html+'</details>'; }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -435,11 +443,17 @@ const L1=[
     <p>Kai opens his mouth… and realizes he is not sure. Tavo pulls a folded paper from a dry drawer.</p></div>
     ${policy()}
     <div class="card"><p>This is Kai’s <strong>policy</strong>: the written agreement with his insurance. The premium, the deductible, and exactly what is covered — in writing.</p></div>
+    ${more('<p>Why write it down? Memories get fuzzy. If Kai and the fishers remember the deal differently, the written policy settles it.</p>'+
+      '<p>It protects both sides. The pot cannot suddenly say “we never pay for sails.” And Kai cannot say “you promised to pay for my rod.”</p>'+
+      '<p>Keep it somewhere safe and dry, like Tavo’s drawer.</p>')}
     <button onclick="earnWord('policy');next()">New word: policy</button>`),
   ()=>show(`<div class="kicker">Lesson 1 · Read the bottom half</div>
     <div class="card"><p>Look at the two lists. What the policy will pay for is called its <strong>coverage</strong>.</p>
     <p>And the <em>not covered</em> list matters just as much. No policy covers everything. If Kai only learns what is missing on the day he needs it, it is too late.</p>
     <p style="text-align:center"><strong>Read the policy before you need it.</strong></p></div>
+    ${more('<p>Why leave things out? Old things wearing out is sure to happen. It is not a surprise. If the pot paid for every old rope, premiums would get huge.</p>'+
+      '<p>Some things, like racing, are left out because people choose that risk on purpose.</p>'+
+      '<p>Real policies can use tricky words. Ask a trusted adult to read one with you.</p>')}
     <button onclick="earnWord('coverage');next()">New word: coverage</button>`),
   ()=>renderMC("q391a", next),
   ()=>renderMC("q391b", next),
@@ -476,7 +490,8 @@ const L2=[
         if(ok){
           done=true; addXP(1);
           document.getElementById("sYes").disabled=true; document.getElementById("sNo").disabled=true;
-          document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(i<EVENTS.length-1?"Next":"Done")+'</button>';
+          document.getElementById("cont").innerHTML=(i===EVENTS.length-1?more('<p>Three of the five were not covered. That surprises a lot of people!</p>'+
+      '<p>That is why the emergency fund and the budget still matter, even with insurance. Insurance handles some big losses. Your own money handles the rest.</p>'):'')+'<button onclick="window._n()">'+(i<EVENTS.length-1?"Next":"Done")+'</button>';
           window._n=()=>{ i++; draw(); };
           revealFB();
         }
@@ -567,6 +582,8 @@ const L3=[
       <li>✅ <strong>Shared</strong> a big loss through an honest claim.</li>
       <li>✅ <strong>Budgeted</strong> for what simply wears out.</li>
     </ul></div>
+    ${more('<p>Look at the list. Kai used the ways to handle risk from Module 35 together: reduce it first, keep the small losses, and share the big ones.</p>'+
+      '<p>No single tool was enough alone. Insurance without a fund, or a fund without care, would have left gaps. Together, they made a scary season feel calm.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q393a", next),
 ];

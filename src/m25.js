@@ -111,6 +111,9 @@ const L1=[
     <div class="scene">🚤💥<div class="cap">Tavo’s boat engine broke. No boat, no fishing. No fishing, no earning.</div></div>
     <div class="card"><p>Tavo has $10 saved. The repair costs $30. If he waits to save the rest, he cannot fish — so he cannot earn — so he can never save the rest.</p>
     <p>So he is thinking about using someone else’s money now, and giving it back later. That is called <strong>borrowing</strong>.</p></div>
+    ${more('<p>You already know borrowing from everyday life. A neighbor borrows a cup of rice. A classmate borrows your pencil.</p>'+
+      '<p>The deal is always the same: you use it now, and you give it back later.</p>'+
+      '<p>Giving it back on time matters. When you do, people trust you, and they are happy to help again next time.</p>')}
     <button onclick="earnWord('borrow');next()">New word: borrow</button>`),
   ()=>show(`<div class="kicker">Lesson 1 · Where the money comes from</div>
     <div class="card"><p>Tavo goes to the bank. They agree: the bank will lend him $20 now, and he will pay it back a little each week, plus some extra, by harvest.</p>
@@ -118,6 +121,9 @@ const L1=[
     <p>And here is the part that makes Kai stop in his tracks. Remember Module 21 — the bank “puts your money to work, helping other people with their own plans”?</p></div>
     ${flow(["Kai saves","→","the bank","→","lends to Tavo"])}
     <div class="card" style="margin-top:12px"><p style="margin:0"><strong>This is what it meant.</strong> Money savers leave in the bank is part of what the bank lends out.</p></div>
+    ${more('<p>Why does a loan need an agreement? So nobody has to guess. Both sides know how much, how often, and by when.</p>'+
+      '<p>Tavo and the bank both write it down. If anyone forgets later, the agreement remembers.</p>'+
+      '<p>Kids usually cannot get a bank loan on their own. Rules are different in different places, so ask a trusted adult how it works where you live.</p>')}
     <button onclick="earnWord('loan');next()">New word: loan</button>`),
   ()=>renderMC("q251a", next),
   ()=>renderMC("q251b", next),
@@ -141,6 +147,9 @@ const L2=[
     <div class="card"><p>Same word, opposite directions. <strong>Whoever gets to use the money pays the thank-you.</strong></p>
     <p>That is why the poster said borrow $10, pay back $12. The extra is interest — the price of using money that is not yours.</p>
     <p>So borrowing makes things cost more than their price. The $30 boat repair will cost Tavo <em>more</em> than $30 by the time he is done.</p></div>
+    ${more('<p>Where does Tavo’s extra money go? Part of it helps the bank pay savers like Kai their interest. Part of it pays for running the bank.</p>'+
+      '<p>So the money moves in a circle. Savers leave money in. Borrowers use it and pay a little extra. Savers get a little thank-you.</p>'+
+      '<p>Kai and Tavo are on opposite sides of the same circle.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q252a", next),
   ()=>renderTF("q252b", next),
@@ -192,6 +201,9 @@ const L3=[
           done=true; addXP(1);
           document.getElementById("sWait").disabled=true; document.getElementById("sBor").disabled=true;
           document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(i<CASES.length-1?"Next":"Done")+'</button>';
+          if(i===CASES.length-1) document.getElementById("cont").innerHTML=more('<p>Look at the cases where borrowing might make sense. Each one was a real need that could not wait: a roof before a storm, a boat to keep fishing.</p>'+
+            '<p>A loan that helps you keep earning can help pay itself back. Tavo fishes, earns, and pays the bank a little each week.</p>'+
+            '<p>A loan for a want just makes the want cost more.</p>')+document.getElementById("cont").innerHTML;
           window._n=()=>{ i++; draw(); };
           revealFB();
         }

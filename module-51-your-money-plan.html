@@ -179,6 +179,13 @@
   }
   .back-btn{background:transparent; color:var(--ink); border:2px solid #cfdcd8; margin-top:12px; min-height:44px}
   .back-btn:hover{border-color:var(--ink)}
+  /* optional deeper explanation for kids who want more */
+  details.more{background:var(--card); border:1.5px dashed var(--sand-deep, #d9c9a8); border-radius:12px; margin:0 0 14px; padding:0 14px}
+  details.more summary{cursor:pointer; font-weight:700; color:var(--shell); min-height:44px; display:flex; align-items:center; list-style:none}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::after{content:"＋"; margin-left:auto; font-weight:700}
+  details.more[open] summary::after{content:"−"}
+  details.more p{font-size:15px; margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -298,6 +305,7 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
 function addXP(n){ if(_replay) return; FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function more(html){ return '<details class="more"><summary>🤔 Tell me more</summary>'+html+'</details>'; }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -495,6 +503,8 @@ const L1=[
     <div class="card"><p>Everything you own minus everything you owe is your <strong>net worth</strong>.</p>
     <p>Notice the jacket: it cost $60 but would only sell for $20. Things count at what someone would pay for them <em>now</em>.</p>
     <p>Saving, investing, and paying off debt make net worth grow. Borrowing for wants makes it shrink.</p></div>
+    ${more('<p>Think of net worth as a snapshot. If Kai sold everything he owns today and paid back everyone he owes, what would be left? That’s his net worth.</p>'+
+      '<p>It isn’t the same as cash in your pocket. Kai has only $50 in savings, but his boat makes his net worth much bigger. And net worth says nothing about how kind or smart a person is.</p>')}
     <button onclick="earnWord('networth');next()">New word: net worth</button>`),
   ()=>renderMC("q511a", next),
   ()=>renderMC("q511b", next),
@@ -531,6 +541,8 @@ const L2=[
   ()=>show(`<div class="kicker">Lesson 2 · Another new word</div>
     <div class="plan"><div class="hd">Kai’s Financial Plan</div><ol>${STEPS.map(s=>'<li>'+s.t+'</li>').join('')}</ol></div>
     <div class="card"><p>Your whole money picture on one page, in order, is a <strong>financial plan</strong>. It also has room for goals, fun, and giving, and you check it whenever life changes.</p></div>
+    ${more('<p>Why this order? Each step protects the next one. Without an emergency fund, one bad day can push Kai onto a credit card. And costly debt usually grows faster than investments do.</p>'+
+      '<p>Lots of grown-ups keep their plan on one simple page, so it’s easy to look at. Simple beats fancy.</p>')}
     <button onclick="earnWord('finplan');next()">New word: financial plan</button>`),
   ()=>renderMC("q512a", next),
   ()=>renderMC("q512b", next),
@@ -585,6 +597,8 @@ const L3=[
       <li>✅ You have a new goal.</li>
       <li>✅ And once in a while, just to see your net worth grow.</li>
     </ul></div>
+    ${more('<p>Why check a plan at all? A map only helps if it matches the road. When income, prices, or goals change, an old plan can quietly lead you the wrong way.</p>'+
+      '<p>Many people pick a regular day, like their birthday or the start of the year, to sit down and check. Kai picks the first calm day after fishing season ends.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q513a", next),
 ];

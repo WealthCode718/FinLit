@@ -113,6 +113,13 @@
   }
   .back-btn{background:transparent; color:var(--ink); border:2px solid #cfdcd8; margin-top:12px; min-height:44px}
   .back-btn:hover{border-color:var(--ink)}
+  /* optional deeper explanation for kids who want more */
+  details.more{background:var(--card); border:1.5px dashed var(--sand-deep, #d9c9a8); border-radius:12px; margin:0 0 14px; padding:0 14px}
+  details.more summary{cursor:pointer; font-weight:700; color:var(--shell); min-height:44px; display:flex; align-items:center; list-style:none}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::after{content:"＋"; margin-left:auto; font-weight:700}
+  details.more[open] summary::after{content:"−"}
+  details.more p{font-size:15px; margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -203,6 +210,7 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
 function addXP(n){ if(_replay) return; FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function more(html){ return '<details class="more"><summary>🤔 Tell me more</summary>'+html+'</details>'; }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -326,6 +334,9 @@ const L1=[
     '<p>Left of the wall: <strong>whole dollars</strong>. Right of the wall: <strong>parts of a dollar</strong> — fraction country!</p>'+
     '<p>$3.50 means: 3 whole dollars, plus 50 hundredths of one more — which you know as <strong>half</strong>.</p>'+
     '<p>Numbers with the dot are called <strong>decimals</strong>. Rana was right: the dot has been hiding fractions inside numbers all along.</p></div>'+
+    more('<p>Decimals don’t only live in money. You can find them all over the place.</p>'+
+      '<p>A runner might finish a race in 12.5 seconds. A sick kid might have a temperature of 100.4. A ruler shows parts between the whole numbers too.</p>'+
+      '<p>Every time, the dot does the same job: whole things on the left, parts on the right.</p>')+
     '<button onclick="earnWord(\'decimal\');next()">New word: decimal</button>'),
   ()=>renderMC("q151a", next),
 ];
@@ -345,6 +356,9 @@ const L2=[
     '<div class="card"><p>Here comes the twist: <strong>you have been holding decimals since Module 3.</strong></p>'+
     '<p>A dime is one <strong>tenth</strong> of a dollar (10 make a whole). A penny is one <strong>hundredth</strong> (100 make a whole). The coins ARE the parts the dot talks about!</p>'+
     '<p>And now Module 3\'s old mystery finally cracks: cents get exactly <strong>two digits</strong> after the dot <em>because cents are hundredths</em> — and hundredths need two digits to count from 00 to 99.</p></div>'+
+    more('<p>Why do we write a dime as $0.10 and not just $0.1? Both are the same amount!</p>'+
+      '<p>With money, people always use two digits after the dot. That way every price lines up the same, and your eye can read the cents right away.</p>'+
+      '<p>It also makes it easy to say out loud: $0.10 is “ten cents.”</p>')+
     '<button onclick="earnWord(\'hundredth\');next()">New word: hundredth</button>'),
   ()=>{
     let round=0;
@@ -368,7 +382,9 @@ const L2=[
           if(ok){
             answered=true; addXP(2);
             document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
-            document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(round<COIN_ROUNDS.length-1?"Next coin":"Done")+'</button>';
+            document.getElementById("cont").innerHTML=(round===COIN_ROUNDS.length-1?more('<p>There are two ways to write the same coin: 25¢ or $0.25. The ¢ sign goes after cents. The $ sign goes before dollars with a dot.</p>'+
+              '<p>Watch out for signs that mix them up, like “0.25¢.” That would mean a tiny part of ONE cent, not a quarter!</p>'+
+              '<p>Pick one way, and you will always be clear.</p>'):'')+'<button onclick="window._n()">'+(round<COIN_ROUNDS.length-1?"Next coin":"Done")+'</button>';
             revealFB();
             window._n=()=>{ round++; if(round<COIN_ROUNDS.length) draw(); else { addXP(4); next(); } };
           } else { answered=true; }
@@ -393,6 +409,9 @@ const L3=[
     '<div class="card"><p><strong>Rana wins.</strong> $0.5 is 5 tenths — five dimes. $0.50 is 50 hundredths — fifty pennies. Count either pile: <strong>50¢ both ways</strong>. A zero tacked on the END changes nothing.</p>'+
     '<p>But beware the zero\'s POSITION: <strong>$2.05 and $2.50 are wildly different</strong> — 205 cents vs 250 cents (that digit-flip trap from Module 4, back with a dot!).</p>'+
     '<p>The safe road, always: turn decimals into cents, then compare. Your Module 4 eye already knows the rest.</p></div>'+
+    more('<p>The dot is small, but moving it is a big deal. $1.00 is one dollar. Slide the dot two spots to the right, and it becomes $100!</p>'+
+      '<p>That’s why grown-ups look carefully at the dot when they read a price or pay for something.</p>'+
+      '<p>Kai’s rule: before you pay, find the dot first. Then read the dollars.</p>')+
     '<button onclick="next()">Practice</button>'),
   ()=>renderTF("q152b", next),
   ()=>renderMC("q153a", next),

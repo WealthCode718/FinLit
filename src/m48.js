@@ -165,6 +165,8 @@ const L1=[
       <li>🧰 <strong>Time and things</strong> count too.</li>
       <li>🍚 Don’t give so much that your own <strong>needs</strong> go unpaid, and never borrow to give.</li>
     </ul></div>
+    ${more('<p>Why do people give? Part of it is simple: helping feels good. Part of it is that a village works best when neighbors look out for each other.</p>'+
+      '<p>Next year a storm might hit Kai’s side of the bay instead. Giving keeps that circle of help strong. But a gift is still a gift: you don’t give to get something back.</p>')}
     <button onclick="earnWord('donate');next()">New word: donate</button>`),
   ()=>renderMC("q481a", next),
   ()=>renderMC("q481b", next),
@@ -179,6 +181,8 @@ const L2=[
     <div class="recap"><strong>So far:</strong> to donate is to give money, things, or time, freely.</div>
     <div class="card"><p>Word of the flood spreads, and suddenly lots of people are asking for donations. Most mean well. Some don’t.</p>
     <p>A group whose job is to collect donations and use them to help people, animals, or places is called a <strong>charity</strong>. A real one is open about who it is and what it does with the money.</p></div>
+    ${more('<p>Why give through a charity instead of on your own? A charity can gather lots of small gifts into one big pile and buy just what is needed, like 50 nets at once.</p>'+
+      '<p>A good charity also tells people what it did with the money. That’s how Kai can know his $2 really reached the village.</p>')}
     <button onclick="earnWord('charity');next()">New word: charity</button>`),
   ()=>{
     let i=0;
@@ -212,6 +216,8 @@ const L2=[
     <div class="card"><p><strong>Good signs:</strong> a name you know or can check, a clear need, open about what the money does, receipts, any amount welcome.</p>
     <p><strong>🚩 Red flags:</strong> strangers, cash or gift cards only, “urgent” or “today only,” vague answers, pressure.</p>
     <p>When unsure, give through people and places you know, and ask a trusted adult.</p></div>
+    ${more('<p>Why do scammers show up after a storm? People feel sad and want to help fast. Fast is just what a scammer wants, so you don’t stop to check.</p>'+
+      '<p>Taking a day to check doesn’t hurt a real charity. It will still be there tomorrow. A stranger leaving on the next ferry won’t.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q482a", next),
   ()=>renderMC("q482b", next),
@@ -265,6 +271,8 @@ const L3=[
       <li>✅ A small giving line in your budget is easy to keep.</li>
       <li>✅ Time is a gift too.</li>
     </ul></div>
+    ${more('<p>Lots of families talk about giving together: who they want to help, and how much fits their budget. You could ask a grown-up at home what they care about.</p>'+
+      '<p>Some kids keep three jars: give, save, and spend. Even a few cents in the give jar each week adds up over a whole year.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q483a", next),
 ];

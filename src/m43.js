@@ -154,6 +154,8 @@ const L1=[
     <p>"But look at the sunny season," Kai says. "Basket A was way ahead!"</p>
     <p>"True," Rana says. "Spreading out means you don’t get the biggest win either. You give up the wildest highs to avoid the deepest lows."</p>
     <p style="text-align:center"><strong>Diversifying lowers risk. It doesn’t remove it.</strong></p></div>
+    ${more('<p>You may have heard: “Don’t put all your eggs in one basket.” If you trip while carrying one basket, every egg breaks. Carry four baskets, and one trip breaks only a few.</p>'+
+      '<p>That is the idea behind diversifying. Kai cannot know which business will have a bad season, so he makes sure no single bad season can break everything.</p>')}
     <button onclick="earnWord('diversify');next()">New word: diversify</button>`),
   ()=>renderMC("q431a", next),
   ()=>renderTF("q431c", next),
@@ -202,6 +204,9 @@ const L2=[
   ()=>show(`<div class="kicker">Lesson 2 · The rule</div>
     <div class="card"><p>Owning more of the <strong>same kind</strong> of thing isn’t really spreading out. One rainy month still hits all of it.</p>
     <p>Owning <strong>different kinds</strong> of things, some that do well when others struggle, is what makes diversifying work.</p></div>
+    ${more('<p>Think about a lunch box. Four sandwiches is a lot of food, but if you drop the bread, lunch is ruined.</p>'+
+      '<p>A sandwich, a fruit, some nuts, and a drink are different kinds of food. If one goes wrong, the others still feed you.</p>'+
+      '<p>Kai’s money works the same way. The trick is not how many things you own. It is how different they are.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q431b", next),
 ];
@@ -245,7 +250,10 @@ const L3=[
         <div class="pot"><div class="hd">🫙 The Island Fund</div><div class="tiles">${FUND_E.map(e=>'<div class="'+(hit&&e==="🪁"?'gone':'')+'">'+e+'</div>').join('')}</div>
         <div class="row"><span>The whole pot</span><strong>${hit?'$190':'$200'}</strong></div><div class="row"><span>Kai’s share (1 of 20)</span><strong>${hit?'$9.50':'$10'}</strong></div></div>
         <div id="cont">${hit
-          ? '<div class="feedback good">Kai’s share went from $10 to $9.50. If he’d put his $10 all in the kite shop, he’d have lost all $10.</div><button onclick="next()">Continue</button>'
+          ? '<div class="feedback good">Kai’s share went from $10 to $9.50. If he’d put his $10 all in the kite shop, he’d have lost all $10.</div>'+
+            more('<p>Why only 50 cents? The kite shop was just 1 of 20 pieces in the pot. Losing it took away 1/20 of the pot, so it took 1/20 of Kai’s share too.</p>'+
+              '<p>That is the magic of a shared pot. Kai owns a tiny bit of every business with just $10. One closed shop is a small bump, not a disaster.</p>')+
+            '<button onclick="next()">Continue</button>'
           : '<button data-bot="1" onclick="window._h()">See what happens</button>'}</div>`);
       window._h=()=>{ hit=true; draw(); };
     }
@@ -254,6 +262,8 @@ const L3=[
   ()=>show(`<div class="kicker">Lesson 3 · Same word, different job</div>
     <div class="card"><p>An <strong>investment fund</strong> spreads your money out for you, even when you only have a little.</p>
     <p>⚠️ Don’t mix it up with your <strong>emergency fund</strong>. That one is your own money in savings, ready for a bad day. An investment fund can go down. Running it usually costs a small fee too.</p></div>
+    ${more('<p>Why is there a fee? Someone has to keep track of all 20 businesses, write down who owns what, and handle the money. That work costs something.</p>'+
+      '<p>A small fee is fair. A big fee, every year, quietly eats the money you hoped would grow. Before choosing a fund, grown-ups compare the fees, just like you compare prices at the market.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q432a", next),
   ()=>renderMC("q432b", next),

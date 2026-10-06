@@ -125,6 +125,8 @@ const L1=[
     <p><strong>Sales tax</strong> is a tax added to the price when you buy something. The shop collects it and passes it to the government — the same shared-things pot as the lighthouse.</p>
     <p>In many places it is <strong>not on the tag</strong>. It only shows up at the register. And the bigger the price, the bigger the little extra.</p>
     <p class="muted">(Some places have no sales tax, and some put it right in the price on the tag. Rules differ from place to place.)</p></div>
+    ${more('<p>Why add it at the register and not on the tag? It is just how some places do it. That is why the same net can cost a little more on one island than on another.</p>'+
+      '<p>In places that have sales tax, everyone who buys pays it, even kids. A tiny part of your snack money may help pay for things like the school.</p>')}
     <button onclick="earnWord('salestax');next()">New word: sales tax</button>`),
   ()=>renderMC("q331a", next),
   ()=>renderMC("q331b", next),
@@ -148,6 +150,9 @@ const L2=[
     <div class="card"><p>Kai does not need to work out the exact tax. He just needs one rule:</p>
     <p style="text-align:center; font-size:18px"><strong>Exactly the tag is not enough.<br>Leave a little room.</strong></p>
     <p>This matters even more with a debit card: if the total is bigger than his balance, that is an overdraft.</p></div>
+    ${more('<p>Why not just work it out? You could, but the amount changes from place to place, and the register is a busy spot for math.</p>'+
+      '<p>A little room is easier. Bring a bit more than the tag, or pick something that costs a bit less than what you have.</p>'+
+      '<p>It is the same idea as the cushion in Kai’s budget: a little extra, just in case.</p>')}
     <button onclick="next()">Enough or not? Try five</button>`),
   ()=>{
     let i=0;
@@ -168,7 +173,8 @@ const L2=[
         if(ok){
           done=true; addXP(1);
           document.getElementById("sYes").disabled=true; document.getElementById("sNo").disabled=true;
-          document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(i<CASES.length-1?"Next":"Done")+'</button>';
+          document.getElementById("cont").innerHTML=(i===CASES.length-1?more('<p>See the pattern? Every “not enough” was exactly the tag. Every “enough” had plenty of room.</p>'+
+            '<p>When it is close, it is fine to ask for the total before you pay, or to put one thing back. Grown-ups do it all the time.</p>'):'')+'<button onclick="window._n()">'+(i<CASES.length-1?"Next":"Done")+'</button>';
           window._n=()=>{ i++; draw(); };
           revealFB();
         }
@@ -192,6 +198,9 @@ const L3=[
     <div class="card"><p>After Kai pays, the shopkeeper hands him a slip of paper. He almost drops it in the bin.</p>
     <p>"Keep that," Rana says. "It’s your <strong>receipt</strong> — a record of what you bought and what you paid. Each price, the tax, the total."</p>
     <p>If the net rips on day one, the receipt proves he bought it here. And it lets him check the shop got it right.</p></div>
+    ${more('<p>Many shops can send a receipt to your phone instead of paper. It still counts as a receipt.</p>'+
+      '<p>Some grown-ups keep a month of receipts in one envelope. Then they match them to the transactions in their bank app.</p>'+
+      '<p>Shops often ask to see the receipt if you want to bring something back.</p>')}
     <button onclick="earnWord('receipt');next()">New word: receipt</button>`),
   ()=>show(`<div class="kicker">Lesson 3 · Check it</div>
     ${receipt([["Bread","$3.00"],["Bread","$3.00"],["Fruit","$2.00"]],"$0.48","$8.48")}

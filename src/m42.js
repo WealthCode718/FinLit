@@ -140,6 +140,9 @@ const L1=[
     <div class="card"><p>Kai’s little square has a name. A small piece of owning a business is called <strong>stock</strong>.</p>
     <p>Kai isn’t a lender. Nalu doesn’t owe him $10. He’s a part <em>owner</em>. When the stand does well, he shares in it. When it struggles, he shares in that too.</p>
     <p class="muted">Big businesses split themselves into millions of pieces, so lots of people can each own a tiny bit.</p></div>
+    ${more('<p>Why would Nalu share her stand instead of keeping it all? She did not have $60. Selling pieces let her get the money without borrowing or owing anyone.</p>'+
+      '<p>The trade-off: now the stand is not only hers. Each good month is shared with Kai, Tavo, and Rana.</p>'+
+      '<p>Lending and owning are different. A lender wants money paid back. An owner hopes the business does well.</p>')}
     <button onclick="earnWord('stock');next()">New word: stock</button>`),
   ()=>renderMC("q421a", next),
   ()=>renderMC("q421b", next),
@@ -180,6 +183,8 @@ const L2=[
     <div class="card"><p>The money a business has left after it pays all its costs is its <strong>profit</strong>.</p>
     <p>This month the profit is $20. Nalu decides to share it with the owners: $20 split into 10 pieces is <strong>$2 a piece</strong>. Kai gets $2. Tavo gets $6. Rana gets $4. Nalu gets $8.</p>
     <p class="muted">Some businesses share profit like this. Others keep it to grow bigger.</p></div>
+    ${more('<p>Why not share all $60? Because $40 of it was never really extra. It had to buy mangoes and cups and pay Nalu’s wage. Without those, there would be no juice next month!</p>'+
+      '<p>A busy stand is not always a stand with profit. Lots of money coming in only helps if the costs are smaller.</p>')}
     <button onclick="earnWord('profit');next()">New word: profit</button>`),
   ()=>{
     let shown=false;
@@ -201,6 +206,8 @@ const L2=[
     <p>So a stock can bring a return in two ways:</p>
     <ul class="recaplist"><li>💵 A part of the <strong>profit</strong>, when the business shares it.</li><li>🔁 <strong>Selling</strong> your piece later for more than you paid.</li></ul>
     <p style="text-align:center"><strong>Both can go down. A piece can even end up worth less than you paid.</strong></p></div>
+    ${more('<p>Why did the price of a piece change? Nothing about the paper changed. What changed is how much people <strong>want</strong> it.</p>'+
+      '<p>Remember Module 1: worth is how much people want something. When the stand looked like a winner, Mika wanted in. When a cheaper stand opened nearby, fewer people wanted a piece.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q422a", next),
   ()=>renderMC("q422b", next),
@@ -274,6 +281,9 @@ const L3=[
       <li>✅ Everything in one business is a big risk.</li>
       <li>✅ One rough patch isn’t the whole story, and panic isn’t a plan.</li>
     </ul></div>
+    ${more('<p>Owning a piece means riding along with the business, in sunny months and rainy ones.</p>'+
+      '<p>That is why Rana only lets Kai use money that can wait. If he needed it next week, a rough patch could force him to sell for $6 a piece he paid $10 for.</p>'+
+      '<p>And putting all his money into one stand? Kai will learn a smarter way next.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q423a", next),
 ];

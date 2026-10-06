@@ -115,6 +115,9 @@ const L1=[
     <div class="recap"><strong>Kai’s story so far:</strong> A squall tore his sail: a $30 repair. He has insurance. "The pot pays!" But Tavo says: not all of it, and you have to ask the right way.</div>
     <div class="card"><p>The pot does not pay automatically. Kai has to tell the fishers what happened, show proof, and ask to be paid.</p>
     <p>That request is called a <strong>claim</strong>: asking your insurance to pay for a loss, with proof.</p></div>
+    ${more('<p>Why does the pot need proof? Twenty fishers share that money. Before paying, they want to be sure the loss really happened, and how big it was.</p>'+
+      '<p>Photos show what broke. A receipt shows what the fix cost. Together, they tell the true story.</p>'+
+      '<p>Tip: take photos right away, before anything gets cleaned up or fixed.</p>')}
     <button onclick="earnWord('claim');next()">New word: claim</button>`),
   ()=>show(`<div class="kicker">Lesson 1 · Honest proof</div>
     ${claimForm()}
@@ -137,6 +140,8 @@ const L2=[
     <div class="card"><p>Here is the line Tavo pointed to: <em>“The fisher pays the first $10 of any loss.”</em></p>
     <p>That first part is called the <strong>deductible</strong>: the part of a loss you pay yourself before insurance pays the rest.</p>
     <p>Kai pays $10 from his emergency fund. The pot pays $20. His emergency fund and his insurance just worked as a team.</p></div>
+    ${more('<p>Why have a deductible at all? It saves the pot for losses that really matter. If the pot paid for every tiny scratch, it would run dry fast, and premiums would go up for everyone.</p>'+
+      '<p>It also helps people take care. When you pay the first part yourself, you tie the sail down a little tighter.</p>')}
     <button onclick="earnWord('deductible');next()">New word: deductible</button>`),
   ()=>show(`<div class="kicker">Lesson 2 · The seesaw</div>
     <div class="seesaw">
@@ -145,6 +150,9 @@ const L2=[
     </div>
     <div class="card"><p>Deductible and premium sit on a seesaw. Take on more of the risk yourself, and you usually pay less each season.</p>
     <p>The catch: only pick a deductible your emergency fund can actually cover.</p></div>
+    ${more('<p>Picture two fishers. Nilo picks a high deductible so his premium is small. Then a storm hits, and he has no emergency fund to pay his part.</p>'+
+      '<p>Tavo picks a high deductible too, but his emergency fund can cover it. He pays less every season, and he is still safe.</p>'+
+      '<p>Same choice, different endings. The emergency fund makes the difference.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q382a", next),
   ()=>renderMC("q382b", next),
@@ -186,7 +194,8 @@ const L3=[
         if(ok){
           done=true; addXP(1);
           document.getElementById("sIns").disabled=true; document.getElementById("sSelf").disabled=true;
-          document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(i<LOSSES.length-1?"Next":"Done")+'</button>';
+          document.getElementById("cont").innerHTML=(i===LOSSES.length-1?more('<p>See the pattern? Small losses happen often, but you can handle them. Huge losses are rare, but they could wipe you out.</p>'+
+      '<p>It is the same “how likely, how big” question from Module 35. Insurance is for the big ones. Your emergency fund is for the rest.</p>'):'')+'<button onclick="window._n()">'+(i<LOSSES.length-1?"Next":"Done")+'</button>';
           window._n=()=>{ i++; draw(); };
           revealFB();
         }

@@ -172,6 +172,13 @@
   }
   .back-btn{background:transparent; color:var(--ink); border:2px solid #cfdcd8; margin-top:12px; min-height:44px}
   .back-btn:hover{border-color:var(--ink)}
+  /* optional deeper explanation for kids who want more */
+  details.more{background:var(--card); border:1.5px dashed var(--sand-deep, #d9c9a8); border-radius:12px; margin:0 0 14px; padding:0 14px}
+  details.more summary{cursor:pointer; font-weight:700; color:var(--shell); min-height:44px; display:flex; align-items:center; list-style:none}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::after{content:"＋"; margin-left:auto; font-weight:700}
+  details.more[open] summary::after{content:"−"}
+  details.more p{font-size:15px; margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -296,6 +303,7 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
 function addXP(n){ if(_replay) return; FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function more(html){ return '<details class="more"><summary>🤔 Tell me more</summary>'+html+'</details>'; }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -433,6 +441,9 @@ const L1=[
     <p>A credit score shows banks how well you have paid back money before. Higher means more trusted.</p>
     <p>Tavo has paid his boat loan every single week. Nilo skipped payments on his jacket and his card. The bank did not guess — it looked.</p>
     <p>One surprise: <strong>the score is not about how much money you have.</strong> It is about how you have handled borrowed money.</p></div>
+    ${more('<p>Think of it like a report card for paying back. Each on-time payment is a good mark. Each missed one is a bad mark.</p>'+
+      '<p>The record is kept for years. That way, a bank that has never met Tavo can still see that he pays back.</p>'+
+      '<p>Kids don’t have a credit score yet. It starts later, once a grown-up begins to borrow.</p>')}
     <button onclick="earnWord('creditscore');next()">New word: credit score</button>`),
   ()=>renderMC("q281a", next),
   ()=>renderMC("q281b", next),
@@ -456,6 +467,9 @@ const L2=[
     <div class="card"><p>Remember Nilo’s bill in Module 27? At the bottom it said: <strong>pay by the 15th</strong>. ${cal(15)}</p>
     <p>That date has a name: the <strong>due date</strong> — the date on a bill by which you must pay.</p>
     <p>Of everything that moves a credit score, paying by the due date matters most. <strong>On time, every time.</strong></p></div>
+    ${more('<p>Why does one date matter so much? Paying on time is a promise kept. Banks want to see promises kept, again and again.</p>'+
+      '<p>Paying late, even by a few days, can bring a late fee. Paying early is always fine.</p>'+
+      '<p>Many grown-ups set a phone reminder a few days before each due date, so they never forget.</p>')}
     <button onclick="earnWord('duedate');next()">New word: due date</button>`),
   ()=>{
     let i=0, pos=50;
@@ -478,7 +492,8 @@ const L2=[
           pos += a.up ? 12 : -12;
           document.querySelector(".gauge").outerHTML=gauge(pos,"Someone’s credit score");
           document.getElementById("sUp").disabled=true; document.getElementById("sDown").disabled=true;
-          document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(i<ACTIONS.length-1?"Next":"Done")+'</button>';
+          document.getElementById("cont").innerHTML=(i===ACTIONS.length-1?more('<p>Look at what moved the pin. It was not how big the bill was. It was whether it was paid on time.</p>'+
+            '<p>A small bill paid on time every month helps. A big one ignored hurts. Banks care most about the pattern, month after month.</p>'):'')+'<button onclick="window._n()">'+(i<ACTIONS.length-1?"Next":"Done")+'</button>';
           window._n=()=>{ i++; draw(); };
           revealFB();
         }
@@ -510,6 +525,9 @@ const L3=[
     ${gauge(55,"Nilo — a year of on-time payments later")}
     <div class="card"><p>A low score is not forever. Nilo pays every bill by its due date, month after month. Slowly, the pin moves.</p>
     <p>Trust takes a long time to build and a short time to lose. But it <strong>can</strong> be built back.</p></div>
+    ${more('<p>Why so slow? Each on-time payment is one small piece of proof. A bank wants lots of proof before it trusts again.</p>'+
+      '<p>It’s like a friend who broke a promise. One kept promise is nice. A whole year of kept promises is what wins trust back.</p>'+
+      '<p>Nilo’s plan: a budget, a phone reminder for each due date, and no new borrowing for a while.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q283a", next),
   ()=>renderMC("q283c", next),

@@ -118,6 +118,13 @@
   }
   .back-btn{background:transparent; color:var(--ink); border:2px solid #cfdcd8; margin-top:12px; min-height:44px}
   .back-btn:hover{border-color:var(--ink)}
+  /* optional deeper explanation for kids who want more */
+  details.more{background:var(--card); border:1.5px dashed var(--sand-deep, #d9c9a8); border-radius:12px; margin:0 0 14px; padding:0 14px}
+  details.more summary{cursor:pointer; font-weight:700; color:var(--shell); min-height:44px; display:flex; align-items:center; list-style:none}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::after{content:"＋"; margin-left:auto; font-weight:700}
+  details.more[open] summary::after{content:"−"}
+  details.more p{font-size:15px; margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -207,6 +214,7 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
 function addXP(n){ if(_replay) return; FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function more(html){ return '<details class="more"><summary>🤔 Tell me more</summary>'+html+'</details>'; }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -331,6 +339,9 @@ const L1=[
     '<p>$5 − $2 means start with 5, take 2 away.</p>'+
     '<p>What’s left? <strong>$3</strong>.</p></div>'+
     '<p>Adding makes amounts bigger. Subtracting makes them smaller.</p>'+
+    more('<p>Adding and subtracting are opposites. One makes the pile grow. One makes it shrink.</p>'+
+      '<p>You can even check one with the other. $5 − $2 = $3. Now add it back: $3 + $2 = $5. You are back where you started!</p>'+
+      '<p>Together, these two track every pocket on the island.</p>')+
     '<button onclick="earnWord(\'subtract\');next()">New word: subtract</button>'),
   ()=>renderMC("q71a", next),
   ()=>renderMC("q71b", next),
@@ -351,6 +362,9 @@ const L2=[
     '<div class="card"><p>Kai gives $1 for a 70¢ mango. That is more than the price.</p>'+
     '<p>So the trader gives some money back. That money is called <strong>change</strong>.</p></div>'+
     '<p>To find it, count UP from the price: 70… 80, 90, 100. That’s <strong>30¢</strong>.</p>'+
+    more('<p>At the trading post, people almost never hand over the exact price. They hand a bill and get money back.</p>'+
+      '<p>Change is really subtracting: what you hand over − the price = your change. $1 − 70¢ = 30¢.</p>'+
+      '<p>Traders like counting up because they can hand back coins as they count: “70… 80, 90, 100. Here you go!”</p>')+
     '<button onclick="earnWord(\'change\');next()">New word: change</button>'),
   ()=>{
     let round=0;
@@ -378,7 +392,8 @@ const L2=[
           if(ok){
             answered=true; addXP(2);
             document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
-            document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(round<CHANGE_ROUNDS.length-1?"Next customer":"Done")+'</button>';
+            document.getElementById("cont").innerHTML=(round===CHANGE_ROUNDS.length-1?more('<p>Always check your change before you walk away. Anyone can make a mistake, even a busy trader.</p>'+
+              '<p>A quick check: add the change to the price. 260¢ + 40¢ = 300¢. That matches the $3 you handed over, so the change is right!</p>'):'')+'<button onclick="window._n()">'+(round<CHANGE_ROUNDS.length-1?"Next customer":"Done")+'</button>';
             revealFB();
             window._n=()=>{ round++; if(round<CHANGE_ROUNDS.length) draw(); else { addXP(4); next(); } };
           } else { answered=true; }
@@ -404,10 +419,16 @@ const L3=[
     '<p>Count up from 125 to 170.</p>'+
     '<p><strong>+5</strong> gets to 130. <strong>+40</strong> gets to 170.</p>'+
     '<p>5 + 40 = <strong>45¢</strong>. Kai needs 45¢ more.</p></div>'+
+    more('<p>In Module 6, Kai only knew he did not have enough. But how short was he? Nobody knew.</p>'+
+      '<p>Now he knows exactly: 45¢. Not “some more.” Not “a lot more.” Exactly a quarter and two dimes.</p>'+
+      '<p>A number turns a worry into a plan Kai can follow.</p>')+
     '<button onclick="next()">And then?</button>'),
   ()=>show('<div class="kicker">Lesson 3 · The feast</div>'+
     '<div class="scene">🥭🥥🎉<div class="cap">The next day, Kai comes back with $1.70. He gets both!</div></div>'+
     '<p>Read the tags. Add the total. Find the gap. Now Kai has a plan.</p>'+
+    more('<p>Look at how far Kai has come. In Module 5 he read the tags. In Module 6 he added the total. In Module 7 he found the gap.</p>'+
+      '<p>Yesterday was a sad day at the front of the line. Today is the best breakfast on the island.</p>'+
+      '<p>Numbers turned a sad morning into a happy one.</p>')+
     '<button onclick="next()">Practice the gap</button>'),
   ()=>renderMC("q73a", next),
   ()=>renderMC("q73c", next),

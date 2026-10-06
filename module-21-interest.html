@@ -161,6 +161,13 @@
   }
   .back-btn{background:transparent; color:var(--ink); border:2px solid #cfdcd8; margin-top:12px; min-height:44px}
   .back-btn:hover{border-color:var(--ink)}
+  /* optional deeper explanation for kids who want more */
+  details.more{background:var(--card); border:1.5px dashed var(--sand-deep, #d9c9a8); border-radius:12px; margin:0 0 14px; padding:0 14px}
+  details.more summary{cursor:pointer; font-weight:700; color:var(--shell); min-height:44px; display:flex; align-items:center; list-style:none}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::after{content:"＋"; margin-left:auto; font-weight:700}
+  details.more[open] summary::after{content:"−"}
+  details.more p{font-size:15px; margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -255,6 +262,7 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
 function addXP(n){ if(_replay) return; FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function more(html){ return '<details class="more"><summary>🤔 Tell me more</summary>'+html+'</details>'; }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -391,12 +399,16 @@ const L1=[
     growCard(15.00, 15.08, "Kai\'s savings, one month apart")+
     '<div class="card"><p>No deposit. No withdrawal. The number just… went up.</p>'+
     '<p>This is called <strong>interest</strong> — a little extra the bank adds to your account, on its own, just for keeping your money there.</p></div>'+
+        more('<p>Look closely: the number went up by only 8 cents. Interest is usually small, just a few cents at a time. It won’t make anyone rich overnight.</p>'+
+      '<p>But it shows up again and again, month after month, without Kai lifting a finger. Small and steady is still a lot better than nothing.</p>')+
     '<button onclick="earnWord(\'interest\');next()">New word: interest</button>'),
   ()=>show('<div class="kicker">Lesson 1 · Why would a bank do that?</div>'+
     '<div class="card"><p>It sounds like a magic trick, but it isn\'t. Here is what is really going on:</p>'+
     '<p>The bank does not lock your money in a box and forget about it. It <strong>puts the money to work</strong> helping other people with their own plans.</p>'+
     '<p>Because the bank gets to use your money, it pays you a little something back. That little something is interest.</p>'+
     '<p>You let the bank use your money without even trying. Interest is the thank-you.</p></div>'+
+        more('<p>Here’s a way to picture it. Kai lets Tavo use his spare fishing net for a month. Tavo catches extra fish with it, so he gives Kai two fish as a thank-you.</p>'+
+      '<p>The net comes back to Kai, safe. And Kai has two more fish than before. Interest works a lot like that: your money helps someone, and a little thank-you comes back.</p>')+
     '<button onclick="next()">Practice</button>'),
   ()=>renderMC("q211a", next),
   ()=>renderMC("q211b", next),
@@ -411,6 +423,8 @@ const L2=[
     '<div class="card"><p>Here is the part that actually matters: interest does not need Kai to do anything at all.</p>'+
     '<p>Not a deposit. Not a chore. Not even remembering it exists.</p>'+
     '<p>Money in a savings account can <strong>grow</strong> — get a little bigger over time — while Kai is fishing, sleeping, or off on an adventure completely unrelated to money.</p></div>'+
+        more('<p>Not every account grows by the same amount. Some savings accounts add more than others, and some add almost nothing.</p>'+
+      '<p>That makes a great question to ask with a trusted adult when picking where to keep goal money: “How much will this account add over time?”</p>')+
     '<button onclick="earnWord(\'grow\');next()">New word: grow</button>'),
   ()=>show('<div class="kicker">Lesson 2 · The tin, one more time</div>'+
     '<div class="card"><p>Picture Kai\'s old tin, still sitting under that floorboard, with $15 inside.</p></div>'+
@@ -438,6 +452,8 @@ const L3=[
     '<p>If Kai keeps $15 in savings, the bank can put $15 to work. If he keeps $150, the bank can put $150 to work.</p>'+
     '<p><strong>More money sitting there means more for the bank to use — which generally means more comes back.</strong></p>'+
     '<p>This is exactly why the goal-money habit from Module 19 matters even more now. Money kept safely in savings is not just protected — it is quietly working.</p></div>'+
+        more('<p>Time matters too. Money that stays in savings for one month grows a little. Money that stays for a whole year gets a little added again and again.</p>'+
+      '<p>So two simple things help savings grow: keep more in it, and leave it there longer. Kai can do both just by sticking to his sail goal.</p>')+
     '<button onclick="next()">Practice</button>'),
   ()=>renderMC("q213a", next),
   ()=>renderMC("q213c", next),

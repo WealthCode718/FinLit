@@ -123,6 +123,13 @@
   }
   .back-btn{background:transparent; color:var(--ink); border:2px solid #cfdcd8; margin-top:12px; min-height:44px}
   .back-btn:hover{border-color:var(--ink)}
+  /* optional deeper explanation for kids who want more */
+  details.more{background:var(--card); border:1.5px dashed var(--sand-deep, #d9c9a8); border-radius:12px; margin:0 0 14px; padding:0 14px}
+  details.more summary{cursor:pointer; font-weight:700; color:var(--shell); min-height:44px; display:flex; align-items:center; list-style:none}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::after{content:"＋"; margin-left:auto; font-weight:700}
+  details.more[open] summary::after{content:"−"}
+  details.more p{font-size:15px; margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -216,6 +223,7 @@ let S = { xp:0, shelf:[], lesson:0, step:0, firstTry:{}, done:[false,false,false
 async function loadState(){ S = await FL.load(MODULE_N, S); }
 async function saveState(){ await FL.save(MODULE_N, S); }
 function addXP(n){ if(_replay) return; FL.award(S, n); document.getElementById("xpBox").textContent = FL.displayXP(S)+" XP"; saveState(); }
+function more(html){ return '<details class="more"><summary>🤔 Tell me more</summary>'+html+'</details>'; }
 function earnWord(k){
   if(S.shelf.includes(k)) return;
   S.shelf.push(k); renderShelf(); saveState();
@@ -363,12 +371,16 @@ const L1=[
     '<div class="card"><p>Kai counts the ways this could end badly:</p>'+
     '<p>The rain could soak it. The tin could be lost. Someone could take it. And worst of all — <strong>nobody wrote down how much was inside.</strong> If it vanished, Kai couldn\'t even prove what was lost.</p>'+
     '<p>Rana points across the water. "On the mainland there\'s a place built for exactly this problem. It\'s called a <strong>bank</strong>."</p></div>'+
+        more('<p>Why does writing it down matter so much? Imagine the tin vanished. Kai might say $23. Someone else might say $13. Who is right? Nobody could tell.</p>'+
+      '<p>A written record settles it. It’s like a scoreboard at a game: everyone can check the number, so nobody has to argue.</p>')+
     '<button onclick="earnWord(\'bank\');next()">New word: bank</button>'),
   ()=>show('<div class="kicker">Lesson 1 · What a bank actually does</div>'+
     '<div class="card"><p>A bank does two jobs, and both matter:</p>'+
     '<p><strong>1. It keeps the money safe.</strong> Locks, walls, a roof that doesn\'t leak.</p>'+
     '<p><strong>2. It keeps a record.</strong> A written list of exactly how much is yours.</p>'+
     '<p>That second job is the one people forget. A tin can hold money — but only a bank can PROVE how much was there.</p></div>'+
+        more('<p>A bank keeps money from lots of people in one strong place, like one big safe instead of a hundred little tins.</p>'+
+      '<p>And it keeps a record for every single person. If Kai ever forgets how much he has, he can just ask. The bank always knows the number.</p>')+
     '<button onclick="next()">Practice</button>'),
   ()=>renderMC("q171a", next),
   ()=>renderMC("q171b", next),
@@ -391,6 +403,8 @@ const L2=[
     '<div class="recap"><strong>So far:</strong> A bank keeps money safe AND keeps a record.</div>'+
     '<div class="card"><p>Kai rows to the mainland with the tin. The bank opens an <strong>account</strong> — Kai\'s own place to keep money.</p>'+
     '<p>Putting money in is called making a <strong>deposit</strong>.</p></div>'+
+        more('<p>Here’s a surprise: the bank doesn’t put Kai’s bills in a box with his name on it. It mixes them with everyone else’s money.</p>'+
+      '<p>That’s okay! What belongs to Kai is the <strong>number</strong> on his record. If the record says $23, then $23 is his, no matter which bills the bank hands back later.</p>')+
     '<button onclick="earnWord(\'deposit\');next()">New word: deposit</button>'); },
   ()=>{
     let i=0;
@@ -449,6 +463,8 @@ const L3=[
     '<div class="card"><p>That\'s the whole promise: <strong>your money stays yours.</strong></p>'+
     '<p>A bank is not a place you GIVE money to. It\'s a place you LEAVE money — like handing your bag to a friend while you swim. Ask for it, and it comes back.</p>'+
     '<p>The list proves it, every single time. That\'s something a tin under a floorboard could never do.</p></div>'+
+        more('<p>Why would a bank keep this promise? Because the whole deal depends on trust. If a bank didn’t give money back, nobody would ever make a deposit there again.</p>'+
+      '<p>Remember Module 1? Money works because everyone agrees to take it. Banks work the same way. They work because people trust them to keep their word.</p>')+
     '<button onclick="next()">Practice</button>'),
   ()=>renderTF("q172b", next),
   ()=>renderMC("q173c", next),

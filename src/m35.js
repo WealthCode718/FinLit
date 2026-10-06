@@ -122,11 +122,15 @@ const L1=[
   ()=>show(`<div class="kicker">Lesson 1</div>
     <div class="card"><p>A <strong>risk</strong> is the chance that something bad could happen that costs you money.</p>
     <p>It is not a sure thing. The storm <em>might</em> tear the sail. Or it might not.</p></div>
+    ${more('<p>Risk is everywhere, and that is okay. Riding a bike, planting seeds, even carrying eggs home: something could go wrong.</p>'+
+      '<p>Most of the time, nothing bad happens. Thinking about risk is not about being scared. It is about being ready, so one bad day does not ruin a whole season.</p>')}
     <button onclick="earnWord('risk');next()">New word: risk</button>`),
   ()=>show(`<div class="kicker">Lesson 1 · And if it happens?</div>
     <div class="sailcard"><div>If the sail tears, Kai loses</div><div class="v">$60</div></div>
     <div class="card"><p>If the bad thing actually happens, what you lose is called a <strong>loss</strong>.</p>
     <p>The risk is the <em>chance</em>. The loss is the <em>cost</em>. Kai’s whole season of saving could be a $60 loss in one gust.</p></div>
+    ${more('<p>A loss can be bigger than the price of the thing. If the sail tears, Kai cannot fish until he gets a new one. No fishing means no fish to sell.</p>'+
+      '<p>So the real loss is the cost of a new sail, plus the money he misses while his boat sits still.</p>')}
     <button onclick="earnWord('loss');next()">New word: loss</button>`),
   ()=>renderMC("q351a", next),
   ()=>renderMC("q351b", next),
@@ -162,7 +166,8 @@ const L2=[
           if(ok){
             done=true; addXP(1);
             document.querySelectorAll(".grid2 button").forEach(x=>x.disabled=true);
-            document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(i<RISKS.length-1?"Next":"Done")+'</button>';
+            document.getElementById("cont").innerHTML=(i===RISKS.length-1?more('<p>Did you notice? The giant wave is rare, but it could sink the whole boat. Rare does not mean safe to ignore when the loss would be huge.</p>'+
+      '<p>The fish hook is the opposite. It happens all the time, but each loss is tiny. Different kinds of risk need different plans.</p>'):'')+'<button onclick="window._n()">'+(i<RISKS.length-1?"Next":"Done")+'</button>';
             window._n=()=>{ i++; draw(); };
             revealFB();
           } else { b.disabled=true; }
@@ -189,6 +194,8 @@ const L3=[
     </div>
     <div class="card"><p>Tavo uses all four. He never sails in a storm. He ties everything down. He buys new hooks without a second thought.</p>
     <p>And for the really big ones — the ones that could sink him — he shares the risk with other fishers. Kai will learn how that works in Module 37.</p></div>
+    ${more('<p>How can sharing help? Picture ten fishers. Each year, one of their boats might get badly hurt. That one fisher could not pay for the repair alone.</p>'+
+      '<p>But if all ten put in a few dollars every season, there is enough to fix whichever boat breaks. Each one pays a little, so nobody loses everything.</p>')}
     <button onclick="next()">Practice</button>`),
   ()=>renderMC("q353a", next),
   ()=>renderMC("q353c", next),

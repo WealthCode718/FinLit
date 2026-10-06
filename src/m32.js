@@ -113,6 +113,9 @@ const L1=[
     <div class="card"><p>The island is run by a group of people chosen to make rules and look after shared things: the island council. Most places call that group the <strong>government</strong>.</p>
     <p>To pay for things everyone shares, everyone who earns pays a part of what they earn to the government. That part is called a <strong>tax</strong>.</p>
     <p>It is not a fee to a bank, and it is not a choice. It is how the lighthouse stays lit for every boat — including Tavo’s, with Kai on it.</p></div>
+    ${more('<p>Why not let each person pay only for what they use? Some things only work if everyone chips in. One family could never pay for a whole lighthouse, but a whole island can.</p>'+
+      '<p>How much tax someone pays depends on the rules where they live, and often on how much they earn. Rules differ from place to place.</p>'+
+      '<p>Ask a trusted adult to point out something near you that taxes helped pay for, like a road or a park.</p>')}
     <button onclick="earnWord('tax');next()">New word: tax</button>`),
   ()=>renderMC("q321a", next),
   ()=>renderMC("q321b", next),
@@ -154,7 +157,8 @@ const L2=[
         if(ok){
           done=true; addXP(1);
           document.getElementById("sYes").disabled=true; document.getElementById("sNo").disabled=true;
-          document.getElementById("cont").innerHTML='<button onclick="window._n()">'+(i<THINGS.length-1?"Next":"Done")+'</button>';
+          document.getElementById("cont").innerHTML=(i===THINGS.length-1?more('<p>Real life is not always so neat. Some shared things also cost a little to use, like a small fee to ride a ferry. Places mix the two in different ways.</p>'+
+            '<p>The big idea stays the same: taxes pay for things everyone needs that no one person could pay for alone.</p>'):'')+'<button onclick="window._n()">'+(i<THINGS.length-1?"Next":"Done")+'</button>';
           window._n=()=>{ i++; draw(); };
           revealFB();
         }
@@ -178,11 +182,16 @@ const L3=[
     <p>Tavo, his employer, took the tax out <em>before</em> paying him, and sent it along for him.</p></div>
     <div class="flow"><span class="pill">Kai earns $40</span><span>→</span><span class="pill">Tavo sends $4 tax</span><span>→</span><span class="pill">Kai gets $36</span></div>
     <div class="card"><p>That way Kai pays his part a little at a time, instead of having to find it all at once later.</p></div>
+    ${more('<p>Taking the tax out before payday is easier for everyone. Kai never has to remember, and the island council gets it a little at a time.</p>'+
+      '<p>It is like a budget that does one part for you, before the money even arrives.</p>'+
+      '<p>People who work for themselves, like someone selling their own fish, have no employer to do this. They often have to set that money aside on their own.</p>')}
     <button onclick="next()">And the $36?</button>`),
   ()=>show(`<div class="kicker">Lesson 3</div>
     ${stub()}
     <div class="card"><p>The part of your pay you actually get, after taxes, is your <strong>take-home pay</strong>.</p>
     <p>Remember Module 31? Kai planned his budget with $36, not $40. Now he has the name for it. <strong>Always plan with take-home pay</strong> — it is the only part you can spend.</p></div>
+    ${more('<p>When people talk about pay, they often say the big number: “The job pays $40!” But the number that lands in the account is smaller.</p>'+
+      '<p>Comparing two jobs? Ask what the take-home pay would be. That is the money you can really budget, spend, and save.</p>')}
     <button onclick="earnWord('takehome');next()">New word: take-home pay</button>`),
   ()=>renderMC("q323a", next),
   ()=>renderMC("q323c", next),
