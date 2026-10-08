@@ -39,7 +39,7 @@ def static_checks():
         t = open(f, encoding="utf-8").read()
         for link in set(re.findall(r"module-\d+-[a-z0-9-]+\.html", t)):
             if not os.path.exists(os.path.join(ROOT, link)): missing.append(f"{name(f)} -> {link}")
-        if '<script src="finlit-core.js"></script>' not in t: missing.append(f"{name(f)} does not load finlit-core.js")
+        if not re.search(r'<script src="finlit-core\.js(\?v=[\w.]+)?"></script>', t): missing.append(f"{name(f)} does not load finlit-core.js")
     check(not missing, "all links and engine includes resolve" + ("" if not missing else ": " + "; ".join(missing)))
     stray = [name(f) for f in MODULES if re.search(r"S\.xp\s*=\s*(p|m1)\.xp", open(f, encoding="utf-8").read())]
     check(not stray, "no module copies XP from another module" + ("" if not stray else ": " + ", ".join(stray)))
