@@ -235,7 +235,7 @@
   function clean(t){
     return t.replace(EMOJI, " ")
       .replace(/(\d)¢/g, "$1 cents").replace(/¢/g, " cents")
-      .replace(/×/g, " times ").replace(/÷/g, " divided by ").replace(/\s=\s?/g, " equals ")
+      .replace(/\s\+\s/g, " plus ").replace(/×/g, " times ").replace(/÷/g, " divided by ").replace(/\s=\s?/g, " equals ")
       .replace(/[→⟶➡←⬅]/g, " ").replace(/·/g, ". ").replace(/[“”"]/g, "")
       .replace(/\s+/g, " ").trim();
   }
@@ -256,28 +256,66 @@
     // keep block boundaries as sentence breaks
     c.querySelectorAll("p,div,li,h1,h2,h3,h4,br").forEach(e => e.insertAdjacentText("afterend", ". "));
     let t = clean(c.textContent).replace(/([.!?])(\s*\.)+/g, "$1").replace(/^\.\s*/, "");
-    if(choices.length) t += (t ? " " : "") + "Choices: " + choices.join(". ") + ".";
+    if(choices.length) t += (t ? " " : "") + "Here are the choices. " + choices.map(c => /[.!?]$/.test(c) ? c : c + ".").join(" ");
     return t;
   }
 
   /* ---- speaking (short chunks: some phones cut long ones off) ---- */
-  function speak(text){
-    if(!on || !text) return;
-    synth.cancel();
-    const parts = text.match(/[^.!?]+[.!?]*/g) || [text];
-    parts.map(s => s.trim()).filter(s => s.length > 1).forEach(s => {
+  /* Recorded voice: audio/mN.json lists the sentences that have a studio
+     recording (audio/mN/<id>.mp3). Anything not recorded falls back to the
+     device's own voice, sentence by sentence. */
+  function sentences(text){
+    return text.split(/(?<=[.!?])\s+/).map(x => x.trim()).filter(x => x.length > 1);
+  }
+  function clipId(sentence){   // FNV-1a hash of the normalized sentence
+    const n = sentence.replace(/\s+/g, " ").trim().toLowerCase();
+    let h = 0x811c9dc5;
+    for(let i = 0; i < n.length; i++){ h ^= n.charCodeAt(i); h = Math.imul(h, 0x01000193); }
+    return (h >>> 0).toString(16).padStart(8, "0");
+  }
+  let recorded = new Set();
+  fetch("audio/m" + modN + ".json", {cache:"no-cache"}).then(r => r.ok ? r.json() : [])
+    .then(list => { recorded = new Set(list); }).catch(() => {});
+  const player = new Audio(); player.preload = "auto";
+  let run = 0;
+  function stopAll(){ run++; synth.cancel(); try{ player.pause(); }catch(e){} }
+  function playClip(id, token){
+    return new Promise(res => {
+      if(token !== run) return res(true);
+      player.onended = () => res(true);
+      player.onerror = () => res(false);
+      player.src = "audio/c/" + id + ".mp3";
+      const p = player.play(); if(p && p.catch) p.catch(() => res(false));
+    });
+  }
+  function sayDevice(s, token){
+    return new Promise(res => {
+      if(token !== run) return res();
       const u = new SpeechSynthesisUtterance(s);
       if(voice) u.voice = voice;
       u.lang = voice ? voice.lang : "en-US"; u.rate = 0.9; u.pitch = 1.05;
+      u.onend = u.onerror = () => res();
       synth.speak(u);
+      setTimeout(res, 400 + s.length * 120);   // never hang if a phone drops onend
     });
   }
+  async function speak(text){
+    if(!on || !text) return;
+    stopAll(); const token = run;
+    for(const s of sentences(text)){
+      if(token !== run) return;
+      const id = clipId(s);
+      if(!(recorded.has(id) && await playClip(id, token))) await sayDevice(s, token);
+    }
+  }
+  FL.readAloud = { sentences, clipId, textOf };   // used by tools/voice_collect.py
   function readScreen(){ const s = main.querySelector(".screen"); if(s) speak(textOf(s)); }
   // iPhone/iPad only allow speech after a tap: unlock on the first touch
   let unlocked = false;
   document.addEventListener("pointerdown", function(){
     if(unlocked) return; unlocked = true;
     try{ const u = new SpeechSynthesisUtterance(" "); u.volume = 0; synth.speak(u); }catch(e){}
+    try{ player.muted = true; const p = player.play(); if(p && p.catch) p.catch(()=>{}); player.pause(); player.muted = false; }catch(e){}
   }, {capture:true});
 
   /* ---- header buttons ---- */
@@ -306,7 +344,7 @@
   }
   btn.addEventListener("click", function(){
     on = !on; setPref(on); paint();
-    if(on) readScreen(); else synth.cancel();
+    if(on) readScreen(); else stopAll();
   });
   again.addEventListener("click", readScreen);
   paint();
@@ -339,7 +377,7 @@
   if(modal){ let was = modalOpen();
     new MutationObserver(function(){ const now = modalOpen(); if(was && !now && on) readScreen(); was = now; })
       .observe(modal, {attributes:true, attributeFilter:["class"]}); }
-  window.addEventListener("pagehide", function(){ synth.cancel(); });
+  window.addEventListener("pagehide", stopAll);
 }
   if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", initReadAloud); else setTimeout(initReadAloud, 0);
 })();
